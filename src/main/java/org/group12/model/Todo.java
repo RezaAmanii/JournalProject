@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class Todo implements ITodo{
 
+    // TODO find out how dates will be implemented and fix all date related sections
+
     String title;
     String description;
     Date dateCreated;
