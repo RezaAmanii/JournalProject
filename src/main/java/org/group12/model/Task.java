@@ -3,9 +3,6 @@ package org.group12.model;
 import java.time.LocalDateTime;
 
 public class Task implements ITask {
-
-    // TODO find out how dates will be implemented and fix all date related sections
-
     private String title;
     private String description;
     private final LocalDateTime dateCreated;

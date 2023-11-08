@@ -1,5 +1,6 @@
 package org.group12.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TodoList implements ITodoList {
@@ -7,6 +8,31 @@ public class TodoList implements ITodoList {
 
     public TodoList() {
         this.tasks = new ArrayList<>();
+    }
+
+    @Override
+    public String getTitle() {
+        return null;
+    }
+
+    @Override
+    public void setTitle(String title) {
+
+    }
+
+    @Override
+    public String getDescription() {
+        return null;
+    }
+
+    @Override
+    public void setDescription(String desc) {
+
+    }
+
+    @Override
+    public LocalDateTime getDateCreated() {
+        return null;
     }
 
     @Override
