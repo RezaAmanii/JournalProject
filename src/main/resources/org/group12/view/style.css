@@ -1,0 +1,14 @@
+.main {
+    /*-fx-background: #FFC111;*/
+}
+
+.taskCard {
+    -fx-background-color: #95C6CD;
+    -fx-border-width: 2px;
+    -fx-border-color: "black";
+}
+
+.todoListAnchorPane {
+    -fx-border-width: 2px;
+    -fx-border-color: "black";
+}

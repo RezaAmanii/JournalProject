@@ -4,6 +4,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TodoList implements ITodoList {
+    private String title;
+    private String description;
+    private LocalDateTime dateCreated;
     private final ArrayList<Task> tasks;
 
     public TodoList() {
@@ -12,12 +15,12 @@ public class TodoList implements ITodoList {
 
     @Override
     public String getTitle() {
-        return null;
+        return title;
     }
 
     @Override
     public void setTitle(String title) {
-
+        this.title = title;
     }
 
     @Override

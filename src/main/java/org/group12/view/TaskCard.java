@@ -1,4 +1,4 @@
-package org.group12;
+package org.group12.view;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +13,7 @@ public class TaskCard extends AnchorPane {
     private Label taskTitleLabel;
 
     public TaskCard(String title){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("view/task_card.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("task_card.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
