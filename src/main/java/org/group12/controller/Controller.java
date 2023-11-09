@@ -24,7 +24,7 @@ public class Controller implements Initializable {
         for (Task t: model.getTasks()) {
             label.setText(t.getTitle());
             System.out.println(t.getTitle());
-            //taskBox.getChildren().add((new TaskCard(t.getTitle())));
+            taskBox.getChildren().add((new TaskCard(t.getTitle())));
         }
     }
 }
