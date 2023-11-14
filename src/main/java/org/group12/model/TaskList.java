@@ -3,37 +3,35 @@ package org.group12.model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class TodoList implements ITodoList {
+public class TaskList implements ITaskList {
     private String title;
-    private String description;
     private LocalDateTime dateCreated;
     private final ArrayList<Task> tasks;
+    private boolean isEmpty;
+    private long ID;
 
-    public TodoList() {
+    //private ArrayList<TaskListObserver> observers;
+    //private TaskFactory taskFactory;
+
+    public TaskList() {
         this.tasks = new ArrayList<>();
     }
 
     @Override
+    public long getID() {
+        return ID;
+    }
+
     public String getTitle() {
         return title;
     }
 
-    @Override
+
     public void setTitle(String title) {
         this.title = title;
     }
 
-    @Override
-    public String getDescription() {
-        return null;
-    }
 
-    @Override
-    public void setDescription(String desc) {
-
-    }
-
-    @Override
     public LocalDateTime getDateCreated() {
         return null;
     }
