@@ -28,4 +28,30 @@ public class MainMenuController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
+
+    public boolean sideBarExpanded=false;
+    public void sideBarOnMouseEnter(){
+        sideBarExpanded=!sideBarExpanded;
+        if (sideBarExpanded){
+            sideBar.setPrefWidth(sideBar.getMaxWidth());
+
+            calendarLBL.setVisible(true);
+            settingsLBL.setVisible(true);
+            homeLBL.setVisible(true);
+            todoLBL.setVisible(true);
+            journalLBL.setVisible(true);
+            homeLBL1.setVisible(true);
+
+        }
+        else{
+            sideBar.setPrefWidth(sideBar.getMinWidth());
+            calendarLBL.setVisible(false);
+            settingsLBL.setVisible(false);
+            homeLBL.setVisible(false);
+            todoLBL.setVisible(false);
+            journalLBL.setVisible(false);
+            homeLBL1.setVisible(false);
+        }
+
+    }
 }
