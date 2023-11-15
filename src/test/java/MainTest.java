@@ -1,3 +1,4 @@
+
 import org.group12.model.Task;
 import org.group12.model.TodoList;
 import org.junit.jupiter.api.Test;
@@ -93,6 +94,3 @@ class MainTest {
         assertEquals(task1.getDueDate(), null);
 
     }
-
-
-}

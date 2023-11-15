@@ -21,10 +21,6 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        TodoListCard todoListCard = new TodoListCard(model.getTodoList().getTitle());
-        startPageHBox.getChildren().add(todoListCard);
-        for (Task t: model.getTodoList().getTasks()) {
-            todoListCard.getTodoListVBox().getChildren().add((new TaskCard(t.getTitle())));
-        }
+        //TodoListCard todoListCard = new TodoListCard(model.getTodoList().getTitle());
     }
 }
