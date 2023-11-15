@@ -29,6 +29,9 @@ public class TaskList implements ITaskList {
 
     public void setTitle(String title) {
         this.title = title;
+        if (this.title == null || title.trim().isEmpty()){
+            throw new IllegalArgumentException("Title cannot be empty");
+        }
     }
 
 
