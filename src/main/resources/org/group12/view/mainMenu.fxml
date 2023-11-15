@@ -11,13 +11,13 @@
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0" prefWidth="872.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controller.MainMenuController">
     <left>
-        <VBox fx:id="sideBar" maxWidth="180.0" minWidth="68.0" >
+        <VBox fx:id="sideBar" maxWidth="180.0" minWidth="68.0" onMouseEntered="#sideBarOnMouseEnter" onMouseExited="#sideBarOnMouseEnter" prefHeight="573.0" prefWidth="180.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" BorderPane.alignment="CENTER" >
             <children>
                 <Pane prefHeight="104.0" prefWidth="168.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;">
                     <children>
                         <ImageView fx:id="menuImg" fitHeight="51.0" fitWidth="49.0" layoutX="5.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@/palnnerIcon.png" />
+                                <Image url="@/PlanIT2.png" />
                             </image></ImageView>
                         <Label fx:id="homeLBL1" layoutX="62.0" layoutY="37.0" text="Plan-It" textFill="#183a4e">
                             <font>
