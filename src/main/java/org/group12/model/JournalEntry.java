@@ -16,4 +16,32 @@ public class JournalEntry {
         this.modifiedTimestamp = new Date();
         this.content = content;
     }
+    public void updateContent(String newContent) {
+        this.content = newContent;
+        this.modifiedTimestamp = new Date();
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Long getID() {
+        return ID;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Date getCreatedTimestamp() {
+        return createdTimestamp;
+    }
+
+    public Date getModifiedTimestamp() {
+        return modifiedTimestamp;
+    }
+
+    public String getContent() {
+        return content;
+    }
 }
