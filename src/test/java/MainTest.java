@@ -1,4 +1,4 @@
-class MainTest {
-    //Testar
+import org.junit.jupiter.api.Test;
 
+class MainTest {
 }
