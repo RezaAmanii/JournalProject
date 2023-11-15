@@ -10,5 +10,7 @@ module JournalProject {
     opens org.group12.controller to javafx.fxml;
     exports org.group12.view;
     opens org.group12.view to javafx.fxml;
+    exports org.group12.model.Calendar;
+    opens org.group12.model.Calendar to javafx.fxml;
 
 }

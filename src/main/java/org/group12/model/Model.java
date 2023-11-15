@@ -1,19 +1,19 @@
 package org.group12.model;
 
 public class Model {
-    private final TodoList todoList;
+    private final TaskList taskList;
 
     public Model() {
-        todoList = new TodoList();
+        taskList = new TaskList();
 
-        todoList.setTitle("Exempel Lista");
+        taskList.setTitle("Exempel Lista");
 
-        todoList.addTask(new Task("Willys"));
-        todoList.addTask(new Task("Plugga"));
-        todoList.addTask(new Task("Skriva rapport"));
+        taskList.addTask(new Task("Willys"));
+        taskList.addTask(new Task("Plugga"));
+        taskList.addTask(new Task("Skriva rapport"));
     }
 
-    public TodoList getTodoList() {
-        return todoList;
+    public TaskList getTodoList() {
+        return taskList;
     }
 }

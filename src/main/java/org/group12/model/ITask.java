@@ -2,16 +2,18 @@ package org.group12.model;
 
 import java.time.LocalDateTime;
 
-interface ITask extends INameable{
-    LocalDateTime getDueDate();
+interface ITaskItem {
+    long getID();
 
-    void setDueDate(LocalDateTime date);
+    String getTitle();
+
+    String getDescription();
+
+    LocalDateTime getDateCreated();
+
+    LocalDateTime getDueDate();
 
     boolean getStatus();
 
-    void setStatus(boolean status);
-
     int getPriority();
-
-    public void setPriority(int priority);
 }
