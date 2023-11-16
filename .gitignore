@@ -4,6 +4,8 @@ out/
 !**/src/test/**/out/
 .idea/*
 /target/
+/target/*
+target/*
 
 ### Eclipse ###
 .apt_generated
@@ -29,4 +31,3 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-/target/
