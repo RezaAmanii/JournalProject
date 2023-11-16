@@ -1,15 +1,15 @@
 package org.group12.controller;
 
-import org.group12.model.TodoList;
+import org.group12.model.TaskList;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class journalController {
-    private List<TodoList> allJournalEntriesList;
+    private List<TaskList> allJournalEntriesList;
 
 
-    public List<TodoList> getAllJournalEntriesList(){
+    public List<TaskList> getAllJournalEntriesList(){
         return allJournalEntriesList;
     }
 
@@ -30,7 +30,7 @@ public class journalController {
 
     }
 
-    public List<TodoList> getTodaysEntry(){
+    public List<TaskList> getTodaysEntry(){
         return null;
     }
 
