@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 interface ITask {
     long getID();
 
-    String getTitle();
-
     String getDescription();
 
     LocalDateTime getDateCreated();
