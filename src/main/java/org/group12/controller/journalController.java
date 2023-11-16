@@ -1,6 +1,6 @@
 package org.group12.controller;
 
-import org.group12.model.TaskList;
+import org.group12.model.todo.TaskList;
 
 import java.util.ArrayList;
 import java.util.List;
