@@ -9,8 +9,6 @@ public interface IEvent {
 
     String getDescription();
 
-    LocalDateTime getDateCreated();
-
     LocalDateTime getDateOfEvent();
 
     Pair<LocalDateTime, LocalDateTime> getTimeFrame();

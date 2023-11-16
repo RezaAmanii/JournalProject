@@ -7,8 +7,6 @@ interface ITask {
 
     String getDescription();
 
-    LocalDateTime getDateCreated();
-
     LocalDateTime getDueDate();
 
     boolean getStatus();
