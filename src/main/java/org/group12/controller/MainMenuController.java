@@ -64,6 +64,35 @@ public class MainMenuController implements Initializable {
         todoPane.setVisible(false);
     }
 
+    @FXML
+    void backOneMonth() {
+        dateFocus = dateFocus.minusMonths(1);
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 7; j++) {
+                clearCell(calendarPane, j, i);
+
+            }
+        }
+        drawCalendar();
+    }
+
+    @FXML
+    void forwardOneMonth() {
+        dateFocus = dateFocus.plusMonths(1);
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 6; j++) {
+                clearCell(calendarPane, i, j);
+
+            }
+        }
+        drawCalendar();
+    }
+
+    private void clearCell(GridPane gridPane, int rowIndex, int colIndex) {
+        gridPane.getChildren().removeIf(node ->
+                GridPane.getRowIndex(node) == rowIndex && GridPane.getColumnIndex(node) == colIndex);
+    }
+
     private void drawCalendar() {
         yearLBL.setText(String.valueOf(dateFocus.getYear()));
         monthLBL.setText(String.valueOf(dateFocus.getMonth()));
