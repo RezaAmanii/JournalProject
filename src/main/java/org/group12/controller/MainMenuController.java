@@ -29,6 +29,22 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /**
+     * Switches to the "ToDo" page.
+     */
+    public void switchToTabPane(){
+        homePane.setVisible(false);
+        todoPane.setVisible(true);
+    }
+
+    /**
+     * Switches to the "Home" page.
+     */
+    public void switchToHomePane(){
+        homePane.setVisible(true);
+        todoPane.setVisible(false);
+    }
+
     public boolean sideBarExpanded=false;
     public void sideBarOnMouseEnter(){
         sideBarExpanded=!sideBarExpanded;

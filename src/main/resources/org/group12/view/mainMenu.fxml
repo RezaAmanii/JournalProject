@@ -35,7 +35,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="homeBtn"  prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
+                <Pane fx:id="homeBtn" onMouseClicked="#switchToHomePane" prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
                     <children>
                         <Label fx:id="homeLBL" layoutX="59.0" layoutY="23.0" text="Home" textFill="#183a4e">
                             <font>
@@ -68,7 +68,7 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="todoBTN"  prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
+                <Pane fx:id="todoBTN" onMouseClicked="#switchToTabPane" prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
                     <children>
                         <Label fx:id="todoLBL" layoutX="56.0" layoutY="23.0" text="ToDo" textFill="#183a4e">
                             <font>
