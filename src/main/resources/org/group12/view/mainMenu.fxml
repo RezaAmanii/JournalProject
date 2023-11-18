@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="593.0" prefWidth="872.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controller.MainMenuController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="872.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controller.MainMenuController">
     <left>
-        <VBox fx:id="sideBar" maxWidth="180.0" minWidth="68.0" onMouseEntered="#sideBarOnMouseEnter" onMouseExited="#sideBarOnMouseEnter" prefHeight="573.0" prefWidth="180.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" BorderPane.alignment="CENTER" >
+        <VBox fx:id="sideBar" maxWidth="180.0" minWidth="68.0" onMouseEntered="#sideBarOnMouseEnter" onMouseExited="#sideBarOnMouseEnter" prefHeight="573.0" prefWidth="180.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
             <children>
                 <Pane prefHeight="104.0" prefWidth="168.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;">
                     <children>
@@ -29,7 +35,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="homePane" prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
+                <Pane fx:id="homeBtn"  prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
                     <children>
                         <Label fx:id="homeLBL" layoutX="59.0" layoutY="23.0" text="Home" textFill="#183a4e">
                             <font>
@@ -62,7 +68,7 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="todoPane" prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
+                <Pane fx:id="todoBTN"  prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
                     <children>
                         <Label fx:id="todoLBL" layoutX="56.0" layoutY="23.0" text="ToDo" textFill="#183a4e">
                             <font>
@@ -79,7 +85,7 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="calendarPane" prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
+                <Pane fx:id="calendarBTN" prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
                     <children>
                         <Label fx:id="calendarLBL" layoutX="56.0" layoutY="23.0" text="Calendar" textFill="#183a4e">
                             <font>
@@ -120,910 +126,338 @@
         </VBox>
     </left>
     <center>
-        <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-            <top>
-                <BorderPane prefHeight="64.0" prefWidth="659.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
-                    <BorderPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                    </BorderPane.margin>
-                    <left>
-                        <Label fx:id="nameLBL" text="Name" textFill="#183a4e" BorderPane.alignment="CENTER">
-                            <font>
-                                <Font name="Berlin Sans FB Demi Bold" size="47.0" />
-                            </font>
-                            <BorderPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </BorderPane.margin>
-                        </Label>
-                    </left>
-                    <right>
-                        <HBox prefHeight="76.0" prefWidth="146.0" BorderPane.alignment="CENTER">
-                            <children>
-                                <ImageView fitHeight="51.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@/notification.png" />
-                                    </image>
-                                    <HBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </HBox.margin>
-                                </ImageView>
-                                <ImageView fitHeight="42.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@/user.png" />
-                                    </image>
-                                    <HBox.margin>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </HBox.margin>
-                                </ImageView>
-                            </children>
-                            <padding>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                    </right>
-                </BorderPane>
-            </top>
-            <center>
-                <GridPane fx:id="calendarPane2" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
+        <StackPane fx:id="tabsa" BorderPane.alignment="CENTER">
+            <BorderPane fx:id="todoPane" prefHeight="200.0" prefWidth="200.0" visible="false">
+                <top>
+                    <BorderPane prefHeight="64.0" prefWidth="659.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                        <BorderPane.margin>
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </BorderPane.margin>
+                        <left>
+                            <Label fx:id="nameLBL1" text="ToDo" textFill="#183a4e" BorderPane.alignment="CENTER">
+                                <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="47.0" />
+                                </font>
+                                <BorderPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </BorderPane.margin>
+                            </Label>
+                        </left>
+                        <right>
+                            <HBox prefHeight="76.0" prefWidth="121.0" BorderPane.alignment="CENTER">
+                                <children>
+                                    <ImageView fitHeight="51.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@/notification.png" />
+                                        </image>
+                                        <HBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="42.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@/user.png" />
+                                        </image>
+                                        <HBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </HBox.margin>
+                                    </ImageView>
+                                </children>
+                                <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </padding>
+                            </HBox>
+                        </right>
+                    </BorderPane>
+                </top>
+                <right>
+                    <VBox fx:id="rightToDoPane" prefHeight="361.0" prefWidth="177.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                        <BorderPane.margin>
+                            <Insets bottom="10.0" right="10.0" />
+                        </BorderPane.margin>
+                    </VBox>
+                </right>
+                <center>
+                    <BorderPane prefHeight="361.0" prefWidth="456.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                        <BorderPane.margin>
+                            <Insets bottom="10.0" left="10.0" right="10.0" />
+                        </BorderPane.margin>
+                    </BorderPane>
+                </center>
+            </BorderPane>
+            <BorderPane fx:id="homePane" prefHeight="200.0" prefWidth="200.0">
+                <top>
+                    <BorderPane prefHeight="64.0" prefWidth="659.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                        <BorderPane.margin>
+                            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        </BorderPane.margin>
+                        <left>
+                            <Label fx:id="nameLBL" text="Hello, PlanIt" textFill="#183a4e" BorderPane.alignment="CENTER">
+                                <font>
+                                    <Font name="Berlin Sans FB Demi Bold" size="47.0" />
+                                </font>
+                                <BorderPane.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </BorderPane.margin>
+                            </Label>
+                        </left>
+                        <right>
+                            <HBox prefHeight="76.0" prefWidth="121.0" BorderPane.alignment="CENTER">
+                                <children>
+                                    <ImageView fitHeight="51.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@/notification.png" />
+                                        </image>
+                                        <HBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </HBox.margin>
+                                    </ImageView>
+                                    <ImageView fitHeight="42.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@/user.png" />
+                                        </image>
+                                        <HBox.margin>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </HBox.margin>
+                                    </ImageView>
+                                </children>
+                                <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </padding>
+                            </HBox>
+                        </right>
+                    </BorderPane>
+                </top>
+                <right>
+                    <VBox fx:id="dayDeadlines" prefHeight="460.0" prefWidth="221.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                        <BorderPane.margin>
+                            <Insets bottom="10.0" right="10.0" />
+                        </BorderPane.margin>
+                    </VBox>
+                </right>
+                <bottom>
+                    <HBox prefHeight="131.0" prefWidth="679.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                        <BorderPane.margin>
+                            <Insets bottom="10.0" left="10.0" right="10.0" />
+                        </BorderPane.margin>
+                        <children>
+                            <Pane prefHeight="111.0" prefWidth="160.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;">
+                                <HBox.margin>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </HBox.margin>
+                            </Pane>
+                            <Pane  prefHeight="111.0" prefWidth="160.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;">
+                                <HBox.margin>
+                                    <Insets bottom="10.0" right="10.0" top="10.0" />
+                                </HBox.margin>
+                                <children>
+                                    <ImageView fx:id="menuImg1" fitHeight="51.0" fitWidth="49.0" layoutX="56.0" layoutY="30.0"  pickOnBounds="true" preserveRatio="true">
+                                        <image>
+                                            <Image url="@/addNew.png" />
+                                        </image>
+                                    </ImageView>
+                                </children>
+                            </Pane>
+                        </children>
+                    </HBox>
+                </bottom>
+                <center>
+                    <BorderPane style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                        <BorderPane.margin>
+                            <Insets bottom="10.0" left="10.0" right="10.0" />
+                        </BorderPane.margin>
+                        <top>
+                            <GridPane BorderPane.alignment="CENTER">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                <children>
+                                    <HBox>
+                                        <children>
+                                            <Label text="Sun" textFill="#183a4e">
+                                                <padding>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </padding>
+                                                <font>
+                                                    <Font name="Bodoni MT Black" size="17.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                        <padding>
+                                            <Insets right="5.0" top="10.0" />
+                                        </padding>
+                                    </HBox>
+                                    <HBox GridPane.columnIndex="1">
+                                        <children>
+                                            <Label text="Mon" textFill="#183a4e">
+                                                <padding>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </padding>
+                                                <font>
+                                                    <Font name="Bodoni MT Black" size="17.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                        <padding>
+                                            <Insets right="5.0" top="10.0" />
+                                        </padding>
+                                    </HBox>
+                                    <HBox GridPane.columnIndex="2">
+                                        <children>
+                                            <Label text="Tues" textFill="#183a4e">
+                                                <padding>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </padding>
+                                                <font>
+                                                    <Font name="Bodoni MT Black" size="17.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                        <padding>
+                                            <Insets right="5.0" top="10.0" />
+                                        </padding>
+                                    </HBox>
+                                    <HBox GridPane.columnIndex="3">
+                                        <children>
+                                            <Label text="Wed" textFill="#183a4e">
+                                                <padding>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </padding>
+                                                <font>
+                                                    <Font name="Bodoni MT Black" size="17.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                        <padding>
+                                            <Insets right="5.0" top="10.0" />
+                                        </padding>
+                                    </HBox>
+                                    <HBox GridPane.columnIndex="4">
+                                        <children>
+                                            <Label text="Thu" textFill="#183a4e">
+                                                <padding>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </padding>
+                                                <font>
+                                                    <Font name="Bodoni MT Black" size="17.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                        <padding>
+                                            <Insets right="5.0" top="10.0" />
+                                        </padding>
+                                    </HBox>
+                                    <HBox GridPane.columnIndex="5">
+                                        <children>
+                                            <Label text="Fri" textFill="#183a4e">
+                                                <padding>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </padding>
+                                                <font>
+                                                    <Font name="Bodoni MT Black" size="17.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                        <padding>
+                                            <Insets right="5.0" top="10.0" />
+                                        </padding>
+                                        <GridPane.margin>
+                                            <Insets />
+                                        </GridPane.margin>
+                                    </HBox>
+                                    <HBox GridPane.columnIndex="6">
+                                        <children>
+                                            <Label text="Sat" textFill="#183a4e">
+                                                <padding>
+                                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                </padding>
+                                                <font>
+                                                    <Font name="Bodoni MT Black" size="17.0" />
+                                                </font>
+                                            </Label>
+                                        </children>
+                                        <padding>
+                                            <Insets right="5.0" top="10.0" />
+                                        </padding>
+                                    </HBox>
+                                </children>
+                                <padding>
+                                    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                                </padding>
+                            </GridPane>
+                        </top>
+                        <bottom>
+                            <HBox prefHeight="40.0" prefWidth="425.0" BorderPane.alignment="CENTER">
+                                <children>
+                                    <Label fx:id="monthLBL" prefHeight="31.0" prefWidth="142.0" text="Sat" textFill="#183a4e">
+                                        <padding>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </padding>
+                                        <font>
+                                            <Font name="Bodoni MT Black" size="17.0" />
+                                        </font>
+                                    </Label>
+                                    <Label fx:id="yearLBL" text="Sat" textFill="#183a4e">
+                                        <padding>
+                                            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                        </padding>
+                                        <font>
+                                            <Font name="Bodoni MT Black" size="17.0" />
+                                        </font>
+                                    </Label>
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false"  text="&lt;">
+                                        <font>
+                                            <Font name="System Bold" size="16.0" />
+                                        </font>
+                                    </Button>
+                                    <Button alignment="CENTER_RIGHT" mnemonicParsing="false"  text="&gt;">
+                                        <font>
+                                            <Font name="System Bold" size="16.0" />
+                                        </font>
+                                    </Button>
+                                </children>
+                            </HBox>
+                        </bottom>
+                        <center>
+                            <GridPane fx:id="calendarPane" minHeight="267.0" prefHeight="267.0" prefWidth="425.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                                <columnConstraints>
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="7.111118846469456" prefWidth="30.22226291232639" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="27.555514865451393" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
+                                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
 
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 
-                    </rowConstraints>
-                    <children>
-                        <HBox>
-                            <children>
-                                <Label text="Sat" textFill="#183a4e">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets right="5.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                        <HBox GridPane.columnIndex="1">
-                            <children>
-                                <Label text="Sun" textFill="#183a4e">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets right="5.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                        <HBox GridPane.columnIndex="2">
-                            <children>
-                                <Label text="Mon" textFill="#183a4e">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets right="5.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                        <HBox GridPane.columnIndex="3">
-                            <children>
-                                <Label text="Tues" textFill="#183a4e">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets right="5.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                        <HBox GridPane.columnIndex="4">
-                            <children>
-                                <Label text="Wed" textFill="#183a4e">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets right="5.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                        <HBox GridPane.columnIndex="5">
-                            <children>
-                                <Label text="Thu" textFill="#183a4e">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets right="5.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                        <HBox GridPane.columnIndex="6">
-                            <children>
-                                <Label text="Fri" textFill="#183a4e">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets right="5.0" top="10.0" />
-                            </padding>
-                        </HBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.rowIndex="1">
-                            <children>
-                                <Label fx:id="lbl10" text="1,0">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                            <children>
-                                <Label text="1,1">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="2" GridPane.rowIndex="1">
-                            <children>
-                                <Label text="1,2">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="3" GridPane.rowIndex="1">
-                            <children>
-                                <Label text="1,3">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="4" GridPane.rowIndex="1">
-                            <children>
-                                <Label text="1,4">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="5" GridPane.rowIndex="1">
-                            <children>
-                                <Label text="1,5">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="6" GridPane.rowIndex="1">
-                            <children>
-                                <Label text="1,6">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.rowIndex="2">
-                            <children>
-                                <Label text="2,0">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                            <children>
-                                <Label text="2,1">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="2" GridPane.rowIndex="2">
-                            <children>
-                                <Label text="2,2">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="3" GridPane.rowIndex="2">
-                            <children>
-                                <Label text="2,3">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="4" GridPane.rowIndex="2">
-                            <children>
-                                <Label text="2,4">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="5" GridPane.rowIndex="2">
-                            <children>
-                                <Label text="2,5">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="6" GridPane.rowIndex="2">
-                            <children>
-                                <Label text="2,6">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.rowIndex="3">
-                            <children>
-                                <Label text="3,0">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                            <children>
-                                <Label text="3,1">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                            <children>
-                                <Label text="3,2">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="3" GridPane.rowIndex="3">
-                            <children>
-                                <Label text="3,3">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="4" GridPane.rowIndex="3">
-                            <children>
-                                <Label text="3,4">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="5" GridPane.rowIndex="3">
-                            <children>
-                                <Label text="3,5">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="6" GridPane.rowIndex="3">
-                            <children>
-                                <Label text="3,6">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.rowIndex="4">
-                            <children>
-                                <Label text="4,0">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                            <children>
-                                <Label text="4,1">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="2" GridPane.rowIndex="4">
-                            <children>
-                                <Label text="4,2">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="3" GridPane.rowIndex="4">
-                            <children>
-                                <Label text="4,3">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="4" GridPane.rowIndex="4">
-                            <children>
-                                <Label text="4,4">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="5" GridPane.rowIndex="4">
-                            <children>
-                                <Label text="4,5">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="6" GridPane.rowIndex="4">
-                            <children>
-                                <Label text="4,6">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.rowIndex="5">
-                            <children>
-                                <Label text="5,0">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                            <children>
-                                <Label text="5,1">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                            <children>
-                                <Label text="5,2">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="3" GridPane.rowIndex="5">
-                            <children>
-                                <Label text="5,3">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="4" GridPane.rowIndex="5">
-                            <children>
-                                <Label text="5,4">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox layoutX="254.0" layoutY="296.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="5" GridPane.rowIndex="5">
-                            <children>
-                                <Label text="5,5">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                        <VBox style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" GridPane.columnIndex="6" GridPane.rowIndex="5">
-                            <children>
-                                <Label text="5,6">
-                                    <padding>
-                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                    </padding>
-                                    <font>
-                                        <Font name="Bodoni MT Black" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                            <padding>
-                                <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                            </padding>
-                            <GridPane.margin>
-                                <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                            </GridPane.margin>
-                        </VBox>
-                    </children>
-                    <BorderPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                    </BorderPane.margin>
-                    <padding>
-                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                    </padding>
-                </GridPane>
-            </center>
-            <right>
-                <VBox prefHeight="460.0" prefWidth="221.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
-                    <BorderPane.margin>
-                        <Insets bottom="10.0" right="10.0" />
-                    </BorderPane.margin>
-                    <children>
-                        <GridPane prefHeight="81.0" prefWidth="212.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <VBox.margin>
-                                <Insets left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                            <children>
-                                <Label text="Deadline1">
-                                    <GridPane.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                    </GridPane.margin>
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label text="Deadline1time" GridPane.rowIndex="1">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                    <GridPane.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                            </children>
-                        </GridPane>
-                        <GridPane prefHeight="81.0" prefWidth="212.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;">
-                            <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                            </columnConstraints>
-                            <rowConstraints>
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                            </rowConstraints>
-                            <children>
-                                <Label text="Deadline2">
-                                    <GridPane.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                    </GridPane.margin>
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                </Label>
-                                <Label text="Deadline2time" GridPane.rowIndex="1">
-                                    <font>
-                                        <Font size="18.0" />
-                                    </font>
-                                    <GridPane.margin>
-                                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                    </GridPane.margin>
-                                </Label>
-                            </children>
-                            <VBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </VBox.margin>
-                        </GridPane>
-                    </children>
-                </VBox>
-            </right>
-            <bottom>
-                <HBox prefHeight="131.0" prefWidth="679.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
-                    <BorderPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" />
-                    </BorderPane.margin>
-                    <children>
-                        <Pane prefHeight="111.0" prefWidth="160.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;">
-                            <HBox.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                            </HBox.margin>
-                        </Pane>
-                        <Pane prefHeight="111.0" prefWidth="160.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;">
-                            <HBox.margin>
-                                <Insets bottom="10.0" right="10.0" top="10.0" />
-                            </HBox.margin>
-                            <children>
-                                <ImageView fx:id="menuImg1" fitHeight="51.0" fitWidth="49.0" layoutX="56.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@/addNew.png" />
-                                    </image>
-                                </ImageView>
-                            </children>
-                        </Pane>
-                    </children>
-                </HBox>
-            </bottom>
-        </BorderPane>
+                                </rowConstraints>
+                                <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </padding>
+                            </GridPane>
+                        </center>
+                    </BorderPane>
+                </center>
+            </BorderPane>
+        </StackPane>
+
+
     </center>
 </BorderPane>
