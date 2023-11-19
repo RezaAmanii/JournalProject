@@ -6,9 +6,9 @@ import java.util.ArrayList;
 public interface ITaskList{
     long getID();
 
-    void addTask(Task task);
+    void addTask(BigTask task);
 
-    void removeTask(Task task);
+    void removeTask(BigTask task);
 
-    ArrayList<Task> getTasks();
+    ArrayList<BigTask> getTasks();
 }

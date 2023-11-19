@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class TaskList implements ITaskList, INameable, IDateCreated {
     private String title;
     private LocalDateTime dateCreated;
-    private final ArrayList<Task> tasks;
+    private final ArrayList<BigTask> tasks;
     private boolean isEmpty;
     private long ID;
 
@@ -44,17 +44,17 @@ public class TaskList implements ITaskList, INameable, IDateCreated {
     }
 
     @Override
-    public void addTask(Task task) {
+    public void addTask(BigTask task) {
         tasks.add(task);
     }
 
     @Override
-    public void removeTask(Task task) {
+    public void removeTask(BigTask task) {
         tasks.remove(task);
     }
 
     @Override
-    public ArrayList<Task> getTasks() {
+    public ArrayList<BigTask> getTasks() {
         return tasks;
     }
 }
