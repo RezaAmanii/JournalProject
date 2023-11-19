@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class TodoCollection implements ITodoCollection{
     private ArrayList<ITaskList> taskLists;
+    private TaskListFactory taskListFactory;
     //private ArrayList<TodoObserver> observers;
-    //private TaskListFactory taskListFactory;
 
     public TodoCollection (){
         taskLists = new ArrayList<>();
+        taskListFactory = new TaskListFactory();
     }
 
     @Override
@@ -18,7 +19,7 @@ public class TodoCollection implements ITodoCollection{
 
     @Override
     public void addTaskList() {
-
+        taskLists.add(taskListFactory.makeTaskList());
     }
 
     @Override

@@ -17,6 +17,7 @@ public class TaskList implements ITaskList, INameable, IDateCreated {
 
     public TaskList() {
         this.tasks = new ArrayList<>();
+        this.title = "new list";
     }
 
     @Override
