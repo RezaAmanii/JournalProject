@@ -246,12 +246,12 @@
                                     <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                                 </HBox.margin>
                             </Pane>
-                            <Pane  prefHeight="111.0" prefWidth="160.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;">
+                            <Pane onMouseClicked="#addNewDayActivity" prefHeight="111.0" prefWidth="160.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;">
                                 <HBox.margin>
                                     <Insets bottom="10.0" right="10.0" top="10.0" />
                                 </HBox.margin>
                                 <children>
-                                    <ImageView fx:id="menuImg1" fitHeight="51.0" fitWidth="49.0" layoutX="56.0" layoutY="30.0"  pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="menuImg1" fitHeight="51.0" fitWidth="49.0" layoutX="56.0" layoutY="30.0" onMouseClicked="#addNewDayActivity" pickOnBounds="true" preserveRatio="true">
                                         <image>
                                             <Image url="@/addNew.png" />
                                         </image>

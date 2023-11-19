@@ -217,7 +217,6 @@ public class MainMenuController implements Initializable {
     List<CalendarActivity> calendarActivities = new ArrayList<>();
 
 
-
     private Map<Integer, List<CalendarActivity>> getCalendarActivitiesMonth(ZonedDateTime dateFocus) {
         List<CalendarActivity>currMonthActivities=new ArrayList<>();
         for (CalendarActivity ca:calendarActivities) {
@@ -226,6 +225,26 @@ public class MainMenuController implements Initializable {
             }
         }
         return createCalendarMap(currMonthActivities);
+    }
+
+    public void addNewDayActivity(){
+        int year = dateFocus.getYear();
+        int month = dateFocus.getMonth().getValue();
+
+        ZonedDateTime time = ZonedDateTime.of(year, month, selectedDay, ZonedDateTime.now().getHour(), ZonedDateTime.now().getMinute(), 0, 0, dateFocus.getZone());
+        CalendarActivity calendarActivity=new CalendarActivity(time,"Event");
+        calendarActivities.add(calendarActivity);
+//        createCalendarMap(calendarActivities);
+        drawCalendar();
+        dayDeadlines.getChildren().clear();
+        Label todayLBL = new Label(String.valueOf(selectedDay)+" "+monthLBL.getText()+" "+yearLBL.getText());
+        todayLBL.setPadding(new Insets(5, 5, 5, 5));
+        todayLBL.setFont(Font.font("Bodoni MT Black", 17));
+        todayLBL.setStyle("-fx-text-fill: #081e2a");
+        dayDeadlines.getChildren().add(todayLBL);
+        if(getCalendarActivitiesMonth(dateFocus).get(selectedDay) != null){
+            createCalendarActivity(getCalendarActivitiesMonth(dateFocus).get(selectedDay), dayDeadlines);
+        }
     }
 
     public boolean sideBarExpanded=false;
