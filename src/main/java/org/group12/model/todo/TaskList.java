@@ -9,8 +9,7 @@ import java.util.ArrayList;
 public class TaskList implements ITaskList, INameable, IDateCreated {
     private String title;
     private LocalDateTime dateCreated;
-    private final ArrayList<BigTask> tasks;
-    private boolean isEmpty;
+    private final ArrayList<IBigTask> tasks;
     private long ID;
 
     //private ArrayList<TaskListObserver> observers;
@@ -23,6 +22,21 @@ public class TaskList implements ITaskList, INameable, IDateCreated {
     @Override
     public long getID() {
         return ID;
+    }
+
+    @Override
+    public void addTask(BigTask task) {
+
+    }
+
+    @Override
+    public void removeTask(BigTask task) {
+
+    }
+
+    @Override
+    public ArrayList<IBigTask> getTasks() {
+        return null;
     }
 
     @Override
@@ -40,21 +54,6 @@ public class TaskList implements ITaskList, INameable, IDateCreated {
 
     @Override
     public LocalDateTime getDateCreated() {
-        return null;
-    }
-
-    @Override
-    public void addTask(BigTask task) {
-        tasks.add(task);
-    }
-
-    @Override
-    public void removeTask(BigTask task) {
-        tasks.remove(task);
-    }
-
-    @Override
-    public ArrayList<BigTask> getTasks() {
-        return tasks;
+        return dateCreated;
     }
 }

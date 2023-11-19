@@ -12,5 +12,5 @@ public interface IBigTask extends ITask{
 
     void setPriority(int priority);
 
-    ArrayList<Task> getSubTasks();
+    ArrayList<ITask> getSubTasks();
 }

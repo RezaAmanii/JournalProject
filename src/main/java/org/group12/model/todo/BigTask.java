@@ -11,7 +11,7 @@ public class BigTask implements IBigTask, INameable, IDateCreated, IDescription 
     private String description;
     private LocalDateTime dueDate;
     private int priority;
-    ArrayList<Task> subTasks;
+    ArrayList<ITask> subTasks;
     Task modelTask;
 
     public BigTask(String title) {
@@ -42,7 +42,7 @@ public class BigTask implements IBigTask, INameable, IDateCreated, IDescription 
     }
 
     @Override
-    public ArrayList<Task> getSubTasks() {
+    public ArrayList<ITask> getSubTasks() {
         return subTasks;
     }
 

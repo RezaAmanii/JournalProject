@@ -10,5 +10,5 @@ public interface ITaskList{
 
     void removeTask(BigTask task);
 
-    ArrayList<BigTask> getTasks();
+    ArrayList<IBigTask> getTasks();
 }
