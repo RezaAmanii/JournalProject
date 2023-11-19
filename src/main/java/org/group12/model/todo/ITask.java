@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 interface ITask {
     long getID();
 
-    String getDescription();
-
     LocalDateTime getDueDate();
 
     boolean getStatus();

@@ -1,6 +1,6 @@
 package org.group12.observers;
 
-import org.group12.model.Journal;
+import org.group12.model.journal.Journal;
 
 public class JournalObserver implements Observer {
     private Journal journal;

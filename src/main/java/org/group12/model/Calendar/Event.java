@@ -1,14 +1,14 @@
 package org.group12.model.Calendar;
 
 import javafx.util.Pair;
-import org.group12.IDateCreated;
-import org.group12.INameable;
-import org.group12.model.IEvent;
+import org.group12.model.IDateCreated;
+import org.group12.model.IDescription;
+import org.group12.model.INameable;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Event implements IEvent, INameable, IDateCreated {
+public class Event implements IEvent, INameable, IDateCreated, IDescription {
     private String title;
     private String description;
     private final LocalDateTime dateCreated;

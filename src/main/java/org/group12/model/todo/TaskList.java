@@ -1,7 +1,7 @@
 package org.group12.model.todo;
 
-import org.group12.IDateCreated;
-import org.group12.INameable;
+import org.group12.model.IDateCreated;
+import org.group12.model.INameable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

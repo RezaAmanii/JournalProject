@@ -1,4 +1,4 @@
-package org.group12;
+package org.group12.model;
 
 import java.time.LocalDateTime;
 
