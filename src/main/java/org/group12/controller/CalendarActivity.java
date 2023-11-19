@@ -16,10 +16,24 @@ public class CalendarActivity {
         return date;
     }
 
+    public void setDate(ZonedDateTime date) {
+        this.date = date;
+    }
 
     public String getClientName() {
         return clientName;
     }
 
+    public void setClientName(String clientName) {
+        this.clientName = clientName;
+    }
+
+    @Override
+    public String toString() {
+        return "CalenderActivity{" +
+                "date=" + date +
+                ", clientName='" + clientName + '\'' +
+                '}';
+    }
 
 }

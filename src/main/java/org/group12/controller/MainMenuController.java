@@ -5,6 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -34,6 +38,9 @@ public class MainMenuController implements Initializable {
     public Label monthLBL;
     public Label yearLBL;
     public VBox dayDeadlines;
+    public TextField newTaskNameTF;
+    public Spinner<Integer> hrSpinner;
+    public Spinner<Integer> minSpinner;
 
 
     ZonedDateTime dateFocus;
@@ -42,10 +49,14 @@ public class MainMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        dateFocus = ZonedDateTime.now();
+        hrSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,ZonedDateTime.now().getHour()));
+        minSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59,ZonedDateTime.now().getMinute()));
+        todoPane.setVisible(false);
+        homePane.setVisible(true);
         today = ZonedDateTime.now();
+        selectedDay = today.getDayOfMonth();
+        dateFocus = ZonedDateTime.now();
         drawCalendar();
-
     }
 
     /**
@@ -54,6 +65,32 @@ public class MainMenuController implements Initializable {
     public void switchToTabPane(){
         homePane.setVisible(false);
         todoPane.setVisible(true);
+    }
+
+    public boolean sideBarExpanded=false;
+
+    public void sideBarOnMouseEnter() {
+        sideBarExpanded = !sideBarExpanded;
+        if (sideBarExpanded) {
+            sideBar.setPrefWidth(sideBar.getMaxWidth());
+
+            calendarLBL.setVisible(true);
+            settingsLBL.setVisible(true);
+            homeLBL.setVisible(true);
+            todoLBL.setVisible(true);
+            journalLBL.setVisible(true);
+            homeLBL1.setVisible(true);
+
+        } else {
+            sideBar.setPrefWidth(sideBar.getMinWidth());
+            calendarLBL.setVisible(false);
+            settingsLBL.setVisible(false);
+            homeLBL.setVisible(false);
+            todoLBL.setVisible(false);
+            journalLBL.setVisible(false);
+            homeLBL1.setVisible(false);
+        }
+
     }
 
     /**
@@ -67,33 +104,24 @@ public class MainMenuController implements Initializable {
     @FXML
     void backOneMonth() {
         dateFocus = dateFocus.minusMonths(1);
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                clearCell(calendarPane, j, i);
-
-            }
-        }
         drawCalendar();
     }
 
     @FXML
     void forwardOneMonth() {
         dateFocus = dateFocus.plusMonths(1);
-        for (int i = 0; i < 7; i++) {
-            for (int j = 0; j < 6; j++) {
-                clearCell(calendarPane, i, j);
-
-            }
-        }
         drawCalendar();
     }
 
+    /*
     private void clearCell(GridPane gridPane, int rowIndex, int colIndex) {
         gridPane.getChildren().removeIf(node ->
                 GridPane.getRowIndex(node) == rowIndex && GridPane.getColumnIndex(node) == colIndex);
     }
+     */
 
     private void drawCalendar() {
+        calendarPane.getChildren().clear();
         yearLBL.setText(String.valueOf(dateFocus.getYear()));
         monthLBL.setText(String.valueOf(dateFocus.getMonth()));
 
@@ -116,52 +144,54 @@ public class MainMenuController implements Initializable {
                 Label date = new Label(String.valueOf(currentDate));
                 date.setPadding(new Insets(5, 5, 5, 5));
                 date.setFont(Font.font("Bodoni MT Black", 17));
-                boolean valid=false;
+                boolean valid = false;
+
                 if (calculatedDate > dateOffset) {
                     if (currentDate <= monthMaxDate) {
-                        valid=true;
-                        vDay.setStyle("-fx-background-color: #e3f6f5; -fx-background-radius: 10;");
-                        vDay.setPadding(new Insets(1));
+                        valid = true;
+                        vDay.setStyle("-fx-background-color: #e3f6f5; -fx-background-radius: 10;-fx-border-radius: 10; -fx-border-color: #ffffff");
+                        vDay.setPadding(new Insets(1,1,0,1));
                         GridPane.setMargin(vDay, new Insets(4));
 //                        vDay.getChildren().add(date);
 
                     }
+
                     if (today.getYear() == dateFocus.getYear() && today.getMonth() == dateFocus.getMonth() && today.getDayOfMonth() == currentDate) {
-                        vDay.setStyle("-fx-background-color: #213742; -fx-background-radius: 10;");
+                        vDay.setStyle("-fx-background-color: #213742; -fx-background-radius: 10;-fx-border-radius: 10; -fx-border-color: #ffffff");
                         date.setStyle("-fx-text-fill: #ffffff;");
                         List<CalendarActivity> calendarActivities = calendarActivityMap.get(currentDate);
                         dayDeadlines.getChildren().clear();
                         //day label
-                        Label todayLBL = new Label(String.valueOf(currentDate)+" "+monthLBL.getText()+" "+yearLBL.getText());
+                        Label todayLBL = new Label(String.valueOf(currentDate) + " " + monthLBL.getText() + " " + yearLBL.getText());
                         todayLBL.setPadding(new Insets(5, 5, 5, 5));
                         todayLBL.setFont(Font.font("Bodoni MT Black", 17));
                         todayLBL.setStyle("-fx-text-fill: #081e2a");
                         dayDeadlines.getChildren().add(todayLBL);
                         //if activities
-                        if(calendarActivities != null){
+                        if (calendarActivities != null) {
                             createCalendarActivity(calendarActivities, dayDeadlines);
                         }
                     }
-                    if (valid){
+                    if (valid) {
                         List<CalendarActivity> calendarActivities = calendarActivityMap.get(currentDate);
                         vDay.getChildren().add(date);
-                        if(calendarActivities != null){
+                        if (calendarActivities != null) {
                             VBox notification = new VBox();
-                            notification.setPadding(new Insets(5));
+                            notification.setPadding(new Insets(5,5,3,5));
                             notification.setStyle("-fx-background-color: #081e2a; -fx-background-radius: 10;");
-                            VBox.setMargin(notification,new Insets(2));
+                            VBox.setMargin(notification, new Insets(2));
                             vDay.getChildren().add(notification);
                         }
                         vDay.setOnMouseClicked(mouseEvent -> {
 //                            vDay.setStyle("-fx-background-color: #284a64; -fx-background-radius: 10;");
                             dayDeadlines.getChildren().clear();
-                            selectedDay=currentDate;
-                            Label todayLBL = new Label(String.valueOf(currentDate)+" "+monthLBL.getText()+" "+yearLBL.getText());
+                            selectedDay = currentDate;
+                            Label todayLBL = new Label(String.valueOf(currentDate) + " " + monthLBL.getText() + " " + yearLBL.getText());
                             todayLBL.setPadding(new Insets(5, 5, 5, 5));
                             todayLBL.setFont(Font.font("Bodoni MT Black", 17));
                             todayLBL.setStyle("-fx-text-fill: #081e2a");
                             dayDeadlines.getChildren().add(todayLBL);
-                            if(calendarActivities != null){
+                            if (calendarActivities != null) {
                                 createCalendarActivity(calendarActivities, dayDeadlines);
                             }
                         });
@@ -177,21 +207,69 @@ public class MainMenuController implements Initializable {
     }
 
     private void createCalendarActivity(List<CalendarActivity> currCalendarActivities, VBox stackPane) {
-        VBox calendarActivityBox = new VBox();
-        calendarActivityBox.setPadding(new Insets(5));
-        calendarActivityBox.setStyle("-fx-background-color: #e3f6f5; -fx-background-radius: 10;");
-        VBox.setMargin(calendarActivityBox,new Insets(5));
+
         for (CalendarActivity currCalendarActivity : currCalendarActivities) {
-            Text text = new Text(currCalendarActivity.getClientName() + ", " + currCalendarActivity.getDate().toLocalTime());
-            text.setStyle("-fx-text-fill: #ffffff");
+//            VBox calendarActivityBox = new VBox();
+            GridPane calendarActivityBox=new GridPane();
+            ColumnConstraints col1=new ColumnConstraints();
+            col1.setPercentWidth(80);
+            col1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+
+            ColumnConstraints col2=new ColumnConstraints();
+            col2.setPercentWidth(20);
+            col2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+
+            calendarActivityBox.getColumnConstraints().addAll(col1,col2);
+
+            RowConstraints row=new RowConstraints();
+            row.setVgrow(Priority.SOMETIMES);
+
+            calendarActivityBox.getRowConstraints().add(row);
+
+            calendarActivityBox.setPadding(new Insets(5));
+            calendarActivityBox.setStyle("-fx-background-color: #203649; -fx-background-radius: 10;");
+            VBox.setMargin(calendarActivityBox, new Insets(5));
+
+            ZonedDateTime activityTime= currCalendarActivity.getDate();
+            Text text = new Text(currCalendarActivity.getClientName() + ", " + activityTime.toLocalTime());
             text.setFont(Font.font("Bodoni MT Black", 15));
-            calendarActivityBox.getChildren().add(text);
+            text.setStyle("-fx-text-fill: #ffffff");
+
+            GridPane.setColumnIndex(text,0);
+
+            ImageView imageView = new ImageView("/delete-96.png");
+            imageView.setFitHeight(31.0);
+            imageView.setFitWidth(31.0);
+            imageView.setPickOnBounds(true);
+            imageView.setPreserveRatio(true);
+
+            GridPane.setColumnIndex(imageView,1);
+
+            calendarActivityBox.getChildren().addAll(text,imageView);
             text.setOnMouseClicked(mouseEvent -> {
                 //On Text clicked
                 System.out.println(text.getText());
             });
+
+            stackPane.getChildren().add(calendarActivityBox);
+            imageView.setOnMouseClicked(event -> { //delete
+
+//                currCalendarActivities.removeIf(ca -> ca.getDate() == activityTime && Objects.equals(ca.getClientName(), currCalendarActivity.getClientName()));
+//                calendarActivities.removeIf(ca -> ca.getDate()== activityTime && Objects.equals(ca.getClientName(), currCalendarActivity.getClientName()));
+                ZonedDateTime ymd= ZonedDateTime.of(activityTime.getYear(),activityTime.getMonth().getValue(),selectedDay,0,0,0,0,ZonedDateTime.now().getZone());
+                calendarActivities.computeIfPresent(ymd, (k, v) -> {
+                    v.removeIf(ca -> ca.getDate()== activityTime && Objects.equals(ca.getClientName(), currCalendarActivity.getClientName()));
+                    if (v.isEmpty()) {
+                        return null;
+                    }
+                    return v;
+                });
+                drawCalendar();
+
+            });
+
         }
-        stackPane.getChildren().add(calendarActivityBox);
+
     }
 
 
@@ -213,63 +291,44 @@ public class MainMenuController implements Initializable {
         return calendarActivityMap;
     }
 
+    Map<ZonedDateTime,ArrayList<CalendarActivity>>calendarActivities = new HashMap<>();
 
-    List<CalendarActivity> calendarActivities = new ArrayList<>();
 
-
-    private Map<Integer, List<CalendarActivity>> getCalendarActivitiesMonth(ZonedDateTime dateFocus) {
-        List<CalendarActivity>currMonthActivities=new ArrayList<>();
-        for (CalendarActivity ca:calendarActivities) {
-            if (ca.getDate().getMonth()==dateFocus.getMonth()){
-                currMonthActivities.add(ca);
-            }
-        }
-        return createCalendarMap(currMonthActivities);
-    }
-
-    public void addNewDayActivity(){
+    public void addNewDayActivity() {
         int year = dateFocus.getYear();
         int month = dateFocus.getMonth().getValue();
 
-        ZonedDateTime time = ZonedDateTime.of(year, month, selectedDay, ZonedDateTime.now().getHour(), ZonedDateTime.now().getMinute(), 0, 0, dateFocus.getZone());
-        CalendarActivity calendarActivity=new CalendarActivity(time,"Event");
-        calendarActivities.add(calendarActivity);
+        ZonedDateTime time = ZonedDateTime.of(year, month, selectedDay, hrSpinner.getValue(), minSpinner.getValue(), 0, 0, dateFocus.getZone());
+        CalendarActivity calendarActivity = new CalendarActivity(time, newTaskNameTF.getText());
+        time=ZonedDateTime.of(year,month,selectedDay,0,0,0,0,dateFocus.getZone());
+        calendarActivities.computeIfAbsent(time, k -> new ArrayList<>()).add(calendarActivity);
+
 //        createCalendarMap(calendarActivities);
         drawCalendar();
         dayDeadlines.getChildren().clear();
-        Label todayLBL = new Label(String.valueOf(selectedDay)+" "+monthLBL.getText()+" "+yearLBL.getText());
+        Label todayLBL = new Label(String.valueOf(selectedDay) + " " + monthLBL.getText() + " " + yearLBL.getText());
         todayLBL.setPadding(new Insets(5, 5, 5, 5));
         todayLBL.setFont(Font.font("Bodoni MT Black", 17));
-        todayLBL.setStyle("-fx-text-fill: #081e2a");
+        todayLBL.setStyle("-fx-text-fill: #081e2a"); //today date label
         dayDeadlines.getChildren().add(todayLBL);
-        if(getCalendarActivitiesMonth(dateFocus).get(selectedDay) != null){
+        if (getCalendarActivitiesMonth(dateFocus).get(selectedDay) != null) {
             createCalendarActivity(getCalendarActivitiesMonth(dateFocus).get(selectedDay), dayDeadlines);
         }
     }
 
-    public boolean sideBarExpanded=false;
-    public void sideBarOnMouseEnter(){
-        sideBarExpanded=!sideBarExpanded;
-        if (sideBarExpanded){
-            sideBar.setPrefWidth(sideBar.getMaxWidth());
-
-            calendarLBL.setVisible(true);
-            settingsLBL.setVisible(true);
-            homeLBL.setVisible(true);
-            todoLBL.setVisible(true);
-            journalLBL.setVisible(true);
-            homeLBL1.setVisible(true);
-
+    private Map<Integer, List<CalendarActivity>> getCalendarActivitiesMonth(ZonedDateTime dateFocus) {
+        List<CalendarActivity> currMonthActivities = new ArrayList<>();
+        for (Map.Entry<ZonedDateTime,ArrayList<CalendarActivity>>entry:calendarActivities.entrySet()){
+            if (entry.getKey().getMonth()==dateFocus.getMonth()){
+                currMonthActivities.addAll(entry.getValue());
+            }
         }
-        else{
-            sideBar.setPrefWidth(sideBar.getMinWidth());
-            calendarLBL.setVisible(false);
-            settingsLBL.setVisible(false);
-            homeLBL.setVisible(false);
-            todoLBL.setVisible(false);
-            journalLBL.setVisible(false);
-            homeLBL1.setVisible(false);
-        }
-
+//        for (CalendarActivity ca : calendarActivities) {
+//            if (ca.getDate().getMonth() == dateFocus.getMonth()) {
+//                currMonthActivities.add(ca);
+//            }
+//        }
+        return createCalendarMap(currMonthActivities);
     }
+
 }
