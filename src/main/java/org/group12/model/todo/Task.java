@@ -1,17 +1,14 @@
 package org.group12.model.todo;
 
-import org.group12.IDateCreated;
-import org.group12.INameable;
+import org.group12.model.IDateCreated;
+import org.group12.model.INameable;
 
 import java.time.LocalDateTime;
 
 public class Task implements ITask, INameable, IDateCreated {
     private String title;
-    private String description;
     private final LocalDateTime dateCreated;
-    private LocalDateTime dueDate;
     private boolean completed;
-    private int priority;
     private long ID;
 
     public Task(String title) {
@@ -35,28 +32,8 @@ public class Task implements ITask, INameable, IDateCreated {
     }
 
     @Override
-    public String getDescription() {
-        return description;
-    }
-
-
-    public void setDescription(String desc) {
-        this.description = desc;
-    }
-
-    @Override
     public LocalDateTime getDateCreated() {
         return dateCreated;
-    }
-
-    @Override
-    public LocalDateTime getDueDate() {
-        return dueDate;
-    }
-
-
-    public void setDueDate(LocalDateTime dueDate) {
-        this.dueDate = dueDate;
     }
 
     @Override
@@ -64,19 +41,8 @@ public class Task implements ITask, INameable, IDateCreated {
         return completed;
     }
 
-
-    public void setStatus(boolean status) {
+    @Override
+    public void setCompleted(boolean status) {
         this.completed = status;
-    }
-
-
-    public int getPriority() {
-        return priority;
-    }
-
-
-    public void setPriority(int priority) {
-        if (priority >= 0 && priority <= 2) this.priority = priority;
-        else throw new RuntimeException("Illegal priority. Can only be 0-2");
     }
 }

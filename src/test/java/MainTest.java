@@ -1,4 +1,5 @@
 
+import org.group12.model.todo.BigTask;
 import org.group12.model.todo.Task;
 import org.group12.model.todo.TaskList;
 import org.junit.jupiter.api.Test;
@@ -11,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.*;
 class MainTest {
 
     private final TaskList todoList = new TaskList();
-    private final Task task1 = new Task("Skriva rapport");
-    private final Task task2 = new Task("Willys");
+    private final BigTask task1 = new BigTask("Skriva rapport");
+    private final BigTask task2 = new BigTask("Willys");
     private boolean error;
 
     @Test
@@ -43,7 +44,7 @@ class MainTest {
     @Test
         // Try to set the title of a task to null, should throw exception
     void addEmptyTask() {
-        assertThrows(IllegalArgumentException.class, () -> todoList.addTask(new Task("")));
+        assertThrows(IllegalArgumentException.class, () -> todoList.addTask(new BigTask("")));
     }
 
     @Test
@@ -56,7 +57,7 @@ class MainTest {
     @Test
         // Marks a task as completed and removes it from the list
     void markTaskAsComplete() {
-        task2.setStatus(true);
+        task2.setCompleted(true);
         if (task2.getStatus() == false) {
             fail("Wrong complete status!");
         }

@@ -1,4 +1,4 @@
-package org.group12.model;
+package org.group12.model.journal;
 
 public class JournalFactory {
     // change nextID to some Tokenfunction?

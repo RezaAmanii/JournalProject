@@ -1,10 +1,9 @@
-package org.group12.model;
+package org.group12.model.journal;
 
-import org.group12.IDateCreated;
-import org.group12.INameable;
+import org.group12.model.IDateCreated;
+import org.group12.model.INameable;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class JournalEntry implements INameable, IDateCreated {
     private Long ID;

@@ -1,4 +1,4 @@
-package org.group12.model;
+package org.group12.model.journal;
 
 import java.util.ArrayList;
 import java.util.Date;
