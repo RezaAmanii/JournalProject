@@ -1,5 +1,8 @@
 package org.group12.model;
 
+import org.group12.model.todo.Task;
+import org.group12.model.todo.TaskList;
+
 public class Model {
     private final TaskList taskList;
 
