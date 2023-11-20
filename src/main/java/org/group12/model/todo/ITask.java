@@ -1,15 +1,11 @@
-package org.group12.model;
+package org.group12.model.todo;
 
 import java.time.LocalDateTime;
 
-interface ITaskItem {
+interface ITask {
     long getID();
 
-    String getTitle();
-
     String getDescription();
-
-    LocalDateTime getDateCreated();
 
     LocalDateTime getDueDate();
 

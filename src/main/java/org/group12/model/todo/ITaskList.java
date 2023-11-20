@@ -1,14 +1,10 @@
-package org.group12.model;
+package org.group12.model.todo;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface ITaskList{
     long getID();
-
-    String getTitle();
-
-    LocalDateTime getDateCreated();
 
     void addTask(Task task);
 

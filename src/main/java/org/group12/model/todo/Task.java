@@ -1,8 +1,11 @@
-package org.group12.model;
+package org.group12.model.todo;
+
+import org.group12.IDateCreated;
+import org.group12.INameable;
 
 import java.time.LocalDateTime;
 
-public class Task implements ITaskItem {
+public class Task implements ITask, INameable, IDateCreated {
     private String title;
     private String description;
     private final LocalDateTime dateCreated;

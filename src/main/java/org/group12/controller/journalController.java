@@ -1,7 +1,6 @@
 package org.group12.controller;
 
-import org.group12.Listeners.JournalListener;
-import org.group12.model.JournalEntry;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

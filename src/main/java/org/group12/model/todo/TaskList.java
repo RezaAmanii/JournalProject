@@ -1,9 +1,12 @@
-package org.group12.model;
+package org.group12.model.todo;
+
+import org.group12.IDateCreated;
+import org.group12.INameable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class TaskList implements ITaskList {
+public class TaskList implements ITaskList, INameable, IDateCreated {
     private String title;
     private LocalDateTime dateCreated;
     private final ArrayList<Task> tasks;
@@ -22,6 +25,7 @@ public class TaskList implements ITaskList {
         return ID;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
@@ -34,7 +38,7 @@ public class TaskList implements ITaskList {
         }
     }
 
-
+    @Override
     public LocalDateTime getDateCreated() {
         return null;
     }

@@ -5,9 +5,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import org.group12.model.Model;
-import org.group12.model.Task;
-import org.group12.view.TaskCard;
-import org.group12.view.TodoListCard;
 
 import java.net.URL;
 import java.util.ResourceBundle;

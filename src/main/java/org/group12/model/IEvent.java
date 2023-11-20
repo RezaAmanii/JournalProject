@@ -7,11 +7,7 @@ import java.time.LocalDateTime;
 public interface IEvent {
     long getID();
 
-    String getTitle();
-
     String getDescription();
-
-    LocalDateTime getDateCreated();
 
     LocalDateTime getDateOfEvent();
 
