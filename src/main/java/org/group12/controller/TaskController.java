@@ -1,7 +1,8 @@
 package org.group12.controller;
 
 import org.group12.Listeners.TaskListener;
-import org.group12.model.Task;
+import org.group12.model.todo.Task;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class TaskController {
 
     private void markSubTaskAsDone(Task subTask){
         if(!subTask.getStatus()){
-            subTask.setStatus(true);
+            subTask.setCompleted(true);
         }
 
         // Notify the listeners that a task is completed
@@ -44,7 +45,7 @@ public class TaskController {
 
     private void markSubTaskAsNotDone(Task subTask){
         if(subTask.getStatus()){
-            subTask.setStatus(false);
+            subTask.setCompleted(false);
         }
 
         // Notify the listeners that a task is not completed
@@ -57,7 +58,9 @@ public class TaskController {
         subTask.setTitle(newTaskName);
     }
 
-    private String getSubTaskDetails(Task subTask){
+    /*private String getSubTaskDetails(Task subTask){
         return subTask.getDescription();
     }
+
+     */
 }

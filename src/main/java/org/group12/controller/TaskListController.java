@@ -1,7 +1,7 @@
 package org.group12.controller;
 
 import org.group12.Listeners.TaskListListener;
-import org.group12.model.TaskList;
+import org.group12.model.todo.TaskList;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
