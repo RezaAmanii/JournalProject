@@ -1,6 +1,9 @@
 package org.group12.model.journal;
 
+import org.group12.model.IDFactory;
+
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 /**
  * Factory class for creating instances of JournalEntry.
@@ -16,10 +19,10 @@ public class JournalEntryFactory {
      * @return a new JournalEntry object
      */
     public JournalEntry createJournalEntry(String content) {
-//        long ID = new IDFactory().generateUniqueID();
+        long ID = new IDFactory().generateUniqueID();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String title = dateFormat.format(new Date());
-        Date createdTimestamp = new Date();
+        LocalDateTime createdTimestamp = LocalDateTime.now();
         return new JournalEntry(ID, title, content, createdTimestamp);
     }
 
@@ -33,7 +36,7 @@ public class JournalEntryFactory {
      */
     public JournalEntry createJournalEntry(String title, String content) {
         long ID = new IDFactory().generateUniqueID();
-        Date createdTimestamp = new Date();
+        LocalDateTime createdTimestamp = LocalDateTime.now();
         return new JournalEntry(ID, title, content, createdTimestamp);
     }
 }

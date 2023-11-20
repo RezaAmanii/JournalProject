@@ -1,5 +1,7 @@
 package org.group12.model.journal;
 
+import org.group12.model.IDFactory;
+
 public class JournalFactory {
     // change nextID to some Tokenfunction?
 
