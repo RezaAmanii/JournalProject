@@ -1,37 +1,54 @@
 package org.group12.controller;
 
-import org.group12.model.todo.TaskList;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class journalController {
-    private List<TaskList> allJournalEntriesList;
+    private List<JournalEntry> journalEntries;
+    private List<JournalListener> listeners = new ArrayList<>();
 
-
-    public List<TaskList> getAllJournalEntriesList(){
-        return allJournalEntriesList;
-    }
-
-    // Constructor makes a new list of type TodoList
     public journalController(){
-        allJournalEntriesList = new ArrayList<>();
+        this.journalEntries = new ArrayList<>();
     }
 
-    public void createJournalEntry(){
-
+    public List<JournalEntry> allJournalEntries (){
+        return journalEntries;
     }
 
-    public void removeJournalEntry(){
+    private void addJournalEntry(JournalEntry entry){
+        journalEntries.add(entry);
 
+        for(JournalListener listener : listeners){
+            listener.notifyJournalEntryAdded(entry);
+        }
     }
 
-    public void updateJournalEntry(){
+    private void removeJournalEntry(JournalEntry entry){
+        journalEntries.remove(entry);
 
+        for(JournalListener listener : listeners){
+            listener.notifyJournalEntryRemoved(entry);
+        }
     }
 
-    public List<TaskList> getTodaysEntry(){
-        return null;
+    private void updateJournalEntry(JournalEntry entry, String newTitle){
+        entry.setTitle(newTitle);
+
+        for(JournalListener listener : listeners){
+            listener.notifyJournalEntryUpdated(entry);
+        }
+    }
+
+    private List<JournalEntry> getTodaysEntry(Date today){
+        List<JournalEntry> todaysEntry = new ArrayList<>();
+        for(JournalEntry entry : journalEntries){
+            if(entry.getCreatedTimestamp() == today){
+                todaysEntry.add(entry);
+            }
+        }
+        return todaysEntry;
     }
 
 
