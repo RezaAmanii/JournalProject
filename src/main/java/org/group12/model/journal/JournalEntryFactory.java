@@ -1,4 +1,4 @@
-package org.group12.model;
+package org.group12.model.journal;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -7,6 +7,11 @@ public class EventListController {
     private Date dateFrom;
     private Date dateTo;
 
+    public EventListController(){
+        this.dateFrom = new Date();
+        this.dateTo = new Date();
+    }
+
     public void filterDateByEvent(){
 
     }

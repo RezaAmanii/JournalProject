@@ -1,4 +1,4 @@
-package org.group12.model;
+package org.group12.model.journal;
 
 import org.group12.observers.JournalObserver;
 

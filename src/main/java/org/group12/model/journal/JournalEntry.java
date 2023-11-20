@@ -1,12 +1,15 @@
-package org.group12.model;
+package org.group12.model.journal;
 
-import java.util.Date;
+import org.group12.model.IDateCreated;
+import org.group12.model.INameable;
 
-public class JournalEntry {
+import java.time.LocalDateTime;
+
+public class JournalEntry implements INameable, IDateCreated {
     private Long ID;
     private String title;
-    private Date createdTimestamp;
-    private Date modifiedTimestamp;
+    private LocalDateTime createdTimestamp;
+    private LocalDateTime modifiedTimestamp;
     private String content;
 
     /**
@@ -39,7 +42,7 @@ public class JournalEntry {
      */
     public void updateContent(String newContent) {
         this.content = newContent;
-        this.modifiedTimestamp = new Date();
+        //this.modifiedTimestamp = new Date();
     }
 
     /**
@@ -75,7 +78,7 @@ public class JournalEntry {
      *
      * @return the timestamp when the journal entry was created
      */
-    public Date getCreatedTimestamp() {
+    public LocalDateTime getDateCreated() {
         return createdTimestamp;
     }
 
@@ -84,7 +87,7 @@ public class JournalEntry {
      *
      * @return the last modified timestamp for the journal entry
      */
-    public Date getModifiedTimestamp() {
+    public LocalDateTime getModifiedTimestamp() {
         return modifiedTimestamp;
     }
 
