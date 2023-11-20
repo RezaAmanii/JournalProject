@@ -1,6 +1,10 @@
 package org.group12.controller;
 
 
+import org.group12.Listeners.JournalListener;
+import org.group12.model.journal.JournalEntry;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,10 +45,10 @@ public class journalController {
         }
     }
 
-    private List<JournalEntry> getTodaysEntry(Date today){
+    private List<JournalEntry> getTodaysEntry(LocalDateTime today){
         List<JournalEntry> todaysEntry = new ArrayList<>();
         for(JournalEntry entry : journalEntries){
-            if(entry.getCreatedTimestamp() == today){
+            if(entry.getDateCreated() == today){
                 todaysEntry.add(entry);
             }
         }

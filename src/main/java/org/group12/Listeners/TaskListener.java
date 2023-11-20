@@ -1,6 +1,6 @@
 package org.group12.Listeners;
 
-import org.group12.model.Task;
+import org.group12.model.todo.Task;
 
 public interface TaskListener {
 
