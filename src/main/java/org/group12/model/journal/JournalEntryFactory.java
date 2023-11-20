@@ -16,7 +16,7 @@ public class JournalEntryFactory {
      * @return a new JournalEntry object
      */
     public JournalEntry createJournalEntry(String content) {
-        long ID = new IDFactory().generateUniqueID();
+//        long ID = new IDFactory().generateUniqueID();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String title = dateFormat.format(new Date());
         Date createdTimestamp = new Date();

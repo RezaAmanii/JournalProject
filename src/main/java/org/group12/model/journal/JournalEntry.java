@@ -20,7 +20,7 @@ public class JournalEntry implements INameable, IDateCreated {
      * @param content          content of the journal entry
      * @param createdTimestamp timestamp when the journal entry was created
      */
-    public JournalEntry(Long ID, String title, String content, Date createdTimestamp) {
+    public JournalEntry(Long ID, String title, String content, LocalDateTime createdTimestamp) {
         this.ID = ID;
         this.title = title;
         this.createdTimestamp = createdTimestamp;
@@ -52,7 +52,7 @@ public class JournalEntry implements INameable, IDateCreated {
      */
     public void setTitle(String newTitle) {
         this.title = newTitle;
-        this.modifiedTimestamp = new Date();
+//        this.modifiedTimestamp = new LocalDateTime();
     }
 
     /**
