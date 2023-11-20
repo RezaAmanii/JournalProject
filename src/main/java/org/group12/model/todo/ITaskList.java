@@ -6,8 +6,6 @@ import java.util.ArrayList;
 public interface ITaskList{
     long getID();
 
-    String getTitle();
-
     LocalDateTime getDateCreated();
 
     void addTask(Task task);

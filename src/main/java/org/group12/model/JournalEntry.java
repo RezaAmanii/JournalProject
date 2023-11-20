@@ -1,8 +1,10 @@
 package org.group12.model;
 
+import org.group12.INameable;
+
 import java.util.Date;
 
-public class JournalEntry {
+public class JournalEntry implements INameable {
     private Long ID;
     private String title;
     private Date createdTimestamp;
@@ -29,6 +31,7 @@ public class JournalEntry {
         return ID;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
