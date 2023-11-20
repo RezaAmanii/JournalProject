@@ -1,5 +1,6 @@
-package org.group12.model;
+package org.group12.model.journal;
 
+import org.group12.model.JournalEntry;
 import org.group12.observers.JournalObserver;
 
 import java.util.ArrayList;

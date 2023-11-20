@@ -1,4 +1,7 @@
-package org.group12.model;
+package org.group12.model.journal;
+
+import org.group12.model.IDFactory;
+import org.group12.model.JournalEntry;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
