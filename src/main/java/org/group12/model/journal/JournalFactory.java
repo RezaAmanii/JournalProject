@@ -3,10 +3,13 @@ package org.group12.model.journal;
 import org.group12.model.IDFactory;
 
 public class JournalFactory {
-    // change nextID to some Tokenfunction?
+    private JournalIDFactory idFactory;
 
+    public JournalFactory() {
+        this.idFactory = new JournalIDFactory();
+    }
     public Journal createJournal(String title, JournalEntryFactory entryFactory) {
-        long ID = new IDFactory().generateUniqueID();
+        String ID = idFactory.generateID();
         return new Journal(ID, title, entryFactory);
     }
 

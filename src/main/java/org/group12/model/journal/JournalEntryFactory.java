@@ -10,6 +10,11 @@ import java.util.Date;
  */
 
 public class JournalEntryFactory {
+    private JournalEntryIDFactory idFactory;
+
+    public JournalEntryFactory() {
+        this.idFactory = new JournalEntryIDFactory();
+    }
 
     /**
      * Creates a new JournalEntry with a generated ID, title set to the current date,
@@ -19,7 +24,7 @@ public class JournalEntryFactory {
      * @return a new JournalEntry object
      */
     public JournalEntry createJournalEntry(String content) {
-        long ID = new IDFactory().generateUniqueID();
+        String ID = idFactory.generateID();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String title = dateFormat.format(new Date());
         LocalDateTime createdTimestamp = LocalDateTime.now();
@@ -35,7 +40,7 @@ public class JournalEntryFactory {
      * @return a new JournalEntry object
      */
     public JournalEntry createJournalEntry(String title, String content) {
-        long ID = new IDFactory().generateUniqueID();
+        String ID = idFactory.generateID();
         LocalDateTime createdTimestamp = LocalDateTime.now();
         return new JournalEntry(ID, title, content, createdTimestamp);
     }
