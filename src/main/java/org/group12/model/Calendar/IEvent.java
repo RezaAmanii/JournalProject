@@ -10,7 +10,8 @@ public interface IEvent {
     LocalDateTime getDateOfEvent();
 
     Pair<LocalDateTime, LocalDateTime> getTimeFrame();
-    void addTag(String tag);
 
     boolean getRecurrence();
+
+
 }

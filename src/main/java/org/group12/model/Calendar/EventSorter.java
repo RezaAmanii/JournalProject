@@ -18,6 +18,10 @@ public class EventSorter {
             }
         });
     }
+
+    // ----- O( n ) time complexity -----------
+    // these methods does not require the list to be sorted
+
     public static List<Event> getEventsAfterNow(List<Event> eventList) {
         LocalDateTime now = LocalDateTime.now();
         List<Event> result = new ArrayList<>();
@@ -34,6 +38,16 @@ public class EventSorter {
         List<Event> result = new ArrayList<>();
         for (Event event : eventList) {
             if (event.getDateOfEvent().isBefore(now)) {
+                result.add(event);
+            }
+        }
+        return result;
+    }
+
+    public static List<Event> getEventsBetweenDates(List<Event> eventList, LocalDateTime date1, LocalDateTime date2) {
+        List<Event> result = new ArrayList<>();
+        for (Event event : eventList) {
+            if (event.getDateOfEvent().isAfter(date1) && event.getDateOfEvent().isBefore(date2)) {
                 result.add(event);
             }
         }
