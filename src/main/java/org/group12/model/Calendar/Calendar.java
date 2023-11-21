@@ -17,10 +17,12 @@ public class Calendar {
         this.isEmpty = true;
 //        this.observers = new ArrayList<>();
     }
+
+    // ---------- methods ----------------
+
     public void sortEvents(){
         EventSorter.sortEvents(eventList);
     }
-
     public void addEvent(String title, String description, LocalDateTime dateOfEvent,
                          Pair<LocalDateTime, LocalDateTime> timeFrame){
         Event newEvent = eventFactory.createEvent(title, description, dateOfEvent, timeFrame);
@@ -36,6 +38,8 @@ public class Calendar {
     public void updateEvent(Event event){
 
     }
+
+    // ----------- getters ----------------
     public List<Event> getUpcomingEvents(){
         return EventSorter.getEventsAfterNow(eventList);
     }
@@ -45,6 +49,12 @@ public class Calendar {
     public List<Event> getEvents(){
         return eventList;
     }
+    public List<Event> getEventsBetweenDates(){
+        return EventSorter.getEventsBetweenDates(eventList, LocalDateTime.now(), LocalDateTime.now().plusDays(7));
+    }
+
+
+    // ----------- notifiers ----------------
 
 //    private void notifyObservers() {
 //        for (EventObserver observer : observers) {
