@@ -1,23 +1,34 @@
 package org.group12.model.todo;
 
-import org.group12.model.IDateCreated;
-import org.group12.model.IDescription;
-import org.group12.model.INameable;
+import org.group12.model.todo.factories.TaskFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class BigTask implements IBigTask, INameable, IDateCreated, IDescription {
+public class BigTask implements IBigTask {
     private String description;
     private LocalDateTime dueDate;
     private int priority;
-    ArrayList<ITask> subTasks;
+    private final HashMap<String, ITask> subTasks;
     Task modelTask;
 
+    private TaskFactory taskFactory;
+
     public BigTask(String title, String ID) {
+        this.subTasks = new HashMap<>();
+        this.taskFactory = new TaskFactory();
         modelTask = new Task("model", ID);
         modelTask.setTitle(title);
-        this.subTasks = new ArrayList<>();
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.modelTask.setTitle(title);
+    }
+
+    @Override
+    public String getTitle() {
+        return modelTask.getTitle();
     }
 
     @Override
@@ -35,15 +46,10 @@ public class BigTask implements IBigTask, INameable, IDateCreated, IDescription 
         return priority;
     }
 
+    // TODO choose priority implementation
     @Override
     public void setPriority(int priority) {
-        if (priority >= 0 && priority <= 2) this.priority = priority;
-        else throw new RuntimeException("Illegal priority. Can only be 0-2");
-    }
-
-    @Override
-    public ArrayList<ITask> getSubTasks() {
-        return subTasks;
+        this.priority = priority;
     }
 
     @Override
@@ -72,12 +78,52 @@ public class BigTask implements IBigTask, INameable, IDateCreated, IDescription 
     }
 
     @Override
-    public void setTitle(String title) {
-        this.modelTask.setTitle(title);
+    public void setDescription(String desc) {
+        this.description = desc;
+    }
+
+    //
+    //
+    //
+
+    @Override
+    public void addSubTask(String title) {
+        ITask newTask = taskFactory.createTask(title);
+        subTasks.put(newTask.getID(), newTask);
     }
 
     @Override
-    public String getTitle() {
-        return modelTask.getTitle();
+    public void removeSubTask(String subTaskID) {
+        subTasks.remove(subTaskID);
+    }
+
+    @Override
+    public String getSubTaskID(String subTaskID) {
+        return subTasks.get(subTaskID).getID();
+    }
+
+    @Override
+    public String getSubTaskTitle(String subTaskID) {
+        return subTasks.get(subTaskID).getTitle();
+    }
+
+    @Override
+    public void setSubTaskTitle(String title, String subTaskID) {
+        subTasks.get(subTaskID).setTitle(title);
+    }
+
+    @Override
+    public LocalDateTime getSubTaskDateCreated(String subTaskID) {
+        return subTasks.get(subTaskID).getDateCreated();
+    }
+
+    @Override
+    public boolean getSubTaskStatus(String subTaskID) {
+        return subTasks.get(subTaskID).getStatus();
+    }
+
+    @Override
+    public void setSubTaskCompleted(boolean status, String subTaskID) {
+        subTasks.get(subTaskID).setCompleted(status);
     }
 }

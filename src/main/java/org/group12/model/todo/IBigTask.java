@@ -1,9 +1,11 @@
 package org.group12.model.todo;
 
+import org.group12.model.IDescription;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public interface IBigTask extends ITask{
+public interface IBigTask extends ITask, IDescription {
     LocalDateTime getDueDate();
 
     void setDueDate(LocalDateTime date);
@@ -12,5 +14,21 @@ public interface IBigTask extends ITask{
 
     void setPriority(int priority);
 
-    ArrayList<ITask> getSubTasks();
+    //
+
+    void addSubTask(String title);
+
+    void removeSubTask(String subTaskID);
+
+    String getSubTaskID(String subTaskID);
+
+    String getSubTaskTitle(String subTaskID);
+
+    void setSubTaskTitle(String title, String subTaskID);
+
+    LocalDateTime getSubTaskDateCreated(String subTaskID);
+
+    boolean getSubTaskStatus(String subTaskID);
+
+    void setSubTaskCompleted(boolean status, String subTaskID);
 }

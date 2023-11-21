@@ -4,17 +4,57 @@ import org.group12.model.IDateCreated;
 import org.group12.model.INameable;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public interface ITaskList extends INameable, IDateCreated {
     String getID();
 
     // Methods for editing tasks
-    void addTask(String title);
+    void addBigTask(String title);
 
-    void removeTask(String ID);
+    void removeBigTask(String ID);
 
-    void setTaskTitle(String title, String taskID);
+    //
+    //
+    void setBigTaskTitle(String title, String bigTaskID);
 
-    void getTaskTitle(String taskID);
+    void getBigTaskTitle(String bigTaskID);
+
+    LocalDateTime getBigTaskDueDate(String bigTaskID);
+
+    void setBigTaskDueDate(LocalDateTime date, String bigTaskID);
+
+    int getBigTaskPriority(String bigTaskID);
+
+    void setBigTaskPriority(int priority, String bigTaskID);
+
+    String getBigTaskID(String bigTaskID);
+
+    boolean getBigTaskStatus(String bigTaskID);
+
+    void setBigTaskCompleted(boolean status, String bigTaskID);
+
+    LocalDateTime getBigTaskDateCreated(String bigTaskID);
+
+    String getBigTaskDescription(String bigTaskID);
+
+    void setBigTaskDescription(String desc, String bigTaskID);
+
+    //
+    //
+
+    void addSubTask(String title, String bigTaskID);
+
+    void removeSubTask(String bigTaskID, String subTaskID);
+
+    String getSubTaskID(String bigTaskID, String subTaskID);
+
+    String getSubTaskTitle(String bigTaskID, String subTaskID);
+
+    void setSubTaskTitle(String title, String bigTaskID, String subTaskID);
+
+    LocalDateTime getSubTaskDateCreated(String bigTaskID, String subTaskID);
+
+    boolean getSubTaskStatus(String bigTaskID, String subTaskID);
+
+    void setSubTaskCompleted(boolean status, String bigTaskID, String subTaskID);
 }

@@ -1,11 +1,8 @@
 package org.group12.model.todo;
 
-import org.group12.model.IDateCreated;
-import org.group12.model.INameable;
-
 import java.time.LocalDateTime;
 
-public class Task implements ITask, INameable, IDateCreated {
+public class Task implements ITask {
     private String title;
     private final LocalDateTime dateCreated;
     private boolean completed;
@@ -28,6 +25,7 @@ public class Task implements ITask, INameable, IDateCreated {
         return title;
     }
 
+    @Override
     public void setTitle(String title) {
         this.title = title;
     }
