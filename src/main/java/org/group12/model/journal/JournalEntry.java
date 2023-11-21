@@ -6,7 +6,7 @@ import org.group12.model.INameable;
 import java.time.LocalDateTime;
 
 public class JournalEntry implements INameable, IDateCreated {
-    private Long ID;
+    private String ID;
     private String title;
     private LocalDateTime createdTimestamp;
     private LocalDateTime modifiedTimestamp;
@@ -20,7 +20,7 @@ public class JournalEntry implements INameable, IDateCreated {
      * @param content          content of the journal entry
      * @param createdTimestamp timestamp when the journal entry was created
      */
-    public JournalEntry(Long ID, String title, String content, LocalDateTime createdTimestamp) {
+    public JournalEntry(String ID, String title, String content, LocalDateTime createdTimestamp) {
         this.ID = ID;
         this.title = title;
         this.createdTimestamp = createdTimestamp;
@@ -60,7 +60,7 @@ public class JournalEntry implements INameable, IDateCreated {
      *
      * @return the unique identifier for the journal entry
      */
-    public Long getID() {
+    public String getID() {
         return ID;
     }
 

@@ -20,7 +20,7 @@ public class Journal {
      * @param title         the title of the journal
      * @param entryFactory  the factory for creating journal entries
      */
-    public Journal(Long ID, String title, JournalEntryFactory entryFactory) {
+    public Journal(String ID, String title, JournalEntryFactory entryFactory) {
         this.entryList = new ArrayList<>();
         this.isEmpty = true;
         this.observers = new ArrayList<>();
