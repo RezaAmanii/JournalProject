@@ -118,8 +118,13 @@ public class TodoCollection implements ITodoCollection{
         taskListMap.get(taskListID).setBigTaskDescription(desc, bigTaskID);
     }
 
+    @Override
+    public HashMap<String, IBigTask> getBigTaskMap(String taskListID) {
+        return taskListMap.get(taskListID).getBigTaskMap();
+    }
+
     //
-    //
+    // Methods for editing the subTasks inside BigTasks in TaskLists
 
     @Override
     public void addSubTask(String title, String taskListID, String bigTaskID) {
@@ -159,5 +164,10 @@ public class TodoCollection implements ITodoCollection{
     @Override
     public void setSubTaskCompleted(boolean status, String taskListID, String bigTaskID, String subTaskID) {
         taskListMap.get(taskListID).setSubTaskCompleted(status, bigTaskID, subTaskID);
+    }
+
+    @Override
+    public HashMap<String, ITask> getSubTaskMap(String taskListID, String bigTaskID) {
+        return taskListMap.get(taskListID).getSubTaskMap(bigTaskID);
     }
 }

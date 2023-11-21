@@ -40,7 +40,7 @@ public class TaskList implements ITaskList {
         return ID;
     }
 
-    // Methods for editing tasks
+    // Methods for editing Bigtasks
     @Override
     public void addBigTask(String title) {
         IBigTask newTask = bigTaskFactory.createBigTask(title);
@@ -51,10 +51,6 @@ public class TaskList implements ITaskList {
     public void removeBigTask(String ID) {
         bigTaskMap.remove(ID);
     }
-
-
-    //
-    //
     @Override
     public void setBigTaskTitle(String title, String bigTaskID) {
         bigTaskMap.get(bigTaskID).setTitle(title);
@@ -115,8 +111,13 @@ public class TaskList implements ITaskList {
         bigTaskMap.get(bigTaskID).setDescription(desc);
     }
 
+    @Override
+    public HashMap<String, IBigTask> getBigTaskMap() {
+        return bigTaskMap;
+    }
+
     //
-    //
+    // Methods for editing the subTasks inside BigTasks in TaskLists
 
     @Override
     public void addSubTask(String title, String bigTaskID) {
@@ -156,5 +157,10 @@ public class TaskList implements ITaskList {
     @Override
     public void setSubTaskCompleted(boolean status, String bigTaskID, String subTaskID) {
         bigTaskMap.get(bigTaskID).setSubTaskCompleted(status, subTaskID);
+    }
+
+    @Override
+    public HashMap<String, ITask> getSubTaskMap(String bigTaskID) {
+        return bigTaskMap.get(bigTaskID).getSubTaskMap();
     }
 }

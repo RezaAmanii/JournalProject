@@ -1,7 +1,7 @@
 package org.group12.model.todo;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface ITodoCollection {
     // Methods for editing the TaskLists
@@ -17,6 +17,7 @@ public interface ITodoCollection {
 
     String getTaskListID(String taskListID);
 
+    //
     // Methods for editing the Tasks inside TaskLists
     void addBigTask(String listID, String taskID);
 
@@ -46,6 +47,11 @@ public interface ITodoCollection {
 
     void setBigTaskDescription(String desc, String taskListID, String bigTaskID);
 
+    //
+    // Methods for editing the subTasks inside BigTasks in TaskLists
+
+    HashMap<String, IBigTask> getBigTaskMap(String taskListID);
+
     void addSubTask(String title, String taskListID, String bigTaskID);
 
     void removeSubTask(String taskListID, String bigTaskID, String subTaskID);
@@ -61,4 +67,6 @@ public interface ITodoCollection {
     boolean getSubTaskStatus(String taskListID, String bigTaskID, String subTaskID);
 
     void setSubTaskCompleted(boolean status, String taskListID, String bigTaskID, String subTaskID);
+
+    HashMap<String, ITask> getSubTaskMap(String taskListID, String bigTaskID);
 }

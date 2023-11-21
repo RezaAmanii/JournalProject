@@ -4,6 +4,7 @@ import org.group12.model.IDescription;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public interface IBigTask extends ITask, IDescription {
     LocalDateTime getDueDate();
@@ -14,7 +15,7 @@ public interface IBigTask extends ITask, IDescription {
 
     void setPriority(int priority);
 
-    //
+    // Methods for editing the subTasks
 
     void addSubTask(String title);
 
@@ -31,4 +32,6 @@ public interface IBigTask extends ITask, IDescription {
     boolean getSubTaskStatus(String subTaskID);
 
     void setSubTaskCompleted(boolean status, String subTaskID);
+
+    HashMap<String, ITask> getSubTaskMap();
 }

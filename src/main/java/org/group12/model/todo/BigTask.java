@@ -9,13 +9,13 @@ public class BigTask implements IBigTask {
     private String description;
     private LocalDateTime dueDate;
     private int priority;
-    private final HashMap<String, ITask> subTasks;
+    private final HashMap<String, ITask> subTaskMap;
     Task modelTask;
 
     private TaskFactory taskFactory;
 
     public BigTask(String title, String ID) {
-        this.subTasks = new HashMap<>();
+        this.subTaskMap = new HashMap<>();
         this.taskFactory = new TaskFactory();
         modelTask = new Task("model", ID);
         modelTask.setTitle(title);
@@ -83,47 +83,51 @@ public class BigTask implements IBigTask {
     }
 
     //
-    //
-    //
+    // Methods for editing the subTasks
 
     @Override
     public void addSubTask(String title) {
         ITask newTask = taskFactory.createTask(title);
-        subTasks.put(newTask.getID(), newTask);
+        subTaskMap.put(newTask.getID(), newTask);
     }
 
     @Override
     public void removeSubTask(String subTaskID) {
-        subTasks.remove(subTaskID);
+        subTaskMap.remove(subTaskID);
     }
 
     @Override
     public String getSubTaskID(String subTaskID) {
-        return subTasks.get(subTaskID).getID();
+        return subTaskMap.get(subTaskID).getID();
     }
 
     @Override
     public String getSubTaskTitle(String subTaskID) {
-        return subTasks.get(subTaskID).getTitle();
+        return subTaskMap.get(subTaskID).getTitle();
     }
 
     @Override
     public void setSubTaskTitle(String title, String subTaskID) {
-        subTasks.get(subTaskID).setTitle(title);
+        subTaskMap.get(subTaskID).setTitle(title);
     }
 
     @Override
     public LocalDateTime getSubTaskDateCreated(String subTaskID) {
-        return subTasks.get(subTaskID).getDateCreated();
+        return subTaskMap.get(subTaskID).getDateCreated();
     }
 
     @Override
     public boolean getSubTaskStatus(String subTaskID) {
-        return subTasks.get(subTaskID).getStatus();
+        return subTaskMap.get(subTaskID).getStatus();
     }
 
     @Override
     public void setSubTaskCompleted(boolean status, String subTaskID) {
-        subTasks.get(subTaskID).setCompleted(status);
+        subTaskMap.get(subTaskID).setCompleted(status);
+    }
+
+    @Override
+    public HashMap<String, ITask> getSubTaskMap() {
+        return subTaskMap;
     }
 }

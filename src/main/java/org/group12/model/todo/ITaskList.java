@@ -4,17 +4,15 @@ import org.group12.model.IDateCreated;
 import org.group12.model.INameable;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 public interface ITaskList extends INameable, IDateCreated {
     String getID();
 
-    // Methods for editing tasks
+    // Methods for editing Bigtasks
     void addBigTask(String title);
 
     void removeBigTask(String ID);
-
-    //
-    //
     void setBigTaskTitle(String title, String bigTaskID);
 
     void getBigTaskTitle(String bigTaskID);
@@ -40,7 +38,9 @@ public interface ITaskList extends INameable, IDateCreated {
     void setBigTaskDescription(String desc, String bigTaskID);
 
     //
-    //
+    // Methods for editing the subTasks inside BigTasks in TaskLists
+
+    HashMap<String, IBigTask> getBigTaskMap();
 
     void addSubTask(String title, String bigTaskID);
 
@@ -57,4 +57,6 @@ public interface ITaskList extends INameable, IDateCreated {
     boolean getSubTaskStatus(String bigTaskID, String subTaskID);
 
     void setSubTaskCompleted(boolean status, String bigTaskID, String subTaskID);
+
+    HashMap<String, ITask> getSubTaskMap(String bigTaskID);
 }
