@@ -14,8 +14,8 @@ public class BigTask implements IBigTask, INameable, IDateCreated, IDescription 
     ArrayList<ITask> subTasks;
     Task modelTask;
 
-    public BigTask(String title) {
-        modelTask = new Task("model");
+    public BigTask(String title, String ID) {
+        modelTask = new Task("model", ID);
         modelTask.setTitle(title);
         this.subTasks = new ArrayList<>();
     }
@@ -47,7 +47,7 @@ public class BigTask implements IBigTask, INameable, IDateCreated, IDescription 
     }
 
     @Override
-    public long getID() {
+    public String getID() {
         return modelTask.getID();
     }
 
@@ -69,6 +69,11 @@ public class BigTask implements IBigTask, INameable, IDateCreated, IDescription 
     @Override
     public String getDescription() {
         return description;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.modelTask.setTitle(title);
     }
 
     @Override

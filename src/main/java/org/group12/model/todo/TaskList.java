@@ -1,23 +1,23 @@
 package org.group12.model.todo;
 
-import org.group12.model.IDateCreated;
-import org.group12.model.INameable;
+import org.group12.model.todo.factories.BigTaskFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class TaskList implements ITaskList, INameable, IDateCreated {
+public class TaskList implements ITaskList {
     private String title;
     private LocalDateTime dateCreated;
-    private final ArrayList<IBigTask> tasks;
-    private String ID;
+    private final HashMap<String, IBigTask> bigTaskMap;
+    private final String ID;
 
-    //private TaskFactory taskFactory;
+    private final BigTaskFactory bigTaskFactory;
 
     public TaskList(String title, String ID) {
-        this.tasks = new ArrayList<>();
-        this.title = title;
+        this.bigTaskMap = new HashMap<>();
+        this.bigTaskFactory = new BigTaskFactory();
         this.ID = ID;
+        setTitle(title);
     }
 
     @Override
@@ -26,18 +26,8 @@ public class TaskList implements ITaskList, INameable, IDateCreated {
     }
 
     @Override
-    public void addTask(BigTask task) {
-
-    }
-
-    @Override
-    public void removeTask(BigTask task) {
-
-    }
-
-    @Override
-    public ArrayList<IBigTask> getTasks() {
-        return null;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
@@ -45,16 +35,30 @@ public class TaskList implements ITaskList, INameable, IDateCreated {
         return title;
     }
 
-
-    public void setTitle(String title) {
-        this.title = title;
-        if (this.title == null || title.trim().isEmpty()){
-            throw new IllegalArgumentException("Title cannot be empty");
-        }
-    }
-
     @Override
     public LocalDateTime getDateCreated() {
         return dateCreated;
+    }
+
+    // Methods for editing tasks
+    @Override
+    public void addTask(String title) {
+        IBigTask newTask = bigTaskFactory.createBigTask(title);
+        bigTaskMap.put(newTask.getID(), newTask);
+    }
+
+    @Override
+    public void removeTask(String ID) {
+        bigTaskMap.remove(ID);
+    }
+
+    @Override
+    public void setTaskTitle(String title, String taskID) {
+        bigTaskMap.get(taskID).setTitle(title);
+    }
+
+    @Override
+    public void getTaskTitle(String taskID) {
+        bigTaskMap.get(taskID).getTitle();
     }
 }

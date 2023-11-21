@@ -1,7 +1,7 @@
 package org.group12.model.todo;
 
 interface ITask {
-    long getID();
+    String getID();
 
     boolean getStatus();
 

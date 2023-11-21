@@ -9,16 +9,17 @@ public class Task implements ITask, INameable, IDateCreated {
     private String title;
     private final LocalDateTime dateCreated;
     private boolean completed;
-    private long ID;
+    private final String ID;
 
-    public Task(String title) {
+    public Task(String title, String ID) {
         this.title = title;
+        this.ID = ID;
         this.dateCreated = LocalDateTime.now();
         this.completed = false;
     }
 
     @Override
-    public long getID() {
+    public String getID() {
         return ID;
     }
 

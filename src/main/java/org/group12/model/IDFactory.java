@@ -19,6 +19,7 @@ public abstract class IDFactory {
         prefixToObjectTypes.put("JE", "Journal Entry");
         prefixToObjectTypes.put("EV", "Event");
         prefixToObjectTypes.put("TK", "Task");
+        prefixToObjectTypes.put("BTK", "BigTask");
         prefixToObjectTypes.put("TL", "Tasklist");
         prefixToObjectTypes.put("CAL", "Calendar");
     }

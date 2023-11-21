@@ -1,8 +1,7 @@
-package org.group12.model.todo;
+package org.group12.model.todo.factories;
 
-import org.group12.model.journal.Journal;
-import org.group12.model.journal.JournalEntryFactory;
-import org.group12.model.journal.JournalIDFactory;
+import org.group12.model.todo.ITaskList;
+import org.group12.model.todo.TaskList;
 
 /**
  * Represents a factory for creating TaskList objects.
@@ -23,10 +22,9 @@ public class TaskListFactory {
      * Creates a new Journal with a unique ID and the given title.
      *
      * @param title the title of the Journal
-     * @param entryFactory the factory to create JournalEntry objects
      * @return the created Journal
      */
-    public ITaskList createTaskList(String title, JournalEntryFactory entryFactory) {
+    public ITaskList createTaskList(String title) {
         String ID = idFactory.generateID();
         return new TaskList(title, ID);
     }
