@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class MainTest {
 
-    private final TaskList todoList = new TaskList();
+    private final TaskList todoList = new TaskList("test", "1.1");
     private final BigTask task1 = new BigTask("Skriva rapport");
     private final BigTask task2 = new BigTask("Willys");
     private boolean error;

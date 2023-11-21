@@ -5,18 +5,18 @@ import org.group12.model.journal.JournalEntryFactory;
 import org.group12.model.journal.JournalIDFactory;
 
 /**
- * Represents a factory for creating TaskList objects.
+ * Represents a factory for creating Journal objects.
  * This class uses a JournalIDFactory to generate unique IDs for each Journal.
  */
-public class TaskListFactory {
-    private TaskListIDFactory idFactory;
+public class TaskFactory {
+    private JournalIDFactory idFactory;
 
     /**
      * Constructs a new JournalFactory.
      * Initializes the JournalIDFactory used to generate IDs.
      */
-    public TaskListFactory() {
-        this.idFactory = new TaskListIDFactory();
+    public TaskFactory() {
+        this.idFactory = new JournalIDFactory();
     }
 
     /**
@@ -26,8 +26,9 @@ public class TaskListFactory {
      * @param entryFactory the factory to create JournalEntry objects
      * @return the created Journal
      */
-    public ITaskList createTaskList(String title, JournalEntryFactory entryFactory) {
+    public Journal createJournal(String title, JournalEntryFactory entryFactory) {
         String ID = idFactory.generateID();
-        return new TaskList(title, ID);
+        return new Journal(ID, title, entryFactory);
     }
+
 }

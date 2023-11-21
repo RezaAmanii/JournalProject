@@ -88,14 +88,14 @@ public class TaskListController {
      */
 
     // This method gets specific task by its ID (Maybe we should Implement binary search)
-    public TaskList getTask(Long taskID){
+    /*public TaskList getTask(Long taskID){
         for(TaskList task : this.tasksList){
             if(task.getID() == taskID){
                 return task;
             }
         }
         return null;
-    }
+    }*/
 
     /*
     // This method gets list of all completed tasks

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface ITodoCollection {
     ArrayList<ITaskList> getTaskLists();
-    void addTaskList();
-    void remove();
+    void addTaskList(String title);
+    void removeTaskList(String Id);
     void edit();
 }

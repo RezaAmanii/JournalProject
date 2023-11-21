@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface ITaskList{
-    long getID();
+    String getID();
 
-    void addTask(BigTask task);
+    void addTask(String title);
 
-    void removeTask(BigTask task);
+    void removeTask(String ID);
 
     ArrayList<IBigTask> getTasks();
 }

@@ -10,18 +10,18 @@ public class TaskList implements ITaskList, INameable, IDateCreated {
     private String title;
     private LocalDateTime dateCreated;
     private final ArrayList<IBigTask> tasks;
-    private long ID;
+    private String ID;
 
-    //private ArrayList<TaskListObserver> observers;
     //private TaskFactory taskFactory;
 
-    public TaskList() {
+    public TaskList(String title, String ID) {
         this.tasks = new ArrayList<>();
-        this.title = "new list";
+        this.title = title;
+        this.ID = ID;
     }
 
     @Override
-    public long getID() {
+    public String getID() {
         return ID;
     }
 
