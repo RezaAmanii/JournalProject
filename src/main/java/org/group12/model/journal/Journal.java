@@ -1,6 +1,5 @@
 package org.group12.model.journal;
 
-import org.group12.observers.JournalObserver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.List;
 public class Journal {
     private List<JournalEntry> entryList;
     private boolean isEmpty;
-    private List<JournalObserver> observers;
     private JournalEntryFactory entryFactory;
     private String title;
     /**
@@ -23,7 +21,6 @@ public class Journal {
     public Journal(String ID, String title, JournalEntryFactory entryFactory) {
         this.entryList = new ArrayList<>();
         this.isEmpty = true;
-        this.observers = new ArrayList<>();
         this.entryFactory = entryFactory;
         this.title = title;
     }
@@ -46,16 +43,7 @@ public class Journal {
         JournalEntry newEntry = entryFactory.createJournalEntry(content);
         entryList.add(newEntry);
         isEmpty = false;
-        notifyObservers();
-    }
-
-    /**
-     * Notifies all registered observers when an entry is added or removed.
-     */
-    private void notifyObservers() {
-        for (JournalObserver observer : observers) {
-            observer.update();
-        }
+        //notifyObservers();
     }
 
     /**
@@ -66,27 +54,9 @@ public class Journal {
     public void removeEntry(JournalEntry entry){
         entryList.remove(entry);
         isEmpty = entryList.isEmpty();
-        notifyObservers();
+        //notifyObservers();
 
     }
 
-    /**
-     * Adds an observer to the list of observers.
-     *
-     * @param observer the observer to be added
-     */
-    public void addObserver(JournalObserver observer){
-        observers.add(observer);
-    }
-
-    /**
-     * Removes an observer from the list of observers.
-     *
-     * @param observer the observer to be removed
-     */
-    public void removeObserver(JournalObserver observer){
-        observers.remove(observer);
-        
-    }
 
 }
