@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 
 public interface ITaskList extends INameable, IDateCreated {
-    String getID();
-
     // Methods for editing Bigtasks
     void addBigTask(String title);
 

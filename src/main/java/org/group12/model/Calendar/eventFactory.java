@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class eventFactory {
-    private long nextID = 1;
+    //TODO implement factory in the same way as todo and journal
+    private String nextID= "temp";
 
     public Event createEvent(String title, String description, LocalDateTime dateOfEvent,
                              Pair<LocalDateTime, LocalDateTime> timeFrame) {

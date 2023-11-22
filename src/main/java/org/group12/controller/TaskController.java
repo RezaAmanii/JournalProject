@@ -10,7 +10,7 @@ public class TaskController {
     private String taskTitle;
 
     public TaskController(String taskTitle){
-        this.taskModel = new Task(taskTitle);
+        //this.taskModel = new Task(taskTitle);
         this.taskView = new taskView();
         //taskModel.addObserver(taskView);
     }
