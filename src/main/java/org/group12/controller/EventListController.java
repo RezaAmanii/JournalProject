@@ -2,7 +2,7 @@ package org.group12.controller;
 
 import java.util.Date;
 
-public class EventListController {
+public class EventListController implements IController {
 
     private Date dateFrom;
     private Date dateTo;

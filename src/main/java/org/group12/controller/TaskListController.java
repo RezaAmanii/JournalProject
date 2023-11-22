@@ -3,7 +3,7 @@ package org.group12.controller;
 import org.group12.model.todo.TaskList;
 import org.group12.view.taskListView;
 
-public class TaskListController {
+public class TaskListController implements IController {
 
     private TaskList taskListModel;
     private taskListView taskListView;
