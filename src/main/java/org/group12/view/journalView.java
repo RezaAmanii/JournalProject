@@ -1,4 +1,10 @@
 package org.group12.view;
 
-public class journalView {
+import org.group12.Observers.IJournalObserver;
+
+public class journalView implements IJournalObserver {
+    @Override
+    public void updateJournal() {
+
+    }
 }
