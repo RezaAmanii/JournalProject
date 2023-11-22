@@ -21,17 +21,5 @@ public interface IBigTask extends ITask, IDescription {
 
     void removeSubTask(String subTaskID);
 
-    String getSubTaskID(String subTaskID);
-
-    String getSubTaskTitle(String subTaskID);
-
-    void setSubTaskTitle(String title, String subTaskID);
-
-    LocalDateTime getSubTaskDateCreated(String subTaskID);
-
-    boolean getSubTaskStatus(String subTaskID);
-
-    void setSubTaskCompleted(boolean status, String subTaskID);
-
     HashMap<String, ITask> getSubTaskMap();
 }

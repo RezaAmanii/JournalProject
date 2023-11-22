@@ -97,36 +97,6 @@ public class BigTask implements IBigTask {
     }
 
     @Override
-    public String getSubTaskID(String subTaskID) {
-        return subTaskMap.get(subTaskID).getID();
-    }
-
-    @Override
-    public String getSubTaskTitle(String subTaskID) {
-        return subTaskMap.get(subTaskID).getTitle();
-    }
-
-    @Override
-    public void setSubTaskTitle(String title, String subTaskID) {
-        subTaskMap.get(subTaskID).setTitle(title);
-    }
-
-    @Override
-    public LocalDateTime getSubTaskDateCreated(String subTaskID) {
-        return subTaskMap.get(subTaskID).getDateCreated();
-    }
-
-    @Override
-    public boolean getSubTaskStatus(String subTaskID) {
-        return subTaskMap.get(subTaskID).getStatus();
-    }
-
-    @Override
-    public void setSubTaskCompleted(boolean status, String subTaskID) {
-        subTaskMap.get(subTaskID).setCompleted(status);
-    }
-
-    @Override
     public HashMap<String, ITask> getSubTaskMap() {
         return subTaskMap;
     }
