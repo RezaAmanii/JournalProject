@@ -4,12 +4,12 @@ import org.group12.model.Calendar.Calendar;
 import org.group12.view.calendarView;
 
 
-public class calendarController {
+public class CalendarController {
 
     Calendar calenderModel;
     calendarView calenderView;
 
-    public calendarController(){
+    public CalendarController(){
         this.calenderModel = new Calendar();
         this.calenderView = new calendarView();
         //calenderModel.addObserver(calenderView);
