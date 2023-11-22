@@ -11,8 +11,8 @@ public class BigTaskFactory {
     private final BigTaskIDFactory idFactory;
 
     /**
-     * Constructs a new TaskFactory.
-     * Initializes the TaskIDFactory used to generate IDs.
+     * Constructs a new BigTaskFactory.
+     * Initializes the BigTaskIDFactory used to generate IDs.
      */
     public BigTaskFactory() {
         this.idFactory = new BigTaskIDFactory();

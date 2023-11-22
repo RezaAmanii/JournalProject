@@ -3,7 +3,7 @@ package org.group12.model.todo;
 import org.group12.model.IDateCreated;
 import org.group12.model.INameable;
 
-interface ITask extends INameable, IDateCreated {
+public interface ITask extends INameable, IDateCreated {
     String getID();
 
     boolean getStatus();

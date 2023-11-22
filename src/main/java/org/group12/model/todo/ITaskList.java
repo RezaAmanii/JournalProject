@@ -37,10 +37,10 @@ public interface ITaskList extends INameable, IDateCreated {
 
     void setBigTaskDescription(String desc, String bigTaskID);
 
+    HashMap<String, IBigTask> getBigTaskMap();
+
     //
     // Methods for editing the subTasks inside BigTasks in TaskLists
-
-    HashMap<String, IBigTask> getBigTaskMap();
 
     void addSubTask(String title, String bigTaskID);
 

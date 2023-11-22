@@ -1,10 +1,11 @@
 package org.group12.model.todo.factories;
 
+import org.group12.model.todo.ITask;
 import org.group12.model.todo.Task;
 
 /**
  * Represents a factory for creating Task objects.
- * This class uses a TaskIDFactory to generate unique IDs for each Journal.
+ * This class uses a TaskIDFactory to generate unique IDs for each Task.
  */
 public class TaskFactory {
     private TaskIDFactory idFactory;
@@ -23,7 +24,7 @@ public class TaskFactory {
      * @param title the title of the Task
      * @return the created Task
      */
-    public Task createTask(String title) {
+    public ITask createTask(String title) {
         String ID = idFactory.generateID();
         return new Task(title, ID);
     }
