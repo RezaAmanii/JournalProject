@@ -1,12 +1,13 @@
 package org.group12.model.todo;
 
+import org.group12.Observers.IObservable;
 import org.group12.model.IDateCreated;
 import org.group12.model.INameable;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-public interface ITaskList extends INameable, IDateCreated {
+public interface ITaskList extends INameable, IDateCreated, IObservable {
     // Methods for editing Bigtasks
     void addBigTask(String title);
 
