@@ -11,7 +11,7 @@ public class Container {
     private Calendar calender;
     private Journal journal;
     private TodoCollection todoCollection;
-    private HashMap<String, INameable> itemMap;
+    private final HashMap<String, INameable> itemMap;
 
     public Container() {
         this.calender = new Calendar();
