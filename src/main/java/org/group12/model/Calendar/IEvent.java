@@ -5,8 +5,7 @@ import javafx.util.Pair;
 import java.time.LocalDateTime;
 
 public interface IEvent {
-    long getID();
-
+    String getID();
     LocalDateTime getDateOfEvent();
 
     Pair<LocalDateTime, LocalDateTime> getTimeFrame();

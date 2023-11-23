@@ -9,7 +9,7 @@ public class TaskListController {
     private taskListView taskListView;
 
     public TaskListController(){
-        this.taskListModel = new TaskList();
+        //this.taskListModel = new TaskList();
         this.taskListView = new taskListView();
         //taskListModel.addobservers(taskListView);
     }

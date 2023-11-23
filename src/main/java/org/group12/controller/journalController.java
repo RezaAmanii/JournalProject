@@ -11,9 +11,9 @@ public class journalController {
 
 
     public journalController(){
-        this.journalModel = new Journal();
+        //this.journalModel = new Journal();
         this.journalView = new journalView();
-        journalModel.addObserver(journalView);
+        //journalModel.addObserver(journalView);
     }
 
 
