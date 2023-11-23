@@ -1,8 +1,10 @@
 package org.group12.model.todo;
 
+import org.group12.Observers.IPlanITObserver;
 import org.group12.model.todo.factories.BigTaskFactory;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TaskList implements ITaskList {
@@ -10,14 +12,15 @@ public class TaskList implements ITaskList {
     private LocalDateTime dateCreated;
     private final HashMap<String, IBigTask> bigTaskMap;
     private final String ID;
-
     private final BigTaskFactory bigTaskFactory;
+    private final ArrayList<IPlanITObserver> observers;
 
     public TaskList(String title, String ID) {
         this.bigTaskMap = new HashMap<>();
         this.bigTaskFactory = new BigTaskFactory();
         this.ID = ID;
         setTitle(title);
+        this.observers = new ArrayList<>();
     }
 
     @Override
@@ -51,8 +54,26 @@ public class TaskList implements ITaskList {
     public void removeBigTask(String ID) {
         bigTaskMap.remove(ID);
     }
+
     @Override
     public HashMap<String, IBigTask> getBigTaskMap() {
         return bigTaskMap;
+    }
+
+    @Override
+    public void addObserver(IPlanITObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(IPlanITObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IPlanITObserver observer : observers) {
+            //observer.update();
+        }
     }
 }
