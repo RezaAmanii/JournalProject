@@ -1,15 +1,16 @@
 package org.group12.controller;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 public class EventListController implements IController {
 
-    private Date dateFrom;
-    private Date dateTo;
+    private LocalDateTime dateFrom;
+    private LocalDateTime dateTo;
 
     public EventListController(){
-        this.dateFrom = new Date();
-        this.dateTo = new Date();
+        this.dateFrom = LocalDateTime.now();
+        this.dateTo = LocalDateTime.now().plusDays(7);
     }
 
     public void filterDateByEvent(){

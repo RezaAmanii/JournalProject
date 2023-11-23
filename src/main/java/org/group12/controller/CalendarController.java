@@ -2,21 +2,21 @@ package org.group12.controller;
 
 import javafx.util.Pair;
 import org.group12.model.Calendar.Calendar;
-import org.group12.view.calendarView;
+import org.group12.view.CalendarView;
 
 import java.time.LocalDateTime;
 
 
 public class CalendarController implements IController {
 
-    Calendar calenderModel;
-    calendarView calenderView;
+    private Calendar calenderModel;
+    private CalendarView calenderView;
 
     public CalendarController(){
 
     }
 
-    public CalendarController(Calendar calenderModel, calendarView calenderView){
+    public CalendarController(Calendar calenderModel, CalendarView calenderView){
         this.calenderModel = calenderModel;
         this.calenderView = calenderView;
         //calenderModel.addObserver(calenderView);
