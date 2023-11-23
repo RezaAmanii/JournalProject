@@ -1,14 +1,18 @@
 package org.group12.model.todo;
 
+import org.group12.model.IDateCreated;
+import org.group12.model.INameable;
+
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public interface ITaskList{
-    long getID();
+public interface ITaskList extends INameable, IDateCreated {
+    String getID();
 
-    void addTask(BigTask task);
+    // Methods for editing Bigtasks
+    void addBigTask(String title);
 
-    void removeTask(BigTask task);
+    void removeBigTask(String ID);
 
-    ArrayList<BigTask> getTasks();
+    HashMap<String, IBigTask> getBigTaskMap();
 }

@@ -1,23 +1,34 @@
 package org.group12.model.todo;
 
-import org.group12.model.IDateCreated;
-import org.group12.model.IDescription;
-import org.group12.model.INameable;
+import org.group12.model.todo.factories.TaskFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashMap;
 
-public class BigTask implements IBigTask, INameable, IDateCreated, IDescription {
+public class BigTask implements IBigTask {
     private String description;
     private LocalDateTime dueDate;
     private int priority;
-    ArrayList<Task> subTasks;
+    private final HashMap<String, ITask> subTaskMap;
     Task modelTask;
 
-    public BigTask(String title) {
-        modelTask = new Task("model");
+    private TaskFactory taskFactory;
+
+    public BigTask(String title, String ID) {
+        this.subTaskMap = new HashMap<>();
+        this.taskFactory = new TaskFactory();
+        modelTask = new Task("model", ID);
         modelTask.setTitle(title);
-        this.subTasks = new ArrayList<>();
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.modelTask.setTitle(title);
+    }
+
+    @Override
+    public String getTitle() {
+        return modelTask.getTitle();
     }
 
     @Override
@@ -35,19 +46,14 @@ public class BigTask implements IBigTask, INameable, IDateCreated, IDescription 
         return priority;
     }
 
+    // TODO choose priority implementation
     @Override
     public void setPriority(int priority) {
-        if (priority >= 0 && priority <= 2) this.priority = priority;
-        else throw new RuntimeException("Illegal priority. Can only be 0-2");
+        this.priority = priority;
     }
 
     @Override
-    public ArrayList<Task> getSubTasks() {
-        return subTasks;
-    }
-
-    @Override
-    public long getID() {
+    public String getID() {
         return modelTask.getID();
     }
 
@@ -72,7 +78,26 @@ public class BigTask implements IBigTask, INameable, IDateCreated, IDescription 
     }
 
     @Override
-    public String getTitle() {
-        return modelTask.getTitle();
+    public void setDescription(String desc) {
+        this.description = desc;
+    }
+
+    //
+    // Methods for editing the subTasks
+
+    @Override
+    public void addSubTask(String title) {
+        ITask newTask = taskFactory.createTask(title);
+        subTaskMap.put(newTask.getID(), newTask);
+    }
+
+    @Override
+    public void removeSubTask(String subTaskID) {
+        subTaskMap.remove(subTaskID);
+    }
+
+    @Override
+    public HashMap<String, ITask> getSubTaskMap() {
+        return subTaskMap;
     }
 }

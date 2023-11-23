@@ -1,7 +1,10 @@
 package org.group12.model.todo;
 
-interface ITask {
-    long getID();
+import org.group12.model.IDateCreated;
+import org.group12.model.INameable;
+
+public interface ITask extends INameable, IDateCreated {
+    String getID();
 
     boolean getStatus();
 
