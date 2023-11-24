@@ -296,7 +296,7 @@
                         <bottom>
                             <VBox fx:id="fixedListsVbox1" prefHeight="50.0" prefWidth="296.0" style="-fx-background-color: #183a4e; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
                                 <children>
-                                    <GridPane fx:id="addNewListBtn"  prefHeight="31.0" prefWidth="320.0" style="-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;">
+                                    <GridPane fx:id="addNewListBtn" onMouseClicked="#addNewList" prefHeight="31.0" prefWidth="320.0" style="-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;">
                                         <columnConstraints>
                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.77783203125" minWidth="10.0" percentWidth="15.0" prefWidth="216.44439019097223" />
                                             <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.77783203125" minWidth="10.0" percentWidth="85.0" prefWidth="216.44439019097223" />
@@ -428,7 +428,7 @@
                                 <bottom>
                                     <VBox fx:id="fixedListsVbox11" prefHeight="50.0" prefWidth="296.0" style="-fx-background-color: #183a4e; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
                                         <children>
-                                            <GridPane fx:id="addNewTaskBtn"  prefHeight="31.0" prefWidth="320.0" style="-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;">
+                                            <GridPane fx:id="addNewTaskBtn" onMouseClicked="#addNewTask" prefHeight="31.0" prefWidth="320.0" style="-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;">
                                                 <columnConstraints>
                                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.77783203125" minWidth="10.0" percentWidth="15.0" prefWidth="216.44439019097223" />
                                                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.77783203125" minWidth="10.0" percentWidth="85.0" prefWidth="216.44439019097223" />

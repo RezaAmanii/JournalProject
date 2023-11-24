@@ -1,14 +1,17 @@
 package org.group12.view;
 
+import org.group12.toDoTask;
+import org.group12.toDoList;
+import org.group12.globals;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.Label;
+import javafx.geometry.Pos;
+import javafx.scene.control.*;
 
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -16,6 +19,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.*;
@@ -41,11 +45,24 @@ public class MainMenuController implements Initializable {
     public TextField newTaskNameTF;
     public Spinner<Integer> hrSpinner;
     public Spinner<Integer> minSpinner;
+    public Label todayToDoLBL;
+    public Label importantToDoLBL;
+    public VBox appendableListVbox;
+    public Label activeListNameLBL;
+    public VBox ongoingTasksVbox;
+    public VBox completedTasksVbox;
+    public GridPane addNewListBtn;
+    public BorderPane mainWindowBorder;
+
 
 
     ZonedDateTime dateFocus;
     ZonedDateTime today;
     int selectedDay;
+
+    ArrayList<toDoList> allLists = new ArrayList<>();
+    public toDoList selectedList = new toDoList();
+    public static toDoTask selectedTask=null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -56,6 +73,12 @@ public class MainMenuController implements Initializable {
         today = ZonedDateTime.now();
         selectedDay = today.getDayOfMonth();
         dateFocus = ZonedDateTime.now();
+
+        allLists.add(new toDoList(1,"Today", new ArrayList<>()));
+        allLists.add(new toDoList(2,"Important", new ArrayList<>()));
+        selectedList = allLists.get(0);
+        refreshSidePanelInfo();
+
         drawCalendar();
     }
 
@@ -112,6 +135,248 @@ public class MainMenuController implements Initializable {
         dateFocus = dateFocus.plusMonths(1);
         drawCalendar();
     }
+
+
+    //////////////////////////////////////// ToDo Functions
+    //////////////////////////////////////
+
+    //todo functions
+    public void addNewList() {
+        //
+        GridPane listToAppend = new GridPane();
+        toDoList newList = new toDoList(globals.createNewRandomID(globals.toDoListsIDs),"New List", new ArrayList<>());
+        allLists.add(newList);
+        listToAppend.setMinHeight(33.0);
+        listToAppend.setMinWidth(300.0);
+        listToAppend.setStyle("-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;");
+
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        col2.setMinWidth(10.0);
+        col2.setPercentWidth(76.0);
+
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        col3.setMinWidth(10.0);
+        col3.setPercentWidth(24.0);
+
+        listToAppend.getColumnConstraints().addAll(col2, col3);
+
+        RowConstraints row1 = new RowConstraints();
+        row1.setMinHeight(10.0);
+        row1.setPrefHeight(30.0);
+        row1.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
+
+        listToAppend.getRowConstraints().add(row1);
+
+        TextField taskNameLBL = new TextField(newList.getListName());
+        taskNameLBL.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
+        taskNameLBL.setEditable(false);
+        taskNameLBL.setAlignment(Pos.CENTER);
+        //
+
+
+        GridPane.setColumnIndex(taskNameLBL, 0);
+        GridPane.setHalignment(taskNameLBL, javafx.geometry.HPos.CENTER);
+        GridPane.setValignment(taskNameLBL, javafx.geometry.VPos.CENTER);
+        taskNameLBL.setFont(new Font("Berlin Sans FB Demi Bold", 22.0));
+
+
+        Label noOfTasks = new Label(String.valueOf(allLists.get(allLists.indexOf(newList)).getTasks().size()));
+        noOfTasks.setAlignment(javafx.geometry.Pos.CENTER);
+        noOfTasks.setTextFill(javafx.scene.paint.Color.WHITE);
+        GridPane.setColumnIndex(noOfTasks, 1);
+        GridPane.setHalignment(noOfTasks, javafx.geometry.HPos.CENTER);
+        Font font2 = new Font("Berlin Sans FB Demi Bold", 22.0);
+        noOfTasks.setFont(font2);
+
+        taskNameLBL.setOnMouseClicked(event -> {
+            selectedList = allLists.get(findTheToDoList(newList));////////////
+            noOfTasks.setText(String.valueOf(allLists.get(findTheToDoList(selectedList)).getTasks().size()));
+            refreshSidePanelInfo();
+            if (event.getClickCount() == 2) {
+                taskNameLBL.setEditable(true);
+                taskNameLBL.requestFocus();
+            }
+        });
+
+        taskNameLBL.setOnKeyPressed(event -> {
+            selectedList=newList;
+            noOfTasks.setText(String.valueOf(allLists.get(findTheToDoList(selectedList)).getTasks().size()));
+
+            if (event.getCode() == KeyCode.ENTER) {
+                taskNameLBL.setEditable(false);
+                renameToDoList(selectedList, taskNameLBL.getText());
+            }
+        });
+
+        mainWindowBorder.setOnMouseClicked(event -> {
+
+            mainWindowBorder.getOnMouseClicked();
+            selectedList = allLists.get(findTheToDoList(newList));////////////
+            noOfTasks.setText(String.valueOf(allLists.get(findTheToDoList(selectedList)).getTasks().size()));
+
+            if (event.getClickCount() > 0 && !taskNameLBL.getBoundsInParent().contains(event.getX(), event.getY())) {
+                taskNameLBL.setEditable(false);
+                renameToDoList(selectedList, taskNameLBL.getText());
+
+            }
+        });
+
+        listToAppend.setOnMouseClicked(event -> {
+            selectedList = allLists.get(findTheToDoList(newList));////////////
+            noOfTasks.setText(String.valueOf(allLists.get(findTheToDoList(selectedList)).getTasks().size()));
+            refreshSidePanelInfo();///////////////
+        });
+
+        listToAppend.getChildren().addAll(taskNameLBL, noOfTasks);
+
+        VBox.setMargin(listToAppend, new Insets(10.0, 10.0, 0, 10.0));
+
+        appendableListVbox.getChildren().add(listToAppend);
+    }
+
+
+    void renameToDoList(toDoList list, String newName) {
+        allLists.get(findTheToDoList(list)).setListName(newName);
+        refreshSidePanelInfo();
+    }
+    void renameTask(toDoTask task,String newName){
+        allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task)).setTaskName(newName);
+    }
+    int findTheToDoList(toDoList list) {
+        for (toDoList list1 : allLists) {
+            if (list1.getID() == list.getID()) return allLists.indexOf(list);
+        }
+        return -1;
+    }
+
+    int findTheTask(toDoTask task) {
+        selectedList=allLists.get(findTheToDoList(selectedList));
+        for (toDoTask task1 : selectedList.getTasks()) {
+            if (task1.getID() == task.getID()) return selectedList.getTasks().indexOf(task1);
+        }
+        return -1;
+    }
+
+
+    GridPane createNewTaskObject(toDoTask task) {
+
+        GridPane newTaskPane = new GridPane();
+        newTaskPane.setMinHeight(30.0);
+        newTaskPane.setMinWidth(250.0);
+        newTaskPane.setStyle("-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;");
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        col1.setMinWidth(10.0);
+        col1.setPercentWidth(20.0);
+        col1.setPrefWidth(216.44439019097223);
+
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        col2.setMinWidth(10.0);
+        col2.setPercentWidth(75.0);
+        col2.setPrefWidth(216.44439019097223);
+
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        col3.setMinWidth(10.0);
+        col3.setPercentWidth(20.0);
+        col3.setPrefWidth(104.00005425347223);
+
+        newTaskPane.getColumnConstraints().addAll(col1, col2, col3);
+
+        RowConstraints row1 = new RowConstraints();
+        row1.setMinHeight(10.0);
+        row1.setPrefHeight(30.0);
+        row1.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
+
+        newTaskPane.getRowConstraints().add(row1);
+
+        TextField taskNameLBL = new TextField(task.getTaskName());
+        taskNameLBL.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
+        taskNameLBL.setEditable(false);
+        taskNameLBL.setAlignment(Pos.CENTER);
+        GridPane.setHalignment(taskNameLBL, javafx.geometry.HPos.CENTER);
+        GridPane.setValignment(taskNameLBL, javafx.geometry.VPos.CENTER);
+        taskNameLBL.setFont(new Font("Berlin Sans FB Demi Bold", 22.0));
+
+        double tasksFinishedPercentage=0;
+        if ((task.getCompletedSubTasks().size()+task.getToDoSubTasks().size()!=0)){
+            tasksFinishedPercentage=(double)(task.getCompletedSubTasks().size() /(task.getCompletedSubTasks().size()+task.getToDoSubTasks().size()));
+        }
+
+        ProgressIndicator progressIndicator = new ProgressIndicator(tasksFinishedPercentage);
+        GridPane.setHalignment(progressIndicator, javafx.geometry.HPos.CENTER);
+        GridPane.setMargin(progressIndicator, new Insets(3.0, 3.0, 3.0, 3.0));
+
+        ImageView imageView = new ImageView("notification.png");
+        imageView.setFitHeight(31.0);
+        imageView.setFitWidth(31.0);
+        imageView.setPickOnBounds(true);
+        imageView.setPreserveRatio(true);
+        GridPane.setColumnIndex(taskNameLBL, 1);
+        GridPane.setColumnIndex(progressIndicator, 0);
+
+        GridPane.setColumnIndex(imageView, 2);
+        GridPane.setHalignment(imageView, javafx.geometry.HPos.CENTER);
+        GridPane.setMargin(imageView, new Insets(2.0, 2.0, 2.0, 2.0));
+        taskNameLBL.setOnMouseClicked(event -> {
+            selectedTask=task;
+            if (event.getClickCount() == 2) {
+                taskNameLBL.setEditable(true);
+                taskNameLBL.requestFocus();
+            }
+        });
+        imageView.setOnMouseClicked(event -> {
+            selectedTask=task;
+            try {
+                globals.openNewForm("subTasks.fxml",selectedTask.getTaskName());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        taskNameLBL.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                taskNameLBL.setEditable(false);
+                renameTask(allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task)), taskNameLBL.getText());
+            }
+        });
+
+        newTaskPane.getChildren().addAll(taskNameLBL, progressIndicator, imageView);
+
+        VBox.setMargin(newTaskPane, new Insets(10.0, 10.0, 0, 10.0));
+        return newTaskPane;
+    }
+
+    public void addNewTask() {
+        toDoTask newToDoTask=new toDoTask(globals.createNewRandomID(globals.toDoListsIDs),"newTask", false, ZonedDateTime.now(),new ArrayList<>(),new ArrayList<>());
+        selectedList.getTasks().add(newToDoTask);
+        GridPane newTask = createNewTaskObject(newToDoTask);
+
+        ongoingTasksVbox.getChildren().add(newTask);
+
+    }
+
+    private void refreshSidePanelInfo() {
+        selectedList=allLists.get(findTheToDoList(selectedList));
+        activeListNameLBL.setText(selectedList.getListName());
+        ongoingTasksVbox.getChildren().clear();
+        completedTasksVbox.getChildren().clear();
+        for (toDoTask task:selectedList.getTasks()){
+            if (!task.isFinished())
+                ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
+            else
+                completedTasksVbox.getChildren().add(createNewTaskObject(task));
+
+        }
+
+    }
+
+    //////////////////////////////////////
+    ///////////////////////////////////////  End ToDo Functions
 
     /*
     private void clearCell(GridPane gridPane, int rowIndex, int colIndex) {

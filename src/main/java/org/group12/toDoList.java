@@ -8,8 +8,11 @@ public class toDoList {
     private ArrayList<toDoTask> tasks;
 
 
-    toDoList(){this.tasks=new ArrayList<>();}
-    toDoList(int id,String listName, ArrayList<toDoTask>initialTasks){
+    public toDoList() {
+        this.tasks=new ArrayList<>();
+    }
+
+    public toDoList(int id,String listName, ArrayList<toDoTask>initialTasks){
         this.ID=id;
         this.listName=listName;
         this.tasks=initialTasks;
@@ -23,8 +26,19 @@ public class toDoList {
         return ID;
     }
 
+    public void setTasks(ArrayList<toDoTask> tasks) {
+        this.tasks = tasks;
+    }
+
     public ArrayList<toDoTask> getTasks() {
         return tasks;
     }
 
+    public void setListName(String listName) {
+        this.listName = listName;
+    }
+
+    public String getListName() {
+        return listName;
+    }
 }
