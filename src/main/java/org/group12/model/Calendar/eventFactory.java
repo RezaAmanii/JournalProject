@@ -8,11 +8,27 @@ import java.util.List;
 
 public class eventFactory {
     //TODO implement factory in the same way as todo and journal
-    private String nextID= "temp";
+    private EventIdFactory idFactory;
+
+    public eventFactory() {
+        this.idFactory = new EventIdFactory();
+    }
+    /**
+     * Creates a new Event with a generated ID, title set to the current date,
+     * provided content, and timestamps set to the current date.
+     *
+     * @param title the name of event
+     * @param description the content for the new event
+     * @param dateOfEvent when the event is happening
+     * @param timeFrame when the event is happening
+     * @return a new Event object with ID
+     */
 
     public Event createEvent(String title, String description, LocalDateTime dateOfEvent,
                              Pair<LocalDateTime, LocalDateTime> timeFrame) {
         List<String> tags = new ArrayList<>();
-        return new Event(nextID, title, description, dateOfEvent, timeFrame, tags, false);
+        String ID = idFactory.generateID();
+        LocalDateTime createdTimestamp = LocalDateTime.now();
+        return new Event(ID, title, description, dateOfEvent, timeFrame, createdTimestamp, tags, false);
     }
 }
