@@ -9,7 +9,7 @@ public class TaskListController implements IController {
     private TaskListView taskListView;
 
     public TaskListController(){
-        this.taskListModel = new TaskList();
+//        this.taskListModel = new TaskList();
         this.taskListView = new TaskListView();
         //taskListModel.addobservers(taskListView);
     }

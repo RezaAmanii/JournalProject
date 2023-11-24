@@ -14,12 +14,12 @@ public class Event implements IEvent, INameable, IDateCreated, IDescription, IEd
     private String description;
     private final LocalDateTime dateCreated;
     private LocalDateTime dateOfEvent;
-    private long ID;
+    private String ID;
     private Pair<LocalDateTime, LocalDateTime> timeFrame;
     private List<String> tags;
     private boolean recurrence;
 
-    public Event(Long ID, String title, String description, LocalDateTime dateOfEvent,
+    public Event(String ID, String title, String description, LocalDateTime dateOfEvent,
                  Pair<LocalDateTime, LocalDateTime> timeFrame, List<String> tags, boolean recurrence) {
 
         this.dateCreated = LocalDateTime.now();
@@ -84,7 +84,7 @@ public class Event implements IEvent, INameable, IDateCreated, IDescription, IEd
         return timeFrame;
     }
     @Override
-    public long getID() {
+    public String getID() {
         return ID;
     }
 

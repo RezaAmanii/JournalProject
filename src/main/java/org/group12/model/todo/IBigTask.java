@@ -1,9 +1,13 @@
 package org.group12.model.todo;
 
+import org.group12.Observers.IObservable;
+import org.group12.model.IDescription;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public interface IBigTask extends ITask{
+public interface IBigTask extends ITask, IDescription, IObservable {
     LocalDateTime getDueDate();
 
     void setDueDate(LocalDateTime date);
@@ -12,5 +16,11 @@ public interface IBigTask extends ITask{
 
     void setPriority(int priority);
 
-    ArrayList<Task> getSubTasks();
+    // Methods for editing the subTasks
+
+    void addSubTask(String title);
+
+    void removeSubTask(String subTaskID);
+
+    HashMap<String, ITask> getSubTaskMap();
 }

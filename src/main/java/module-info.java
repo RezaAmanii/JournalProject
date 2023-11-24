@@ -16,5 +16,7 @@ module JournalProject {
     opens org.group12.model.todo to javafx.fxml;
     exports org.group12.model.journal;
     opens org.group12.model.journal to javafx.fxml;
+    exports org.group12.model.todo.factories;
+    opens org.group12.model.todo.factories to javafx.fxml;
 
 }

@@ -1,5 +1,6 @@
 package org.group12.controller;
 
+import org.group12.model.INameable;
 import org.group12.model.todo.Task;
 import org.group12.view.TaskView;
 
@@ -13,8 +14,8 @@ public class TaskController implements IController {
 
     }
 
-    public TaskController(String taskTitle){
-        this.taskModel = new Task(taskTitle);
+    public TaskController(String taskTitle, String id){
+        this.taskModel = new Task(taskTitle, id);
         this.taskView = new TaskView();
         //taskModel.addObserver(taskView);
     }
