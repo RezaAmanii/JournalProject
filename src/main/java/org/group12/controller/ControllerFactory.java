@@ -5,8 +5,8 @@ public class ControllerFactory {
 
     public static IController createController(String controllerType) {
         switch (controllerType) {
-//            case "JournalController":
-//                return new JournalController();
+            case "JournalController":
+                return new JournalController();
             case "CalendarController":
                 return new CalendarController();
             case "TaskListController":

@@ -4,15 +4,19 @@ import org.group12.model.journal.Journal;
 import org.group12.view.JournalView;
 
 
-public class JournalController {
+public class JournalController implements IController {
 
     private Journal journalModel;
     private JournalView journalView;
 
-
     public JournalController(){
-        //this.journalModel = new Journal();
-        this.journalView = new JournalView();
+
+    }
+
+
+    public JournalController(Journal journalModel, JournalView journalView){
+        this.journalModel = journalModel;
+        this.journalView = journalView;;
         //journalModel.addObserver(journalView);
     }
 
