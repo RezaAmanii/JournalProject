@@ -20,9 +20,9 @@ public class Event implements IEvent, INameable, IDateCreated, IDescription, IEd
     private boolean recurrence;
 
     public Event(String ID, String title, String description, LocalDateTime dateOfEvent,
-                 Pair<LocalDateTime, LocalDateTime> timeFrame, List<String> tags, boolean recurrence) {
+                 Pair<LocalDateTime, LocalDateTime> timeFrame,LocalDateTime dateCreated, List<String> tags, boolean recurrence) {
 
-        this.dateCreated = LocalDateTime.now();
+        this.dateCreated = dateCreated;
         this.title = title;
         this.ID = ID;
         this.description = description;
@@ -108,7 +108,4 @@ public class Event implements IEvent, INameable, IDateCreated, IDescription, IEd
         return dateOfEvent;
     }
 
-
-
 }
-
