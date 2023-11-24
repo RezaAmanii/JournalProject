@@ -1,18 +1,18 @@
 package org.group12.controller;
 
 import org.group12.model.journal.Journal;
-import org.group12.view.journalView;
+import org.group12.view.JournalView;
 
 
 public class journalController {
 
     private Journal journalModel;
-    private journalView journalView;
+    private JournalView journalView;
 
 
     public journalController(){
         //this.journalModel = new Journal();
-        this.journalView = new journalView();
+        this.journalView = new JournalView();
         //journalModel.addObserver(journalView);
     }
 

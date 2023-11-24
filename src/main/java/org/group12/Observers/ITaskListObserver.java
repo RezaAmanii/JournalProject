@@ -1,7 +1,4 @@
 package org.group12.Observers;
 
-public interface ITaskListObserver {
-
-    void updateTaskList();
-
+public interface ITaskListObserver extends IPlanITObserver {
 }

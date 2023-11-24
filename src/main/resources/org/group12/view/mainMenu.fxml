@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainWindowBorder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="872.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controller.MainMenuController">
+<BorderPane fx:id="mainWindowBorder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="872.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.view.MainMenuController">
     <left>
         <VBox fx:id="sideBar" maxWidth="180.0" minWidth="68.0" onMouseEntered="#sideBarOnMouseEnter" onMouseExited="#sideBarOnMouseEnter" prefHeight="573.0" prefWidth="180.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
             <children>
@@ -473,7 +473,7 @@
                             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                         </BorderPane.margin>
                         <left>
-                            <Label fx:id="nameLBL" text="Welcome back, Mr.Robot!" textFill="#183a4e" BorderPane.alignment="CENTER">
+                            <Label fx:id="nameLBL" text="Hello, PlanIt" textFill="#183a4e" BorderPane.alignment="CENTER">
                                 <font>
                                     <Font name="Berlin Sans FB Demi Bold" size="47.0" />
                                 </font>

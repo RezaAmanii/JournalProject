@@ -1,16 +1,16 @@
 package org.group12.controller;
 
 import org.group12.model.todo.TaskList;
-import org.group12.view.taskListView;
+import org.group12.view.TaskListView;
 
-public class TaskListController {
+public class TaskListController implements IController {
 
     private TaskList taskListModel;
-    private taskListView taskListView;
+    private TaskListView taskListView;
 
     public TaskListController(){
-        //this.taskListModel = new TaskList();
-        this.taskListView = new taskListView();
+//        this.taskListModel = new TaskList();
+        this.taskListView = new TaskListView();
         //taskListModel.addobservers(taskListView);
     }
 
