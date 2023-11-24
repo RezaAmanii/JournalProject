@@ -1,16 +1,21 @@
 package org.group12.model.journal;
 
 
+import org.group12.Observers.IObservable;
+import org.group12.Observers.IPlanITObserver;
+import org.group12.model.INameable;
+
 import java.util.ArrayList;
 import java.util.List;
 /**
  * Represents a Journal with a list of entries and associated functionality.
  */
-public class Journal {
+public class Journal implements INameable, IObservable{
     private List<JournalEntry> entryList;
-    private boolean isEmpty;
     private JournalEntryFactory entryFactory;
     private String title;
+    private final String ID;
+    private List<IPlanITObserver> observers;
     /**
      * Constructs a Journal with the given ID, title, and entry factory.
      *
@@ -20,9 +25,50 @@ public class Journal {
      */
     public Journal(String ID, String title, JournalEntryFactory entryFactory) {
         this.entryList = new ArrayList<>();
-        this.isEmpty = true;
         this.entryFactory = entryFactory;
         this.title = title;
+        this.ID = ID;
+        this.observers = new ArrayList<>();
+    }
+
+
+    /**
+     * Adds a new entry to the journal with the provided title and content.
+     * Notifies all observers of the journal and the new entry.
+     *
+     * @param title   the title for the new journal entry
+     * @param content the content for the new journal entry
+     */
+    public void addEntry(String title, String content){
+        JournalEntry newEntry = entryFactory.createJournalEntry(content);
+        for (IPlanITObserver observer : observers) {
+            newEntry.addObserver(observer);
+        }
+        entryList.add(newEntry);
+        notifyObservers();
+    }
+
+    /**
+     * Removes the specified entry from the journal.
+     * Notifies all observers of the journal.
+     *
+     * @param entry the entry to be removed
+     */
+    public void removeEntry(JournalEntry entry){
+        entryList.remove(entry);
+        notifyObservers();
+    }
+
+    /**
+     * Sets the title of the journal and notifies all observers.
+     *
+     * @param title the new title of the journal
+     */
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+        notifyObservers();
+
     }
 
     /**
@@ -33,30 +79,48 @@ public class Journal {
     public String getTitle() {
         return title;
     }
+
     /**
-     * Adds a new entry to the journal with the provided title and content.
+     * Gets the ID of the journal.
      *
-     * @param title   the title for the new journal entry
-     * @param content the content for the new journal entry
+     * @return the ID of the journal
      */
-    public void addEntry(String title, String content){
-        JournalEntry newEntry = entryFactory.createJournalEntry(content);
-        entryList.add(newEntry);
-        isEmpty = false;
-        //notifyObservers();
+    public String getID(){ return ID; }
+    /**
+     * Gets a list of the entries in the journal.
+     *
+     * @return a list of entries in the journal
+     */
+    public List<JournalEntry> getEntries() {
+        return entryList;
     }
 
     /**
-     * Removes the specified entry from the journal.
+     * Adds an observer to the journal.
      *
-     * @param entry the entry to be removed
+     * @param observer the observer to be added
      */
-    public void removeEntry(JournalEntry entry){
-        entryList.remove(entry);
-        isEmpty = entryList.isEmpty();
-        //notifyObservers();
+    @Override
+    public void addObserver(IPlanITObserver observer) {
+        observers.add(observer);
 
     }
+    /**
+     * Removes an observer from the journal.
+     *
+     * @param observer the observer to be removed
+     */
+    @Override
+    public void removeObserver(IPlanITObserver observer) {
+        observers.remove(observer);
 
+    }
+    /**
+     * Notifies all observers of the journal.
+     */
+    @Override
+    public void notifyObservers() {
+        observers.forEach(IPlanITObserver::update);
 
+    }
 }
