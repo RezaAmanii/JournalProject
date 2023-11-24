@@ -14,16 +14,14 @@ public class JournalController implements IController {
     }
 
 
-    public JournalController(Journal journalModel, JournalView journalView){
+    public JournalController(Journal journalMorndel, JournalView joualView){
         this.journalModel = journalModel;
         this.journalView = journalView;
         //journalModel.addObserver(journalView);
     }
 
 
-    public void handleButtonClick(){
-
-    }
+    public void handleButtonClick(){}
 
 
 
