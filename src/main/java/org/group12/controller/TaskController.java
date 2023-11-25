@@ -7,7 +7,7 @@ import org.group12.view.TaskView;
 
 public class TaskController implements IController {
     private Task taskModel;
-    private TaskView taskView;;
+    private TaskView taskView;
     private String taskTitle;
 
     public TaskController(){
