@@ -25,7 +25,10 @@ import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.*;
 
-
+/**
+ * The MainMenuController class controls the main menu of the application.
+ * It implements the Initializable interface to initialize the menu components.
+ */
 public class MainMenuController implements Initializable {
 
     public VBox sideBar;
@@ -67,6 +70,12 @@ public class MainMenuController implements Initializable {
     public static toDoList selectedList = new toDoList();
     public static toDoTask selectedTask=null;
 
+    /**
+     * Initializes the main menu.
+     *
+     * @param url The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         hrSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,ZonedDateTime.now().getHour()));
@@ -95,6 +104,10 @@ public class MainMenuController implements Initializable {
 
     public boolean sideBarExpanded=false;
 
+    /**
+     * Handles the mouse enter event on the sidebar.
+     * Expands or collapses the sidebar based on its current state.
+     */
     public void sideBarOnMouseEnter() {
         sideBarExpanded = !sideBarExpanded;
         if (sideBarExpanded) {
@@ -145,6 +158,12 @@ public class MainMenuController implements Initializable {
 
     //todo functions
 
+    /**
+     Creates a new list object in the GUI for the given toDoList.
+
+     * @param newList The toDoList for which the list object is created.
+     * @return The GridPane representing the new list object.
+     */
     GridPane createNewListObject(toDoList newList){
         GridPane listToAppend = new GridPane();
         listToAppend.setMinHeight(33.0);
@@ -236,65 +255,113 @@ public class MainMenuController implements Initializable {
 
         return listToAppend;
     }
+
+    /**
+     * Adds a new to-do list to the application.
+     */
     public void addNewList() {
-        //
+        // Create a new to-do list
         toDoList newList = new toDoList(globals.createNewRandomID(globals.toDoListsIDs),"New List", new ArrayList<>());
         allLists.add(newList);
+
+        // Create a new list object in the GUI for the new to-do list
         GridPane listToAppend=createNewListObject(newList);
 
+        // Add the list object to the appendable list VBox
         appendableListVbox.getChildren().add(listToAppend);
     }
 
+    /**
+     * Deletes the selected to-do list from the application.
+     */
     public void deleteSelectedList(){
         if(selectedList.getID()==1||selectedList.getID()==2){
+            // Show an error message if trying to delete the Today or Important lists
             globals.showErrorAlert("Can't delete Today or Important Lists, select a different list.");
             return;
         }
+        // Remove the selected to-do list from the allLists collection
         for (toDoList list:allLists){
             if (list.getID()==selectedList.getID()){
                 allLists.remove(list);
                 break;
             }
         }
+        // Refresh the UI components related to to-do lists
         refreshAllListVBox();
         refreshSidePanelInfo();
     }
+
+    /**
+     * Refreshes the VBox that contains all the to-do lists in the UI.
+     */
     void refreshAllListVBox(){
         selectedList=allLists.get(0);
         fixedListsVbox.getChildren().clear();
         appendableListVbox.getChildren().clear();
         for (toDoList list:allLists){
             if (list.getID()==1||list.getID()==2){
+                // Add fixed lists (Today and Important) to the fixedListsVbox
                 fixedListsVbox.getChildren().add(createNewListObject(list));
             }
             else{
+                // Separate tasks based on their deadline and importance
                 allLists.get(0).getTasks().clear();
                 allLists.get(1).getTasks().clear();
                 for (toDoTask task:list.getTasks()){
                     if (task.getTaskDeadline().getDayOfMonth()==ZonedDateTime.now().getDayOfMonth()
                             && task.getTaskDeadline().getMonth()==ZonedDateTime.now().getMonth()
                             && task.getTaskDeadline().getYear()==ZonedDateTime.now().getYear()){
+
+                        // Add tasks due today to the "Today" list
                         allLists.get(0).getTasks().removeIf(task1 -> task1.getID() == task.getID());
                         allLists.get(0).getTasks().add(task);
                     }
                     if (task.isImportant()){
+                        // Add important tasks to the "Important" list
                         allLists.get(1).getTasks().removeIf(task1 -> task1.getID() == task.getID());
                         allLists.get(1).getTasks().add(task);
                     }
                 }
+                // Add the list object to the appendableListVbox
                 appendableListVbox.getChildren().add(createNewListObject(list));
             }
         }
         refreshSidePanelInfo();
     }
+
+    /**
+     * Renames the given to-do list with a new name.
+     *
+     * @param list    The to-do list to rename.
+     * @param newName The new name for the list.
+     */
     void renameToDoList(toDoList list, String newName) {
-        if (allLists.get(findTheToDoList(list)).getID()==1||allLists.get(findTheToDoList(list)).getID()==0)return;
+        // Do not rename Today or Important lists
+        if (allLists.get(findTheToDoList(list)).getID()==1||allLists.get(findTheToDoList(list)).getID()==0)
+            return;
+
+        // Set the new name for the to-do list
         allLists.get(findTheToDoList(list)).setListName(newName);
         refreshSidePanelInfo();
     }
+
+    /**
+     * Renames the given to-do task with a new name.
+     *
+     * @param task    The to-do task to rename.
+     * @param newName The new name for the task.
+     */
     void renameTask(toDoTask task,String newName){
         allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task)).setTaskName(newName);
     }
+
+    /**
+     * Finds the index of the given to-do list in the allLists collection.
+     *
+     * @param list The to-do list to find.
+     * @return The index of the list in the allLists collection, or -1 if not found.
+     */
     public static int findTheToDoList(toDoList list) {
         for (toDoList list1 : allLists) {
             if (list1.getID() == list.getID()) return allLists.indexOf(list);
@@ -302,6 +369,12 @@ public class MainMenuController implements Initializable {
         return -1;
     }
 
+    /**
+     * Finds the index of the given to-do task in the selectedList's tasks.
+     *
+     * @param task The to-do task to find.
+     * @return The index of the task in the selectedList's tasks, or -1 if not found.
+     */
     public static int findTheTask(toDoTask task) {
         selectedList=allLists.get(findTheToDoList(selectedList));
         for (toDoTask task1 : selectedList.getTasks()) {
@@ -310,7 +383,12 @@ public class MainMenuController implements Initializable {
         return -1;
     }
 
-
+    /**
+     * Creates a GridPane object representing a new task based on the provided toDoTask object.
+     *
+     * @param task The toDoTask object representing the task.
+     * @return The GridPane object representing the new task.
+     */
     GridPane createNewTaskObject(toDoTask task) {
 
         GridPane newTaskPane = new GridPane();
@@ -483,6 +561,10 @@ public class MainMenuController implements Initializable {
         return newTaskPane;
     }
 
+    /**
+     * Adds a new task to the selected list.
+     * Displays an error message if the selected list is "today" or "important".
+     */
     public void addNewTask() {
         if (selectedList.getID()==1||selectedList.getID()==2){
             globals.showErrorAlert("You can't add tasks to today or important directly, \ncreate a list to add tasks to \nand today and important lists will be updated accordingly.");
@@ -497,6 +579,10 @@ public class MainMenuController implements Initializable {
 
     }
 
+    /**
+     * Refreshes the side panel information based on the selected list.
+     * Updates the active list name label, ongoing tasks VBox, and completed tasks VBox.
+     */
     private void refreshSidePanelInfo() {
         selectedList = allLists.get(findTheToDoList(selectedList));
         activeListNameLBL.setText(selectedList.getListName());
@@ -526,6 +612,9 @@ public class MainMenuController implements Initializable {
     }
      */
 
+    /**
+     * Draws the calendar by creating and arranging the necessary UI elements based on the current date focus.
+     */
     private void drawCalendar() {
         calendarPane.getChildren().clear();
         yearLBL.setText(String.valueOf(dateFocus.getYear()));
@@ -612,6 +701,12 @@ public class MainMenuController implements Initializable {
         }
     }
 
+    /**
+     * Creates calendar activity UI elements and adds them to the provided stack pane.
+     *
+     * @param currCalendarActivities The list of calendar activities for a specific date.
+     * @param stackPane              The stack pane where the calendar activities will be added.
+     */
     private void createCalendarActivity(List<CalendarActivity> currCalendarActivities, VBox stackPane) {
 
         for (CalendarActivity currCalendarActivity : currCalendarActivities) {
@@ -679,6 +774,12 @@ public class MainMenuController implements Initializable {
     }
 
 
+    /**
+     * Creates a map of calendar activities grouped by day of the month.
+     *
+     * @param calendarActivities The calendar.
+     * @return A map of calendar activities grouped by day of the month.
+     */
     private Map<Integer, List<CalendarActivity>> createCalendarMap(List<CalendarActivity> calendarActivities) {
         Map<Integer, List<CalendarActivity>> calendarActivityMap = new HashMap<>();
 
@@ -697,9 +798,14 @@ public class MainMenuController implements Initializable {
         return calendarActivityMap;
     }
 
+
+    // Map to store calendar activities
     Map<ZonedDateTime,ArrayList<CalendarActivity>>calendarActivities = new HashMap<>();
 
 
+    /**
+     * Adds a new activity for the selected day.
+     */
     public void addNewDayActivity() {
         int year = dateFocus.getYear();
         int month = dateFocus.getMonth().getValue();
@@ -722,6 +828,13 @@ public class MainMenuController implements Initializable {
         }
     }
 
+
+    /**
+     * Retrieves the calendar activities for the specified month.
+     *
+     * @param dateFocus The date focus representing the month.
+     * @return A map of calendar activities grouped by day of the month.
+     */
     private Map<Integer, List<CalendarActivity>> getCalendarActivitiesMonth(ZonedDateTime dateFocus) {
         List<CalendarActivity> currMonthActivities = new ArrayList<>();
         for (Map.Entry<ZonedDateTime,ArrayList<CalendarActivity>>entry:calendarActivities.entrySet()){
