@@ -11,9 +11,9 @@ public class BigTask implements IBigTask {
     private LocalDateTime dueDate;
     private int priority;
     private final HashMap<String, ITask> subTaskMap;
-    Task modelTask;
+    private final Task modelTask;
 
-    private TaskFactory taskFactory;
+    private final TaskFactory taskFactory;
 
     public BigTask(String title, String ID) {
         this.subTaskMap = new HashMap<>();
