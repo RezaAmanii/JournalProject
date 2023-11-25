@@ -1,6 +1,9 @@
 package org.group12.model.todo;
 
 import org.group12.Observers.IPlanITObserver;
+import org.group12.Observers.alternative.IItemObserver;
+import org.group12.model.INameable;
+import org.group12.model.Items;
 import org.group12.model.todo.factories.TaskListFactory;
 
 import java.time.LocalDateTime;
@@ -8,15 +11,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class TodoCollection implements ITodoCollection{
+    String ID;
+    String title;
     private final HashMap<String, ITaskList> taskListMap;
     private final TaskListFactory taskListFactory;
 
-    private final ArrayList<IPlanITObserver> observers;
+    private final ArrayList<IItemObserver> observers;
 
-    public TodoCollection (){
+    public TodoCollection (String title, String ID){
         taskListMap = new HashMap<>();
         taskListFactory = new TaskListFactory();
         this.observers = new ArrayList<>();
+        this.title = title;
+        this.ID = ID;
     }
 
     // Methods for editing the TaskLists
@@ -24,6 +31,7 @@ public class TodoCollection implements ITodoCollection{
     public void addTaskList(String title) {
         ITaskList newList = taskListFactory.createTaskList(title);
         taskListMap.put(newList.getID(), newList);
+        notifyNewItem(newList);
     }
 
     @Override
@@ -37,19 +45,41 @@ public class TodoCollection implements ITodoCollection{
     }
 
     @Override
-    public void addObserver(IPlanITObserver observer) {
+    public void addObserver(IItemObserver observer) {
         observers.add(observer);
     }
 
     @Override
-    public void removeObserver(IPlanITObserver observer) {
+    public void removeObserver(IItemObserver observer) {
         observers.remove(observer);
     }
 
     @Override
-    public void notifyObservers() {
-        for (IPlanITObserver observer : observers) {
-            //observer.update();
+    public void notifyNewItem(INameable newItem) {
+        for (IItemObserver observer : observers) {
+            observer.addItem(newItem);
         }
+    }
+
+    @Override
+    public void notifyRemoveItem(INameable newItem) {
+        for (IItemObserver observer : observers) {
+            observer.removeItem(newItem);
+        }
+    }
+
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
     }
 }

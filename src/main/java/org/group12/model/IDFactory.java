@@ -22,6 +22,7 @@ public abstract class IDFactory {
         prefixToObjectTypes.put("BTK", "BigTask");
         prefixToObjectTypes.put("TL", "Tasklist");
         prefixToObjectTypes.put("CAL", "Calendar");
+        prefixToObjectTypes.put("TC", "TodoCollection");
     }
     /**
      * Generates a new ID by concatenating the prefix and the next number from the counter.
