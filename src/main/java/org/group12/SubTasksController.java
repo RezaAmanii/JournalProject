@@ -24,7 +24,9 @@ import static org.group12.view.MainMenuController.findTheToDoList;
 import static org.group12.view.MainMenuController.selectedTask;
 import static org.group12.view.MainMenuController.selectedList;
 
-
+/**
+ * Controller class for managing subtasks in the application.
+ */
 public class SubTasksController implements Initializable {
 
     static public subTask selectedSubTask=null;
@@ -42,6 +44,12 @@ public class SubTasksController implements Initializable {
     public DatePicker changeDeadlineDP;
     ZonedDateTime deadline= selectedTask.getTaskDeadline();
 
+    /**
+     * Initializes the subtask view.
+     *
+     * @param url            The location used to resolve relative paths for the root object, or null if the location is not known.
+     * @param resourceBundle The resources used to localize the root object, or null if the root object was not localized.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         taskNameLBL.setText(MainMenuController.selectedTask.getTaskName());
@@ -53,6 +61,9 @@ public class SubTasksController implements Initializable {
         refreshSubTasksPane();
     }
 
+    /**
+     * Saves the new deadline for the task.
+     */
     public void saveNewDeadline(){
         ZonedDateTime dd=ZonedDateTime.now();
         deadline= ZonedDateTime.of(changeDeadlineDP.getValue().getYear()
@@ -68,11 +79,19 @@ public class SubTasksController implements Initializable {
         refreshSubTasksPane();
 
     }
+
+    /**
+     * Removes the selected subtask.
+     */
     public void removeSubTask(){
         if (selectedSubTask!=null)
             allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().remove(selectedSubTask);
         refreshSubTasksPane();
     }
+
+    /**
+     * Adds a new subtask.
+     */
     public void addNewSubTask(){
         subTask subTask=new subTask(globals.createNewSeqID(globals.toDoSubTasksIDs),"newSubTask",false);
         selectedSubTask=subTask;
@@ -82,6 +101,9 @@ public class SubTasksController implements Initializable {
 
     }
 
+    /**
+     * Refreshes the subtasks pane.
+     */
     void refreshSubTasksPane(){
         subTasksPane.getChildren().clear();
 
@@ -92,6 +114,13 @@ public class SubTasksController implements Initializable {
             subTasksPane.getChildren().add(createNewSubTaskObject(task));
         }
     }
+
+    /**
+     * Finds the index of the specified subtask within the selected task's subtasks.
+     *
+     * @param task The subtask to find.
+     * @return The index of the subtask if found, otherwise -1.
+     */
     public static int findTheSubTask(subTask task) {
         selectedList=allLists.get(findTheToDoList(selectedList));
         selectedTask=selectedList.getTasks().get(findTheTask(selectedTask));
@@ -101,9 +130,22 @@ public class SubTasksController implements Initializable {
         return -1;
     }
 
+    /**
+     * Renames the specified subtask with a new name.
+     *
+     * @param task     The subtask to rename.
+     * @param newName  The new name for the subtask.
+     */
     void renameSubTask(subTask task,String newName){
         allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().get(findTheSubTask(task)).setSubTaskName(newName);
     }
+
+    /**
+     * Creates a new subtask object.
+     *
+     * @param task The subtask to create the object for.
+     * @return The created GridPane object representing the subtask.
+     */
     GridPane createNewSubTaskObject(subTask task){
         GridPane newTaskPane=new GridPane();
         newTaskPane.setMinHeight(57.0);
