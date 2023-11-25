@@ -1,7 +1,10 @@
 package org.group12.controller;
 
+import org.group12.model.INameable;
 import org.group12.model.journal.Journal;
 import org.group12.view.JournalView;
+
+import java.util.HashMap;
 
 
 public class JournalController implements IController {
@@ -9,14 +12,12 @@ public class JournalController implements IController {
     private Journal journalModel;
     private JournalView journalView;
 
-    public JournalController(){
-
-    }
+    private HashMap<String, INameable> itemMap;
 
 
-    public JournalController(Journal journalMorndel, JournalView joualView){
+    public JournalController(Journal journalModel, HashMap<String, INameable> itemMap){
         this.journalModel = journalModel;
-        this.journalView = journalView;
+        this.itemMap= itemMap;
         //journalModel.addObserver(journalView);
     }
 

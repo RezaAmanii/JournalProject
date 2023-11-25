@@ -1,28 +1,29 @@
 package org.group12.controller;
 
+import javafx.event.ActionEvent;
 import javafx.util.Pair;
 import org.group12.model.Calendar.Calendar;
+import org.group12.model.INameable;
 import org.group12.view.CalendarView;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 
 
 public class CalendarController implements IController {
 
     private Calendar calenderModel;
     private CalendarView calenderView;
+    private HashMap<String, INameable> itemMap;
 
-    public CalendarController(){
 
-    }
-
-    public CalendarController(Calendar calenderModel, CalendarView calenderView){
+    public CalendarController(Calendar calenderModel, HashMap<String, INameable> itemMap){
         this.calenderModel = calenderModel;
-        this.calenderView = calenderView;
+        this.itemMap = itemMap;
         //calenderModel.addObserver(calenderView);
     }
 
-    private void addEvent(String title, String description, LocalDateTime dateOfEvent, Pair<LocalDateTime, LocalDateTime> timeFrame){
+    private void addEventHandler(String title, String description, LocalDateTime dateOfEvent, Pair<LocalDateTime, LocalDateTime> timeFrame){
 
         try{
             // Checks if title, date and time frame is not null or empty
@@ -50,11 +51,6 @@ public class CalendarController implements IController {
 
             calenderModel.addEvent(title, description, dateOfEvent, timeFrame);
 
-            //Event newEvent = calenderModel.eventFactory.createEvent(title, description, dateOfEvent, timeFrame);
-
-            // Notify observer to update view
-            //calenderModel.notifyObservers(newEvent);
-
             // Catches exceptions for adding method
         } catch (IllegalArgumentException error){
             System.out.println("Error occurred while adding event : " + error.getMessage());
@@ -63,6 +59,12 @@ public class CalendarController implements IController {
         } catch (Exception commonError){
             System.out.println("Error occurred : " + commonError.getMessage());
         }
+
+    }
+
+
+    public void removeEventHandler(ActionEvent event){
+
 
     }
 

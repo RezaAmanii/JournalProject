@@ -1,14 +1,17 @@
 package org.group12.controller;
 
 
-public class ControllerFactory {
+import org.group12.model.Container;
 
-    public static IController createController(String controllerType) {
+public class ControllerFactory {
+    private Container model;
+
+    public  IController createController(String controllerType) {
         switch (controllerType) {
             case "JournalController":
-                return new JournalController();
+                return new JournalController(model.getJournal(), model.getItemMap());
             case "CalendarController":
-                return new CalendarController();
+                return new CalendarController(model.getCalender(), model.getItemMap());
             case "TaskListController":
                 return new TaskListController();
             case "TaskController":
