@@ -9,64 +9,53 @@ import java.util.ArrayList;
 public class toDoTask {
     private int ID;
     private String taskName;
-    private boolean isFinished;
+    private boolean isFinished, isImportant;
     private ZonedDateTime taskDeadline;
-    private ArrayList<subTask> completedSubTasks;
-    private ArrayList<subTask> toDoSubTasks;
+    private ArrayList<subTask> subTasks;
 
-    /**
-     * Constructor for ToDoTask with initial values.
-     *
-     * @param id               The ID of the task.
-     * @param taskName         The name of the task.
-     * @param isFinished       The status of the task (finished or not).
-     * @param taskDeadline     The deadline of the task.
-     * @param csb     The list of to-do subtasks.
-     * @param tdsb The list of completed subtasks.
-     */
-    public toDoTask(int id,String taskName,boolean isFinished,ZonedDateTime taskDeadline,ArrayList<subTask>tdsb,ArrayList<subTask>csb){
-        this.ID = id;
-        this.taskDeadline = taskDeadline;
-        this.taskName = taskName;
-        this.isFinished = isFinished;
-        this.completedSubTasks = csb;
-        this.toDoSubTasks = tdsb;
+
+    public toDoTask(int id,String taskName,boolean isFinished,boolean isImportant,ZonedDateTime taskDeadline,ArrayList<subTask>csb){
+        this.ID=id;
+        this.taskDeadline=taskDeadline;
+        this.isImportant=isImportant;
+        this.taskName=taskName;
+        this.isFinished=isFinished;
+        this.subTasks=csb;
     }
 
-    /**
-     * Sets the list of to-do subtasks.
-     *
-     * @param toDoSubTasks The list of to-do subtasks to be set.
-     */
-    public void setToDoSubTasks(ArrayList<subTask> toDoSubTasks) {
-        this.toDoSubTasks = toDoSubTasks;
+    public void setImportant(boolean important) {
+        isImportant = important;
     }
 
-    /**
-     * Sets the list of completed subtasks.
-     *
-     * @param completedSubTasks The list of completed subtasks to be set.
-     */
-    public void setCompletedSubTasks(ArrayList<subTask> completedSubTasks) {
-        this.completedSubTasks = completedSubTasks;
+    public boolean isImportant() {
+        return isImportant;
     }
 
-    /**
-     * Retrieves the list of completed subtasks.
-     *
-     * @return The list of completed subtasks.
-     */
+    public void setSubTasks(ArrayList<subTask> subTasks) {
+        this.subTasks = subTasks;
+    }
+
+    public ArrayList<subTask> getSubTasks() {
+        return subTasks;
+    }
+
+
     public ArrayList<subTask> getCompletedSubTasks() {
-        return completedSubTasks;
+        ArrayList<subTask>completed=new ArrayList<>();
+        for (subTask task:subTasks){
+            if(task.isFinished())
+                completed.add(task);
+        }
+        return completed;
     }
 
-    /**
-     * Retrieves the list of to-do subtasks.
-     *
-     * @return The list of to-do subtasks.
-     */
-    public ArrayList<subTask> getToDoSubTasks() {
-        return toDoSubTasks;
+    public ArrayList<subTask> getUnfinishedSubTasks() {
+        ArrayList<subTask>notCompleted=new ArrayList<>();
+        for (subTask task:subTasks){
+            if(!task.isFinished())
+                notCompleted.add(task);
+        }
+        return notCompleted;
     }
 
     /**

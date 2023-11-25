@@ -16,6 +16,10 @@ import java.util.Random;
 public class globals {
 
     public static boolean[] toDoListsIDs=new boolean[1000];
+    public static boolean[] toDoTasksIDs=new boolean[1000];
+
+    public static boolean[] toDoSubTasksIDs=new boolean[1000];
+
 
     public static int createNewRandomID(boolean[] v) {
         Random random = new Random();
@@ -48,11 +52,11 @@ public class globals {
         alert.showAndWait();
     }
 
-
-    public static void openNewForm(String formName,String title) throws IOException {
-        Parent root= FXMLLoader.load(Objects.requireNonNull(globals.class.getResource(formName)));
+    public static void openNewForm(String formName,String title,boolean resizable) throws IOException {
+        Parent root= FXMLLoader.load(globals.class.getResource(formName));
         Scene scene=new Scene(root);
         Stage stage=new Stage();
+        stage.setResizable(resizable);
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();

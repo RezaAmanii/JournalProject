@@ -1,5 +1,6 @@
 package org.group12.view;
 
+import javafx.scene.image.Image;
 import org.group12.toDoTask;
 import org.group12.toDoList;
 import org.group12.globals;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.*;
+
 
 public class MainMenuController implements Initializable {
 
@@ -53,6 +55,7 @@ public class MainMenuController implements Initializable {
     public VBox completedTasksVbox;
     public GridPane addNewListBtn;
     public BorderPane mainWindowBorder;
+    public VBox fixedListsVbox;
 
 
 
@@ -60,8 +63,8 @@ public class MainMenuController implements Initializable {
     ZonedDateTime today;
     int selectedDay;
 
-    ArrayList<toDoList> allLists = new ArrayList<>();
-    public toDoList selectedList = new toDoList();
+    public static ArrayList<toDoList> allLists = new ArrayList<>();
+    public static toDoList selectedList = new toDoList();
     public static toDoTask selectedTask=null;
 
     @Override
@@ -76,7 +79,7 @@ public class MainMenuController implements Initializable {
 
         allLists.add(new toDoList(1,"Today", new ArrayList<>()));
         allLists.add(new toDoList(2,"Important", new ArrayList<>()));
-        selectedList = allLists.get(0);
+        refreshAllListVBox();
         refreshSidePanelInfo();
 
         drawCalendar();
@@ -141,11 +144,9 @@ public class MainMenuController implements Initializable {
     //////////////////////////////////////
 
     //todo functions
-    public void addNewList() {
-        //
+
+    GridPane createNewListObject(toDoList newList){
         GridPane listToAppend = new GridPane();
-        toDoList newList = new toDoList(globals.createNewRandomID(globals.toDoListsIDs),"New List", new ArrayList<>());
-        allLists.add(newList);
         listToAppend.setMinHeight(33.0);
         listToAppend.setMinWidth(300.0);
         listToAppend.setStyle("-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;");
@@ -153,12 +154,13 @@ public class MainMenuController implements Initializable {
         ColumnConstraints col2 = new ColumnConstraints();
         col2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         col2.setMinWidth(10.0);
-        col2.setPercentWidth(76.0);
+        col2.setPercentWidth(75);
 
         ColumnConstraints col3 = new ColumnConstraints();
         col3.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         col3.setMinWidth(10.0);
-        col3.setPercentWidth(24.0);
+        col3.setPercentWidth(25);
+
 
         listToAppend.getColumnConstraints().addAll(col2, col3);
 
@@ -173,10 +175,8 @@ public class MainMenuController implements Initializable {
         taskNameLBL.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
         taskNameLBL.setEditable(false);
         taskNameLBL.setAlignment(Pos.CENTER);
-        //
 
 
-        GridPane.setColumnIndex(taskNameLBL, 0);
         GridPane.setHalignment(taskNameLBL, javafx.geometry.HPos.CENTER);
         GridPane.setValignment(taskNameLBL, javafx.geometry.VPos.CENTER);
         taskNameLBL.setFont(new Font("Berlin Sans FB Demi Bold", 22.0));
@@ -194,7 +194,7 @@ public class MainMenuController implements Initializable {
             selectedList = allLists.get(findTheToDoList(newList));////////////
             noOfTasks.setText(String.valueOf(allLists.get(findTheToDoList(selectedList)).getTasks().size()));
             refreshSidePanelInfo();
-            if (event.getClickCount() == 2) {
+            if (event.getClickCount() == 2 &&selectedList.getID()!=1&&selectedList.getID()!=2) {
                 taskNameLBL.setEditable(true);
                 taskNameLBL.requestFocus();
             }
@@ -213,6 +213,8 @@ public class MainMenuController implements Initializable {
         mainWindowBorder.setOnMouseClicked(event -> {
 
             mainWindowBorder.getOnMouseClicked();
+            refreshSidePanelInfo();
+            refreshAllListVBox();
             selectedList = allLists.get(findTheToDoList(newList));////////////
             noOfTasks.setText(String.valueOf(allLists.get(findTheToDoList(selectedList)).getTasks().size()));
 
@@ -230,28 +232,77 @@ public class MainMenuController implements Initializable {
         });
 
         listToAppend.getChildren().addAll(taskNameLBL, noOfTasks);
-
         VBox.setMargin(listToAppend, new Insets(10.0, 10.0, 0, 10.0));
+
+        return listToAppend;
+    }
+    public void addNewList() {
+        //
+        toDoList newList = new toDoList(globals.createNewRandomID(globals.toDoListsIDs),"New List", new ArrayList<>());
+        allLists.add(newList);
+        GridPane listToAppend=createNewListObject(newList);
 
         appendableListVbox.getChildren().add(listToAppend);
     }
 
-
+    public void deleteSelectedList(){
+        if(selectedList.getID()==1||selectedList.getID()==2){
+            globals.showErrorAlert("Can't delete Today or Important Lists, select a different list.");
+            return;
+        }
+        for (toDoList list:allLists){
+            if (list.getID()==selectedList.getID()){
+                allLists.remove(list);
+                break;
+            }
+        }
+        refreshAllListVBox();
+        refreshSidePanelInfo();
+    }
+    void refreshAllListVBox(){
+        selectedList=allLists.get(0);
+        fixedListsVbox.getChildren().clear();
+        appendableListVbox.getChildren().clear();
+        for (toDoList list:allLists){
+            if (list.getID()==1||list.getID()==2){
+                fixedListsVbox.getChildren().add(createNewListObject(list));
+            }
+            else{
+                allLists.get(0).getTasks().clear();
+                allLists.get(1).getTasks().clear();
+                for (toDoTask task:list.getTasks()){
+                    if (task.getTaskDeadline().getDayOfMonth()==ZonedDateTime.now().getDayOfMonth()
+                            && task.getTaskDeadline().getMonth()==ZonedDateTime.now().getMonth()
+                            && task.getTaskDeadline().getYear()==ZonedDateTime.now().getYear()){
+                        allLists.get(0).getTasks().removeIf(task1 -> task1.getID() == task.getID());
+                        allLists.get(0).getTasks().add(task);
+                    }
+                    if (task.isImportant()){
+                        allLists.get(1).getTasks().removeIf(task1 -> task1.getID() == task.getID());
+                        allLists.get(1).getTasks().add(task);
+                    }
+                }
+                appendableListVbox.getChildren().add(createNewListObject(list));
+            }
+        }
+        refreshSidePanelInfo();
+    }
     void renameToDoList(toDoList list, String newName) {
+        if (allLists.get(findTheToDoList(list)).getID()==1||allLists.get(findTheToDoList(list)).getID()==0)return;
         allLists.get(findTheToDoList(list)).setListName(newName);
         refreshSidePanelInfo();
     }
     void renameTask(toDoTask task,String newName){
         allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task)).setTaskName(newName);
     }
-    int findTheToDoList(toDoList list) {
+    public static int findTheToDoList(toDoList list) {
         for (toDoList list1 : allLists) {
             if (list1.getID() == list.getID()) return allLists.indexOf(list);
         }
         return -1;
     }
 
-    int findTheTask(toDoTask task) {
+    public static int findTheTask(toDoTask task) {
         selectedList=allLists.get(findTheToDoList(selectedList));
         for (toDoTask task1 : selectedList.getTasks()) {
             if (task1.getID() == task.getID()) return selectedList.getTasks().indexOf(task1);
@@ -263,36 +314,87 @@ public class MainMenuController implements Initializable {
     GridPane createNewTaskObject(toDoTask task) {
 
         GridPane newTaskPane = new GridPane();
-        newTaskPane.setMinHeight(30.0);
+        newTaskPane.setMinHeight(70.0);
         newTaskPane.setMinWidth(250.0);
         newTaskPane.setStyle("-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;");
 
-        ColumnConstraints col1 = new ColumnConstraints();
+        ColumnConstraints col1 = new ColumnConstraints(); //progress
         col1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         col1.setMinWidth(10.0);
-        col1.setPercentWidth(20.0);
-        col1.setPrefWidth(216.44439019097223);
+        col1.setPercentWidth(12.5);
+        col1.setPrefWidth(216);
 
-        ColumnConstraints col2 = new ColumnConstraints();
+        ColumnConstraints col2 = new ColumnConstraints(); //name and deadline
         col2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         col2.setMinWidth(10.0);
-        col2.setPercentWidth(75.0);
-        col2.setPrefWidth(216.44439019097223);
+        col2.setPercentWidth(50.0);
+        col2.setPrefWidth(216);
 
-        ColumnConstraints col3 = new ColumnConstraints();
+        ColumnConstraints col3 = new ColumnConstraints(); //view
         col3.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
         col3.setMinWidth(10.0);
-        col3.setPercentWidth(20.0);
-        col3.setPrefWidth(104.00005425347223);
+        col3.setPercentWidth(12.5);
+        col3.setPrefWidth(104);
 
-        newTaskPane.getColumnConstraints().addAll(col1, col2, col3);
+        ColumnConstraints col4 = new ColumnConstraints(); //delete
+        col4.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        col4.setMinWidth(10.0);
+        col4.setPercentWidth(12.5);
+        col4.setPrefWidth(104);
+
+        ColumnConstraints col5 = new ColumnConstraints(); //important
+        col5.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
+        col5.setMinWidth(10.0);
+        col5.setPercentWidth(12.5);
+        col5.setPrefWidth(104);
+        newTaskPane.getColumnConstraints().addAll(col1, col2, col3,col4,col5);
 
         RowConstraints row1 = new RowConstraints();
-        row1.setMinHeight(10.0);
-        row1.setPrefHeight(30.0);
+        row1.setMinHeight(30.0);
+        row1.setPercentHeight(60);
         row1.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
 
+        RowConstraints row2 = new RowConstraints();
+        row2.setMinHeight(10.0);
+        row2.setPercentHeight(40);
+        row2.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
+
         newTaskPane.getRowConstraints().add(row1);
+
+        Label deadlineLabel=new Label(task.getTaskDeadline().getDayOfMonth() + "/"
+                + task.getTaskDeadline().getMonthValue() + "/"
+                + task.getTaskDeadline().getYear() + " - "
+                + task.getTaskDeadline().getHour() + ':' + task.getTaskDeadline().getMinute());
+        deadlineLabel.setFont(new Font("Berlin Sans FB", 16.0));
+        deadlineLabel.setStyle("-fx-text-fill: white");
+        GridPane.setMargin(deadlineLabel,new Insets(3));
+        GridPane.setValignment(deadlineLabel, javafx.geometry.VPos.CENTER);
+        GridPane.setHalignment(deadlineLabel, javafx.geometry.HPos.CENTER);
+        GridPane.setColumnIndex(deadlineLabel,1);
+        GridPane.setRowIndex(deadlineLabel,1);
+
+        ImageView imageViewImportant = new ImageView("starUnselected.png");
+        if (task.isImportant())imageViewImportant.setImage(new Image("star.png"));
+        imageViewImportant.setFitHeight(31.0);
+        imageViewImportant.setFitWidth(31.0);
+        imageViewImportant.setPickOnBounds(true);
+        imageViewImportant.setPreserveRatio(true);
+        GridPane.setColumnIndex(imageViewImportant, 4);
+        GridPane.setRowSpan(imageViewImportant,2);
+
+        imageViewImportant.setOnMouseClicked(event -> {
+            if (task.isImportant()){
+                task.setImportant(false);
+                allLists.get(1).getTasks().remove(task);
+                imageViewImportant.setImage(new Image("starUnselected.png"));
+            }
+            else{
+                task.setImportant(true);
+                allLists.get(1).getTasks().add(task);
+                imageViewImportant.setImage(new Image("star.png"));
+
+            }
+        });
 
         TextField taskNameLBL = new TextField(task.getTaskName());
         taskNameLBL.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
@@ -302,40 +404,70 @@ public class MainMenuController implements Initializable {
         GridPane.setValignment(taskNameLBL, javafx.geometry.VPos.CENTER);
         taskNameLBL.setFont(new Font("Berlin Sans FB Demi Bold", 22.0));
 
+        ImageView imageViewDelete = new ImageView("deleteWhite.png");
+        imageViewDelete.setFitHeight(31.0);
+        imageViewDelete.setFitWidth(31.0);
+        imageViewDelete.setPickOnBounds(true);
+        imageViewDelete.setPreserveRatio(true);
+        GridPane.setColumnIndex(imageViewDelete, 3);
+        GridPane.setRowSpan(imageViewDelete,2);
+
+        imageViewDelete.setOnMouseClicked(event -> {
+            for (toDoTask task1: selectedList.getTasks()){
+                if (task.getID()==task1.getID()){
+                    selectedList.getTasks().remove(task1);
+                    break;
+                }
+            }
+            refreshSidePanelInfo();
+            refreshAllListVBox();
+        });
+
         double tasksFinishedPercentage=0;
-        if ((task.getCompletedSubTasks().size()+task.getToDoSubTasks().size()!=0)){
-            tasksFinishedPercentage=(double)(task.getCompletedSubTasks().size() /(task.getCompletedSubTasks().size()+task.getToDoSubTasks().size()));
+        if ((task.getSubTasks().size()!=0)){
+            tasksFinishedPercentage=(((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size()));
         }
 
         ProgressIndicator progressIndicator = new ProgressIndicator(tasksFinishedPercentage);
         GridPane.setHalignment(progressIndicator, javafx.geometry.HPos.CENTER);
         GridPane.setMargin(progressIndicator, new Insets(3.0, 3.0, 3.0, 3.0));
 
-        ImageView imageView = new ImageView("notification.png");
+        ImageView imageView = new ImageView("viewWhite.png");
         imageView.setFitHeight(31.0);
         imageView.setFitWidth(31.0);
         imageView.setPickOnBounds(true);
         imageView.setPreserveRatio(true);
         GridPane.setColumnIndex(taskNameLBL, 1);
         GridPane.setColumnIndex(progressIndicator, 0);
-
         GridPane.setColumnIndex(imageView, 2);
+        GridPane.setRowSpan(imageView,2);
+        GridPane.setRowSpan(progressIndicator,2);
+
+
+
+
         GridPane.setHalignment(imageView, javafx.geometry.HPos.CENTER);
         GridPane.setMargin(imageView, new Insets(2.0, 2.0, 2.0, 2.0));
         taskNameLBL.setOnMouseClicked(event -> {
             selectedTask=task;
-            if (event.getClickCount() == 2) {
+            if (event.getClickCount() == 2 &&selectedList.getID()!=1&&selectedList.getID()!=2) {
                 taskNameLBL.setEditable(true);
                 taskNameLBL.requestFocus();
             }
         });
         imageView.setOnMouseClicked(event -> {
-            selectedTask=task;
+            selectedTask = task;
             try {
-                globals.openNewForm("subTasks.fxml",selectedTask.getTaskName());
+                globals.openNewForm("view/subTasks.fxml", selectedTask.getTaskName(),false);
+                if ((task.getSubTasks().size()!=0)) {
+                    progressIndicator.setProgress((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
+                    System.out.println((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
+                }
+                refreshSidePanelInfo();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+
         });
 
         taskNameLBL.setOnKeyPressed(event -> {
@@ -345,31 +477,40 @@ public class MainMenuController implements Initializable {
             }
         });
 
-        newTaskPane.getChildren().addAll(taskNameLBL, progressIndicator, imageView);
+        newTaskPane.getChildren().addAll(taskNameLBL, progressIndicator, imageView,imageViewDelete,deadlineLabel,imageViewImportant);
 
         VBox.setMargin(newTaskPane, new Insets(10.0, 10.0, 0, 10.0));
         return newTaskPane;
     }
 
     public void addNewTask() {
-        toDoTask newToDoTask=new toDoTask(globals.createNewRandomID(globals.toDoListsIDs),"newTask", false, ZonedDateTime.now(),new ArrayList<>(),new ArrayList<>());
+        if (selectedList.getID()==1||selectedList.getID()==2){
+            globals.showErrorAlert("You can't add tasks to today or important directly, \ncreate a list to add tasks to \nand today and important lists will be updated accordingly.");
+            return;
+        }
+        toDoTask newToDoTask=new toDoTask(globals.createNewRandomID(globals.toDoTasksIDs),"newTask", false,false, ZonedDateTime.now(),new ArrayList<>());
         selectedList.getTasks().add(newToDoTask);
         GridPane newTask = createNewTaskObject(newToDoTask);
 
         ongoingTasksVbox.getChildren().add(newTask);
+        refreshAllListVBox();
 
     }
 
     private void refreshSidePanelInfo() {
-        selectedList=allLists.get(findTheToDoList(selectedList));
+        selectedList = allLists.get(findTheToDoList(selectedList));
         activeListNameLBL.setText(selectedList.getListName());
         ongoingTasksVbox.getChildren().clear();
         completedTasksVbox.getChildren().clear();
+        Comparator<toDoTask> comparator = Comparator.comparing(toDoTask::getTaskDeadline);
+        selectedList.getTasks().sort(comparator);
+
         for (toDoTask task:selectedList.getTasks()){
-            if (!task.isFinished())
-                ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
-            else
+            if (task.getSubTasks().size()==task.getCompletedSubTasks().size() && task.getSubTasks().size()!=0)
                 completedTasksVbox.getChildren().add(createNewTaskObject(task));
+
+            else
+                ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
 
         }
 
