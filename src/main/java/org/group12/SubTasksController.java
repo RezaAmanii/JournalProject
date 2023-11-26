@@ -18,11 +18,7 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.*;
 
-import static org.group12.view.MainMenuController.findTheTask;
-import static org.group12.view.MainMenuController.allLists;
-import static org.group12.view.MainMenuController.findTheToDoList;
-import static org.group12.view.MainMenuController.selectedTask;
-import static org.group12.view.MainMenuController.selectedList;
+import static org.group12.ToDoPageController.*;
 
 /**
  * Controller class for managing subtasks in the application.
@@ -52,7 +48,7 @@ public class SubTasksController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        taskNameLBL.setText(MainMenuController.selectedTask.getTaskName());
+        taskNameLBL.setText(selectedTask.getTaskName());
         hrSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,ZonedDateTime.now().getHour()));
         minSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59,ZonedDateTime.now().getMinute()));
         changeDeadlineDP.setValue(LocalDate.now());

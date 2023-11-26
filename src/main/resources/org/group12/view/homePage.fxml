@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<BorderPane fx:id="homePane" xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.group12.HomePageController"
+            prefHeight="400.0" prefWidth="600.0">
+    <top>
+        <BorderPane prefHeight="64.0" prefWidth="659.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+            </BorderPane.margin>
+            <left>
+                <Label fx:id="nameLBL" text="Hello, PlanIt" textFill="#183a4e" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font name="Berlin Sans FB Demi Bold" size="47.0" />
+                    </font>
+                    <BorderPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </BorderPane.margin>
+                </Label>
+            </left>
+            <right>
+                <HBox prefHeight="76.0" prefWidth="121.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fitHeight="51.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/notification.png" />
+                            </image>
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </HBox.margin>
+                        </ImageView>
+                        <ImageView fitHeight="42.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/user.png" />
+                            </image>
+                            <HBox.margin>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </HBox.margin>
+                        </ImageView>
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </HBox>
+            </right>
+        </BorderPane>
+    </top>
+    <right>
+        <VBox fx:id="dayDeadlines" prefHeight="460.0" prefWidth="221.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="10.0" right="10.0" />
+            </BorderPane.margin>
+        </VBox>
+    </right>
+    <bottom>
+        <HBox prefHeight="131.0" prefWidth="679.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" />
+            </BorderPane.margin>
+            <children>
+                <Pane prefHeight="111.0" prefWidth="160.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;">
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
+                    <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Name" textFill="#183a4e">
+                            <font>
+                                <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="newTaskNameTF" layoutX="14.0" layoutY="32.0" prefHeight="23.0" prefWidth="135.0" promptText="Task Name " style="-fx-text-fill: #183a4e;">
+                            <font>
+                                <Font name="Berlin Sans FB" size="14.0" />
+                            </font>
+                        </TextField>
+                        <Label layoutX="14.0" layoutY="62.0" text="Time" textFill="#183a4e">
+                            <font>
+                                <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                            </font>
+                        </Label>
+                        <Spinner fx:id="hrSpinner" layoutX="14.0" layoutY="79.0" prefHeight="27.0" prefWidth="60.0" style="-fx-font-family: Berlin Sans FB Demi; -fx-font-size: 11" />
+                        <Spinner fx:id="minSpinner" layoutX="88.0" layoutY="79.0" prefHeight="27.0" prefWidth="60.0" style="-fx-font-family: Berlin Sans FB Demi; -fx-font-size: 11" />
+                    </children>
+                </Pane>
+                <Pane prefHeight="111.0" prefWidth="160.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;">
+                    <HBox.margin>
+                        <Insets bottom="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
+                    <children>
+                        <ImageView fx:id="menuImg1" fitHeight="51.0" fitWidth="49.0" layoutX="56.0" layoutY="30.0" onMouseClicked="#addNewDayActivity" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/addNew.png" />
+                            </image>
+                        </ImageView>
+                    </children>
+                </Pane>
+            </children>
+        </HBox>
+    </bottom>
+    <center>
+        <BorderPane style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;" BorderPane.alignment="CENTER">
+            <BorderPane.margin>
+                <Insets bottom="10.0" left="10.0" right="10.0" />
+            </BorderPane.margin>
+            <top>
+                <GridPane BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <HBox>
+                            <children>
+                                <Label text="Sun" textFill="#183a4e">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="Bodoni MT Black" size="17.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets right="5.0" top="10.0" />
+                            </padding>
+                        </HBox>
+                        <HBox GridPane.columnIndex="1">
+                            <children>
+                                <Label text="Mon" textFill="#183a4e">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="Bodoni MT Black" size="17.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets right="5.0" top="10.0" />
+                            </padding>
+                        </HBox>
+                        <HBox GridPane.columnIndex="2">
+                            <children>
+                                <Label text="Tues" textFill="#183a4e">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="Bodoni MT Black" size="17.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets right="5.0" top="10.0" />
+                            </padding>
+                        </HBox>
+                        <HBox GridPane.columnIndex="3">
+                            <children>
+                                <Label text="Wed" textFill="#183a4e">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="Bodoni MT Black" size="17.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets right="5.0" top="10.0" />
+                            </padding>
+                        </HBox>
+                        <HBox GridPane.columnIndex="4">
+                            <children>
+                                <Label text="Thu" textFill="#183a4e">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="Bodoni MT Black" size="17.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets right="5.0" top="10.0" />
+                            </padding>
+                        </HBox>
+                        <HBox GridPane.columnIndex="5">
+                            <children>
+                                <Label text="Fri" textFill="#183a4e">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="Bodoni MT Black" size="17.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets right="5.0" top="10.0" />
+                            </padding>
+                            <GridPane.margin>
+                                <Insets />
+                            </GridPane.margin>
+                        </HBox>
+                        <HBox GridPane.columnIndex="6">
+                            <children>
+                                <Label text="Sat" textFill="#183a4e">
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                    </padding>
+                                    <font>
+                                        <Font name="Bodoni MT Black" size="17.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets right="5.0" top="10.0" />
+                            </padding>
+                        </HBox>
+                    </children>
+                    <padding>
+                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+                    </padding>
+                </GridPane>
+            </top>
+            <bottom>
+                <HBox prefHeight="40.0" prefWidth="425.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <Label fx:id="monthLBL" prefHeight="31.0" prefWidth="142.0" text="Sat" textFill="#183a4e">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                            </padding>
+                            <font>
+                                <Font name="Bodoni MT Black" size="17.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="yearLBL" text="Sat" textFill="#183a4e">
+                            <padding>
+                                <Insets bottom="5.0" left="5.0" right="15.0" top="5.0" />
+                            </padding>
+                            <font>
+                                <Font name="Bodoni MT Black" size="17.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Pane onMouseClicked="#backOneMonth" prefHeight="23.0" prefWidth="42.0" style="-fx-background-color: #183a4e; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white;">
+                            <HBox.margin>
+                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                            </HBox.margin>
+                            <children>
+                                <Label alignment="CENTER" layoutX="15.0" layoutY="-4.0" text="&lt;" textFill="WHITE">
+                                    <font>
+                                        <Font name="Berlin Sans FB" size="34.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <padding>
+                                <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
+                            </padding>
+                        </Pane>
+                        <Pane onMouseClicked="#forwardOneMonth" prefHeight="23.0" prefWidth="42.0" style="-fx-background-color: #183a4e; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white;">
+                            <HBox.margin>
+                                <Insets bottom="3.0" right="3.0" top="3.0" />
+                            </HBox.margin>
+                            <children>
+                                <Label alignment="CENTER" layoutX="15.0" layoutY="-4.0" text="&gt;" textFill="WHITE">
+                                    <font>
+                                        <Font name="Berlin Sans FB" size="34.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </Pane>
+                    </children>
+                </HBox>
+            </bottom>
+            <center>
+                <GridPane fx:id="calendarPane" minHeight="267.0" prefHeight="267.0" prefWidth="425.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10;" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="7.111118846469456" prefWidth="30.22226291232639" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="27.555514865451393" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="180.77775065104166" minWidth="10.0" prefWidth="28.5" />
+
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+
+                    </rowConstraints>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </GridPane>
+            </center>
+        </BorderPane>
+    </center>
+</BorderPane>
