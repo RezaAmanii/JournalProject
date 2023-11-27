@@ -37,11 +37,27 @@ public class TodoCollection implements ITodoCollection{
     @Override
     public void removeTaskList(String taskListID) {
         taskListMap.remove(taskListID);
+        notifyRemoveItem(taskListID);
     }
 
     @Override
     public HashMap<String, ITaskList> getTaskListMap() {
         return taskListMap;
+    }
+
+    @Override
+    public String getID() {
+        return ID;
+    }
+
+    @Override
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Override
+    public String getTitle() {
+        return title;
     }
 
     @Override
@@ -62,24 +78,9 @@ public class TodoCollection implements ITodoCollection{
     }
 
     @Override
-    public void notifyRemoveItem(INameable newItem) {
+    public void notifyRemoveItem(String itemID) {
         for (IItemObserver observer : observers) {
-            observer.removeItem(newItem);
+            observer.removeItem(itemID);
         }
-    }
-
-    @Override
-    public String getID() {
-        return ID;
-    }
-
-    @Override
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    @Override
-    public String getTitle() {
-        return title;
     }
 }

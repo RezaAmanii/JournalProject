@@ -1,6 +1,8 @@
 package org.group12.model.todo;
 
 import org.group12.Observers.IPlanITObserver;
+import org.group12.Observers.alternative.IItemObserver;
+import org.group12.model.INameable;
 import org.group12.model.todo.factories.TaskFactory;
 
 import java.time.LocalDateTime;
@@ -102,18 +104,24 @@ public class BigTask implements IBigTask {
         return subTaskMap;
     }
 
+
     @Override
-    public void addObserver(IPlanITObserver observer) {
+    public void addObserver(IItemObserver observer) {
         modelTask.addObserver(observer);
     }
 
     @Override
-    public void removeObserver(IPlanITObserver observer) {
+    public void removeObserver(IItemObserver observer) {
         modelTask.removeObserver(observer);
     }
 
     @Override
-    public void notifyObservers() {
-        modelTask.notifyObservers();
+    public void notifyNewItem(INameable newItem) {
+        modelTask.notifyNewItem(newItem);
+    }
+
+    @Override
+    public void notifyRemoveItem(String itemID) {
+        modelTask.notifyRemoveItem(itemID);
     }
 }

@@ -1,6 +1,8 @@
 package org.group12.model.todo;
 
 import org.group12.Observers.IPlanITObserver;
+import org.group12.Observers.alternative.IItemObserver;
+import org.group12.model.INameable;
 import org.group12.model.todo.factories.BigTaskFactory;
 
 import java.time.LocalDateTime;
@@ -13,7 +15,7 @@ public class TaskList implements ITaskList {
     private final HashMap<String, IBigTask> bigTaskMap;
     private final String ID;
     private final BigTaskFactory bigTaskFactory;
-    private final ArrayList<IPlanITObserver> observers;
+    private final ArrayList<IItemObserver> observers;
 
     public TaskList(String title, String ID) {
         this.bigTaskMap = new HashMap<>();
@@ -21,6 +23,11 @@ public class TaskList implements ITaskList {
         this.ID = ID;
         setTitle(title);
         this.observers = new ArrayList<>();
+    }
+
+    @Override
+    public String getID() {
+        return ID;
     }
 
     @Override
@@ -36,11 +43,6 @@ public class TaskList implements ITaskList {
     @Override
     public LocalDateTime getDateCreated() {
         return dateCreated;
-    }
-
-    @Override
-    public String getID() {
-        return ID;
     }
 
     // Methods for editing Bigtasks
@@ -60,20 +62,28 @@ public class TaskList implements ITaskList {
         return bigTaskMap;
     }
 
+
     @Override
-    public void addObserver(IPlanITObserver observer) {
+    public void addObserver(IItemObserver observer) {
         observers.add(observer);
     }
 
     @Override
-    public void removeObserver(IPlanITObserver observer) {
+    public void removeObserver(IItemObserver observer) {
         observers.remove(observer);
     }
 
     @Override
-    public void notifyObservers() {
-        for (IPlanITObserver observer : observers) {
-            //observer.update();
+    public void notifyNewItem(INameable newItem) {
+        for (IItemObserver observer : observers) {
+            observer.addItem(newItem);
+        }
+    }
+
+    @Override
+    public void notifyRemoveItem(String itemID) {
+        for (IItemObserver observer : observers) {
+            observer.removeItem(itemID);
         }
     }
 }

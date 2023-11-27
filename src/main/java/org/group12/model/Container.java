@@ -60,9 +60,9 @@ public class Container implements IItemObservable {
     }
 
     @Override
-    public void notifyRemoveItem(INameable newItem) {
+    public void notifyRemoveItem(String itemID) {
         for (IItemObserver observer : observers) {
-            observer.removeItem(newItem);
+            observer.removeItem(itemID);
         }
     }
 }

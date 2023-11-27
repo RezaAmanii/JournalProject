@@ -1,8 +1,10 @@
 package org.group12.model;
 
+import org.group12.Observers.alternative.IItemObserver;
+
 import java.util.HashMap;
 
-public class Items {
+public class Items implements IItemObserver {
     private final HashMap<String, INameable> itemMap;
 
     public Items() {
@@ -17,7 +19,7 @@ public class Items {
         itemMap.put(item.getID(), item);
     }
 
-    public void removeItem(INameable item) {
-        itemMap.remove(item.getID());
+    public void removeItem(String itemID) {
+        itemMap.remove(itemID);
     }
 }

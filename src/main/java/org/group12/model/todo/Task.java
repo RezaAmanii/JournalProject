@@ -1,6 +1,8 @@
 package org.group12.model.todo;
 
 import org.group12.Observers.IPlanITObserver;
+import org.group12.Observers.alternative.IItemObserver;
+import org.group12.model.INameable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ public class Task implements ITask {
     private final LocalDateTime dateCreated;
     private boolean completed;
     private final String ID;
-    private final ArrayList<IPlanITObserver> observers;
+    private final ArrayList<IItemObserver> observers;
 
     public Task(String title, String ID) {
         this.title = title;
@@ -50,20 +52,28 @@ public class Task implements ITask {
         this.completed = status;
     }
 
+
     @Override
-    public void addObserver(IPlanITObserver observer) {
+    public void addObserver(IItemObserver observer) {
         observers.add(observer);
     }
 
     @Override
-    public void removeObserver(IPlanITObserver observer) {
+    public void removeObserver(IItemObserver observer) {
         observers.remove(observer);
     }
 
     @Override
-    public void notifyObservers() {
-        for (IPlanITObserver observer : observers) {
-            //observer.update();
+    public void notifyNewItem(INameable newItem) {
+        for (IItemObserver observer : observers) {
+            observer.addItem(newItem);
+        }
+    }
+
+    @Override
+    public void notifyRemoveItem(String itemID) {
+        for (IItemObserver observer : observers) {
+            observer.removeItem(itemID);
         }
     }
 }

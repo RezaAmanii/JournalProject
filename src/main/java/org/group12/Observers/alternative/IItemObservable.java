@@ -6,7 +6,7 @@ public interface IItemObservable {
     void addObserver(IItemObserver observer);
     void removeObserver(IItemObserver observer);
     void notifyNewItem(INameable newItem);
-    void notifyRemoveItem(INameable newItem);
+    void notifyRemoveItem(String itemID);
 
 
 }
