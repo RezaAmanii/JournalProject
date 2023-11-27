@@ -9,34 +9,29 @@ import java.util.concurrent.atomic.AtomicLong;
     * and some methods left abstract for subclasses to implement.
     **/
 public abstract class IDFactory {
-    protected abstract String getPrefix();
-    protected abstract AtomicLong getCounter();
+        protected abstract String getPrefix();
 
-    private static final Map<String, String> prefixToObjectTypes = new HashMap<>();
+        protected abstract AtomicLong getCounter();
 
-    static {
-        prefixToObjectTypes.put("JRNL", "Journal");
-        prefixToObjectTypes.put("JE", "Journal Entry");
-        prefixToObjectTypes.put("EV", "Event");
-        prefixToObjectTypes.put("TK", "Task");
-        prefixToObjectTypes.put("BTK", "BigTask");
-        prefixToObjectTypes.put("TL", "Tasklist");
-        prefixToObjectTypes.put("CAL", "Calendar");
+        protected abstract String getObjectType();
+
+
+        /**
+         * Generates a new ID by concatenating the prefix and the next number from the counter.
+         *
+         * @return the generated ID
+         */
+        public String generateID() {
+            return getPrefix() + getCounter().getAndIncrement();
+        }
+
+        /**
+         * Identifies the type of object based on the prefix.
+         *
+         * @return the type of object, or "Unknown" if the prefix is not recognized
+         */
+        public String identifyObjectType() {
+            return getObjectType();
+
+        }
     }
-    /**
-     * Generates a new ID by concatenating the prefix and the next number from the counter.
-     *
-     * @return the generated ID
-     */
-    public String generateID() {
-        return getPrefix() + getCounter().getAndIncrement();
-    }
-    /**
-     * Identifies the type of object based on the prefix.
-     *
-     * @return the type of object, or "Unknown" if the prefix is not recognized
-     */
-    public String identifyObjectType() {
-        return prefixToObjectTypes.getOrDefault(getPrefix(), "Unknown");
-    }
-}

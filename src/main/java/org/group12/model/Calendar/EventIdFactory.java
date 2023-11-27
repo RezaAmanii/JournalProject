@@ -30,4 +30,6 @@ public class EventIdFactory extends IDFactory {
     protected AtomicLong getCounter() {
         return counter;
     }
+    @Override
+    protected String getObjectType() { return "Event"; }
 }
