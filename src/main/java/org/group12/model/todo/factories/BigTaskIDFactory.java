@@ -29,5 +29,10 @@ public class BigTaskIDFactory extends IDFactory {
     protected AtomicLong getCounter() {
         return counter;
     }
+
+    @Override
+    protected String getObjectType() {
+        return "Big Task";
+    }
 }
 
