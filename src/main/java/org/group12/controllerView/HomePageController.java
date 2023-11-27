@@ -1,4 +1,4 @@
-package org.group12.controller;
+package org.group12.controllerView;
 
 import org.group12.model.homeCalendar.CalendarActivity;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package org.group12.controller;
+package org.group12.controllerView;
 
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.*;
 
-import static org.group12.controller.ToDoPageController.*;
+import static org.group12.controllerView.ToDoPageController.*;
 
 /**
  * Controller class for managing subtasks in the application.

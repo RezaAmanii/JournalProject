@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="347.0" style="-fx-background-color: #2f3f4e;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controller.SubTasksController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="347.0" style="-fx-background-color: #2f3f4e;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controllerView.SubTasksController">
     <top>
         <AnchorPane prefHeight="63.0" prefWidth="327.0" style="-fx-border-radius: 10; -fx-border-color: white;" BorderPane.alignment="CENTER">
             <BorderPane.margin>

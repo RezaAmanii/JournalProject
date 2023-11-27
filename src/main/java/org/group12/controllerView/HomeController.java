@@ -1,8 +1,9 @@
-package org.group12.controller;
+package org.group12.controllerView;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import org.group12.controllerView.MainMenuController;
 //import org.group12.view.MainMenuController;
 
 public class HomeController {

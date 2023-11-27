@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainWindowBorder" onDragDetected="#drawCalendar" prefHeight="663.0" prefWidth="783.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controller.CalendarPageController">
+<BorderPane fx:id="mainWindowBorder" onDragDetected="#drawCalendar" prefHeight="663.0" prefWidth="783.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controllerView.CalendarPageController">
     <top>
         <BorderPane prefHeight="64.0" prefWidth="659.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
             <BorderPane.margin>

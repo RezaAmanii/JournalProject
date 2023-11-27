@@ -1,4 +1,4 @@
-package org.group12.controller;
+package org.group12.controllerView;
 
 
 import javafx.fxml.FXML;
