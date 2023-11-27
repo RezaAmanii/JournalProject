@@ -1,6 +1,6 @@
-package org.group12;
+package org.group12.controller;
 
-import org.group12.view.CalendarActivity;
+import org.group12.model.homeCalendar.CalendarActivity;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -20,7 +20,6 @@ import java.util.*;
 public class CalendarPageController implements Initializable {
     public Label monthLBL;
     public  Label yearLBL;
-    //    public VBox dayDeadlines;
     public GridPane calendarPane;
 
     public ZonedDateTime dateFocus;

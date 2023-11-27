@@ -1,4 +1,4 @@
-package org.group12;
+package org.group12.controller;
 
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -11,6 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import org.group12.model.toDoSubTask.Globals;
+import org.group12.model.toDoSubTask.ToDoList;
+import org.group12.model.toDoSubTask.ToDoTask;
 
 import java.io.IOException;
 import java.net.URL;
@@ -36,9 +39,9 @@ public class ToDoPageController implements Initializable {
     public BorderPane mainWindowBorder;
 
 
-    public static ArrayList<toDoList> allLists = new ArrayList<>();
-    public static toDoList selectedList = new toDoList();
-    public static toDoTask selectedTask=null;
+    public static ArrayList<ToDoList> allLists = new ArrayList<>();
+    public static ToDoList selectedList = new ToDoList();
+    public static ToDoTask selectedTask=null;
 
     /**
      * Initializes the ToDoPageController.
@@ -51,20 +54,20 @@ public class ToDoPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (allLists.size()==0){
-            allLists.add(new toDoList(1,"Today", new ArrayList<>()));
-            allLists.add(new toDoList(2,"Important", new ArrayList<>()));
+            allLists.add(new ToDoList(1,"Today", new ArrayList<>()));
+            allLists.add(new ToDoList(2,"Important", new ArrayList<>()));
         }
         refreshAllListVBox();
         refreshSidePanelInfo();
     }
 
     /**
-     Creates a new list object in the GUI for the given toDoList.
+     Creates a new list object in the GUI for the given ToDoList.
 
-     * @param newList The toDoList for which the list object is created.
+     * @param newList The ToDoList for which the list object is created.
      * @return The GridPane representing the new list object.
      */
-    public  GridPane createNewListObject(toDoList newList){
+    public  GridPane createNewListObject(ToDoList newList){
         GridPane listToAppend = new GridPane();
         listToAppend.setMinHeight(33.0);
         listToAppend.setMinWidth(300.0);
@@ -161,7 +164,7 @@ public class ToDoPageController implements Initializable {
      */
     public void addNewList() {
         //
-        toDoList newList = new toDoList(globals.createNewRandomID(globals.toDoListsIDs),"New List", new ArrayList<>());
+        ToDoList newList = new ToDoList(Globals.createNewRandomID(Globals.toDoListsIDs),"New List", new ArrayList<>());
         allLists.add(newList);
         GridPane listToAppend=createNewListObject(newList);
 
@@ -173,10 +176,10 @@ public class ToDoPageController implements Initializable {
      */
     public void deleteSelectedList(){
         if(selectedList.getID()==1||selectedList.getID()==2){
-            globals.showErrorAlert("Can't delete Today or Important Lists, select a different list.");
+            Globals.showErrorAlert("Can't delete Today or Important Lists, select a different list.");
             return;
         }
-        for (toDoList list:allLists){
+        for (ToDoList list:allLists){
             if (list.getID()==selectedList.getID()){
                 allLists.remove(list);
                 break;
@@ -193,14 +196,14 @@ public class ToDoPageController implements Initializable {
         selectedList=allLists.get(0);
         fixedListsVbox.getChildren().clear();
         appendableListVbox.getChildren().clear();
-        for (toDoList list:allLists){
+        for (ToDoList list:allLists){
             if (list.getID()==1||list.getID()==2){
                 fixedListsVbox.getChildren().add(createNewListObject(list));
             }
             else{
                 allLists.get(0).getTasks().clear();
                 allLists.get(1).getTasks().clear();
-                for (toDoTask task:list.getTasks()){
+                for (ToDoTask task:list.getTasks()){
                     if (task.getTaskDeadline().getDayOfMonth()== ZonedDateTime.now().getDayOfMonth()
                             && task.getTaskDeadline().getMonth()==ZonedDateTime.now().getMonth()
                             && task.getTaskDeadline().getYear()==ZonedDateTime.now().getYear()){
@@ -224,7 +227,7 @@ public class ToDoPageController implements Initializable {
      * @param list    The to-do list to rename.
      * @param newName The new name for the list.
      */
-    public  void renameToDoList(toDoList list, String newName) {
+    public  void renameToDoList(ToDoList list, String newName) {
         if (allLists.get(findTheToDoList(list)).getID()==1||allLists.get(findTheToDoList(list)).getID()==0)return;
         allLists.get(findTheToDoList(list)).setListName(newName);
         refreshSidePanelInfo();
@@ -236,7 +239,7 @@ public class ToDoPageController implements Initializable {
      * @param task    The to-do task to rename.
      * @param newName The new name for the task.
      */
-    void renameTask(toDoTask task, String newName){
+    void renameTask(ToDoTask task, String newName){
         allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task)).setTaskName(newName);
     }
 
@@ -246,8 +249,8 @@ public class ToDoPageController implements Initializable {
      * @param list The to-do list to find.
      * @return The index of the list in the allLists collection, or -1 if not found.
      */
-    public static int findTheToDoList(toDoList list) {
-        for (toDoList list1 : allLists) {
+    public static int findTheToDoList(ToDoList list) {
+        for (ToDoList list1 : allLists) {
             if (list1.getID() == list.getID()) return allLists.indexOf(list);
         }
         return -1;
@@ -260,9 +263,9 @@ public class ToDoPageController implements Initializable {
      * @param task The to-do task to find.
      * @return The index of the task in the selectedList's tasks, or -1 if not found.
      */
-    public static int findTheTask(toDoTask task) {
+    public static int findTheTask(ToDoTask task) {
         selectedList=allLists.get(findTheToDoList(selectedList));
-        for (toDoTask task1 : selectedList.getTasks()) {
+        for (ToDoTask task1 : selectedList.getTasks()) {
             if (task1.getID() == task.getID()) return selectedList.getTasks().indexOf(task1);
         }
         return -1;
@@ -270,12 +273,12 @@ public class ToDoPageController implements Initializable {
 
 
     /**
-     * Creates a GridPane object representing a new task based on the provided toDoTask object.
+     * Creates a GridPane object representing a new task based on the provided ToDoTask object.
      *
-     * @param task The toDoTask object representing the task.
+     * @param task The ToDoTask object representing the task.
      * @return The GridPane object representing the new task.
      */
-    public  GridPane createNewTaskObject(toDoTask task) {
+    public  GridPane createNewTaskObject(ToDoTask task) {
 
         GridPane newTaskPane = new GridPane();
         newTaskPane.setMinHeight(70.0);
@@ -377,7 +380,7 @@ public class ToDoPageController implements Initializable {
         GridPane.setRowSpan(imageViewDelete,2);
 
         imageViewDelete.setOnMouseClicked(event -> {
-            for (toDoTask task1: selectedList.getTasks()){
+            for (ToDoTask task1: selectedList.getTasks()){
                 if (task.getID()==task1.getID()){
                     selectedList.getTasks().remove(task1);
                     break;
@@ -420,7 +423,7 @@ public class ToDoPageController implements Initializable {
         imageView.setOnMouseClicked(event -> {
             selectedTask = task;
             try {
-                globals.openNewForm("view/subTasks.fxml", selectedTask.getTaskName(),false);
+                Globals.openNewForm("/org/group12/view/subTasks.fxml", selectedTask.getTaskName(),false);
                 if ((task.getSubTasks().size()!=0)) {
                     progressIndicator.setProgress((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
                     System.out.println((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
@@ -452,10 +455,10 @@ public class ToDoPageController implements Initializable {
      */
     public void addNewTask() {
         if (selectedList.getID()==1||selectedList.getID()==2){
-            globals.showErrorAlert("You can't add tasks to today or important directly, \ncreate a list to add tasks to \nand today and important lists will be updated accordingly.");
+            Globals.showErrorAlert("You can't add tasks to today or important directly, \ncreate a list to add tasks to \nand today and important lists will be updated accordingly.");
             return;
         }
-        toDoTask newToDoTask=new toDoTask(globals.createNewRandomID(globals.toDoTasksIDs),"newTask", false,false, ZonedDateTime.now(),new ArrayList<>());
+        ToDoTask newToDoTask=new ToDoTask(Globals.createNewRandomID(Globals.toDoTasksIDs),"newTask", false,false, ZonedDateTime.now(),new ArrayList<>());
         selectedList.getTasks().add(newToDoTask);
         GridPane newTask = createNewTaskObject(newToDoTask);
 
@@ -474,10 +477,10 @@ public class ToDoPageController implements Initializable {
         activeListNameLBL.setText(selectedList.getListName());
         ongoingTasksVbox.getChildren().clear();
         completedTasksVbox.getChildren().clear();
-        Comparator<toDoTask> comparator = Comparator.comparing(toDoTask::getTaskDeadline);
+        Comparator<ToDoTask> comparator = Comparator.comparing(ToDoTask::getTaskDeadline);
         selectedList.getTasks().sort(comparator);
 
-        for (toDoTask task:selectedList.getTasks()){
+        for (ToDoTask task:selectedList.getTasks()){
             if (task.getSubTasks().size()==task.getCompletedSubTasks().size() && task.getSubTasks().size()!=0)
                 completedTasksVbox.getChildren().add(createNewTaskObject(task));
 

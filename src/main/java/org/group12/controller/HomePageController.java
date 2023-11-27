@@ -1,6 +1,6 @@
-package org.group12;
+package org.group12.controller;
 
-import org.group12.view.CalendarActivity;
+import org.group12.model.homeCalendar.CalendarActivity;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -276,6 +276,7 @@ public class HomePageController implements Initializable {
         if (getCalendarActivitiesMonth(dateFocus).get(selectedDay) != null) {
             createCalendarActivity(getCalendarActivitiesMonth(dateFocus).get(selectedDay), dayDeadlines);
         }
+
     }
 
     private  Map<Integer, List<CalendarActivity>> getCalendarActivitiesMonth(ZonedDateTime dateFocus) {

@@ -1,6 +1,4 @@
-package org.group12;
-
-import org.group12.view.MainMenuController;
+package org.group12.controller;
 
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -11,6 +9,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import org.group12.model.toDoSubTask.Globals;
+import org.group12.model.toDoSubTask.SubTask;
 
 
 import java.net.URL;
@@ -18,14 +18,14 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.*;
 
-import static org.group12.ToDoPageController.*;
+import static org.group12.controller.ToDoPageController.*;
 
 /**
  * Controller class for managing subtasks in the application.
  */
 public class SubTasksController implements Initializable {
 
-    static public subTask selectedSubTask=null;
+    static public SubTask selectedSubTask=null;
 
     public Label taskNameLBL;
     public VBox subTasksPane;
@@ -89,7 +89,7 @@ public class SubTasksController implements Initializable {
      * Adds a new subtask.
      */
     public void addNewSubTask(){
-        subTask subTask=new subTask(globals.createNewSeqID(globals.toDoSubTasksIDs),"newSubTask",false);
+        SubTask subTask=new SubTask(Globals.createNewSeqID(Globals.toDoSubTasksIDs),"newSubTask",false);
         selectedSubTask=subTask;
         allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().add(subTask);
         subTasksPane.getChildren().add(createNewSubTaskObject(subTask));
@@ -103,10 +103,10 @@ public class SubTasksController implements Initializable {
     void refreshSubTasksPane(){
         subTasksPane.getChildren().clear();
 
-        for (subTask task: selectedTask.getUnfinishedSubTasks()){
+        for (SubTask task: selectedTask.getUnfinishedSubTasks()){
             subTasksPane.getChildren().add(createNewSubTaskObject(task));
         }
-        for (subTask task: selectedTask.getCompletedSubTasks()){
+        for (SubTask task: selectedTask.getCompletedSubTasks()){
             subTasksPane.getChildren().add(createNewSubTaskObject(task));
         }
     }
@@ -117,10 +117,10 @@ public class SubTasksController implements Initializable {
      * @param task The subtask to find.
      * @return The index of the subtask if found, otherwise -1.
      */
-    public static int findTheSubTask(subTask task) {
+    public static int findTheSubTask(SubTask task) {
         selectedList=allLists.get(findTheToDoList(selectedList));
         selectedTask=selectedList.getTasks().get(findTheTask(selectedTask));
-        for (subTask task1 : selectedTask.getSubTasks()) {
+        for (SubTask task1 : selectedTask.getSubTasks()) {
             if (task1.getID() == task.getID()) return selectedTask.getSubTasks().indexOf(task1);
         }
         return -1;
@@ -132,7 +132,7 @@ public class SubTasksController implements Initializable {
      * @param task     The subtask to rename.
      * @param newName  The new name for the subtask.
      */
-    void renameSubTask(subTask task,String newName){
+    void renameSubTask(SubTask task, String newName){
         allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().get(findTheSubTask(task)).setSubTaskName(newName);
     }
 
@@ -142,7 +142,7 @@ public class SubTasksController implements Initializable {
      * @param task The subtask to create the object for.
      * @return The created GridPane object representing the subtask.
      */
-    GridPane createNewSubTaskObject(subTask task){
+    GridPane createNewSubTaskObject(SubTask task){
         GridPane newTaskPane=new GridPane();
         newTaskPane.setMinHeight(57.0);
         newTaskPane.setMinWidth(306.0);

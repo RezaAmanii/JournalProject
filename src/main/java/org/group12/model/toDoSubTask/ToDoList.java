@@ -1,4 +1,4 @@
-package org.group12;
+package org.group12.model.toDoSubTask;
 
 import java.util.ArrayList;
 
@@ -6,16 +6,16 @@ import java.util.ArrayList;
  * Represents a ToDo list.
  */
 
-public class toDoList {
+public class ToDoList {
     int ID;
     private String listName;
-    private ArrayList<toDoTask> tasks;
+    private ArrayList<ToDoTask> tasks;
 
     /**
      * Default constructor for ToDoList.
      * Initializes an empty task list.
      */
-    public toDoList() {
+    public ToDoList() {
         this.tasks=new ArrayList<>();
     }
 
@@ -26,7 +26,7 @@ public class toDoList {
      * @param listName      The name of the list.
      * @param initialTasks  The initial tasks in the list.
      */
-    public toDoList(int id,String listName, ArrayList<toDoTask>initialTasks){
+    public ToDoList(int id, String listName, ArrayList<ToDoTask>initialTasks){
         this.ID=id;
         this.listName=listName;
         this.tasks=initialTasks;
@@ -55,7 +55,7 @@ public class toDoList {
      *
      * @param tasks The tasks to be set.
      */
-    public void setTasks(ArrayList<toDoTask> tasks) {
+    public void setTasks(ArrayList<ToDoTask> tasks) {
         this.tasks = tasks;
     }
 
@@ -64,7 +64,7 @@ public class toDoList {
      *
      * @return The tasks in the list.
      */
-    public ArrayList<toDoTask> getTasks() {
+    public ArrayList<ToDoTask> getTasks() {
         return tasks;
     }
 
