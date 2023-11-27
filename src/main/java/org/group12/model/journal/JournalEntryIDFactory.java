@@ -31,7 +31,7 @@ public class JournalEntryIDFactory extends IDFactory {
 
     @Override
     protected String getObjectType() {
-        return "Journal";
+        return "Journal Entry";
     }
 }
 
