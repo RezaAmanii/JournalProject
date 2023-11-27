@@ -19,6 +19,7 @@ public class JournalController implements IController {
     private HashMap<String, INameable> itemMap;
 
 
+
     public JournalController(Journal journalModel, JournalView journalView, HashMap<String, INameable> itemMap){
         this.journalModel = journalModel;
         this.journalView = journalView;
