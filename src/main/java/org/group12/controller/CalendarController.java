@@ -17,8 +17,9 @@ public class CalendarController implements IController {
     private HashMap<String, INameable> itemMap;
 
 
-    public CalendarController(Calendar calenderModel, HashMap<String, INameable> itemMap){
+    public CalendarController(Calendar calenderModel, CalendarView calendarView, HashMap<String, INameable> itemMap){
         this.calenderModel = calenderModel;
+        this.calenderView = calendarView;
         this.itemMap = itemMap;
         //calenderModel.addObserver(calenderView);
     }
