@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class BigTask implements IBigTask {
     private String description;
     private LocalDateTime dueDate;
-    private int priority;
+    private boolean isFavourite;
     private final HashMap<String, ITask> subTaskMap;
     private final Task modelTask;
     private final TaskFactory taskFactory;
@@ -64,6 +64,7 @@ public class BigTask implements IBigTask {
         return dueDate;
     }
 
+
     /**
      * Sets the due date of the big task.
      *
@@ -75,23 +76,23 @@ public class BigTask implements IBigTask {
     }
 
     /**
-     * Gets the priority of the big task.
+     * Gets the status of isFavourite of the big task.
      *
-     * @return The priority of the big task.
+     * @return The status of isFavourite of the big task.
      */
     @Override
-    public int getPriority() {
-        return priority;
+    public boolean isFavourite() {
+        return isFavourite;
     }
 
     /**
-     * Sets the priority of the big task.
+     * Sets the value of isFavourite of the big task.
      *
-     * @param priority The priority to be set.
+     * @param status The value to be set for isFavourite.
      */
     @Override
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public void setFavourite(boolean status) {
+        this.isFavourite = status;
     }
 
     /**

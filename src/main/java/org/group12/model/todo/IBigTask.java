@@ -11,9 +11,9 @@ public interface IBigTask extends ITask, IDescription, IItemObservable {
 
     void setDueDate(LocalDateTime date);
 
-    int getPriority();
+    boolean isFavourite();
 
-    void setPriority(int priority);
+    void setFavourite(boolean status);
 
     // Methods for editing the subTasks
 
