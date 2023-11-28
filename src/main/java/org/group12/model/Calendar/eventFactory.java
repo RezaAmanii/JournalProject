@@ -29,6 +29,13 @@ public class eventFactory {
         List<String> tags = new ArrayList<>();
         String ID = idFactory.generateID();
         LocalDateTime createdTimestamp = LocalDateTime.now();
-        return new Event(ID, title, description, dateOfEvent, timeFrame, createdTimestamp, tags, false);
+        return new Event(ID, title, description, dateOfEvent, timeFrame, createdTimestamp, tags, false, null);
+    }
+    public Event createEvent(String title, String description, LocalDateTime dateOfEvent,
+                             Pair<LocalDateTime, LocalDateTime> timeFrame, Event parentEvent){
+        List<String> tags = new ArrayList<>();
+        String ID = idFactory.generateID();
+        LocalDateTime createdTimestamp = LocalDateTime.now();
+        return new Event(ID, title, description, dateOfEvent, timeFrame, createdTimestamp, tags, false, parentEvent);
     }
 }
