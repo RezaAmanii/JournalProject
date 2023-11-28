@@ -3,21 +3,23 @@ package org.group12.controller;
 import org.group12.model.Calendar.Calendar;
 import org.group12.model.Calendar.Event;
 import org.group12.model.INameable;
+import org.group12.model.Items;
 import org.group12.view.CalendarView;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
-
+import org.group12.model.Items;
 
 public class CalendarController implements IController {
 
     private Calendar calenderModel;
     private CalendarView calenderView;
-    private HashMap<String, INameable> itemMap;
+//    private HashMap<String, INameable> itemMap;
+    private Items itemMap;
 
 
-    public CalendarController(Calendar calenderModel, CalendarView calendarView, HashMap<String, INameable> itemMap){
+    public CalendarController(Calendar calenderModel, CalendarView calendarView, Items itemMap){
         this.calenderModel = calenderModel;
         this.calenderView = calendarView;
         this.itemMap = itemMap;
@@ -68,7 +70,7 @@ public class CalendarController implements IController {
      * @param event The event to be updated.
      */
     public void updateEvent(Event event){
-        Event oldEvent = (Event) itemMap.get(event.getID());
+        Event oldEvent = (Event) itemMap.getItem(event.getID());
 
         if(oldEvent != null){
             if(event.getTitle() != null){
@@ -182,7 +184,7 @@ public class CalendarController implements IController {
         if(id == null || id.isEmpty()){
             //calenderView.displayErrorMessage("Invalid id.");
         }
-        return (Event) itemMap.get(id);
+        return (Event) itemMap.getItem(id);
     }
 
     /**

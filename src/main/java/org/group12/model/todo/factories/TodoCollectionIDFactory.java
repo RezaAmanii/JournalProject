@@ -29,5 +29,10 @@ public class TodoCollectionIDFactory extends IDFactory {
     protected AtomicLong getCounter() {
         return counter;
     }
+
+    @Override
+    protected String getObjectType() {
+        return null;
+    }
 }
 

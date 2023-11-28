@@ -9,18 +9,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+import org.group12.model.Items;
 
 public class JournalController implements IController {
 
     private Journal journalModel;
     private JournalView journalView;
     private JournalEntry entryModel;
-    private HashMap<String, INameable> itemMap;
+//    private HashMap<String, INameable> itemMap;
+    private Items itemMap;
 
 
-
-    public JournalController(Journal journalModel, JournalView journalView, HashMap<String, INameable> itemMap){
+    public JournalController(Journal journalModel, JournalView journalView, Items itemMap){
         this.journalModel = journalModel;
         this.journalView = journalView;
         this.itemMap= itemMap;

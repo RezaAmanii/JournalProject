@@ -8,6 +8,7 @@ import org.group12.view.TaskView;
 
 import java.time.LocalDateTime;
 import java.util.Map;
+import org.group12.model.Items;
 
 
 public class TaskController implements IController {
@@ -15,10 +16,11 @@ public class TaskController implements IController {
     private TaskView taskView;
     private Map<String, INameable> taskMap;
     private BigTask bigTask;
+    private Items itemMap;
 
 
 
-    public TaskController(TodoCollection taskModel, TaskView taskView, Map<String, INameable> taskMap){
+    public TaskController(TodoCollection taskModel, TaskView taskView, Items itemMap){
         this.taskModel = taskModel;
         this.taskView = taskView;
         this.taskMap = taskMap;
