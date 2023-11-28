@@ -1,4 +1,4 @@
-package org.group12.view;
+package org.group12.model.homeCalendar;
 
 import java.time.ZonedDateTime;
 

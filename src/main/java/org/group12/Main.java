@@ -5,15 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.group12.Observers.items_observers.IItemObserver;
-import org.group12.controller.TodoController;
-import org.group12.model.Container;
-import org.group12.model.Items;
+
+import org.group12.Observers.IObservable;
 
 public class Main extends Application{
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/mainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/org/group12/view/mainMenu.fxml"));
 
         Scene scene = new Scene(root);
 
@@ -24,8 +22,5 @@ public class Main extends Application{
 
     public static void main(String[] args) {
         launch();
-        Items items = new Items();
-        Container container = new Container((IItemObserver) items);
-        TodoController todoController = new TodoController(items);
     }
 }

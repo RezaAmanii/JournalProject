@@ -1,10 +1,10 @@
-package org.group12;
+package org.group12.model.toDoSubTask;
 
-public class subTask {
+public class SubTask {
     int ID;
     private String subTaskName;
     private boolean isFinished;
-    subTask(int id,String subTaskName,boolean isFinished){
+    public SubTask(int id, String subTaskName, boolean isFinished){
         this.ID=id;
         this.subTaskName=subTaskName;
         this.isFinished=isFinished;

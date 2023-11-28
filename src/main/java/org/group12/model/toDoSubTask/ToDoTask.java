@@ -1,4 +1,4 @@
-package org.group12;
+package org.group12.model.toDoSubTask;
 
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -6,21 +6,21 @@ import java.util.ArrayList;
 /**
  * Represents a ToDo task.
  */
-public class toDoTask {
+public class ToDoTask {
     private int ID;
     private String taskName;
     private boolean isFinished, isImportant;
     private ZonedDateTime taskDeadline;
-    private ArrayList<subTask> subTasks;
+    private ArrayList<SubTask> SubTasks;
 
 
-    public toDoTask(int id,String taskName,boolean isFinished,boolean isImportant,ZonedDateTime taskDeadline,ArrayList<subTask>csb){
+    public ToDoTask(int id, String taskName, boolean isFinished, boolean isImportant, ZonedDateTime taskDeadline, ArrayList<SubTask>csb){
         this.ID=id;
         this.taskDeadline=taskDeadline;
         this.isImportant=isImportant;
         this.taskName=taskName;
         this.isFinished=isFinished;
-        this.subTasks=csb;
+        this.SubTasks =csb;
     }
 
     public void setImportant(boolean important) {
@@ -31,27 +31,27 @@ public class toDoTask {
         return isImportant;
     }
 
-    public void setSubTasks(ArrayList<subTask> subTasks) {
-        this.subTasks = subTasks;
+    public void setSubTasks(ArrayList<SubTask> SubTasks) {
+        this.SubTasks = SubTasks;
     }
 
-    public ArrayList<subTask> getSubTasks() {
-        return subTasks;
+    public ArrayList<SubTask> getSubTasks() {
+        return SubTasks;
     }
 
 
-    public ArrayList<subTask> getCompletedSubTasks() {
-        ArrayList<subTask>completed=new ArrayList<>();
-        for (subTask task:subTasks){
+    public ArrayList<SubTask> getCompletedSubTasks() {
+        ArrayList<SubTask>completed=new ArrayList<>();
+        for (SubTask task: SubTasks){
             if(task.isFinished())
                 completed.add(task);
         }
         return completed;
     }
 
-    public ArrayList<subTask> getUnfinishedSubTasks() {
-        ArrayList<subTask>notCompleted=new ArrayList<>();
-        for (subTask task:subTasks){
+    public ArrayList<SubTask> getUnfinishedSubTasks() {
+        ArrayList<SubTask>notCompleted=new ArrayList<>();
+        for (SubTask task: SubTasks){
             if(!task.isFinished())
                 notCompleted.add(task);
         }

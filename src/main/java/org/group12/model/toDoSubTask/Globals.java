@@ -1,4 +1,4 @@
-package org.group12;
+package org.group12.model.toDoSubTask;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,13 +10,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.LinkedList;
-import java.util.Objects;
 import java.util.Random;
 
 /**
  * Contains global utility methods and variables.
  */
-public class globals {
+public class Globals {
 
     public static boolean[] toDoListsIDs=new boolean[1000];
     public static boolean[] toDoTasksIDs=new boolean[1000];
@@ -88,7 +87,7 @@ public class globals {
      * @throws IOException If an I/O error occurs while loading the form.
      */
     public static void openNewForm(String formName,String title,boolean resizable) throws IOException {
-        Parent root= FXMLLoader.load(globals.class.getResource(formName));
+        Parent root= FXMLLoader.load(Globals.class.getResource(formName));
         Scene scene=new Scene(root);
         Stage stage=new Stage();
         stage.setResizable(resizable);
