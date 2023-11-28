@@ -1,6 +1,6 @@
 package org.group12.model.todo;
 
-import org.group12.Observers.alternative.IItemObserver;
+import org.group12.Observers.items_observers.IItemObserver;
 import org.group12.model.INameable;
 import org.group12.model.todo.factories.BigTaskFactory;
 
@@ -82,6 +82,8 @@ public class TaskList implements ITaskList {
     public void addBigTask(String title) {
         IBigTask newTask = bigTaskFactory.createBigTask(title);
         bigTaskMap.put(newTask.getID(), newTask);
+        notifyNewItem(newTask);
+        newTask.addItemObserver(observers.get(0));
     }
 
     /**
@@ -110,7 +112,7 @@ public class TaskList implements ITaskList {
      * @param observer The observer to be added.
      */
     @Override
-    public void addObserver(IItemObserver observer) {
+    public void addItemObserver(IItemObserver observer) {
         observers.add(observer);
     }
 
@@ -120,7 +122,7 @@ public class TaskList implements ITaskList {
      * @param observer The observer to be removed.
      */
     @Override
-    public void removeObserver(IItemObserver observer) {
+    public void removeItemObserver(IItemObserver observer) {
         observers.remove(observer);
     }
 

@@ -1,6 +1,6 @@
 package org.group12.model.todo;
 
-import org.group12.Observers.alternative.IItemObserver;
+import org.group12.Observers.items_observers.IItemObserver;
 import org.group12.model.INameable;
 
 import java.time.LocalDateTime;
@@ -14,7 +14,6 @@ public class Task implements ITask {
     private final LocalDateTime dateCreated;
     private boolean completed;
     private final String ID;
-    private final ArrayList<IItemObserver> observers;
 
     /**
      * Constructs a new Task object with the given title and ID.
@@ -27,7 +26,6 @@ public class Task implements ITask {
         this.ID = ID;
         this.dateCreated = LocalDateTime.now();
         this.completed = false;
-        this.observers = new ArrayList<>();
     }
 
     /**
@@ -88,49 +86,5 @@ public class Task implements ITask {
     @Override
     public void setCompleted(boolean status) {
         this.completed = status;
-    }
-
-    /**
-     * Adds an observer to the task.
-     *
-     * @param observer The observer to be added.
-     */
-    @Override
-    public void addObserver(IItemObserver observer) {
-        observers.add(observer);
-    }
-
-    /**
-     * Removes an observer from the task.
-     *
-     * @param observer The observer to be removed.
-     */
-    @Override
-    public void removeObserver(IItemObserver observer) {
-        observers.remove(observer);
-    }
-
-    /**
-     * Notifies all observers about a new item added to the task.
-     *
-     * @param newItem The new item added to the task.
-     */
-    @Override
-    public void notifyNewItem(INameable newItem) {
-        for (IItemObserver observer : observers) {
-            observer.addItem(newItem);
-        }
-    }
-
-    /**
-     * Notifies all observers about an item removed from the task.
-     *
-     * @param itemID The ID of the item removed from the task.
-     */
-    @Override
-    public void notifyRemoveItem(String itemID) {
-        for (IItemObserver observer : observers) {
-            observer.removeItem(itemID);
-        }
     }
 }

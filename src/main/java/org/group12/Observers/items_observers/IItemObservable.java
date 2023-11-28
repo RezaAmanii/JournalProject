@@ -1,10 +1,10 @@
-package org.group12.Observers.alternative;
+package org.group12.Observers.items_observers;
 
 import org.group12.model.INameable;
 
 public interface IItemObservable {
-    void addObserver(IItemObserver observer);
-    void removeObserver(IItemObserver observer);
+    void addItemObserver(IItemObserver observer);
+    void removeItemObserver(IItemObserver observer);
     void notifyNewItem(INameable newItem);
     void notifyRemoveItem(String itemID);
 

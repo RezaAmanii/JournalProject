@@ -1,6 +1,6 @@
 package org.group12.model;
 
-import org.group12.Observers.alternative.IItemObserver;
+import org.group12.Observers.items_observers.IItemObserver;
 
 import java.util.HashMap;
 

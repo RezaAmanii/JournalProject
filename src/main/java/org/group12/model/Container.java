@@ -1,7 +1,7 @@
 package org.group12.model;
 
-import org.group12.Observers.alternative.IItemObservable;
-import org.group12.Observers.alternative.IItemObserver;
+import org.group12.Observers.items_observers.IItemObservable;
+import org.group12.Observers.items_observers.IItemObserver;
 import org.group12.model.Calendar.Calendar;
 import org.group12.model.journal.Journal;
 import org.group12.model.todo.TodoCollection;
@@ -20,14 +20,16 @@ public class Container implements IItemObservable {
 
     public Container(IItemObserver items) {
         this.observers = new ArrayList<>();
-        addObserver(items);
+        addItemObserver(items);
+
         this.todoCollectionFactory = new TodoCollectionFactory();
+        this.todoCollection = todoCollectionFactory.createTodoCollection("MainTD");
+        notifyNewItem(todoCollection);
+        this.todoCollection.addItemObserver(items);
 
         this.calender = new Calendar();
         this.journal = new Journal("tempID", "temp title", null);
-        this.todoCollection = todoCollectionFactory.createTodoCollection("MainTD");
 
-        notifyNewItem(todoCollection);
     }
 
     public Calendar getCalender() {
@@ -43,12 +45,12 @@ public class Container implements IItemObservable {
     }
 
     @Override
-    public void addObserver(IItemObserver observer) {
+    public void addItemObserver(IItemObserver observer) {
         observers.add(observer);
     }
 
     @Override
-    public void removeObserver(IItemObserver observer) {
+    public void removeItemObserver(IItemObserver observer) {
         observers.remove(observer);
     }
 

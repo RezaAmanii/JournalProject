@@ -1,6 +1,6 @@
 package org.group12.model.todo;
 
-import org.group12.Observers.alternative.IItemObserver;
+import org.group12.Observers.items_observers.IItemObserver;
 import org.group12.model.INameable;
 import org.group12.model.todo.factories.TaskListFactory;
 
@@ -23,8 +23,8 @@ public class TodoCollection implements ITodoCollection{
      * Constructs a new TodoCollection object with the specified title and ID.
      * Initializes the taskListMap, taskListFactory, observers, title, and ID.
      *
-     * @param title the title of the todo collection
-     * @param ID the ID of the todo collection
+     * @param title the title of the TodoCollection
+     * @param ID the ID of the TodoCollection
      */
     public TodoCollection (String title, String ID){
         taskListMap = new HashMap<>();
@@ -39,7 +39,7 @@ public class TodoCollection implements ITodoCollection{
     /**
      * Adds a new task list to the collection with the specified title.
      * Creates a new task list using the taskListFactory and adds it to the taskListMap.
-     * Notifies the observers about the new item.
+     * Notifies the Item observers about the new item.
      *
      * @param title the title of the new task list
      */
@@ -48,6 +48,7 @@ public class TodoCollection implements ITodoCollection{
         ITaskList newList = taskListFactory.createTaskList(title);
         taskListMap.put(newList.getID(), newList);
         notifyNewItem(newList);
+        newList.addItemObserver(observers.get(0));
     }
 
     /**
@@ -109,7 +110,7 @@ public class TodoCollection implements ITodoCollection{
      * @param observer the observer to be added
      */
     @Override
-    public void addObserver(IItemObserver observer) {
+    public void addItemObserver(IItemObserver observer) {
         observers.add(observer);
     }
 
@@ -119,7 +120,7 @@ public class TodoCollection implements ITodoCollection{
      * @param observer the observer to be removed
      */
     @Override
-    public void removeObserver(IItemObserver observer) {
+    public void removeItemObserver(IItemObserver observer) {
         observers.remove(observer);
     }
 
