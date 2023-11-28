@@ -1,22 +1,27 @@
 package org.group12.controller;
 
 
-public class ControllerFactory {
+import org.group12.model.Container;
+import org.group12.view.CalendarView;
+import org.group12.view.JournalView;
+import org.group12.view.TaskView;
+import org.group12.model.Items;
 
-    public static IController createController(String controllerType) {
-        switch (controllerType) {
-            case "JournalController":
-                return new JournalController();
-            case "CalendarController":
-                return new CalendarController();
-            case "TaskListController":
-                return new TaskListController();
-            case "TaskController":
-                return new TaskController();
-            case "EventListController":
-                return new EventListController();
-            default:
-                return null;
-        }
+public class ControllerFactory {
+    private Container model;
+    private JournalView journalView;
+    private CalendarView calenderView;
+    private TaskView todoView;
+    private Items itemMap;
+
+    public  IController createController(String controllerType, Items itemMap) {
+        return switch (controllerType) {
+            case "JournalController" -> new JournalController(model.getJournal(), journalView, itemMap);
+            case "CalendarController" -> new CalendarController(model.getCalender(), calenderView, itemMap);
+            case "TaskListController" -> new TaskListController();
+            case "TaskController" -> new TaskController(model.getTodoCollection(),todoView, itemMap);
+            case "EventListController" -> new EventListController();
+            default -> throw new IllegalArgumentException("Unknown controller type " + controllerType);
+        };
     }
 }

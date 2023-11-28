@@ -1,13 +1,12 @@
 package org.group12.model.todo;
 
-import org.group12.Observers.IObservable;
+import org.group12.Observers.items_observers.IItemObservable;
 import org.group12.model.IDescription;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public interface IBigTask extends ITask, IDescription, IObservable {
+public interface IBigTask extends ITask, IDescription, IItemObservable {
     LocalDateTime getDueDate();
 
     void setDueDate(LocalDateTime date);

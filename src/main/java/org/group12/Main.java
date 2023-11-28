@@ -5,12 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import org.group12.Observers.IObservable;
 
 public class Main extends Application{
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("view/mainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/org/group12/view/mainMenu.fxml"));
 
         Scene scene = new Scene(root);
 
