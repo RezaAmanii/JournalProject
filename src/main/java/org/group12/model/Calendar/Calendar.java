@@ -23,6 +23,7 @@ public class Calendar {
     public void sortEvents(){
         EventSorter.sortEvents(eventList);
     }
+
     public void addEvent(String title, String description, LocalDateTime dateOfEvent,
                          Pair<LocalDateTime, LocalDateTime> timeFrame){
         Event newEvent = eventFactory.createEvent(title, description, dateOfEvent, timeFrame);
