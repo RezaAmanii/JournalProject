@@ -18,6 +18,7 @@ public class Calendar implements IObservable {
         this.eventList = new ArrayList<>();
         this.isEmpty = true;
         this.observers = new ArrayList<>();
+        this.eventFactory = new eventFactory();
     }
 
     // ---------- methods ----------------
@@ -26,10 +27,15 @@ public class Calendar implements IObservable {
         EventSorter.sortEvents(eventList);
     }
 
-    public void addEvent(String title, String description, LocalDateTime dateOfEvent,
+    public void addEvent(String title, String description,
                          Pair<LocalDateTime, LocalDateTime> timeFrame){
-        Event newEvent = eventFactory.createEvent(title, description, dateOfEvent, timeFrame);
+        Event newEvent = eventFactory.createEvent(title, description, timeFrame);
         eventList.add(newEvent);
+        this.isEmpty = false;
+        notifyObservers();
+    }
+    public void addEvent(Event event){
+        eventList.add(event);
         this.isEmpty = false;
         notifyObservers();
     }
@@ -62,7 +68,7 @@ public class Calendar implements IObservable {
      */
     public void makeRecurring(Event event){
         event.setRecurrence(true);
-        Event newEvent = eventFactory.createEvent(event.getTitle(), event.getDescription(), event.getDateOfEvent(), event.getTimeFrame(), event);
+        Event newEvent = eventFactory.createEvent(event.getTitle(), event.getDescription(), event.getTimeFrame(), event);
         eventList.add(newEvent);
         notifyObservers(); // dangerous to notify observers here, since it will notify the observers multiple times
     }

@@ -16,7 +16,6 @@ public class Event implements IEvent, INameable, IDateCreated, IDescription, IEd
     private String title;
     private String description;
     private final LocalDateTime dateCreated;
-    private LocalDateTime dateOfEvent;
     private String ID;
     private Pair<LocalDateTime, LocalDateTime> timeFrame;
     private List<String> tags;
@@ -24,14 +23,13 @@ public class Event implements IEvent, INameable, IDateCreated, IDescription, IEd
     private Event parentEvent;
     private List<IPlanITObserver> observers;
 
-    public Event(String ID, String title, String description, LocalDateTime dateOfEvent,
-                 Pair<LocalDateTime, LocalDateTime> timeFrame,LocalDateTime dateCreated, List<String> tags, boolean recurrence, Event parentEvent){
+    public Event(String ID, String title, String description,
+                 Pair<LocalDateTime, LocalDateTime> timeFrame, LocalDateTime dateCreated, List<String> tags, boolean recurrence, Event parentEvent){
 
         this.dateCreated = dateCreated;
         this.title = title;
         this.ID = ID;
         this.description = description;
-        this.dateOfEvent = dateOfEvent;
         this.timeFrame = timeFrame;
         this.tags = tags;
         this.recurrence = recurrence;
@@ -79,12 +77,6 @@ public class Event implements IEvent, INameable, IDateCreated, IDescription, IEd
     }
 
     @Override
-    public void setDateOfEvent(LocalDateTime dateOfEvent) {
-        this.dateOfEvent = dateOfEvent;
-        notifyObservers();
-    }
-
-    @Override
     public void setTimeFrame(Pair<LocalDateTime, LocalDateTime> timeFrame) {
         this.timeFrame = timeFrame;
         notifyObservers();
@@ -126,9 +118,8 @@ public class Event implements IEvent, INameable, IDateCreated, IDescription, IEd
         return dateCreated;
     }
 
-    @Override
     public LocalDateTime getDateOfEvent() {
-        return dateOfEvent;
+        return timeFrame.getKey();
     }
 
     public Event getParentEvent() {

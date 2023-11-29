@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 public interface IEditEvent {
     void setTitle(String title);
     void setDescription(String description);
-    void setDateOfEvent(LocalDateTime dateOfEvent);
     void setTimeFrame(Pair<LocalDateTime, LocalDateTime> timeFrame);
     void setRecurrence(boolean recurrence);
     void removeTag(String tag);

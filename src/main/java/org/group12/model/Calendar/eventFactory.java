@@ -19,23 +19,22 @@ public class eventFactory {
      *
      * @param title the name of event
      * @param description the content for the new event
-     * @param dateOfEvent when the event is happening
      * @param timeFrame when the event is happening
      * @return a new Event object with ID
      */
 
-    public Event createEvent(String title, String description, LocalDateTime dateOfEvent,
+    public Event createEvent(String title, String description,
                              Pair<LocalDateTime, LocalDateTime> timeFrame) {
         List<String> tags = new ArrayList<>();
         String ID = idFactory.generateID();
         LocalDateTime createdTimestamp = LocalDateTime.now();
-        return new Event(ID, title, description, dateOfEvent, timeFrame, createdTimestamp, tags, false, null);
+        return new Event(ID, title, description, timeFrame, createdTimestamp, tags, false, null);
     }
-    public Event createEvent(String title, String description, LocalDateTime dateOfEvent,
+    public Event createEvent(String title, String description,
                              Pair<LocalDateTime, LocalDateTime> timeFrame, Event parentEvent){
         List<String> tags = new ArrayList<>();
         String ID = idFactory.generateID();
         LocalDateTime createdTimestamp = LocalDateTime.now();
-        return new Event(ID, title, description, dateOfEvent, timeFrame, createdTimestamp, tags, false, parentEvent);
+        return new Event(ID, title, description, timeFrame, createdTimestamp, tags, false, parentEvent);
     }
 }
