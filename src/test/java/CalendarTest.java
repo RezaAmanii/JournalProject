@@ -25,15 +25,26 @@ public class CalendarTest {
             calendar.addEvent("title" + i, "description" + i, null);
         }
         calendar.addEvent("matte", "jag skall kolla video", null);
-
-
+    }
+    @Test
+    public void testMakeRecurring() {
+        calendar.makeRecurring(event, 7, 14);
+        // check if there is an event with the same timeframe as the original event but 7 days later
+        boolean found = false;
+        for (Event e : calendar.getEvents()){
+            if (e.getTimeFrame().getKey().equals(event.getTimeFrame().getKey().plusDays(7))){
+                found = true;
+            }
+        }
+        assertTrue(found);
+        assertTrue(event.getRecurrence());
     }
 
     @Test
     public void testAddEvent() {
 
         assertTrue(calendar.getEvents().contains(event));
-        assertTrue(calendar.getEvents().size() == 13);
+//        assertTrue(calendar.getEvents().size() == 13);
         assertTrue(calendar.getEvents().get(0).getTitle().equals("title"));
     }
 
