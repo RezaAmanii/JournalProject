@@ -1,5 +1,6 @@
 package org.group12.model.todo.factories;
 
+import org.group12.model.ItemsSet;
 import org.group12.model.todo.ITaskList;
 import org.group12.model.todo.TaskList;
 import org.group12.model.todo.TodoCollection;
@@ -10,13 +11,15 @@ import org.group12.model.todo.TodoCollection;
  */
 public class TodoCollectionFactory {
     private TodoCollectionIDFactory idFactory;
+    private final ItemsSet items;
 
     /**
      * Constructs a new TodoCollection.
      * Initializes the TodoCollectionIDFactory used to generate IDs.
      */
-    public TodoCollectionFactory() {
+    public TodoCollectionFactory(ItemsSet items) {
         this.idFactory = new TodoCollectionIDFactory();
+        this.items = items;
     }
 
     /**
@@ -27,6 +30,6 @@ public class TodoCollectionFactory {
      */
     public TodoCollection createTodoCollection(String title) {
         String ID = idFactory.generateID();
-        return new TodoCollection(title, ID);
+        return new TodoCollection(title, ID, items);
     }
 }
