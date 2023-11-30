@@ -63,15 +63,20 @@ public class Calendar implements IObservable {
     /**
      *
      * @param event sends the event to the factory to create a new event with the same parameters but new ID
+     * @param frequency how often the event should be repeated (7 = weekly, 14 = biweekly, etc)
+     * @param durationDays how many days the event should be repeated (30 makes the event repeat for a month at frequency)
      *            the new event is added to the eventList
-     *           Call this method when you want to make an event recurring (how many times is not specified here)
+     *           Call this method when you want to make an event recurring, and the event is not recurring already
+     *                     example: makeRecurring(event, 7, 30) makes the event repeat weekly for a month which is 4 times because 30/7 = 4
      */
     public void makeRecurring(Event event, int frequency, int durationDays){
         event.setRecurrence(true);
         int iterations = durationDays/frequency;
-        for (int i = 0; i < iterations; i++){
-            LocalDateTime newStart = event.getTimeFrame().getKey().plusDays(frequency*i);
-            LocalDateTime newEnd = event.getTimeFrame().getValue().plusDays(frequency*i);
+        for (int i = 1; i < iterations+1; i++){
+            LocalDateTime oldStart = event.getTimeFrame().getKey();
+            LocalDateTime oldEnd = event.getTimeFrame().getValue();
+            LocalDateTime newStart = oldStart.plusDays(frequency*i);
+            LocalDateTime newEnd = oldEnd.plusDays(frequency*i);
             Pair<LocalDateTime, LocalDateTime> newTimeFrame = new Pair<>(newStart, newEnd);
             Event newEvent = eventFactory.createEvent(event.getTitle(), event.getDescription(), newTimeFrame, event);
             eventList.add(newEvent);
