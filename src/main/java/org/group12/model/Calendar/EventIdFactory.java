@@ -1,6 +1,7 @@
 package org.group12.model.Calendar;
 
 import org.group12.model.IDFactory;
+import org.group12.model.IIDFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -8,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Singleton factory for generating IDs for TaskList objects.
  * This class extends the IDFactory abstract class and provides the specific implementation for TaskList.
  */
-public class EventIdFactory extends IDFactory {
+public class EventIdFactory extends IDFactory implements IIDFactory {
     private static final String PREFIX = "EV";
     private static final AtomicLong counter = new AtomicLong(1);
 

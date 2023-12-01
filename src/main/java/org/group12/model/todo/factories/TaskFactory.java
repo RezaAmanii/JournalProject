@@ -1,6 +1,7 @@
 package org.group12.model.todo.factories;
 
 import org.group12.model.IDFactory;
+import org.group12.model.IIDFactory;
 import org.group12.model.todo.ITask;
 import org.group12.model.todo.Task;
 
@@ -9,7 +10,7 @@ import org.group12.model.todo.Task;
  * This class uses a TaskIDFactory to generate unique IDs for each Task.
  */
 public class TaskFactory {
-    private TaskIDFactory idFactory;
+    private IIDFactory idFactory;
 
     /**
      * Constructs a new TaskFactory.
