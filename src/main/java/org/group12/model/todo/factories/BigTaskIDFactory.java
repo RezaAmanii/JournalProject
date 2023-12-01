@@ -5,16 +5,25 @@ import org.group12.model.IDFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Represents a factory for generating IDs for BigTask objects.
+ * Singleton factory for generating IDs for BigTask objects.
  * This class extends the IDFactory abstract class and provides the specific implementation for BigTask.
  */
 public class BigTaskIDFactory extends IDFactory {
     private static final String PREFIX = "BTK";
     private static final AtomicLong counter = new AtomicLong(1);
     private static BigTaskIDFactory instance;
+
+    /**
+     * Private constructor to prevent creating multiple instances of the class.
+     */
     private BigTaskIDFactory(){
 
     }
+    /**
+     * Returns the single instance of the class. If the instance is null, it creates a new instance.
+     *
+     * @return the single instance of BigTaskIDFactory
+     */
     public static synchronized BigTaskIDFactory getInstance(){
         if(instance == null){
             instance = new BigTaskIDFactory();
@@ -40,6 +49,11 @@ public class BigTaskIDFactory extends IDFactory {
         return counter;
     }
 
+    /**
+     * Returns the type of object for which this factory generates IDs.
+     *
+     * @return the type of object
+     */
     @Override
     protected String getObjectType() {
         return "Big Task";

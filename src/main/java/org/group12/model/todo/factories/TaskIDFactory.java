@@ -5,16 +5,26 @@ import org.group12.model.IDFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Represents a factory for generating IDs for Task objects.
+ * Singleton factory for generating IDs for Task objects.
  * This class extends the IDFactory abstract class and provides the specific implementation for Task.
  */
 public class TaskIDFactory extends IDFactory {
     private static final String PREFIX = "TK";
     private static final AtomicLong counter = new AtomicLong(1);
     private static TaskIDFactory instance;
+
+    /**
+     * Private constructor to prevent creating multiple instances of the class.
+     */
     private TaskIDFactory(){
 
     }
+
+    /**
+     * Returns the single instance of the class. If the instance is null, it creates a new instance.
+     *
+     * @return the single instance of TaskIDFactory
+     */
     public static synchronized TaskIDFactory getInstance(){
         if(instance == null){
             instance = new TaskIDFactory();
@@ -41,6 +51,11 @@ public class TaskIDFactory extends IDFactory {
         return counter;
     }
 
+    /**
+     * Returns the type of object for which this factory generates IDs.
+     *
+     * @return the type of object
+     */
     @Override
     protected String getObjectType() {
         return "Task";

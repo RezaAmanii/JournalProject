@@ -5,16 +5,24 @@ import org.group12.model.IDFactory;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Represents a factory for generating IDs for TodoCollection objects.
+ * Singleton factory for generating IDs for TodoCollection objects.
  * This class extends the IDFactory abstract class and provides the specific implementation for TodoCollection.
  */
 public class TodoCollectionIDFactory extends IDFactory {
     private static final String PREFIX = "TL";
     private static final AtomicLong counter = new AtomicLong(1);
     private static TodoCollectionIDFactory instance;
+    /**
+     * Private constructor to prevent creating multiple instances of the class.
+     */
     private TodoCollectionIDFactory(){
 
     }
+    /**
+     * Returns the single instance of the class. If the instance is null, it creates a new instance.
+     *
+     * @return the single instance of TodoCollectionIDFactory
+     */
     public static synchronized TodoCollectionIDFactory getInstance(){
         if(instance == null){
             instance = new TodoCollectionIDFactory();
@@ -40,6 +48,11 @@ public class TodoCollectionIDFactory extends IDFactory {
         return counter;
     }
 
+    /**
+     * Returns the type of object for which this factory generates IDs.
+     *
+     * @return the type of object
+     */
     @Override
     protected String getObjectType() {
         return null;
