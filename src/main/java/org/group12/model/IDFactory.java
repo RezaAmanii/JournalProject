@@ -26,9 +26,13 @@ public abstract class IDFactory {
          */
         public static synchronized <T extends IDFactory> T getInstance(Class<T> type) {
             return type.cast(instances.computeIfAbsent(type, key -> {
+            // Use the computeIfAbsent method to get the existing instance from the map
+            // or create a new one if it doesn't exist.
                 try {
+                    // Use reflection to create a new instance of the specified class
                     return key.getDeclaredConstructor().newInstance();
                 } catch (Exception e) {
+                    // If there's an error creating the instance, wrap it in a RuntimeException
                     throw new RuntimeException("Error creating instance of " + key.getName(), e);
                 }
             }));
