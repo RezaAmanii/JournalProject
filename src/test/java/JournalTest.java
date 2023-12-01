@@ -1,4 +1,3 @@
-import org.group12.Observers.IPlanITObserver;
 import org.group12.model.journal.*;
 import org.group12.util.TextUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,12 +12,11 @@ class JournalTest {
 
     @BeforeEach
     void setUp() {
-        journalEntryFactory = new JournalEntryFactory();
-        journalFactory = new JournalFactory();
+        journalEntryFactory = JournalEntryFactory.getInstance();
+        journalFactory = JournalFactory.getInstance();
         journal = journalFactory.createJournal("Test Journal", journalEntryFactory);
         journalEntry = journalEntryFactory.createJournalEntry("Test Title", "Test Content");
         journal.addEntry("Test Title", "Test Content");
-
     }
 
     @Test

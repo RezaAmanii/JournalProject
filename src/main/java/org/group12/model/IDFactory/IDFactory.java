@@ -1,4 +1,4 @@
-package org.group12.model;
+package org.group12.model.IDFactory;
 
 import java.util.HashMap;
 import java.util.Map;

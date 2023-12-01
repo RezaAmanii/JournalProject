@@ -1,8 +1,9 @@
 package org.group12.model.Calendar;
 
 import javafx.util.Pair;
-import org.group12.model.IDFactory;
-import org.group12.model.IIDFactory;
+import org.group12.model.IDFactory.EventIdFactory;
+import org.group12.model.IDFactory.IDFactory;
+import org.group12.model.IDFactory.IIDFactory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

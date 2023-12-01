@@ -1,7 +1,8 @@
 package org.group12.model.todo.factories;
 
-import org.group12.model.IDFactory;
-import org.group12.model.IIDFactory;
+import org.group12.model.IDFactory.IDFactory;
+import org.group12.model.IDFactory.IIDFactory;
+import org.group12.model.IDFactory.TaskIDFactory;
 import org.group12.model.todo.ITask;
 import org.group12.model.todo.Task;
 

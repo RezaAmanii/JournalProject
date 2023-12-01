@@ -1,22 +1,20 @@
-package org.group12.model.todo.factories;
-
-import org.group12.model.IDFactory;
-import org.group12.model.IIDFactory;
+package org.group12.model.IDFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * Singleton factory for generating IDs for TodoCollection objects.
- * This class extends the IDFactory abstract class and provides the specific implementation for TodoCollection.
+ * Singleton factory for generating IDs for BigTask objects.
+ * This class extends the IDFactory abstract class and provides the specific implementation for BigTask.
  */
-public class TodoCollectionIDFactory extends IDFactory implements IIDFactory {
-    private static final String PREFIX = "TL";
+public class BigTaskIDFactory extends IDFactory implements IIDFactory {
+    private static final String PREFIX = "BTK";
     private static final AtomicLong counter = new AtomicLong(1);
+
 
     /**
      * Private constructor to prevent creating multiple instances of the class.
      */
-    private TodoCollectionIDFactory(){
+    protected BigTaskIDFactory(){
 
     }
 
@@ -46,7 +44,7 @@ public class TodoCollectionIDFactory extends IDFactory implements IIDFactory {
      */
     @Override
     protected String getObjectType() {
-        return null;
+        return "Big Task";
     }
 }
 

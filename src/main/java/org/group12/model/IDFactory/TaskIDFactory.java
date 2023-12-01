@@ -1,7 +1,4 @@
-package org.group12.model.todo.factories;
-
-import org.group12.model.IDFactory;
-import org.group12.model.IIDFactory;
+package org.group12.model.IDFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -17,7 +14,7 @@ public class TaskIDFactory extends IDFactory implements IIDFactory {
     /**
      * Private constructor to prevent creating multiple instances of the class.
      */
-    private TaskIDFactory(){
+    protected TaskIDFactory(){
 
     }
 
