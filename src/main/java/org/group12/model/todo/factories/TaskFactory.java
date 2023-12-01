@@ -1,5 +1,6 @@
 package org.group12.model.todo.factories;
 
+import org.group12.model.IDFactory;
 import org.group12.model.todo.ITask;
 import org.group12.model.todo.Task;
 
@@ -15,7 +16,7 @@ public class TaskFactory {
      * Initializes the TaskIDFactory used to generate IDs.
      */
     public TaskFactory() {
-        this.idFactory = TaskIDFactory.getInstance();
+        this.idFactory = IDFactory.getInstance(TaskIDFactory.class);
     }
 
     /**

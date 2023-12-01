@@ -1,5 +1,6 @@
 package org.group12.model.todo.factories;
 
+import org.group12.model.IDFactory;
 import org.group12.model.todo.ITaskList;
 import org.group12.model.todo.TaskList;
 import org.group12.model.todo.TodoCollection;
@@ -16,7 +17,7 @@ public class TodoCollectionFactory {
      * Initializes the TodoCollectionIDFactory used to generate IDs.
      */
     public TodoCollectionFactory() {
-        this.idFactory = TodoCollectionIDFactory.getInstance();
+        this.idFactory = IDFactory.getInstance(TodoCollectionIDFactory.class);
     }
 
     /**

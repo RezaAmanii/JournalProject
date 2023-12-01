@@ -13,7 +13,7 @@ public class JournalFactory {
      * Initializes the JournalIDFactory instance.
      */
     private JournalFactory() {
-        this.idFactory = JournalIDFactory.getInstance();
+        this.idFactory = IDFactory.getInstance(JournalIDFactory.class);
     }
     /**
      * Returns the single instance of the class. If the instance is null, it creates a new instance.

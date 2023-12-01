@@ -1,6 +1,7 @@
 package org.group12.model.Calendar;
 
 import javafx.util.Pair;
+import org.group12.model.IDFactory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,7 +12,7 @@ public class eventFactory {
     private EventIdFactory idFactory;
 
     public eventFactory() {
-        this.idFactory = EventIdFactory.getInstance();
+        this.idFactory = IDFactory.getInstance(EventIdFactory.class);
     }
     /**
      * Creates a new Event with a generated ID, title set to the current date,
