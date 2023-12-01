@@ -1,6 +1,7 @@
 package org.group12.model.journal;
 
 import org.group12.model.IDFactory;
+import org.group12.model.IIDFactory;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -9,8 +10,8 @@ import java.util.Date;
  * Singleton factory class for creating instances of JournalEntry.
  */
 
-public class JournalEntryFactory {
-    private JournalEntryIDFactory idFactory;
+public class JournalEntryFactory implements IJournalEntryFactory {
+    private IIDFactory idFactory;
     private static JournalEntryFactory instance;
 
     /**
