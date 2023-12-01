@@ -1,5 +1,8 @@
 package org.group12.model.todo.factories;
 
+import org.group12.model.IDFactory.IDFactory;
+import org.group12.model.IDFactory.IIDFactory;
+import org.group12.model.IDFactory.TaskListIDFactory;
 import org.group12.model.todo.ITaskList;
 import org.group12.model.todo.TaskList;
 
@@ -8,14 +11,14 @@ import org.group12.model.todo.TaskList;
  * This class uses a TaskListIDFactory to generate unique IDs for each TaskList.
  */
 public class TaskListFactory {
-    private TaskListIDFactory idFactory;
+    private IIDFactory idFactory;
 
     /**
      * Constructs a new TaskListFactory.
      * Initializes the TaskListIDFactory used to generate IDs.
      */
     public TaskListFactory() {
-        this.idFactory = new TaskListIDFactory();
+        this.idFactory = IDFactory.getInstance(TaskListIDFactory.class);
     }
 
     /**
