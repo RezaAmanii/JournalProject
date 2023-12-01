@@ -3,6 +3,7 @@ package org.group12.model.todo.factories;
 import org.group12.model.IDFactory.IDFactory;
 import org.group12.model.IDFactory.IIDFactory;
 import org.group12.model.IDFactory.TaskIDFactory;
+import org.group12.model.ItemsSet;
 import org.group12.model.todo.ITask;
 import org.group12.model.todo.Task;
 

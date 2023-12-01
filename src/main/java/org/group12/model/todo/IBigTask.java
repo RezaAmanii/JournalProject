@@ -1,19 +1,18 @@
 package org.group12.model.todo;
 
-import org.group12.Observers.items_observers.IItemObservable;
 import org.group12.model.IDescription;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
 
-public interface IBigTask extends ITask, IDescription, IItemObservable {
+public interface IBigTask extends ITask, IDescription {
     LocalDateTime getDueDate();
 
     void setDueDate(LocalDateTime date);
 
-    int getPriority();
+    boolean isFavourite();
 
-    void setPriority(int priority);
+    void setFavourite(boolean status);
 
     // Methods for editing the subTasks
 

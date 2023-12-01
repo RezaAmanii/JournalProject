@@ -3,6 +3,7 @@ package org.group12.model.todo.factories;
 import org.group12.model.IDFactory.IDFactory;
 import org.group12.model.IDFactory.IIDFactory;
 import org.group12.model.IDFactory.TaskListIDFactory;
+import org.group12.model.ItemsSet;
 import org.group12.model.todo.ITaskList;
 import org.group12.model.todo.TaskList;
 
@@ -12,13 +13,15 @@ import org.group12.model.todo.TaskList;
  */
 public class TaskListFactory {
     private IIDFactory idFactory;
+    private final ItemsSet items;
 
     /**
      * Constructs a new TaskListFactory.
      * Initializes the TaskListIDFactory used to generate IDs.
      */
-    public TaskListFactory() {
+    public TaskListFactory(ItemsSet items) {
         this.idFactory = IDFactory.getInstance(TaskListIDFactory.class);
+        this.items = items;
     }
 
     /**
@@ -29,6 +32,6 @@ public class TaskListFactory {
      */
     public ITaskList createTaskList(String title) {
         String ID = idFactory.generateID();
-        return new TaskList(title, ID);
+        return new TaskList(title, ID, items);
     }
 }

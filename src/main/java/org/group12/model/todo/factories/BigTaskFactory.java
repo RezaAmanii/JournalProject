@@ -3,6 +3,7 @@ package org.group12.model.todo.factories;
 import org.group12.model.IDFactory.BigTaskIDFactory;
 import org.group12.model.IDFactory.IDFactory;
 import org.group12.model.IDFactory.IIDFactory;
+import org.group12.model.ItemsSet;
 import org.group12.model.todo.BigTask;
 import org.group12.model.todo.IBigTask;
 
@@ -12,13 +13,16 @@ import org.group12.model.todo.IBigTask;
  */
 public class BigTaskFactory {
     private final IIDFactory idFactory;
+    private final ItemsSet items;
+
 
     /**
      * Constructs a new BigTaskFactory.
      * Initializes the BigTaskIDFactory used to generate IDs.
      */
-    public BigTaskFactory() {
+    public BigTaskFactory(ItemsSet items ) {
         this.idFactory = IDFactory.getInstance(BigTaskIDFactory.class);
+        this.items = items;
     }
 
     /**
@@ -29,7 +33,7 @@ public class BigTaskFactory {
      */
     public IBigTask createBigTask(String title) {
         String ID = idFactory.generateID();
-        return new BigTask(title, ID);
+        return new BigTask(title, ID, items);
     }
 
 }
