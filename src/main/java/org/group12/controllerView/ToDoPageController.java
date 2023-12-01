@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import org.group12.controller.TaskListController;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.toDoSubTask.ToDoList;
 import org.group12.model.toDoSubTask.ToDoTask;
@@ -159,11 +160,15 @@ public class ToDoPageController implements Initializable {
         return listToAppend;
     }
 
+
+
     /**
      * Adds a new to-do list to the application.
      */
     public void addNewList() {
-        //
+
+
+
         ToDoList newList = new ToDoList(Globals.createNewRandomID(Globals.toDoListsIDs),"New List", new ArrayList<>());
         allLists.add(newList);
         GridPane listToAppend=createNewListObject(newList);
