@@ -29,7 +29,7 @@ public abstract class IDFactory {
                 try {
                     return key.getDeclaredConstructor().newInstance();
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    throw new RuntimeException("Error creating instance of " + key.getName(), e);
                 }
             }));
         }
