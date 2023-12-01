@@ -45,8 +45,9 @@ public class CalendarTest {
                 }
             }
         }
-        assertTrue(found == duration/ frequency);
+        assertEquals(found, duration / frequency);
         assertTrue(event.getRecurrence());
+        assertEquals(calendar.getEvents().size(), 12 + duration / frequency);
 
         calendar.removeRecurring(event);
         found = 0;
@@ -58,30 +59,16 @@ public class CalendarTest {
                 }
             }
         }
-        assertTrue(found == 0);
+        assertEquals(0, found);
         assertFalse(event.getRecurrence());
 
     }
 
     @Test
-    public void testAddEvent() {
+    public void testAddRemoveEvent() {
 
         assertTrue(calendar.getEvents().contains(event));
-//        assertTrue(calendar.getEvents().size() == 13);
-        assertTrue(calendar.getEvents().get(0).getTitle().equals("title"));
+        assertEquals(12, calendar.getEvents().size());
+        assertEquals("title", calendar.getEvents().get(0).getTitle());
     }
-
-    // @Test
-    // public void testRemoveEvent() {
-    //     // calendar.addEvent(event);
-    //     calendar.removeEvent(event);
-    //     assertFalse(calendar.getEvents().contains(event));
-    // }
-
-    // @Test
-    // public void testMakeRecurring() {
-    //     calendar.addEvent(event);
-    //     calendar.makeRecurring(event);
-    //     assertTrue(event.getRecurrence());
-    // }
 }

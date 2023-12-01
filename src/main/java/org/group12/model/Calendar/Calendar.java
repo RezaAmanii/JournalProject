@@ -80,7 +80,7 @@ public class Calendar implements IObservable {
         while (iterator.hasNext()) {
             Event e = iterator.next();
             if (e.getParentEvent() != null && e.getParentEvent().getID().equals(event.getID())) {
-                eventList.remove(e);
+                iterator.remove();
             }
         }
         event.setRecurrence(false);
