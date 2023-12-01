@@ -40,7 +40,7 @@ public class Journal implements INameable, IObservable{
      * @param content the content for the new journal entry
      */
     public void addEntry(String title, String content){
-        JournalEntry newEntry = entryFactory.createJournalEntry(content);
+        JournalEntry newEntry = entryFactory.createJournalEntry(title, content);
         for (IPlanITObserver observer : observers) {
             newEntry.addObserver(observer);
         }
