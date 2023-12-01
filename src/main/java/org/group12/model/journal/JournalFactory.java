@@ -1,21 +1,34 @@
 package org.group12.model.journal;
 
-import org.group12.model.IDFactory;
+import org.group12.model.IDFactory.IDFactory;
+import org.group12.model.IDFactory.IIDFactory;
+import org.group12.model.IDFactory.JournalIDFactory;
+
 /**
- * Represents a factory for creating Journal objects.
- * This class uses a JournalIDFactory to generate unique IDs for each Journal.
+ * Singleton factory class for creating instances of Journal.
  */
 public class JournalFactory {
-    private JournalIDFactory idFactory;
+    private IIDFactory idFactory;
+    private static JournalFactory instance;
 
     /**
-     * Constructs a new JournalFactory.
-     * Initializes the JournalIDFactory used to generate IDs.
+     * Private constructor to prevent creating multiple instances of the class.
+     * Initializes the JournalIDFactory instance.
      */
-    public JournalFactory() {
-        this.idFactory = new JournalIDFactory();
+    private JournalFactory() {
+        this.idFactory = IDFactory.getInstance(JournalIDFactory.class);
     }
-
+    /**
+     * Returns the single instance of the class. If the instance is null, it creates a new instance.
+     *
+     * @return the single instance of JournalFactory
+     */
+    public static synchronized  JournalFactory getInstance(){
+        if(instance == null){
+            instance = new JournalFactory();
+        }
+        return instance;
+    }
     /**
      * Creates a new Journal with a unique ID and the given title.
      *
