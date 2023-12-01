@@ -26,7 +26,7 @@ public abstract class IDFactory {
          */
         public static synchronized <T extends IDFactory> T getInstance(Class<T> type) {
             // Use the computeIfAbsent method to get the existing instance from the map
-            // or create a new one if it doesn't exist
+            // or create a new one if it doesn't exist.
             return type.cast(instances.computeIfAbsent(type, key -> {
             // Use the computeIfAbsent method to get the existing instance from the map
             // or create a new one if it doesn't exist.
