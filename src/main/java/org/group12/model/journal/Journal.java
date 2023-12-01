@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class Journal implements INameable, IObservable{
     private List<JournalEntry> entryList;
-    private JournalEntryFactory entryFactory;
+    private IJournalEntryFactory entryFactory;
     private String title;
     private final String ID;
     private List<IPlanITObserver> observers;
@@ -23,7 +23,7 @@ public class Journal implements INameable, IObservable{
      * @param title         the title of the journal
      * @param entryFactory  the factory for creating journal entries
      */
-    public Journal(String ID, String title, JournalEntryFactory entryFactory) {
+    public Journal(String ID, String title, IJournalEntryFactory entryFactory) {
         this.entryList = new ArrayList<>();
         this.entryFactory = entryFactory;
         this.title = title;
