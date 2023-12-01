@@ -1,11 +1,13 @@
 package org.group12.model.journal;
 
 import org.group12.model.IDFactory;
+import org.group12.model.IIDFactory;
+
 /**
  * Singleton factory class for creating instances of Journal.
  */
 public class JournalFactory {
-    private JournalIDFactory idFactory;
+    private IIDFactory idFactory;
     private static JournalFactory instance;
 
     /**

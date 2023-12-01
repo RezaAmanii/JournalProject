@@ -1,6 +1,7 @@
 package org.group12.model.journal;
 
 import org.group12.model.IDFactory;
+import org.group12.model.IIDFactory;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -8,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * Singleton factory class for generating IDs for Journal objects.
  * This class extends the IDFactory abstract class and provides the specific implementation for Journals.
  */
-public class JournalIDFactory extends IDFactory {
+public class JournalIDFactory extends IDFactory implements IIDFactory {
     private static final String PREFIX = "JRNL";
     private static final AtomicLong counter = new AtomicLong(1);
 
