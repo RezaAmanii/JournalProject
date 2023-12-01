@@ -6,6 +6,7 @@ import org.group12.Observers.IPlanITObserver;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Calendar implements IObservable {
@@ -46,15 +47,6 @@ public class Calendar implements IObservable {
      *              if the event is recurring, all events with the same parent ID are also removed
      */
     public void removeEvent(Event event){
-        // if event is recurring, remove all events with the same parent ID as this event has
-        if (event.getRecurrence()){
-            // remove all events with same ID
-            for (Event e : eventList){
-                if (e.getParentEvent().getID().equals(event.getID())){
-                    eventList.remove(e);
-                }
-            }
-        }
         eventList.remove(event);
         isEmpty = eventList.isEmpty();
         notifyObservers();
@@ -83,6 +75,18 @@ public class Calendar implements IObservable {
         }
         notifyObservers(); // dangerous to notify observers here, since it will notify the observers multiple times
     }
+    public void removeRecurring(Event event){
+        Iterator<Event> iterator = eventList.iterator();
+        while (iterator.hasNext()) {
+            Event e = iterator.next();
+            if (e.getParentEvent() != null && e.getParentEvent().getID().equals(event.getID())) {
+                eventList.remove(e);
+            }
+        }
+        event.setRecurrence(false);
+        notifyObservers();
+    }
+
     public void updateEvent(Event event){
 
     }

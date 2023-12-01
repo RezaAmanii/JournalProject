@@ -25,18 +25,17 @@ public class CalendarTest {
         timeFrame2 = new Pair<>(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusHours(1).plusDays(1));
         event = new Event("ID", "title", "description", timeFrame1, LocalDateTime.now(),null, false, null);
         calendar.addEvent(event);
-//        for(int i = 0; i < 10; i++) {
-//            calendar.addEvent("title" + i, "description" + i, timeFrame2);
-//        }
+        for(int i = 0; i < 10; i++) {
+            calendar.addEvent("title" + i, "description" + i, timeFrame2);
+        }
         calendar.addEvent("matte", "jag skall kolla video", timeFrame1);
     }
     @Test
-    public void testMakeRecurring() {
+    public void testReccuringAddRemove() {
         int frequency = 7;
         int duration = 22;
         calendar.makeRecurring(event, frequency, duration);
         // check if there is an event with the same timeframe as the original event but 7 days later
-
         int found = 0;
         for (int i = 1; i <= duration / frequency; i++) {
             LocalDateTime ev = event.getTimeFrame().getKey().plusDays(frequency * i);
@@ -48,6 +47,20 @@ public class CalendarTest {
         }
         assertTrue(found == duration/ frequency);
         assertTrue(event.getRecurrence());
+
+        calendar.removeRecurring(event);
+        found = 0;
+        for (int i = 1; i <= duration / frequency; i++) {
+            LocalDateTime ev = event.getTimeFrame().getKey().plusDays(frequency * i);
+            for (Event e : calendar.getEvents()) {
+                if (e.getTimeFrame().getKey().equals(ev)) {
+                    found += 1;
+                }
+            }
+        }
+        assertTrue(found == 0);
+        assertFalse(event.getRecurrence());
+
     }
 
     @Test
