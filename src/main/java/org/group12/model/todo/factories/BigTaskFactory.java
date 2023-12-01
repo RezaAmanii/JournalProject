@@ -13,17 +13,15 @@ import org.group12.model.todo.IBigTask;
  */
 public class BigTaskFactory {
     private final IIDFactory idFactory;
-    private final BigTaskIDFactory idFactory;
     private final ItemsSet items;
+
 
     /**
      * Constructs a new BigTaskFactory.
      * Initializes the BigTaskIDFactory used to generate IDs.
      */
-    public BigTaskFactory() {
+    public BigTaskFactory(ItemsSet items ) {
         this.idFactory = IDFactory.getInstance(BigTaskIDFactory.class);
-    public BigTaskFactory(ItemsSet items) {
-        this.idFactory = new BigTaskIDFactory();
         this.items = items;
     }
 
