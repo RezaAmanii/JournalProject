@@ -13,7 +13,7 @@ public class JournalFactory {
      * Initializes the JournalIDFactory used to generate IDs.
      */
     public JournalFactory() {
-        this.idFactory = new JournalIDFactory();
+        this.idFactory = JournalIDFactory.getInstance();
     }
 
     /**

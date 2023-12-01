@@ -11,7 +11,7 @@ public class eventFactory {
     private EventIdFactory idFactory;
 
     public eventFactory() {
-        this.idFactory = new EventIdFactory();
+        this.idFactory = EventIdFactory.getInstance();
     }
     /**
      * Creates a new Event with a generated ID, title set to the current date,

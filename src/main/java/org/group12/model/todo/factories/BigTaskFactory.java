@@ -15,7 +15,7 @@ public class BigTaskFactory {
      * Initializes the BigTaskIDFactory used to generate IDs.
      */
     public BigTaskFactory() {
-        this.idFactory = new BigTaskIDFactory();
+        this.idFactory = BigTaskIDFactory.getInstance();
     }
 
     /**

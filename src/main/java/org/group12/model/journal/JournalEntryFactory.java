@@ -13,7 +13,7 @@ public class JournalEntryFactory {
     private JournalEntryIDFactory idFactory;
 
     public JournalEntryFactory() {
-        this.idFactory = new JournalEntryIDFactory();
+        this.idFactory = JournalEntryIDFactory.getInstance();
     }
 
     /**

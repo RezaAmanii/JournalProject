@@ -16,7 +16,7 @@ public class TodoCollectionFactory {
      * Initializes the TodoCollectionIDFactory used to generate IDs.
      */
     public TodoCollectionFactory() {
-        this.idFactory = new TodoCollectionIDFactory();
+        this.idFactory = TodoCollectionIDFactory.getInstance();
     }
 
     /**

@@ -15,7 +15,7 @@ public class TaskFactory {
      * Initializes the TaskIDFactory used to generate IDs.
      */
     public TaskFactory() {
-        this.idFactory = new TaskIDFactory();
+        this.idFactory = TaskIDFactory.getInstance();
     }
 
     /**
