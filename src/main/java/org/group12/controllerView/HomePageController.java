@@ -1,5 +1,6 @@
 package org.group12.controllerView;
 
+import org.group12.controller.HomeCalenderController;
 import org.group12.model.homeCalendar.CalendarActivity;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,6 +36,10 @@ public class HomePageController implements Initializable {
     public ZonedDateTime dateFocus;
     public  ZonedDateTime today;
     public  int selectedDay;
+
+
+    public static HomeCalenderController homeCalenderController = new HomeCalenderController();
+    // Map to store calendar activities
 
 
     /**
@@ -81,7 +86,7 @@ public class HomePageController implements Initializable {
 
 
         //List of activities for a given month
-        Map<Integer, List<CalendarActivity>> calendarActivityMap = getCalendarActivitiesMonth(dateFocus);
+        Map<Integer, List<CalendarActivity>> calendarActivityMap = homeCalenderController.getCalendarActivitiesMonthMap(dateFocus);
 
         int monthMaxDate = dateFocus.getMonth().maxLength();
         //Check for leap year
@@ -164,6 +169,7 @@ public class HomePageController implements Initializable {
      */
     private  void createCalendarActivity(List<CalendarActivity> currCalendarActivities, VBox stackPane) {
 
+        // delete all data before set new data
         for (CalendarActivity currCalendarActivity : currCalendarActivities) {
             GridPane calendarActivityBox=new GridPane();
             ColumnConstraints col1=new ColumnConstraints();
@@ -210,7 +216,8 @@ public class HomePageController implements Initializable {
             imageView.setOnMouseClicked(event -> { //delete
 
                 ZonedDateTime ymd= ZonedDateTime.of(activityTime.getYear(),activityTime.getMonth().getValue(),selectedDay,0,0,0,0,ZonedDateTime.now().getZone());
-                calendarActivities.computeIfPresent(ymd, (k, v) -> {
+                // homeCalenderController.delete(ymd);
+                homeCalenderController.getMainClaenderActivitiesMap().computeIfPresent(ymd, (k, v) -> {
                     v.removeIf(ca -> ca.getDate()== activityTime && Objects.equals(ca.getClientName(), currCalendarActivity.getClientName()));
                     if (v.isEmpty()) {
                         return null;
@@ -231,26 +238,6 @@ public class HomePageController implements Initializable {
      * @param calendarActivities The calendar.
      * @return A map of calendar activities grouped by day of the month.
      */
-    private  Map<Integer, List<CalendarActivity>> createCalendarMap(List<CalendarActivity> calendarActivities) {
-        Map<Integer, List<CalendarActivity>> calendarActivityMap = new HashMap<>();
-
-        for (CalendarActivity activity : calendarActivities) {
-            int activityDate = activity.getDate().getDayOfMonth();
-            if (!calendarActivityMap.containsKey(activityDate)) {
-                calendarActivityMap.put(activityDate, List.of(activity));
-            } else {
-                List<CalendarActivity> OldListByDate = calendarActivityMap.get(activityDate);
-
-                List<CalendarActivity> newList = new ArrayList<>(OldListByDate);
-                newList.add(activity);
-                calendarActivityMap.put(activityDate, newList);
-            }
-        }
-        return calendarActivityMap;
-    }
-
-    // Map to store calendar activities
-    Map<ZonedDateTime,ArrayList<CalendarActivity>>calendarActivities=new HashMap<>();
 
 
     /**
@@ -263,7 +250,8 @@ public class HomePageController implements Initializable {
         ZonedDateTime time = ZonedDateTime.of(year, month, selectedDay, hrSpinner.getValue(), minSpinner.getValue(), 0, 0, dateFocus.getZone());
         CalendarActivity calendarActivity = new CalendarActivity(time, newTaskNameTF.getText());
         time=ZonedDateTime.of(year,month,selectedDay,0,0,0,0,dateFocus.getZone());
-        calendarActivities.computeIfAbsent(time, k -> new ArrayList<>()).add(calendarActivity);
+        homeCalenderController.save(time,calendarActivity);
+        //calendarActivities.computeIfAbsent(time, k -> new ArrayList<>()).add(calendarActivity);
 
         drawCalendar();
         dayDeadlines.getChildren().clear();
@@ -273,20 +261,14 @@ public class HomePageController implements Initializable {
         todayLBL.setPadding(new Insets(5, 5, 5, 5));
         todayLBL.setFont(Font.font("Bodoni MT Black", 17));
         dayDeadlines.getChildren().add(todayLBL);
-        if (getCalendarActivitiesMonth(dateFocus).get(selectedDay) != null) {
-            createCalendarActivity(getCalendarActivitiesMonth(dateFocus).get(selectedDay), dayDeadlines);
+        //
+        List<CalendarActivity> activityList = homeCalenderController.getCalendarActivitiesMonth(dateFocus,selectedDay);
+        if (activityList != null) {
+            createCalendarActivity(activityList, dayDeadlines);
         }
 
     }
 
-    private  Map<Integer, List<CalendarActivity>> getCalendarActivitiesMonth(ZonedDateTime dateFocus) {
-        List<CalendarActivity> currMonthActivities = new ArrayList<>();
-        for (Map.Entry<ZonedDateTime,ArrayList<CalendarActivity>>entry:calendarActivities.entrySet()){
-            if (entry.getKey().getMonth()==dateFocus.getMonth()){
-                currMonthActivities.addAll(entry.getValue());
-            }
-        }
-        return createCalendarMap(currMonthActivities);
-    }
+
 
 }
