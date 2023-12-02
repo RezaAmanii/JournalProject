@@ -3,8 +3,6 @@ package org.group12.controllerView;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
@@ -14,7 +12,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.toDoSubTask.ToDoList;
 import org.group12.model.toDoSubTask.ToDoTask;
@@ -22,10 +19,11 @@ import org.group12.model.toDoSubTask.ToDoTask;
 import java.io.IOException;
 import java.net.URL;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.ResourceBundle;
+
+import static org.group12.view.TaskListView.*;
 
 /**
  * This class is a controller for the ToDo Page.
@@ -84,55 +82,7 @@ public class ToDoPageController implements Initializable {
     }
 
     // Refactored createNewListObject
-    private TextField createTaskNameLabel(ToDoList newList){
-        TextField taskNameLBL = new TextField(newList.getListName());
-        taskNameLBL.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
-        taskNameLBL.setEditable(false);
-        taskNameLBL.setAlignment(Pos.CENTER);
-        GridPane.setHalignment(taskNameLBL, javafx.geometry.HPos.CENTER);
-        GridPane.setValignment(taskNameLBL, javafx.geometry.VPos.CENTER);
-        taskNameLBL.setFont(new Font("Berlin Sans FB Demi Bold", 22.0));
-        return taskNameLBL;
-    }
 
-    private GridPane createListPane() {
-        GridPane listToAppend = new GridPane();
-        listToAppend.setMinHeight(33.0);
-        listToAppend.setMinWidth(300.0);
-        listToAppend.setStyle("-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;");
-
-        ColumnConstraints col2 = new ColumnConstraints();
-        col2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
-        col2.setMinWidth(10.0);
-        col2.setPercentWidth(75);
-
-        ColumnConstraints col3 = new ColumnConstraints();
-        col3.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
-        col3.setMinWidth(10.0);
-        col3.setPercentWidth(25);
-
-        listToAppend.getColumnConstraints().addAll(col2, col3);
-
-        RowConstraints row1 = new RowConstraints();
-        row1.setMinHeight(10.0);
-        row1.setPrefHeight(30.0);
-        row1.setVgrow(javafx.scene.layout.Priority.SOMETIMES);
-
-        listToAppend.getRowConstraints().add(row1);
-
-        return listToAppend;
-    }
-
-    private Label createNumberOfTaskLabel(ToDoList newList){
-        Label noOfTasks = new Label(String.valueOf(allLists.get(allLists.indexOf(newList)).getTasks().size()));
-        noOfTasks.setAlignment(javafx.geometry.Pos.CENTER);
-        noOfTasks.setTextFill(javafx.scene.paint.Color.WHITE);
-        GridPane.setColumnIndex(noOfTasks, 1);
-        GridPane.setHalignment(noOfTasks, javafx.geometry.HPos.CENTER);
-        Font font2 = new Font("Berlin Sans FB Demi Bold", 22.0);
-        noOfTasks.setFont(font2);
-        return noOfTasks;
-    }
 
     private void setTaskNameLabelEventHandler(ToDoList newList, TextField taskNameLBL, Label noOfTask){
         taskNameLBL.setOnMouseClicked(event -> {
@@ -148,10 +98,7 @@ public class ToDoPageController implements Initializable {
         selectedList = allLists.get(findTheToDoList(newList));
         noOfTask.setText(String.valueOf(allLists.get(findTheToDoList(selectedList)).getTasks().size()));
         refreshSidePanelInfo();
-        if (event.getClickCount() == 2 &&selectedList.getID()!=1&&selectedList.getID()!=2) {
-            taskNameLBL.setEditable(true);
-            taskNameLBL.requestFocus();
-        }
+        handleTaskNameLabelEvents(taskNameLBL, event);
     }
 
     private void handleTaskNameLabelKeyPress(ToDoList newList, TextField taskNameLBL, Label noOfTask, KeyEvent event) {
@@ -288,10 +235,66 @@ public class ToDoPageController implements Initializable {
         ImageView imageView = createViewImageView(task);
         TextField taskNameLabel = createTaskNameTextField(task);
         ProgressIndicator progressIndicator = createProgressIndicator(task);
-        setTaskNameEditEvent(taskNameLabel, task);
 
+        setTaskNameEditEvent(taskNameLabel, task);
         setViewEvent(imageView, task, progressIndicator);
 
+        handleImportantImageClick(task, imageViewImportant);
+        handleDeleteImageViewClick(task, imageViewDelete);
+
+        configureGridPanePositions(taskNameLabel, progressIndicator, imageView);
+        setVisualComponentsInPane(task, imageView, progressIndicator, taskNameLabel, newTaskPane, imageViewDelete, deadLineLabel, imageViewImportant);
+
+        VBox.setMargin(newTaskPane, new Insets(10.0, 10.0, 0, 10.0));
+        return newTaskPane;
+    }
+
+    private void setVisualComponentsInPane(ToDoTask task, ImageView imageView, ProgressIndicator progressIndicator, TextField taskNameLabel, GridPane newTaskPane, ImageView imageViewDelete, Label deadLineLabel, ImageView imageViewImportant) {
+        imageView.setOnMouseClicked(event -> {
+            handleImageViewClick(task, !task.getSubTasks().isEmpty(), progressIndicator);
+
+        });
+
+        taskNameLabel.setOnMouseClicked(event -> {
+            selectedTask= task;
+            handleTaskNameLabelEvents(taskNameLabel, event);
+        });
+
+        taskNameLabel.setOnKeyPressed(event -> {
+            handleTaskNameLabelKeyPress(event, taskNameLabel, allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task)));
+        });
+
+        newTaskPane.getChildren().addAll(taskNameLabel, progressIndicator, imageView, imageViewDelete, deadLineLabel, imageViewImportant);
+    }
+
+    private void handleImageViewClick(ToDoTask task, boolean task1, ProgressIndicator progressIndicator) {
+        selectedTask = task;
+        try {
+            Globals.openNewForm("/org/group12/view/subTasks.fxml", selectedTask.getTaskName(), false);
+            if (task1) {
+                progressIndicator.setProgress((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
+                System.out.println((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
+            }
+            refreshSidePanelInfo();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void handleDeleteImageViewClick(ToDoTask task, ImageView imageViewDelete) {
+        imageViewDelete.setOnMouseClicked(event -> {
+            for (ToDoTask task1: selectedList.getTasks()){
+                if (task.getID()==task1.getID()){
+                    selectedList.getTasks().remove(task1);
+                    break;
+                }
+            }
+            refreshSidePanelInfo();
+            refreshAllListVBox();
+        });
+    }
+
+    private static void handleImportantImageClick(ToDoTask task, ImageView imageViewImportant) {
         imageViewImportant.setOnMouseClicked(event -> {
             if (task.isImportant()){
                 task.setImportant(false);
@@ -305,208 +308,38 @@ public class ToDoPageController implements Initializable {
 
             }
         });
-
-
-        imageViewDelete.setOnMouseClicked(event -> {
-            for (ToDoTask task1: selectedList.getTasks()){
-                if (task.getID()==task1.getID()){
-                    selectedList.getTasks().remove(task1);
-                    break;
-                }
-            }
-            refreshSidePanelInfo();
-            refreshAllListVBox();
-        });
-
-
-
-        GridPane.setColumnIndex(taskNameLabel, 1);
-        GridPane.setColumnIndex(progressIndicator, 0);
-        GridPane.setRowSpan(progressIndicator,2);
-
-
-        GridPane.setHalignment(imageView, HPos.CENTER);
-        GridPane.setMargin(imageView, new Insets(2.0, 2.0, 2.0, 2.0));
-        taskNameLabel.setOnMouseClicked(event -> {
-            selectedTask=task;
-            if (event.getClickCount() == 2 &&selectedList.getID()!=1&&selectedList.getID()!=2) {
-                taskNameLabel.setEditable(true);
-                taskNameLabel.requestFocus();
-            }
-        });
-        imageView.setOnMouseClicked(event -> {
-            selectedTask = task;
-            try {
-                Globals.openNewForm("/org/group12/view/subTasks.fxml", selectedTask.getTaskName(),false);
-                if ((task.getSubTasks().size()!=0)) {
-                    progressIndicator.setProgress((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
-                    System.out.println((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
-                }
-                refreshSidePanelInfo();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
-        });
-
-        taskNameLabel.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                taskNameLabel.setEditable(false);
-                renameTask(allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task)), taskNameLabel.getText());
-            }
-        });
-
-        newTaskPane.getChildren().addAll(taskNameLabel, progressIndicator, imageView,imageViewDelete,deadLineLabel,imageViewImportant);
-
-        VBox.setMargin(newTaskPane, new Insets(10.0, 10.0, 0, 10.0));
-        return newTaskPane;
     }
 
-    private GridPane createTaskPane(){
-        GridPane newTaskPane = new GridPane();
-        newTaskPane.setMinHeight(70.0);
-        newTaskPane.setMinWidth(250.0);
-        newTaskPane.setStyle("-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;");
-        newTaskPane.getColumnConstraints().addAll(
-                createColumnConstraints(12.5, 216),
-                createColumnConstraints(50.0,216),
-                createColumnConstraints(12.5, 104),
-                createColumnConstraints(12.5, 104),
-                createColumnConstraints(12.5, 104)
-        );
-        newTaskPane.getRowConstraints().addAll(
-                createRowConstraints(60),
-                createRowConstraints(40)
-        );
-        return newTaskPane;
-    }
-
-    private ColumnConstraints createColumnConstraints(double width, double prefWidth){
-        double minWidth = 10.0;
-        ColumnConstraints col = new ColumnConstraints();
-        col.setHgrow(Priority.SOMETIMES);
-        col.setMinWidth(minWidth);
-        col.setPercentWidth(width);
-        col.setPrefWidth(prefWidth);
-        return col;
-    }
-
-    private RowConstraints createRowConstraints(double height){
-        double minHeight = 10.0;
-        RowConstraints row = new RowConstraints();
-        row.setMinHeight(minHeight);
-        row.setPercentHeight(height);
-        row.setPrefHeight(height);
-        return row;
-    }
-
-    private Label createDeadlineLabel(ToDoTask task){
-        Label deadlineLabel = new Label(task.getTaskDeadline().format(DateTimeFormatter.ofPattern("dd/MM/yyy - HH:mm")));
-        deadlineLabel.setFont(new Font("Berlin Sans FB", 16.0));
-        deadlineLabel.setStyle("-fx-text-fill: white");
-        GridPane.setMargin(deadlineLabel,new Insets(3));
-        GridPane.setValignment(deadlineLabel, javafx.geometry.VPos.CENTER);
-        GridPane.setHalignment(deadlineLabel, javafx.geometry.HPos.CENTER);
-        GridPane.setColumnIndex(deadlineLabel,1);
-        GridPane.setRowIndex(deadlineLabel,1);
-        return deadlineLabel;
-    }
-
-    private ImageView createImportantImageView(ToDoTask task){
-        ImageView imageViewImportant = new ImageView(task.isImportant() ? "/star.png" : "/starUnselected.png");
-        imageViewImportant.setFitHeight(31.0);
-        imageViewImportant.setFitWidth(31.0);
-        imageViewImportant.setPickOnBounds(true);
-        imageViewImportant.setPreserveRatio(true);
-        GridPane.setColumnIndex(imageViewImportant, 4);
-        GridPane.setRowSpan(imageViewImportant,2);
-        return imageViewImportant;
-    }
-
-    private ImageView createDeleteImageView(ToDoTask task){
-        ImageView imageViewDelete = new ImageView("/deleteWhite.png");
-        imageViewDelete.setFitHeight(31.0);
-        imageViewDelete.setFitWidth(31.0);
-        imageViewDelete.setPickOnBounds(true);
-        imageViewDelete.setPreserveRatio(true);
-        GridPane.setColumnIndex(imageViewDelete, 3);
-        GridPane.setRowSpan(imageViewDelete,2);
-        return imageViewDelete;
-    }
-
-    private TextField createTaskNameTextField(ToDoTask task){
-        TextField taskNameLBL = new TextField(task.getTaskName());
-        taskNameLBL.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
-        taskNameLBL.setEditable(false);
-        taskNameLBL.setAlignment(Pos.CENTER);
-        taskNameLBL.setFont(new Font("Berlin Sans FB Demi Bold", 22.0));
-        GridPane.setHalignment(taskNameLBL, HPos.CENTER);
-        GridPane.setValignment(taskNameLBL, VPos.CENTER);
-        return taskNameLBL;
-    }
-
-    private ProgressIndicator createProgressIndicator(ToDoTask task){
-        double tasksFinishPrecentage = calculateTaskPrecentage(task);
-        ProgressIndicator progressIndicator = new ProgressIndicator(tasksFinishPrecentage);
-        GridPane.setHalignment(progressIndicator, HPos.CENTER);
-        GridPane.setMargin(progressIndicator, new Insets(3.0, 3.0, 3.0, 3.0));
-        return progressIndicator;
-    }
-
-    private double calculateTaskPrecentage(ToDoTask task) {
-        double precentageCompleted = 0;
-        if(!task.getSubTasks().isEmpty()){
-            precentageCompleted = (double) task.getCompletedSubTasks().size() / task.getSubTasks().size();
-        } else{
-            return 0;
-        }
-        return precentageCompleted;
-    }
-
-    private ImageView createViewImageView(ToDoTask task){
-        ImageView imageView = new ImageView("/viewWhite.png");
-        imageView.setFitHeight(31.0);
-        imageView.setFitWidth(31.0);
-        imageView.setPickOnBounds(true);
-        imageView.setPreserveRatio(true);
-        GridPane.setColumnIndex(imageView, 2);
-        GridPane.setRowSpan(imageView,2);
-
-        return imageView;
-    }
 
     private void setTaskNameEditEvent(TextField taskNameLabel, ToDoTask task){
         taskNameLabel.setOnMouseClicked(event -> {
-            if(event.getClickCount() == 2 && selectedList.getID() != 1 && selectedList.getID() != 2){
-                taskNameLabel.setEditable(true);
-                taskNameLabel.requestFocus();
-            }
+            handleTaskNameLabelEvents(taskNameLabel, event);
         });
 
         taskNameLabel.setOnKeyPressed(event -> {
-            if(event.getCode() == KeyCode.ENTER){
-                taskNameLabel.setEditable(false);
-                renameTask((allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task))), taskNameLabel.getText());
-            }
+            handleTaskNameLabelKeyPress(event, taskNameLabel, (allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task))));
         });
+    }
+
+    private void handleTaskNameLabelKeyPress(KeyEvent event, TextField taskNameLabel, ToDoTask allLists) {
+        if (event.getCode() == KeyCode.ENTER) {
+            taskNameLabel.setEditable(false);
+            renameTask(allLists, taskNameLabel.getText());
+        }
+    }
+
+    private static void handleTaskNameLabelEvents(TextField taskNameLabel, MouseEvent event) {
+        if(event.getClickCount() == 2 && selectedList.getID() != 1 && selectedList.getID() != 2){
+            taskNameLabel.setEditable(true);
+            taskNameLabel.requestFocus();
+        }
     }
 
     private void setViewEvent(ImageView imageView, ToDoTask task, ProgressIndicator progressIndicator){
         imageView.setOnMouseClicked(event -> {
-            selectedTask = task;
-            try {
-                Globals.openNewForm("/org/group12/view/subTasks.fxml", selectedTask.getTaskName(),false);
-                if ((!task.getSubTasks().isEmpty())) {
-                    progressIndicator.setProgress((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
-                    System.out.println((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
-                }
-                refreshSidePanelInfo();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            handleImageViewClick(task, !task.getSubTasks().isEmpty(), progressIndicator);
 
         });
-
     }
 
 
