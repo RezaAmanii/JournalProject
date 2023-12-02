@@ -1,7 +1,6 @@
 package org.group12.controllerView;
 
 import javafx.fxml.Initializable;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
@@ -81,8 +80,6 @@ public class ToDoPageController implements Initializable {
         return listToAppend;
     }
 
-    // Refactored createNewListObject
-
 
     private void setTaskNameLabelEventHandler(ToDoList newList, TextField taskNameLBL, Label noOfTask){
         taskNameLBL.setOnMouseClicked(event -> {
@@ -110,9 +107,6 @@ public class ToDoPageController implements Initializable {
             renameToDoList(selectedList, taskNameLBL.getText());
         }
     }
-
-
-
 
 
     /**
@@ -147,36 +141,59 @@ public class ToDoPageController implements Initializable {
     /**
      * Refreshes the VBox that contains all the to-do lists in the UI.
      */
+
     public void refreshAllListVBox(){
-        selectedList=allLists.get(0);
-        fixedListsVbox.getChildren().clear();
-        appendableListVbox.getChildren().clear();
-        for (ToDoList list:allLists){
-            if (list.getID()==1||list.getID()==2){
-                fixedListsVbox.getChildren().add(createNewListObject(list));
-            }
-            else{
-                allLists.get(0).getTasks().clear();
-                allLists.get(1).getTasks().clear();
-                for (ToDoTask task:list.getTasks()){
-                    if (task.getTaskDeadline().getDayOfMonth()== ZonedDateTime.now().getDayOfMonth()
-                            && task.getTaskDeadline().getMonth()==ZonedDateTime.now().getMonth()
-                            && task.getTaskDeadline().getYear()==ZonedDateTime.now().getYear()){
-                        allLists.get(0).getTasks().removeIf(task1 -> task1.getID() == task.getID());
-                        allLists.get(0).getTasks().add(task);
-                    }
-                    if (task.isImportant()){
-                        allLists.get(1).getTasks().removeIf(task1 -> task1.getID() == task.getID());
-                        allLists.get(1).getTasks().add(task);
-                    }
-                }
-                appendableListVbox.getChildren().add(createNewListObject(list));
-            }
-        }
+        clearListVBoxContent();
+        refreshFixedLists();
+        refreshAppendableLists();
         refreshSidePanelInfo();
     }
 
-        /**
+    private void refreshFixedLists(){
+        for(ToDoList list:allLists){
+            if (list.getID()==1||list.getID()==2){
+                fixedListsVbox.getChildren().add(createNewListObject(list));
+            }
+        }
+    }
+
+    private void refreshAppendableLists(){
+        for(ToDoList list : allLists){
+            if (list.getID() != 1 &&list.getID()!= 2){
+                updateListTasks(list);
+                appendableListVbox.getChildren().add(createNewListObject(list));
+            }
+        }
+    }
+
+    private void updateListTasks(ToDoList list){
+        list.getTasks().forEach(task -> {
+            if(task.getTaskDeadline().toLocalDate().isEqual(ZonedDateTime.now().toLocalDate())){
+                updateTodayTask(task);
+            }
+            if(task.isImportant()){
+                updateImportantTask(task);
+            }
+        });
+    }
+
+    private void updateTodayTask(ToDoTask task) {
+        allLists.get(0).getTasks().removeIf(task1 -> task1.getID() == task.getID());
+        allLists.get(0).getTasks().add(task);
+    }
+
+    private void updateImportantTask(ToDoTask task) {
+        allLists.get(1).getTasks().removeIf(task1 -> task1.getID() == task.getID());
+        allLists.get(1).getTasks().add(task);
+    }
+
+    private void clearListVBoxContent() {
+        selectedList=allLists.get(0);
+        fixedListsVbox.getChildren().clear();
+        appendableListVbox.getChildren().clear();
+    }
+
+    /**
          * Renames the given to-do list with a new name.
          *
          * @param list    The to-do list to rename.
