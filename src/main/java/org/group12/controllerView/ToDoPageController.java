@@ -11,6 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import org.group12.controller.TaskListController;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.toDoSubTask.ToDoList;
 import org.group12.model.toDoSubTask.ToDoTask;
@@ -39,6 +40,9 @@ public class ToDoPageController implements Initializable {
     public VBox completedTasksVbox;
     public GridPane addNewListBtn;
     public BorderPane mainWindowBorder;
+
+    // Controllers
+    private TaskListController taskListController = new TaskListController();
 
 
     public static ArrayList<ToDoList> allLists = new ArrayList<>();

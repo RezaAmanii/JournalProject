@@ -84,11 +84,11 @@ public class TaskController implements IController {
         taskView.update();
     }
 
-    private boolean stringValidation(String stringToCheck) {
+    public static boolean stringValidation(String stringToCheck) {
         return stringToCheck != null && !stringToCheck.trim().isEmpty();
     }
 
-    private boolean dateValidation(LocalDateTime dateToCheck) {
+    public static boolean dateValidation(LocalDateTime dateToCheck) {
         return dateToCheck != null && !dateToCheck.isBefore(LocalDateTime.now());
 
     }
