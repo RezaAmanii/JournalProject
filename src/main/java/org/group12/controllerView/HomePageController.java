@@ -76,6 +76,7 @@ public class HomePageController implements Initializable {
         drawCalendar();
     }
 
+
     /**
      * Draws the calendar by creating and arranging the necessary UI elements based on the current date focus.
      */
@@ -148,8 +149,12 @@ public class HomePageController implements Initializable {
                             todayLBL.setFont(Font.font("Bodoni MT Black", 17));
                             todayLBL.setStyle("-fx-text-fill:  #183a4e");
                             dayDeadlines.getChildren().add(todayLBL);
+                            //
+                            int month = dateFocus.getMonth().getValue();
+                            ZonedDateTime time = ZonedDateTime.of(2000, month, selectedDay, hrSpinner.getValue(), minSpinner.getValue(), 0, 0, dateFocus.getZone());
+
                             if (calendarActivities != null) {
-                                createCalendarActivity(calendarActivities, dayDeadlines);
+                                createCalendarActivity(homeCalenderController.getCalendarActivitiesMonth(time,selectedDay), dayDeadlines);
                             }
                         });
                         calendarPane.add(vDay, j, i);
@@ -169,67 +174,82 @@ public class HomePageController implements Initializable {
      */
     private  void createCalendarActivity(List<CalendarActivity> currCalendarActivities, VBox stackPane) {
 
-        // delete all data before set new data
-        for (CalendarActivity currCalendarActivity : currCalendarActivities) {
-            GridPane calendarActivityBox=new GridPane();
-            ColumnConstraints col1=new ColumnConstraints();
-            col1.setPercentWidth(80);
-            col1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-            ColumnConstraints col2=new ColumnConstraints();
-            col2.setPercentWidth(20);
-            col2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-            calendarActivityBox.getColumnConstraints().addAll(col1,col2);
+        if(currCalendarActivities != null) {
+            // delete all data before set new data
+            for (CalendarActivity currCalendarActivity : currCalendarActivities) {
 
-            RowConstraints row=new RowConstraints();
-            row.setVgrow(Priority.SOMETIMES);
+                GridPane calendarActivityBox = new GridPane();
+                ColumnConstraints col1 = new ColumnConstraints();
+                col1.setPercentWidth(80);
+                col1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-            calendarActivityBox.getRowConstraints().add(row);
+                ColumnConstraints col2 = new ColumnConstraints();
+                col2.setPercentWidth(20);
+                col2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
 
-            calendarActivityBox.setPadding(new Insets(5));
-            calendarActivityBox.setStyle("-fx-background-color: #203649; -fx-background-radius: 10;");
-            VBox.setMargin(calendarActivityBox, new Insets(5));
+                calendarActivityBox.getColumnConstraints().addAll(col1, col2);
 
-            ZonedDateTime activityTime= currCalendarActivity.getDate();
-            Label text = new Label(currCalendarActivity.getClientName() + ", " + activityTime.toLocalTime());
-            text.setFont(Font.font("Bodoni MT Black", 15));
-            text.setStyle("-fx-text-fill: white");
+                RowConstraints row = new RowConstraints();
+                row.setVgrow(Priority.SOMETIMES);
 
-            GridPane.setColumnIndex(text,0);
+                calendarActivityBox.getRowConstraints().add(row);
 
-            ImageView imageView = new ImageView("/deleteWhite.png");
-            imageView.setFitHeight(31.0);
-            imageView.setFitWidth(31.0);
-            imageView.setPickOnBounds(true);
-            imageView.setPreserveRatio(true);
+                calendarActivityBox.setPadding(new Insets(5));
+                calendarActivityBox.setStyle("-fx-background-color: #203649; -fx-background-radius: 10;");
+                VBox.setMargin(calendarActivityBox, new Insets(5));
 
-            GridPane.setColumnIndex(imageView,1);
+                ZonedDateTime activityTime = currCalendarActivity.getDate();
+                Label text = new Label(currCalendarActivity.getClientName() + ", " + activityTime.toLocalTime());
+                text.setFont(Font.font("Bodoni MT Black", 15));
+                text.setStyle("-fx-text-fill: white");
 
-            calendarActivityBox.getChildren().addAll(text,imageView);
-            text.setOnMouseClicked(mouseEvent -> {
-                //On Text clicked
-                System.out.println(text.getText());
-            });
+                GridPane.setColumnIndex(text, 0);
 
-            stackPane.getChildren().add(calendarActivityBox);
-            imageView.setOnMouseClicked(event -> { //delete
+                ImageView imageView = new ImageView("/deleteWhite.png");
+                imageView.setFitHeight(31.0);
+                imageView.setFitWidth(31.0);
+                imageView.setPickOnBounds(true);
+                imageView.setPreserveRatio(true);
 
-                ZonedDateTime ymd= ZonedDateTime.of(activityTime.getYear(),activityTime.getMonth().getValue(),selectedDay,0,0,0,0,ZonedDateTime.now().getZone());
-                // homeCalenderController.delete(ymd);
-                homeCalenderController.getMainClaenderActivitiesMap().computeIfPresent(ymd, (k, v) -> {
-                    v.removeIf(ca -> ca.getDate()== activityTime && Objects.equals(ca.getClientName(), currCalendarActivity.getClientName()));
-                    if (v.isEmpty()) {
-                        return null;
-                    }
-                    return v;
+                GridPane.setColumnIndex(imageView, 1);
+
+                calendarActivityBox.getChildren().addAll(text, imageView);
+                text.setOnMouseClicked(mouseEvent -> {
+                    //On Text clicked
+                    System.out.println(text.getText());
                 });
-                drawCalendar();
 
-            });
+                stackPane.getChildren().add(calendarActivityBox);
+                imageView.setOnMouseClicked(event -> { //delete
 
+                    ZonedDateTime ymd = ZonedDateTime.of(activityTime.getYear(), activityTime.getMonth().getValue(), selectedDay, 0, 0, 0, 0, ZonedDateTime.now().getZone());
+                    // homeCalenderController.delete(ymd);
+                    homeCalenderController.getMainClaenderActivitiesMap().computeIfPresent(ymd, (k, v) -> {
+                        v.removeIf(ca -> ca.getDate() == activityTime && Objects.equals(ca.getClientName(), currCalendarActivity.getClientName()));
+                        if (v.isEmpty()) {
+                            return null;
+                        }
+                        return v;
+                    });
+
+                    List<CalendarActivity> myList = homeCalenderController.getCalendarActivitiesMonth(ymd, selectedDay);
+                    if(myList == null)
+                        dayDeadlines.getChildren().clear();
+                    else {
+                        dayDeadlines.getChildren().clear();
+                        Label todayLBL = new Label(selectedDay + " " + monthLBL.getText() + " " + yearLBL.getText());
+                        todayLBL.setPadding(new Insets(5, 5, 5, 5));
+                        todayLBL.setFont(Font.font("Bodoni MT Black", 17));
+                        todayLBL.setStyle("-fx-text-fill:  #183a4e");
+                        dayDeadlines.getChildren().add(todayLBL);
+                    }
+                    createCalendarActivity(myList, stackPane);
+                });
+
+            }
         }
-
     }
 
     /**
