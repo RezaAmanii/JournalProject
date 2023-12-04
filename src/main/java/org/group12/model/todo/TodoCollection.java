@@ -1,8 +1,10 @@
 package org.group12.model.todo;
 
+import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.factories.TaskListFactory;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -12,7 +14,7 @@ import java.util.HashMap;
 public class TodoCollection implements ITodoCollection{
     String ID;
     String title;
-    private final HashMap<String, ITaskList> taskListMap;
+    private final ArrayList<ITaskList> taskList;
     private final TaskListFactory taskListFactory;
 
     private final ItemsSet items;
@@ -25,7 +27,7 @@ public class TodoCollection implements ITodoCollection{
      * @param ID the ID of the TodoCollection
      */
     public TodoCollection (String title, String ID, ItemsSet items){
-        taskListMap = new HashMap<>();
+        taskList = new ArrayList<>();
         taskListFactory = new TaskListFactory(items);
         this.items = items;
         this.title = title;
@@ -42,10 +44,11 @@ public class TodoCollection implements ITodoCollection{
      * @param title the title of the new task list
      */
     @Override
-    public void addTaskList(String title) {
+    public String addTaskList(String title) {
         ITaskList newList = taskListFactory.createTaskList(title);
-        taskListMap.put(newList.getID(), newList);
+        taskList.add(newList);
         items.addItem(newList);
+        return newList.getID();
     }
 
     /**
@@ -57,7 +60,8 @@ public class TodoCollection implements ITodoCollection{
      */
     @Override
     public void removeTaskList(String taskListID) {
-        taskListMap.remove(taskListID);
+        ITaskList list = (ITaskList) items.getItem(taskListID);
+        taskList.remove(list);
         items.removeItem(taskListID);
     }
 
@@ -67,8 +71,8 @@ public class TodoCollection implements ITodoCollection{
      * @return the task list map
      */
     @Override
-    public HashMap<String, ITaskList> getTaskListMap() {
-        return taskListMap;
+    public ArrayList<ITaskList> getTaskList() {
+        return taskList;
     }
 
     /**

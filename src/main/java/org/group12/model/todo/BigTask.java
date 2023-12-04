@@ -159,10 +159,11 @@ public class BigTask implements IBigTask {
      * @param title The title of the subtask to be added.
      */
     @Override
-    public void addSubTask(String title) {
+    public String addSubTask(String title) {
         ITask newTask = taskFactory.createTask(title);
         subTaskMap.put(newTask.getID(), newTask);
         items.addItem(newTask);
+        return newTask.getID();
     }
 
     /**

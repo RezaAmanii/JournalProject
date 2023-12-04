@@ -16,7 +16,7 @@ public interface IBigTask extends ITask, IDescription {
 
     // Methods for editing the subTasks
 
-    void addSubTask(String title);
+    String addSubTask(String title);
 
     void removeSubTask(String subTaskID);
 
