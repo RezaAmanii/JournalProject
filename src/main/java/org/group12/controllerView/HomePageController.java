@@ -13,8 +13,11 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.*;
+
+import static org.group12.view.CalendarView.*;
 
 /**
  * This class is a controller for the Home Page.
@@ -76,85 +79,18 @@ public class HomePageController implements Initializable {
      */
     public  void drawCalendar() {
         calendarPane.getChildren().clear();
-        yearLBL.setText(String.valueOf(dateFocus.getYear()));
-        monthLBL.setText(String.valueOf(dateFocus.getMonth()));
-
+        setYearAndMonthLabels();
 
         //List of activities for a given month
         Map<Integer, List<CalendarActivity>> calendarActivityMap = getCalendarActivitiesMonth(dateFocus);
 
-        int monthMaxDate = dateFocus.getMonth().maxLength();
-        //Check for leap year
-        if (dateFocus.getYear() % 4 != 0 && monthMaxDate == 29) {
-            monthMaxDate = 28;
-        }
-        int dateOffset = ZonedDateTime.of(dateFocus.getYear(), dateFocus.getMonthValue(), 1, 0, 0, 0, 0, dateFocus.getZone()).getDayOfWeek().getValue();
+        int monthMaxDate = calculateMonthMaxDate();
+        int dateOffset = calculateDateOffset();
 
-        for (int i = 0; i < 6; i++) {
-            for (int j = 0; j < 7; j++) {
-                VBox vDay = new VBox();
-                int calculatedDate = (j + 1) + (7 * i);
-                int currentDate = calculatedDate - dateOffset;
-                Label date = new Label(String.valueOf(currentDate));
-                date.setPadding(new Insets(5, 5, 5, 5));
-                date.setFont(Font.font("Bodoni MT Black", 17));
-                boolean valid = false;
-
-                if (calculatedDate > dateOffset) {
-                    if (currentDate <= monthMaxDate) {
-                        valid = true;
-                        vDay.setStyle("-fx-background-color: #e3f6f5; -fx-background-radius: 10;-fx-border-radius: 10; -fx-border-color: #ffffff");
-                        vDay.setPadding(new Insets(1,1,0,1));
-                        GridPane.setMargin(vDay, new Insets(4));
-
-                    }
-
-                    if (today.getYear() == dateFocus.getYear() && today.getMonth() == dateFocus.getMonth() && today.getDayOfMonth() == currentDate) {
-                        vDay.setStyle("-fx-background-color: #213742; -fx-background-radius: 10;-fx-border-radius: 10; -fx-border-color: #ffffff");
-                        date.setStyle("-fx-text-fill: #ffffff;");
-                        List<CalendarActivity> calendarActivities = calendarActivityMap.get(currentDate);
-                        dayDeadlines.getChildren().clear();
-                        //day label
-                        Label todayLBL = new Label(currentDate + " " + monthLBL.getText() + " " + yearLBL.getText());
-                        todayLBL.setPadding(new Insets(5, 5, 5, 5));
-                        todayLBL.setFont(Font.font("Bodoni MT Black", 17));
-                        todayLBL.setStyle("-fx-text-fill:  #183a4e");
-                        dayDeadlines.getChildren().add(todayLBL);
-                        //if activities
-                        if (calendarActivities != null) {
-                            createCalendarActivity(calendarActivities, dayDeadlines);
-                        }
-                    }
-                    if (valid) {
-                        List<CalendarActivity> calendarActivities = calendarActivityMap.get(currentDate);
-                        vDay.getChildren().add(date);
-                        if (calendarActivities != null) {
-                            VBox notification = new VBox();
-                            notification.setPadding(new Insets(5,5,3,5));
-                            notification.setStyle("-fx-background-color: #081e2a; -fx-background-radius: 10;");
-                            VBox.setMargin(notification, new Insets(2));
-                            vDay.getChildren().add(notification);
-                        }
-                        vDay.setOnMouseClicked(mouseEvent -> {
-                            dayDeadlines.getChildren().clear();
-                            selectedDay = currentDate;
-                            Label todayLBL = new Label(currentDate + " " + monthLBL.getText() + " " + yearLBL.getText());
-                            todayLBL.setPadding(new Insets(5, 5, 5, 5));
-                            todayLBL.setFont(Font.font("Bodoni MT Black", 17));
-                            todayLBL.setStyle("-fx-text-fill:  #183a4e");
-                            dayDeadlines.getChildren().add(todayLBL);
-                            if (calendarActivities != null) {
-                                createCalendarActivity(calendarActivities, dayDeadlines);
-                            }
-                        });
-                        calendarPane.add(vDay, j, i);
-
-                    }
-                }
-            }
-
-        }
+        renderCalender(monthMaxDate, dateOffset, calendarActivityMap);
     }
+
+
 
     /**
      * Creates calendar activity UI elements and adds them to the provided stack pane.
@@ -165,65 +101,14 @@ public class HomePageController implements Initializable {
     private  void createCalendarActivity(List<CalendarActivity> currCalendarActivities, VBox stackPane) {
 
         for (CalendarActivity currCalendarActivity : currCalendarActivities) {
-            GridPane calendarActivityBox=new GridPane();
-            ColumnConstraints col1=new ColumnConstraints();
-            col1.setPercentWidth(80);
-            col1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
-
-            ColumnConstraints col2=new ColumnConstraints();
-            col2.setPercentWidth(20);
-            col2.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
-
-            calendarActivityBox.getColumnConstraints().addAll(col1,col2);
-
-            RowConstraints row=new RowConstraints();
-            row.setVgrow(Priority.SOMETIMES);
-
-            calendarActivityBox.getRowConstraints().add(row);
-
-            calendarActivityBox.setPadding(new Insets(5));
-            calendarActivityBox.setStyle("-fx-background-color: #203649; -fx-background-radius: 10;");
-            VBox.setMargin(calendarActivityBox, new Insets(5));
-
-            ZonedDateTime activityTime= currCalendarActivity.getDate();
-            Label text = new Label(currCalendarActivity.getClientName() + ", " + activityTime.toLocalTime());
-            text.setFont(Font.font("Bodoni MT Black", 15));
-            text.setStyle("-fx-text-fill: white");
-
-            GridPane.setColumnIndex(text,0);
-
-            ImageView imageView = new ImageView("/deleteWhite.png");
-            imageView.setFitHeight(31.0);
-            imageView.setFitWidth(31.0);
-            imageView.setPickOnBounds(true);
-            imageView.setPreserveRatio(true);
-
-            GridPane.setColumnIndex(imageView,1);
-
-            calendarActivityBox.getChildren().addAll(text,imageView);
-            text.setOnMouseClicked(mouseEvent -> {
-                //On Text clicked
-                System.out.println(text.getText());
-            });
-
+            GridPane calendarActivityBox = createActivityBox(currCalendarActivity);
+            configureDeleteFunctionality(currCalendarActivity, calendarActivityBox);
             stackPane.getChildren().add(calendarActivityBox);
-            imageView.setOnMouseClicked(event -> { //delete
-
-                ZonedDateTime ymd= ZonedDateTime.of(activityTime.getYear(),activityTime.getMonth().getValue(),selectedDay,0,0,0,0,ZonedDateTime.now().getZone());
-                calendarActivities.computeIfPresent(ymd, (k, v) -> {
-                    v.removeIf(ca -> ca.getDate()== activityTime && Objects.equals(ca.getClientName(), currCalendarActivity.getClientName()));
-                    if (v.isEmpty()) {
-                        return null;
-                    }
-                    return v;
-                });
-                drawCalendar();
-
-            });
-
         }
 
     }
+
+
 
     /**
      * Creates a map of calendar activities grouped by day of the month.
@@ -288,5 +173,203 @@ public class HomePageController implements Initializable {
         }
         return createCalendarMap(currMonthActivities);
     }
+
+
+    public void renderCalender(int monthMaxDate, int dateOffset, Map<Integer, List<CalendarActivity>> calenderActivityMap){
+        LocalDate today = LocalDate.now();
+        for(int i = 0; i < 6; i++){
+            for(int j = 0; j < 7; j++){
+                renderDay(i, j, monthMaxDate, dateOffset, today, calenderActivityMap);
+            }
+        }
+    }
+
+    private void renderDay(int i, int j, int monthMaxDate, int dateOffset, LocalDate today, Map<Integer, List<CalendarActivity>> calenderActivityMap) {
+        VBox vDay = new VBox();
+        int calculatedDate = (j + 1) + (7 * i);
+        int currentDate = calculatedDate - dateOffset;
+        Label date = createDateLabel(currentDate);
+        Boolean valid = checkValidDate(calculatedDate, dateOffset, currentDate, monthMaxDate);
+
+        if(valid) {
+            List<CalendarActivity> calenderActivities = calenderActivityMap.get((currentDate));
+            renderValidDay(vDay, date, calenderActivities, currentDate, today);
+            setDayClickListener(vDay, currentDate, calenderActivities);
+            calendarPane.add(vDay, j, i);
+        }
+
+    }
+
+    private void setDayClickListener(VBox vDay, int currentDate, List<CalendarActivity> calendarActivities) {
+        vDay.setOnMouseClicked(mouseEvent -> {
+            dayDeadlines.getChildren().clear();
+            selectedDay = currentDate;
+
+            // Create and display the label for the clicked day
+            Label clickedDayLabel = new Label(currentDate + " " + monthLBL.getText() + " " + yearLBL.getText());
+            clickedDayLabel.setPadding(new Insets(5, 5, 5, 5));
+            clickedDayLabel.setFont(Font.font("Bodoni MT Black", 17));
+            clickedDayLabel.setStyle("-fx-text-fill:  #183a4e");
+            dayDeadlines.getChildren().add(clickedDayLabel);
+
+            // Display activities for the clicked day, if any
+            if (calendarActivities != null) {
+                createCalendarActivity(calendarActivities, dayDeadlines);
+            }
+        });
+    }
+
+
+    private void renderValidDay(VBox vDay, Label date, List<CalendarActivity> calendarActivities, int currentDate, LocalDate today) {
+        vDay.getChildren().add(date);
+        vDay.setStyle("-fx-background-color: #e3f6f5; -fx-background-radius: 10;-fx-border-radius: 10; -fx-border-color: #ffffff");
+        vDay.setPadding(new Insets(1,1,0,1));
+        GridPane.setMargin(vDay, new Insets(4));
+
+        if (today.getYear() == dateFocus.getYear() && today.getMonth() == dateFocus.getMonth() && today.getDayOfMonth() == currentDate) {
+            vDay.setStyle("-fx-background-color: #213742; -fx-background-radius: 10;-fx-border-radius: 10; -fx-border-color: #ffffff");
+            date.setStyle("-fx-text-fill: #ffffff;");
+            renderTodayActivities(calendarActivities);
+        }
+
+        if (calendarActivities != null) {
+            renderActivitiesIndicator(vDay);
+        }
+    }
+
+    private void renderTodayActivities(List<CalendarActivity> calendarActivities) {
+        dayDeadlines.getChildren().clear();
+
+        // Day label
+        Label todayLBL = new Label(dateFocus.getDayOfMonth() + " " + monthLBL.getText() + " " + yearLBL.getText());
+        todayLBL.setPadding(new Insets(5, 5, 5, 5));
+        todayLBL.setFont(Font.font("Bodoni MT Black", 17));
+        todayLBL.setStyle("-fx-text-fill:  #183a4e");
+        dayDeadlines.getChildren().add(todayLBL);
+
+        // If activities exist for today, display them
+        if (calendarActivities != null) {
+            createCalendarActivity(calendarActivities, dayDeadlines);
+        }
+    }
+
+
+
+    private Boolean checkValidDate(int calculatedDate, int dateOffset, int currentDate, int monthMaxDate) {
+        return calculatedDate > dateOffset && currentDate <= monthMaxDate;
+    }
+
+
+    private int calculateMonthMaxDate() {
+        int monthMaxDate = dateFocus.getMonth().maxLength();
+
+        //Check for leap year
+        if (dateFocus.getYear() % 4 != 0 && monthMaxDate == 29) {
+            monthMaxDate = 28;
+        }
+        return monthMaxDate;
+    }
+
+    private int calculateDateOffset() {
+        return ZonedDateTime.of(dateFocus.getYear(), dateFocus.getMonthValue(), 1, 0, 0, 0, 0, dateFocus.getZone()).getDayOfWeek().getValue();
+    }
+
+    private void setYearAndMonthLabels() {
+        yearLBL.setText(String.valueOf(dateFocus.getYear()));
+        monthLBL.setText(String.valueOf(dateFocus.getMonth()));
+    }
+
+
+    private void configureDeleteFunctionality(CalendarActivity currCalendarActivity, GridPane calendarActivityBox) {
+        ImageView deleteIcon = createDeleteIcon(currCalendarActivity);
+        configureDeleteAction(currCalendarActivity, deleteIcon);
+
+        calendarActivityBox.getChildren().addAll(deleteIcon);
+        GridPane.setColumnIndex(deleteIcon, 1);
+    }
+
+    private ImageView createDeleteIcon(CalendarActivity currCalendarActivity) {
+        ImageView imageView = new ImageView("/deleteWhite.png");
+        imageView.setFitHeight(31.0);
+        imageView.setFitWidth(31.0);
+        imageView.setPickOnBounds(true);
+        imageView.setPreserveRatio(true);
+
+        imageView.setOnMouseClicked(event -> {
+            ZonedDateTime activityTime = currCalendarActivity.getDate();
+            ZonedDateTime ymd = ZonedDateTime.of(activityTime.getYear(), activityTime.getMonth().getValue(), selectedDay, 0, 0, 0, 0, ZonedDateTime.now().getZone());
+            handleDeleteAction(activityTime, currCalendarActivity, ymd);
+        });
+
+        return imageView;
+    }
+
+    private void handleDeleteAction(ZonedDateTime activityTime, CalendarActivity currCalendarActivity, ZonedDateTime ymd) {
+        calendarActivities.computeIfPresent(ymd, (k, v) -> {
+            v.removeIf(ca -> ca.getDate() == activityTime && Objects.equals(ca.getClientName(), currCalendarActivity.getClientName()));
+            if (v.isEmpty()) {
+                return null;
+            }
+            return v;
+        });
+        drawCalendar();
+    }
+
+
+
+    private GridPane createActivityBox(CalendarActivity currCalendarActivity) {
+        GridPane calendarActivityBox=new GridPane();
+        configureColumns(calendarActivityBox);
+        configureRow(calendarActivityBox);
+        configureStyleAndMargins(calendarActivityBox);
+        addTextAndImage(currCalendarActivity, calendarActivityBox);
+        return calendarActivityBox;
+    }
+
+    private void addTextAndImage(CalendarActivity currCalendarActivity, GridPane calendarActivityBox) {
+        ZonedDateTime activityTime= currCalendarActivity.getDate();
+        Label text = createLabelText(currCalendarActivity, activityTime);
+        ImageView imageView = createDeleteImageView();
+        configureTextClickAction(text);
+        configureDeleteAction(currCalendarActivity, imageView);
+
+        calendarActivityBox.getChildren().addAll(text,imageView);
+        GridPane.setColumnIndex(text,0);
+        GridPane.setColumnIndex(imageView,1);
+    }
+
+    private void configureDeleteAction(CalendarActivity currCalendarActivity, ImageView imageView) {
+        imageView.setOnMouseClicked(event -> handleDeleteAction(currCalendarActivity));
+    }
+
+    private void handleDeleteAction(CalendarActivity currCalendarActivity) {
+        ZonedDateTime activityTime = currCalendarActivity.getDate();
+        ZonedDateTime ymd = ZonedDateTime.of(activityTime.getYear(), activityTime.getMonth().getValue(), selectedDay, 0, 0, 0, 0, ZonedDateTime.now().getZone());
+        calendarActivities.computeIfPresent(ymd, (k, v) -> {
+            v.removeIf(ca -> ca.getDate() == activityTime && Objects.equals(ca.getClientName(), currCalendarActivity.getClientName()));
+            if (v.isEmpty()) {
+                return null;
+            }
+            return v;
+        });
+        drawCalendar();
+    }
+
+    private static void configureTextClickAction(Label text) {
+        text.setOnMouseClicked(mouseEvent -> {
+            //On Text clicked
+            System.out.println(text.getText());
+        });
+    }
+
+
+
+
+
+
+
+
+
+
 
 }
