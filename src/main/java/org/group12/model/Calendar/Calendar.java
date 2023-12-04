@@ -87,6 +87,7 @@ public class Calendar implements IObservable {
         notifyObservers();
     }
 
+
     public void updateEvent(Event event){
 
     }
@@ -101,8 +102,11 @@ public class Calendar implements IObservable {
     public List<Event> getEvents(){
         return eventList;
     }
-    public List<Event> getEventsBetweenDates(){
-        return EventSorter.getEventsBetweenDates(eventList, LocalDateTime.now(), LocalDateTime.now().plusDays(7));
+    public List<Event> getEventsBetweenDates(LocalDateTime date1, LocalDateTime date2){
+        return EventSorter.getEventsBetweenDates(eventList, date1, date2);
+    }
+    public List<Event> getEventsByTag(String tag){
+        return EventSorter.getEventsByTag(eventList, tag);
     }
 
 

@@ -125,6 +125,9 @@ public class Event implements IEvent, INameable, IDateCreated, IDescription, IEd
     public Event getParentEvent() {
         return parentEvent;
     }
+    public List<String> getTags() {
+        return tags;
+    }
 
 //    ------------------ observers ------------------
     @Override
