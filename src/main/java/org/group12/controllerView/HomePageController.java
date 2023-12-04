@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 import java.net.URL;
 import java.time.ZonedDateTime;
 import java.util.*;
+import javafx.scene.Node;
 
 /**
  * This class is a controller for the Home Page.
@@ -81,6 +82,7 @@ public class HomePageController implements Initializable {
      * Draws the calendar by creating and arranging the necessary UI elements based on the current date focus.
      */
     public  void drawCalendar() {
+
         calendarPane.getChildren().clear();
         yearLBL.setText(String.valueOf(dateFocus.getYear()));
         monthLBL.setText(String.valueOf(dateFocus.getMonth()));
@@ -142,6 +144,7 @@ public class HomePageController implements Initializable {
                             vDay.getChildren().add(notification);
                         }
                         vDay.setOnMouseClicked(mouseEvent -> {
+
                             dayDeadlines.getChildren().clear();
                             selectedDay = currentDate;
                             Label todayLBL = new Label(currentDate + " " + monthLBL.getText() + " " + yearLBL.getText());
@@ -155,6 +158,20 @@ public class HomePageController implements Initializable {
 
                             if (calendarActivities != null) {
                                 createCalendarActivity(homeCalenderController.getCalendarActivitiesMonth(time,selectedDay), dayDeadlines);
+                            }
+
+                            // Reset background color for previously selected day
+                            for (Node child : calendarPane.getChildren()) {
+                                if (child instanceof VBox) {
+                                    VBox childVBox = (VBox) child;
+
+                                    if (childVBox.equals(vDay)) {
+                                        childVBox.setStyle("-fx-background-color: #008000; -fx-background-radius: 10;-fx-border-radius: 10; -fx-border-color: #ffffff");
+                                    } else {
+                                        childVBox.setStyle("-fx-background-color: #ec1206; -fx-background-radius: 10;-fx-border-radius: 10; -fx-border-color: #ffffff");
+                                    }
+
+                                }
                             }
                         });
                         calendarPane.add(vDay, j, i);
@@ -181,6 +198,7 @@ public class HomePageController implements Initializable {
             for (CalendarActivity currCalendarActivity : currCalendarActivities) {
 
                 GridPane calendarActivityBox = new GridPane();
+
                 ColumnConstraints col1 = new ColumnConstraints();
                 col1.setPercentWidth(80);
                 col1.setHgrow(javafx.scene.layout.Priority.SOMETIMES);
