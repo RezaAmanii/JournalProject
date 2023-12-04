@@ -65,9 +65,7 @@ public class TaskController implements IController {
         }
     }
 
-    public void handleSetPriority(boolean priority) {
-        if (priority) {
-            bigTask.setFavourite(priority);
+
             taskView.update();
         } else{
             //taskView.displayError("Priority cannot be negative");
