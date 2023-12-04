@@ -28,4 +28,8 @@ public class TaskCard extends AnchorPane {
 
     public void taskCheckBoxClick(ActionEvent actionEvent) {
     }
+
+    public String getID(ActionEvent actionEvent) {
+        return this.ID;
+    }
 }

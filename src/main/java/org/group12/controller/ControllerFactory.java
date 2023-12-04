@@ -18,7 +18,7 @@ public class ControllerFactory {
         return switch (controllerType) {
             case "JournalController" -> new JournalController(model.getJournal(), journalView, itemMap);
             case "CalendarController" -> new CalendarController(model.getCalender(), calenderView, itemMap);
-            case "TaskListController" -> new TaskListController();
+            case "TaskListController" -> TaskListController.getInstance();
             case "TaskController" -> new TaskController(model.getTodoCollection(),todoView, itemMap);
             case "EventListController" -> new EventListController();
             default -> throw new IllegalArgumentException("Unknown controller type " + controllerType);

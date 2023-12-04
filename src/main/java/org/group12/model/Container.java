@@ -11,12 +11,13 @@ public class Container {
     private Calendar calender;
     private Journal journal;
     private TodoCollection todoCollection;
+    private static Container instance;
 
-    private final ItemsSet items;
+    private ItemsSet items;
 
-    public Container(ItemsSet items) {
-        this.items = items;
+    private Container() {
 
+        this.items = Items.getInstance();
         this.todoCollectionFactory = new TodoCollectionFactory(items);
         this.todoCollection = todoCollectionFactory.createTodoCollection("MainTD");
         items.addItem(todoCollection);
@@ -24,6 +25,13 @@ public class Container {
         this.calender = new Calendar();
 
         this.journal = new Journal("tempID", "temp title", null);
+    }
+
+    public static Container getInstance(){
+        if(instance == null){
+            instance = new Container();
+        }
+        return instance;
     }
 
     public Calendar getCalender() {

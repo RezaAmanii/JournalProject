@@ -15,6 +15,7 @@ import org.group12.controller.TaskListController;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.toDoSubTask.ToDoList;
 import org.group12.model.toDoSubTask.ToDoTask;
+import org.group12.model.todo.ITaskList;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,12 +42,15 @@ public class ToDoPageController implements Initializable {
     public GridPane addNewListBtn;
     public BorderPane mainWindowBorder;
 
+    private Label nameLBL1211;
+
     // Controllers
-    private TaskListController taskListController = new TaskListController();
+    private static TaskListController taskListController = TaskListController.getInstance();
 
+    public static ArrayList<ITaskList> allLists = taskListController.fetchAllTaskLists();
 
-    public static ArrayList<ToDoList> allLists = new ArrayList<>();
-    public static ToDoList selectedList = new ToDoList();
+    //public static ArrayList<ITaskList> allLists = new ArrayList<>(taskListController.fetchAllTaskLists());
+    //public static ToDoList selectedList = new ToDoList();
     public static ToDoTask selectedTask=null;
 
     /**
@@ -60,11 +64,16 @@ public class ToDoPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (allLists.isEmpty()){
-            allLists.add(new ToDoList(1,"Today", new ArrayList<>()));
-            allLists.add(new ToDoList(2,"Important", new ArrayList<>()));
+            taskListController.handlerAddToDoList("Today");
+            taskListController.handlerAddToDoList("Important");
         }
         refreshAllListVBox();
         refreshSidePanelInfo();
+    }
+
+
+    public String retriveID(){
+        return this.nameLBL1211.getId();
     }
 
     /**
@@ -89,10 +98,12 @@ public class ToDoPageController implements Initializable {
      * Adds a new to-do list to the application.
      */
     public void addNewList() {
+        taskListController.add
+
         ToDoList newList = new ToDoList(Globals.createNewRandomID(Globals.toDoListsIDs),"New List", new ArrayList<>());
         allLists.add(newList);
-        GridPane listToAppend=createNewListObject(newList);
 
+        GridPane listToAppend=createNewListObject(newList);
         appendableListVbox.getChildren().add(listToAppend);
     }
 
