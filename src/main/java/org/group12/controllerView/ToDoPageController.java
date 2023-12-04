@@ -155,7 +155,7 @@ public class ToDoPageController implements Initializable {
      * @param newName The new name for the task.
      */
     void renameTask(ToDoTask task, String newName){
-        allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task)).setTaskName(newName);
+        allLists.get(findTheToDoList(selectedTask)).getTasks().get(findTheTask(task)).setTaskName(newName);
     }
 
     /**
