@@ -2,6 +2,7 @@ package org.group12.controller;
 
 
 import org.group12.model.INameable;
+import org.group12.model.ItemsSet;
 import org.group12.model.todo.BigTask;
 import org.group12.model.todo.TodoCollection;
 import org.group12.view.TaskView;
@@ -16,14 +17,14 @@ public class TaskController implements IController {
     private TaskView taskView;
     private Map<String, INameable> taskMap;
     private BigTask bigTask;
-    private Items itemMap;
+    private ItemsSet itemsSet;
 
 
 
-    public TaskController(TodoCollection taskModel, TaskView taskView, Items itemMap){
+    public TaskController(TodoCollection taskModel, TaskView taskView, ItemsSet itemsSet){
         this.taskModel = taskModel;
         this.taskView = taskView;
-        this.taskMap = taskMap;
+        this.itemsSet = itemsSet;
         //taskModel.addObserver(taskView);
     }
 
@@ -64,9 +65,9 @@ public class TaskController implements IController {
         }
     }
 
-    public void handleSetPriority(int priority) {
-        if (priority >= 0) {
-            bigTask.setPriority(priority);
+    public void handleSetPriority(boolean priority) {
+        if (priority) {
+            bigTask.setFavourite(priority);
             taskView.update();
         } else{
             //taskView.displayError("Priority cannot be negative");
@@ -83,11 +84,11 @@ public class TaskController implements IController {
         taskView.update();
     }
 
-    private boolean stringValidation(String stringToCheck) {
+    public static boolean stringValidation(String stringToCheck) {
         return stringToCheck != null && !stringToCheck.trim().isEmpty();
     }
 
-    private boolean dateValidation(LocalDateTime dateToCheck) {
+    public static boolean dateValidation(LocalDateTime dateToCheck) {
         return dateToCheck != null && !dateToCheck.isBefore(LocalDateTime.now());
 
     }
