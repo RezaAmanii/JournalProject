@@ -1,5 +1,8 @@
 package org.group12.model.todo.factories;
 
+import org.group12.model.IDFactory.BigTaskIDFactory;
+import org.group12.model.IDFactory.IDFactory;
+import org.group12.model.IDFactory.IIDFactory;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.BigTask;
 import org.group12.model.todo.IBigTask;
@@ -9,15 +12,16 @@ import org.group12.model.todo.IBigTask;
  * This class uses a BigTaskIDFactory to generate unique IDs for each BigTask.
  */
 public class BigTaskFactory {
-    private final BigTaskIDFactory idFactory;
+    private final IIDFactory idFactory;
     private final ItemsSet items;
+
 
     /**
      * Constructs a new BigTaskFactory.
      * Initializes the BigTaskIDFactory used to generate IDs.
      */
-    public BigTaskFactory(ItemsSet items) {
-        this.idFactory = new BigTaskIDFactory();
+    public BigTaskFactory(ItemsSet items ) {
+        this.idFactory = IDFactory.getInstance(BigTaskIDFactory.class);
         this.items = items;
     }
 
