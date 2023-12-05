@@ -1,5 +1,6 @@
 package org.group12.controllerView;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -38,7 +39,7 @@ public class SubTasksController implements Initializable {
     public Spinner<Integer> minSpinner;
     public AnchorPane savePaneBTN;
     public DatePicker changeDeadlineDP;
-    ZonedDateTime deadline= selectedTask.getTaskDeadline();
+    SimpleObjectProperty<ZonedDateTime> deadline = new SimpleObjectProperty<ZonedDateTime>(this, "deadline");
 
     /**
      * Initializes the subtask view.
@@ -48,12 +49,12 @@ public class SubTasksController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        taskNameLBL.setText(selectedTask.getTaskName());
+        //taskNameLBL.setText(selectedTask.getTaskName());
         hrSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,ZonedDateTime.now().getHour()));
         minSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59,ZonedDateTime.now().getMinute()));
         changeDeadlineDP.setValue(LocalDate.now());
 
-        deadlineTF.setText(deadline.getDayOfMonth() + "/" + deadline.getMonthValue() + "/" + deadline.getYear() + " - " + deadline.getHour() + ':' + deadline.getMinute());
+        deadlineTF.setText(deadline.get().getDayOfMonth() + "/" + deadline.get().getMonthValue() + "/" + deadline.get().getYear() + " - " + deadline.get().getHour() + ':' + deadline.get().getMinute());
         refreshSubTasksPane();
     }
 
@@ -62,16 +63,16 @@ public class SubTasksController implements Initializable {
      */
     public void saveNewDeadline(){
         ZonedDateTime dd=ZonedDateTime.now();
-        deadline= ZonedDateTime.of(changeDeadlineDP.getValue().getYear()
+        deadline.set(ZonedDateTime.of(changeDeadlineDP.getValue().getYear()
                 , changeDeadlineDP.getValue().getMonthValue()
                 , changeDeadlineDP.getValue().getDayOfMonth()
                 , hrSpinner.getValue(), minSpinner.getValue()
-                , 0, 0, dd.getZone());
-        deadlineTF.setText(deadline.getDayOfMonth() + "/"
-                + deadline.getMonthValue() + "/"
-                + deadline.getYear() + " - "
-                + deadline.getHour() + ':' + deadline.getMinute());
-        allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).setTaskDeadline(deadline);
+                , 0, 0, dd.getZone()));
+        deadlineTF.setText(deadline.get().getDayOfMonth() + "/"
+                + deadline.get().getMonthValue() + "/"
+                + deadline.get().getYear() + " - "
+                + deadline.get().getHour() + ':' + deadline.get().getMinute());
+        //allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).setTaskDeadline(deadline);
         refreshSubTasksPane();
 
     }
@@ -81,7 +82,7 @@ public class SubTasksController implements Initializable {
      */
     public void removeSubTask(){
         if (selectedSubTask!=null)
-            allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().remove(selectedSubTask);
+            //allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().remove(selectedSubTask);
         refreshSubTasksPane();
     }
 
@@ -91,7 +92,7 @@ public class SubTasksController implements Initializable {
     public void addNewSubTask(){
         SubTask subTask=new SubTask(Globals.createNewSeqID(Globals.toDoSubTasksIDs),"newSubTask",false);
         selectedSubTask=subTask;
-        allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().add(subTask);
+        //allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().add(subTask);
         subTasksPane.getChildren().add(createNewSubTaskObject(subTask));
         refreshSubTasksPane();
 
@@ -102,13 +103,15 @@ public class SubTasksController implements Initializable {
      */
     void refreshSubTasksPane(){
         subTasksPane.getChildren().clear();
-
+/*
         for (SubTask task: selectedTask.getUnfinishedSubTasks()){
             subTasksPane.getChildren().add(createNewSubTaskObject(task));
         }
         for (SubTask task: selectedTask.getCompletedSubTasks()){
             subTasksPane.getChildren().add(createNewSubTaskObject(task));
         }
+
+ */
     }
 
     /**
@@ -119,10 +122,14 @@ public class SubTasksController implements Initializable {
      */
     public static int findTheSubTask(SubTask task) {
         selectedList=allLists.get(findTheToDoList(selectedList));
-        selectedTask=selectedList.getTasks().get(findTheTask(selectedTask));
+        //selectedTask=selectedList.getTasks().get(findTheTask(selectedTask));
+        /*
+
         for (SubTask task1 : selectedTask.getSubTasks()) {
             if (task1.getID() == task.getID()) return selectedTask.getSubTasks().indexOf(task1);
         }
+
+         */
         return -1;
     }
 
@@ -133,7 +140,7 @@ public class SubTasksController implements Initializable {
      * @param newName  The new name for the subtask.
      */
     void renameSubTask(SubTask task, String newName){
-        allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().get(findTheSubTask(task)).setSubTaskName(newName);
+        //allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().get(findTheSubTask(task)).setSubTaskName(newName);
     }
 
     /**
@@ -191,7 +198,7 @@ public class SubTasksController implements Initializable {
         checkBox.setSelected(task.isFinished());
 
         checkBox.setOnMouseClicked(event -> {
-            allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().get(findTheSubTask(task)).setFinished(checkBox.isSelected());
+            //allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().get(findTheSubTask(task)).setFinished(checkBox.isSelected());
             refreshSubTasksPane();
         });
 

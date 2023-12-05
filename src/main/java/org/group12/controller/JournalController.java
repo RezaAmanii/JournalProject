@@ -113,8 +113,4 @@ public class JournalController implements IController {
         return journalEntry != null && !journalEntry.getContent().isEmpty() && !journalEntry.getTitle().isEmpty();
     }
 
-
-
-
-
-    }
+}
