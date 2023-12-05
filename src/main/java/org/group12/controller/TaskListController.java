@@ -1,6 +1,5 @@
 package org.group12.controller;
 
-import org.group12.controllerView.ToDoPageController;
 import org.group12.model.Container;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
@@ -12,13 +11,11 @@ import java.util.ArrayList;
 public class TaskListController implements IController {
 
     private TaskListView taskListView;
-    private ToDoPageController toDoPageController;
 
     private ItemsSet items;
     private TodoCollection todoCollection;
     private static TaskListController instance;
     private Container container = Container.getInstance();
-
 
 
     private TaskListController(){
@@ -62,8 +59,17 @@ public class TaskListController implements IController {
 
     }
 
-    public String getID(){
-        return toDoPageController.retriveID();
+
+    public ITaskList getTaskListByID(String taskListID){
+        return (ITaskList) items.getItem(taskListID);
+    }
+
+    public IBigTask getTaskByID(String taskID){
+        return (IBigTask) items.getItem(taskID);
+    }
+
+    public void removeAnyObject(String ID){
+        items.removeItem(ID);
     }
 
     public ArrayList<ITaskList> fetchAllTaskLists(){
@@ -72,6 +78,11 @@ public class TaskListController implements IController {
     public ArrayList<IBigTask> fetchAllBigTasks(String taskListID){
         ITaskList taskList = (ITaskList) items.getItem(taskListID);
         return taskList.getBigTaskList();
+    }
+
+
+    public ArrayList<ITask> fetchCompletedSubTasks(){
+        return items.getItem();
     }
 
 

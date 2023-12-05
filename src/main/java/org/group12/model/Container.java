@@ -22,9 +22,12 @@ public class Container {
         this.todoCollection = todoCollectionFactory.createTodoCollection("MainTD");
         items.addItem(todoCollection);
 
-        this.calender = new Calendar();
+        this.calender = new Calendar(items);
 
-        this.journal = new Journal("tempID", "temp title", null);
+        //Journal
+        this.journalEntryFactoryInstance = JournalEntryFactory.getInstance();
+        this.journalFactoryInstance = JournalFactory.getInstance();
+        journal = journalFactoryInstance.createJournal("Test Journal", journalEntryFactoryInstance, items);
     }
 
     public static Container getInstance(){

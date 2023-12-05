@@ -5,6 +5,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -15,10 +16,14 @@ import org.group12.controller.TaskListController;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.toDoSubTask.ToDoList;
 import org.group12.model.toDoSubTask.ToDoTask;
+import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
+import org.group12.model.todo.TaskList;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -45,13 +50,15 @@ public class ToDoPageController implements Initializable {
     private Label nameLBL1211;
 
     // Controllers
-    private static TaskListController taskListController = TaskListController.getInstance();
+    public static TaskListController taskListController = TaskListController.getInstance();
 
     public static ArrayList<ITaskList> allLists = taskListController.fetchAllTaskLists();
+    public static ITaskList selectedList = taskListController.getTaskListByID("taskListID");
+    public static IBigTask selectedTask = null;
 
     //public static ArrayList<ITaskList> allLists = new ArrayList<>(taskListController.fetchAllTaskLists());
     //public static ToDoList selectedList = new ToDoList();
-    public static ToDoTask selectedTask=null;
+    //public static ToDoTask selectedTask=null;
 
     /**
      * Initializes the ToDoPageController.
@@ -83,7 +90,7 @@ public class ToDoPageController implements Initializable {
      * @return The GridPane representing the new list object.
      */
 
-    public  GridPane createNewListObject(ToDoList newList){
+    public  GridPane createNewListObject(ITaskList newList){
         GridPane listToAppend = createListPane();
         TextField taskNameLBL = createTaskNameLabel(newList);
         Label noOfTasks = createNumberOfTaskLabel(newList);
@@ -94,16 +101,22 @@ public class ToDoPageController implements Initializable {
     }
 
 
+    public String getInputFromUser(MouseEvent event){
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Title:");
+
+    }
+
+
     /**
      * Adds a new to-do list to the application.
      */
     public void addNewList() {
-        taskListController.add
+        taskListController.handlerAddToDoList("New List");
 
-        ToDoList newList = new ToDoList(Globals.createNewRandomID(Globals.toDoListsIDs),"New List", new ArrayList<>());
-        allLists.add(newList);
+        allLists.add(taskListController.getTaskListByID("ID"));
 
-        GridPane listToAppend=createNewListObject(newList);
+        GridPane listToAppend = createNewListObject(newList);
         appendableListVbox.getChildren().add(listToAppend);
     }
 
@@ -111,7 +124,7 @@ public class ToDoPageController implements Initializable {
      * Deletes the selected to-do list from the application.
      */
     public void deleteSelectedList(){
-        if(selectedList.getID()==1||selectedList.getID()==2){
+        if(selectedList.getID().equals(1) || selectedList.getID().equals(2)){
             Globals.showErrorAlert("Can't delete Today or Important Lists, select a different list.");
             return;
         }
@@ -142,9 +155,15 @@ public class ToDoPageController implements Initializable {
          * @param list    The to-do list to rename.
          * @param newName The new name for the list.
          */
-    public  void renameToDoList(ToDoList list, String newName) {
-        if (allLists.get(findTheToDoList(list)).getID()==1||allLists.get(findTheToDoList(list)).getID()==0)return;
+    public  void renameToDoList(ITaskList list, String newName) {
+        if(taskListController.getTaskListByID(list.getID()).equals(1) || taskListController.getTaskListByID(list.getID()).equals(0)){
+            taskListController.getTaskListByID(list.getID()).setTitle(newName);
+        }
+        /*
+        if (task.getID()==1||allLists.get(findTheToDoList(list)).getID()==0)return;
         allLists.get(findTheToDoList(list)).setListName(newName);
+
+         */
         refreshSidePanelInfo();
     }
 
@@ -154,8 +173,9 @@ public class ToDoPageController implements Initializable {
      * @param task    The to-do task to rename.
      * @param newName The new name for the task.
      */
-    void renameTask(ToDoTask task, String newName){
-        allLists.get(findTheToDoList(selectedTask)).getTasks().get(findTheTask(task)).setTaskName(newName);
+    void renameTask(IBigTask task, String newName){
+        taskListController.getTaskByID(task.getID()).setTitle(newName);
+        //allLists.get(findTheToDoList(selectedTask)).getTasks().get(findTheTask(task)).setTaskName(newName);
     }
 
     /**
@@ -185,7 +205,7 @@ public class ToDoPageController implements Initializable {
         return -1;
     }
 
-    public  GridPane createNewTaskObject(ToDoTask task) {
+    public  GridPane createNewTaskObject(IBigTask task) {
 
         GridPane newTaskPane = createTaskPane();
         Label deadLineLabel = createDeadlineLabel(task);
@@ -214,7 +234,7 @@ public class ToDoPageController implements Initializable {
      * Displays an error message if the selected list is "today" or "important".
      */
     public void addNewTask() {
-        if (selectedList.getID()==1||selectedList.getID()==2){
+        if (selectedList.getID().equals(1) || selectedList.getID().equals(2)){
             Globals.showErrorAlert("You can't add tasks to today or important directly, \ncreate a list to add tasks to \nand today and important lists will be updated accordingly.");
             return;
         }
@@ -233,14 +253,17 @@ public class ToDoPageController implements Initializable {
      * Updates the active list name label, ongoing tasks VBox, and completed tasks VBox.
      */
     public  void refreshSidePanelInfo() {
-        selectedList=allLists.get(findTheToDoList(selectedList));
-        activeListNameLBL.setText(selectedList.getListName());
+        selectedList = taskListController.getTaskListByID("ID");
+        activeListNameLBL.setText(selectedList.getTitle());
+        //selectedList=allLists.get(findTheToDoList(selectedList));
+        //activeListNameLBL.setText(selectedList.getListName());
 
         ongoingTasksVbox.getChildren().clear();
         completedTasksVbox.getChildren().clear();
 
-        Comparator<ToDoTask> comparator = Comparator.comparing(ToDoTask::getTaskDeadline);
-        selectedList.getTasks().sort(comparator);
+        Comparator<IBigTask> comparator = Comparator.comparing(IBigTask::getDueDate);
+        selectedList.getBigTaskList().sort(comparator);
+        //selectedList.getTasks().sort(comparator);
 
         for (ToDoTask task:selectedList.getTasks()){
             if (task.getSubTasks().size()==task.getCompletedSubTasks().size() && task.getSubTasks().size()!=0)
@@ -253,7 +276,7 @@ public class ToDoPageController implements Initializable {
 
     // After refactoring
 
-    private void setTaskNameLabelEventHandler(ToDoList newList, TextField taskNameLBL, Label noOfTask){
+    private void setTaskNameLabelEventHandler(ITaskList newList, TextField taskNameLBL, Label noOfTask){
         taskNameLBL.setOnMouseClicked(event -> {
             handleTaskNameLabelClick(event, newList, taskNameLBL, noOfTask);
         });
@@ -263,16 +286,17 @@ public class ToDoPageController implements Initializable {
         });
     }
 
-    private void handleTaskNameLabelClick(MouseEvent event, ToDoList newList, TextField taskNameLBL, Label noOfTask){
-        selectedList = allLists.get(findTheToDoList(newList));
-        noOfTask.setText(String.valueOf(allLists.get(findTheToDoList(selectedList)).getTasks().size()));
+    private void handleTaskNameLabelClick(MouseEvent event, ITaskList newList, TextField taskNameLBL, Label noOfTask){
+        selectedList = taskListController.getTaskListByID("ID");
+        noOfTask.setText(String.valueOf(taskListController.getTaskListByID("ID").getBigTaskList().size()));
+        //noOfTask.setText(String.valueOf(allLists.get(findTheToDoList(selectedList)).getTasks().size()));
         refreshSidePanelInfo();
         handleTaskNameLabelEvents(taskNameLBL, event);
     }
 
-    private void handleTaskNameLabelKeyPress(ToDoList newList, TextField taskNameLBL, Label noOfTask, KeyEvent event) {
+    private void handleTaskNameLabelKeyPress(ITaskList newList, TextField taskNameLBL, Label noOfTask, KeyEvent event) {
         selectedList = newList;
-        noOfTask.setText(String.valueOf(allLists.get(findTheToDoList(selectedList)).getTasks().size()));
+        noOfTask.setText(String.valueOf(taskListController.getTaskListByID("ID").getBigTaskList().size()));
 
         if (event.getCode() == KeyCode.ENTER) {
             taskNameLBL.setEditable(false);
@@ -280,31 +304,32 @@ public class ToDoPageController implements Initializable {
         }
     }
 
-    private void setVisualComponentsInPane(ToDoTask task, ImageView imageView, ProgressIndicator progressIndicator, TextField taskNameLabel, GridPane newTaskPane, ImageView imageViewDelete, Label deadLineLabel, ImageView imageViewImportant) {
+    private void setVisualComponentsInPane(IBigTask task, ImageView imageView, ProgressIndicator progressIndicator, TextField taskNameLabel, GridPane newTaskPane, ImageView imageViewDelete, Label deadLineLabel, ImageView imageViewImportant) {
         imageView.setOnMouseClicked(event -> {
-            handleImageViewClick(task, !task.getSubTasks().isEmpty(), progressIndicator);
+            handleImageViewClick(task, !task.getSubTaskList().isEmpty(), progressIndicator);
 
         });
 
         taskNameLabel.setOnMouseClicked(event -> {
-            selectedTask= task;
+            selectedTask = taskListController.getTaskByID("ID");
             handleTaskNameLabelEvents(taskNameLabel, event);
         });
 
         taskNameLabel.setOnKeyPressed(event -> {
-            handleTaskNameLabelKeyPress(event, taskNameLabel, allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task)));
+            handleTaskNameLabelKeyPress(event, taskNameLabel, taskListController.getTaskByID("ID"));
+            //handleTaskNameLabelKeyPress(event, taskNameLabel, allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task)));
         });
 
         newTaskPane.getChildren().addAll(taskNameLabel, progressIndicator, imageView, imageViewDelete, deadLineLabel, imageViewImportant);
     }
 
-    private void handleImageViewClick(ToDoTask task, boolean task1, ProgressIndicator progressIndicator) {
+    private void handleImageViewClick(IBigTask task, boolean task1, ProgressIndicator progressIndicator) {
         selectedTask = task;
         try {
-            Globals.openNewForm("/org/group12/view/subTasks.fxml", selectedTask.getTaskName(), false);
+            Globals.openNewForm("/org/group12/view/subTasks.fxml", selectedTask.getTitle(), false);
             if (task1) {
-                progressIndicator.setProgress((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
-                System.out.println((((double) task.getCompletedSubTasks().size() / (double) task.getSubTasks().size())));
+                progressIndicator.setProgress((((double) task.getCompletedSubTasks().size() / (double) task.getSubTaskList().size())));
+                System.out.println((((double) task.getCompletedSubTasks().size() / (double) task.getSubTaskList().size())));
             }
             refreshSidePanelInfo();
         } catch (IOException e) {
@@ -312,11 +337,11 @@ public class ToDoPageController implements Initializable {
         }
     }
 
-    private void handleDeleteImageViewClick(ToDoTask task, ImageView imageViewDelete) {
+    private void handleDeleteImageViewClick(IBigTask task, ImageView imageViewDelete) {
         imageViewDelete.setOnMouseClicked(event -> {
-            for (ToDoTask task1: selectedList.getTasks()){
-                if (task.getID()==task1.getID()){
-                    selectedList.getTasks().remove(task1);
+            for (IBigTask task1: selectedList.getBigTaskList()){
+                if (task.getID() == task1.getID()){
+                    selectedList.getBigTaskList().remove(task1);
                     break;
                 }
             }
@@ -325,16 +350,19 @@ public class ToDoPageController implements Initializable {
         });
     }
 
-    private static void handleImportantImageClick(ToDoTask task, ImageView imageViewImportant) {
+    private static void handleImportantImageClick(IBigTask task, ImageView imageViewImportant) {
         imageViewImportant.setOnMouseClicked(event -> {
-            if (task.isImportant()){
-                task.setImportant(false);
-                allLists.get(1).getTasks().remove(task);
+            if (task.isFavourite()){
+                task.setFavourite(false);
+                taskListController.removeAnyObject(task.getID());
+                //allLists.get(1).getTasks().remove(task);
                 imageViewImportant.setImage(new Image("/starUnselected.png"));
             }
             else{
-                task.setImportant(true);
-                allLists.get(1).getTasks().add(task);
+                // Need ID for the favorite/ important list
+                task.setFavourite(true);
+                taskListController.getTaskListByID("ID").getBigTaskList().add(task);
+                //allLists.get(1).getTasks().add(task);
                 imageViewImportant.setImage(new Image("/star.png"));
 
             }
@@ -342,17 +370,18 @@ public class ToDoPageController implements Initializable {
     }
 
 
-    private void setTaskNameEditEvent(TextField taskNameLabel, ToDoTask task){
+    private void setTaskNameEditEvent(TextField taskNameLabel, IBigTask task){
         taskNameLabel.setOnMouseClicked(event -> {
             handleTaskNameLabelEvents(taskNameLabel, event);
         });
 
         taskNameLabel.setOnKeyPressed(event -> {
-            handleTaskNameLabelKeyPress(event, taskNameLabel, (allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task))));
+            handleTaskNameLabelKeyPress(event, taskNameLabel, (taskListController.getTaskByID(task.getID())));
+            //handleTaskNameLabelKeyPress(event, taskNameLabel, (allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(task))));
         });
     }
 
-    private void handleTaskNameLabelKeyPress(KeyEvent event, TextField taskNameLabel, ToDoTask allLists) {
+    private void handleTaskNameLabelKeyPress(KeyEvent event, TextField taskNameLabel, IBigTask allLists) {
         if (event.getCode() == KeyCode.ENTER) {
             taskNameLabel.setEditable(false);
             renameTask(allLists, taskNameLabel.getText());
@@ -360,37 +389,50 @@ public class ToDoPageController implements Initializable {
     }
 
     private static void handleTaskNameLabelEvents(TextField taskNameLabel, MouseEvent event) {
-        if(event.getClickCount() == 2 && selectedList.getID() != 1 && selectedList.getID() != 2){
+        if(event.getClickCount() == 2 && selectedList.getID().equals(1) && selectedList.getID().equals(2)){
             taskNameLabel.setEditable(true);
             taskNameLabel.requestFocus();
         }
     }
 
-    private void setViewEvent(ImageView imageView, ToDoTask task, ProgressIndicator progressIndicator){
+    private void setViewEvent(ImageView imageView, IBigTask task, ProgressIndicator progressIndicator){
         imageView.setOnMouseClicked(event -> {
-            handleImageViewClick(task, !task.getSubTasks().isEmpty(), progressIndicator);
+            handleImageViewClick(task, !task.getSubTaskList().isEmpty(), progressIndicator);
 
         });
     }
 
     private void refreshFixedLists(){
-        for(ToDoList list:allLists){
-            if (list.getID()==1||list.getID()==2){
+        for(ITaskList list : allLists){
+            if (list.getID().equals(1) ||list.getID().equals(2)){
                 fixedListsVbox.getChildren().add(createNewListObject(list));
             }
         }
     }
 
     private void refreshAppendableLists(){
-        for(ToDoList list : allLists){
-            if (list.getID() != 1 &&list.getID()!= 2){
+        for(ITaskList list : allLists){
+            if (!list.getID().equals(1) && !list.getID().equals(2)){
                 updateListTasks(list);
                 appendableListVbox.getChildren().add(createNewListObject(list));
             }
         }
     }
 
-    private void updateListTasks(ToDoList list){
+    private void updateListTasks(ITaskList list){
+        taskListController.fetchAllBigTasks(list.getID()).forEach(task -> {
+            if(task.getDueDate().toLocalDate().isEqual(ZonedDateTime.now().toLocalDate())){
+                updateTodayTask(task);
+            }
+
+
+            if (task.isFavourite()) {
+                updateImportantTask(task);
+            }
+
+        });
+
+        /*
         list.getTasks().forEach(task -> {
             if(task.getTaskDeadline().toLocalDate().isEqual(ZonedDateTime.now().toLocalDate())){
                 updateTodayTask(task);
@@ -399,16 +441,26 @@ public class ToDoPageController implements Initializable {
                 updateImportantTask(task);
             }
         });
+
+         */
     }
 
-    private void updateTodayTask(ToDoTask task) {
-        allLists.get(0).getTasks().removeIf(task1 -> task1.getID() == task.getID());
-        allLists.get(0).getTasks().add(task);
+    private void updateTodayTask(IBigTask task) {
+        //Update todays list need to ID to work
+        taskListController.fetchAllBigTasks(task.getID()).removeIf(task1 -> task1.getID().equals(task.getID()));
+        taskListController.fetchAllBigTasks(task.getID()).add(task);
+        
+        //allLists.get(0).getTasks().removeIf(task1 -> task1.getID() == task.getID());
+        //allLists.get(0).getTasks().add(task);
     }
 
-    private void updateImportantTask(ToDoTask task) {
-        allLists.get(1).getTasks().removeIf(task1 -> task1.getID() == task.getID());
-        allLists.get(1).getTasks().add(task);
+    private void updateImportantTask(IBigTask task) {
+        //Update important task need ID to work
+        taskListController.fetchAllBigTasks(task.getID()).removeIf(task1 -> task1.getID().equals(task.getID()));
+        taskListController.fetchAllBigTasks(task.getID()).add(task);
+        
+        //allLists.get(1).getTasks().removeIf(task1 -> task1.getID() == task.getID());
+        //allLists.get(1).getTasks().add(task);
     }
 
     private void clearListVBoxContent() {

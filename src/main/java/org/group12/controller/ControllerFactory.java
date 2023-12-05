@@ -16,8 +16,8 @@ public class ControllerFactory {
 
     public  IController createController(String controllerType, Items itemMap) {
         return switch (controllerType) {
-            case "JournalController" -> new JournalController(model.getJournal(), journalView, itemMap);
-            case "CalendarController" -> new CalendarController(model.getCalender(), calenderView, itemMap);
+            case "JournalController" -> new JournalController();
+            case "CalendarController" -> new CalendarController();
             case "TaskListController" -> TaskListController.getInstance();
             case "TaskController" -> new TaskController(model.getTodoCollection(),todoView, itemMap);
             case "EventListController" -> new EventListController();

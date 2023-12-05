@@ -17,6 +17,7 @@ public class BigTask implements IBigTask {
     private final Task modelTask;
     private final TaskFactory taskFactory;
     private final ItemsSet items;
+    private ArrayList<ITask> compeletedSubTasks = new ArrayList<>();
 
     /**
      * Constructs a BigTask object with the given title and ID.
@@ -176,6 +177,18 @@ public class BigTask implements IBigTask {
         subTaskMap.remove(subTaskID);
         items.removeItem(subTaskID);
     }
+
+    @Override
+    public ArrayList<ITask> getCompletedSubTasks(){
+        for (ITask task: subTaskList){
+            if (task.getStatus()){
+                compeletedSubTasks.add(task);
+            }
+        }
+        return compeletedSubTasks;
+    }
+
+
 
     /**
      * Gets the map of subtasks in the big task.

@@ -1,5 +1,6 @@
 package org.group12.controller;
 
+import org.group12.model.Container;
 import org.group12.model.INameable;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
@@ -14,16 +15,16 @@ import org.group12.model.Items;
 public class JournalController implements IController {
 
     private Journal journalModel;
+    private Container container;
     private JournalView journalView;
-    private JournalEntry entryModel;
+
 //    private HashMap<String, INameable> itemMap;
     private Items itemMap;
 
 
-    public JournalController(Journal journalModel, JournalView journalView, Items itemMap){
-        this.journalModel = journalModel;
-        this.journalView = journalView;
-        this.itemMap= itemMap;
+    public JournalController(){
+        this.itemMap = Items.getInstance();
+        this.journalModel = container.getJournal();
         //journalModel.addObserver(journalView);
     }
 
@@ -70,7 +71,7 @@ public class JournalController implements IController {
      */
     public void updateJournalEntry(JournalEntry journalEntry, String newContent){
         if(journalEntry != null && !newContent.isEmpty()){
-            entryModel.updateContent(newContent);
+            journalEntry.updateContent(newContent);
         } else {
             //journalView.displayErrorMessage("Invalid input.");
         }

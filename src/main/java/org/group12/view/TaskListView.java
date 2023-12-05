@@ -114,8 +114,8 @@ public class TaskListView implements ITaskListObserver {
         return row;
     }
 
-    public static Label createDeadlineLabel(ToDoTask task){
-        Label deadlineLabel = new Label(task.getTaskDeadline().format(DateTimeFormatter.ofPattern("dd/MM/yyy - HH:mm")));
+    public static Label createDeadlineLabel(IBigTask task){
+        Label deadlineLabel = new Label(task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyy - HH:mm")));
         deadlineLabel.setFont(new Font("Berlin Sans FB", 16.0));
         deadlineLabel.setStyle("-fx-text-fill: white");
         GridPane.setMargin(deadlineLabel,new Insets(3));
@@ -126,8 +126,8 @@ public class TaskListView implements ITaskListObserver {
         return deadlineLabel;
     }
 
-    public static ImageView createImportantImageView(ToDoTask task){
-        ImageView imageViewImportant = new ImageView(task.isImportant() ? "/star.png" : "/starUnselected.png");
+    public static ImageView createImportantImageView(IBigTask task){
+        ImageView imageViewImportant = new ImageView(task.isFavourite() ? "/star.png" : "/starUnselected.png");
         imageViewImportant.setFitHeight(31.0);
         imageViewImportant.setFitWidth(31.0);
         imageViewImportant.setPickOnBounds(true);
@@ -137,7 +137,7 @@ public class TaskListView implements ITaskListObserver {
         return imageViewImportant;
     }
 
-    public static ImageView createDeleteImageView(ToDoTask task){
+    public static ImageView createDeleteImageView(IBigTask task){
         ImageView imageViewDelete = new ImageView("/deleteWhite.png");
         imageViewDelete.setFitHeight(31.0);
         imageViewDelete.setFitWidth(31.0);
@@ -148,8 +148,8 @@ public class TaskListView implements ITaskListObserver {
         return imageViewDelete;
     }
 
-    public static TextField createTaskNameTextField(ToDoTask task){
-        TextField taskNameLBL = new TextField(task.getTaskName());
+    public static TextField createTaskNameTextField(IBigTask task){
+        TextField taskNameLBL = new TextField(task.getTitle());
         taskNameLBL.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
         taskNameLBL.setEditable(false);
         taskNameLBL.setAlignment(Pos.CENTER);
@@ -159,7 +159,7 @@ public class TaskListView implements ITaskListObserver {
         return taskNameLBL;
     }
 
-    public static ProgressIndicator createProgressIndicator(ToDoTask task){
+    public static ProgressIndicator createProgressIndicator(IBigTask task){
         double tasksFinishPrecentage = calculateTaskPrecentage(task);
         ProgressIndicator progressIndicator = new ProgressIndicator(tasksFinishPrecentage);
         GridPane.setHalignment(progressIndicator, HPos.CENTER);
@@ -167,17 +167,17 @@ public class TaskListView implements ITaskListObserver {
         return progressIndicator;
     }
 
-    public static double calculateTaskPrecentage(ToDoTask task) {
+    public static double calculateTaskPrecentage(IBigTask task) {
         double precentageCompleted = 0;
-        if(!task.getSubTasks().isEmpty()){
-            precentageCompleted = (double) task.getCompletedSubTasks().size() / task.getSubTasks().size();
+        if(!task.getSubTaskList().isEmpty()){
+            precentageCompleted = (double) task.getCompletedSubTasks().size() / task.getSubTaskList().size();
         } else{
             return 0;
         }
         return precentageCompleted;
     }
 
-    public static ImageView createViewImageView(ToDoTask task){
+    public static ImageView createViewImageView(IBigTask task){
         ImageView imageView = new ImageView("/viewWhite.png");
         imageView.setFitHeight(31.0);
         imageView.setFitWidth(31.0);
