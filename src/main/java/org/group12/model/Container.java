@@ -2,6 +2,8 @@ package org.group12.model;
 
 import org.group12.model.Calendar.Calendar;
 import org.group12.model.journal.Journal;
+import org.group12.model.journal.JournalEntryFactory;
+import org.group12.model.journal.JournalFactory;
 import org.group12.model.todo.TodoCollection;
 import org.group12.model.todo.factories.TodoCollectionFactory;
 
@@ -12,6 +14,8 @@ public class Container {
     private Journal journal;
     private TodoCollection todoCollection;
     private static Container instance;
+    private JournalFactory journalFactoryInstance;
+    private JournalEntryFactory journalEntryFactoryInstance;
 
     private ItemsSet items;
 

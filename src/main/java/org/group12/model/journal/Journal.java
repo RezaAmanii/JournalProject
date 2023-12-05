@@ -4,6 +4,7 @@ package org.group12.model.journal;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.model.INameable;
+import org.group12.model.ItemsSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,24 +12,27 @@ import java.util.List;
  * Represents a Journal with a list of entries and associated functionality.
  */
 public class Journal implements INameable, IObservable{
-    private List<JournalEntry> entryList;
+    //private List<JournalEntry> entryList;
     private IJournalEntryFactory entryFactory;
     private String title;
     private final String ID;
     private List<IPlanITObserver> observers;
+    private final ItemsSet items;
     /**
      * Constructs a Journal with the given ID, title, and entry factory.
      *
      * @param ID            the ID of the journal
      * @param title         the title of the journal
      * @param entryFactory  the factory for creating journal entries
+     * @param items         the items set to add the journal entries to
      */
-    public Journal(String ID, String title, IJournalEntryFactory entryFactory) {
-        this.entryList = new ArrayList<>();
+    public Journal(String ID, String title, IJournalEntryFactory entryFactory, ItemsSet items) {
+        //this.entryList = new ArrayList<>();
         this.entryFactory = entryFactory;
         this.title = title;
         this.ID = ID;
         this.observers = new ArrayList<>();
+        this.items = items;
     }
 
 
@@ -44,7 +48,8 @@ public class Journal implements INameable, IObservable{
         for (IPlanITObserver observer : observers) {
             newEntry.addObserver(observer);
         }
-        entryList.add(newEntry);
+        //entryList.add(newEntry);
+        items.addItem(newEntry);
         notifyObservers();
     }
 
@@ -55,7 +60,8 @@ public class Journal implements INameable, IObservable{
      * @param entry the entry to be removed
      */
     public void removeEntry(JournalEntry entry){
-        entryList.remove(entry);
+        //entryList.remove(entry);
+        items.removeItem(entry.getID());
         notifyObservers();
     }
 
@@ -91,9 +97,7 @@ public class Journal implements INameable, IObservable{
      *
      * @return a list of entries in the journal
      */
-    public List<JournalEntry> getEntries() {
-        return entryList;
-    }
+    //ublic List<JournalEntry> getEntries() return items.getItem(ID);}
 
     /**
      * Adds an observer to the journal.

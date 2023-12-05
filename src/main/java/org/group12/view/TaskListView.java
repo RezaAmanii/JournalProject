@@ -16,6 +16,9 @@ import javafx.scene.text.Font;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.model.toDoSubTask.ToDoList;
 import org.group12.model.toDoSubTask.ToDoTask;
+import org.group12.model.todo.IBigTask;
+import org.group12.model.todo.ITask;
+import org.group12.model.todo.ITaskList;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -55,8 +58,8 @@ public class TaskListView implements ITaskListObserver {
         return listToAppend;
     }
 
-    public static TextField createTaskNameLabel(ToDoList newList){
-        TextField taskNameLBL = new TextField(newList.getListName());
+    public static TextField createTaskNameLabel(ITaskList newList){
+        TextField taskNameLBL = new TextField(newList.getTitle());
         taskNameLBL.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
         taskNameLBL.setEditable(false);
         taskNameLBL.setAlignment(Pos.CENTER);
@@ -66,8 +69,8 @@ public class TaskListView implements ITaskListObserver {
         return taskNameLBL;
     }
 
-    public static Label createNumberOfTaskLabel(ToDoList newList){
-        Label noOfTasks = new Label(String.valueOf(newList.getTasks().size()));
+    public static Label createNumberOfTaskLabel(ITaskList newList){
+        Label noOfTasks = new Label(String.valueOf(newList.getBigTaskList().size()));
         noOfTasks.setAlignment(javafx.geometry.Pos.CENTER);
         noOfTasks.setTextFill(javafx.scene.paint.Color.WHITE);
         GridPane.setColumnIndex(noOfTasks, 1);

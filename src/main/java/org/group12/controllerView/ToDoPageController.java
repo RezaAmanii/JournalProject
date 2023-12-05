@@ -128,8 +128,8 @@ public class ToDoPageController implements Initializable {
             Globals.showErrorAlert("Can't delete Today or Important Lists, select a different list.");
             return;
         }
-        for (ToDoList list:allLists){
-            if (list.getID()==selectedList.getID()){
+        for (ITaskList list:allLists){
+            if (list.getID() == selectedList.getID()){
                 allLists.remove(list);
                 break;
             }
@@ -184,8 +184,8 @@ public class ToDoPageController implements Initializable {
      * @param list The to-do list to find.
      * @return The index of the list in the allLists collection, or -1 if not found.
      */
-    public static int findTheToDoList(ToDoList list) {
-        for (ToDoList list1 : allLists) {
+    public static int findTheToDoList(ITaskList list) {
+        for (ITaskList list1 : allLists) {
             if (list1.getID() == list.getID()) return allLists.indexOf(list);
         }
         return -1;
@@ -197,10 +197,10 @@ public class ToDoPageController implements Initializable {
      * @param task The to-do task to find.
      * @return The index of the task in the selectedList's tasks, or -1 if not found.
      */
-    public static int findTheTask(ToDoTask task) {
-        selectedList=allLists.get(findTheToDoList(selectedList));
-        for (ToDoTask task1 : selectedList.getTasks()) {
-            if (task1.getID() == task.getID()) return selectedList.getTasks().indexOf(task1);
+    public static int findTheTask(ITaskList task) {
+        selectedList = taskListController.getTaskListByID(task.getID());
+        for (IBigTask task1 : selectedList.getBigTaskList()) {
+            if (task1.getID() == task.getID()) return selectedList.getBigTaskList().indexOf(task1);
         }
         return -1;
     }
@@ -265,8 +265,8 @@ public class ToDoPageController implements Initializable {
         selectedList.getBigTaskList().sort(comparator);
         //selectedList.getTasks().sort(comparator);
 
-        for (ToDoTask task:selectedList.getTasks()){
-            if (task.getSubTasks().size()==task.getCompletedSubTasks().size() && task.getSubTasks().size()!=0)
+        for (IBigTask task : selectedList.getBigTaskList()){
+            if (task.getSubTaskList().size() == task.getCompletedSubTasks().size() && task.getSubTaskList().size() != 0)
                 completedTasksVbox.getChildren().add(createNewTaskObject(task));
             else
                 ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
