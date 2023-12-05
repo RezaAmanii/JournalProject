@@ -21,13 +21,16 @@ public class CalendarTest {
     public void setup() {
         calendar = new Calendar();
         start1 = LocalDateTime.of(2021, 1, 1, 2, 0);
-        start2 = LocalDateTime.of(2023, 12, 24, 17, 55);
         end1 = LocalDateTime.of(2021, 1, 1, 14, 1);
+        timeFrame1 = new Pair<>(start1, end1);
+
+        start2 = LocalDateTime.of(2023, 12, 24, 17, 55);
         end2 = LocalDateTime.of(2024, 1, 1, 1, 2);
+        timeFrame2 = new Pair<>(start2, end2);
 //        timeFrame1 = new Pair<>(LocalDateTime.now(), LocalDateTime.now().plusHours(1));
 //        timeFrame2 = new Pair<>(LocalDateTime.now().plusDays(1), LocalDateTime.now().plusHours(1).plusDays(1));
-        timeFrame1 = new Pair<>(start1, end1);
-        timeFrame2 = new Pair<>(start2, end2);
+
+
         calendar.addEvent("title", "description", timeFrame1);
         event = calendar.getEvents().get(0);
         for(int i = 0; i < 10; i++) {
@@ -126,14 +129,15 @@ public class CalendarTest {
         assertTrue(past.contains(event) && past.contains(calendar.getEvents().get(11)));
         assertTrue(upcoming.contains(calendar.getEvents().get(10)));
 
-        System.out.println(upcoming.get(1).getDateOfEvent());
-        System.out.println(event.getDateOfEvent());
-
         assertTrue(event.getDateOfEvent().isBefore(upcoming.get(1).getDateOfEvent()));
 
-        assertTrue(past.get(0).getDateOfEvent().isBefore(past.get(1).getDateOfEvent()));
-        List<Event> between = calendar.getEventsBetweenDates(LocalDateTime.now().plusHours(1), LocalDateTime.now().plusDays(2));
-        assertEquals(1, between.size());
-        assertTrue(between.contains(event));
+        assertTrue(past.get(0).getDateOfEvent().isBefore(upcoming.get(0).getDateOfEvent()));
+        List<Event> between = calendar.getEventsBetweenDates(start1.minusDays(1), end1.plusDays(1));
+        assertEquals(2, between.size());
+        List<Event> between2 = calendar.getEventsBetweenDates(start2.minusDays(1), end2.plusDays(1));
+        assertEquals(10, between2.size());
+        assertTrue(between.contains(event) && between.contains(calendar.getEvents().get(11)));
+        assertTrue(between2.contains(calendar.getEvents().get(10)) && between2.contains(calendar.getEvents().get(1)));
+
     }
 }
