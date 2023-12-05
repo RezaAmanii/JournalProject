@@ -9,10 +9,10 @@ public class TextUtils {
      * Counts the number of words in the given text.
      *
      * @param text the text to count words in
-     * @return the number of words in the text, or 0 if the text is null
+     * @return the number of words in the text, or 0 if the text is null or empty
      */
     public static int getWordCount(String text) {
-        if (text == null) {
+        if (text == null || text.trim().isEmpty()) {
             return 0;
         }
         return text.split("\\s+").length;

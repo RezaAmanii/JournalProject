@@ -1,6 +1,9 @@
 package org.group12.model.Calendar;
 
 import javafx.util.Pair;
+import org.group12.model.IDFactory.EventIdFactory;
+import org.group12.model.IDFactory.IDFactory;
+import org.group12.model.IDFactory.IIDFactory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -8,10 +11,10 @@ import java.util.List;
 
 public class eventFactory {
     //TODO implement factory in the same way as todo and journal
-    private EventIdFactory idFactory;
+    private IIDFactory idFactory;
 
     public eventFactory() {
-        this.idFactory = new EventIdFactory();
+        this.idFactory = IDFactory.getInstance(EventIdFactory.class);
     }
     /**
      * Creates a new Event with a generated ID, title set to the current date,

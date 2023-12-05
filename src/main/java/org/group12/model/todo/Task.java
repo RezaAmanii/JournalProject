@@ -1,10 +1,6 @@
 package org.group12.model.todo;
 
-import org.group12.Observers.items_observers.IItemObserver;
-import org.group12.model.INameable;
-
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 /**
  * Represents a subtask in a BigTask.

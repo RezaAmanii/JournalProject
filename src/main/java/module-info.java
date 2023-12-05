@@ -22,5 +22,7 @@ module JournalProject {
     opens org.group12.util to javafx.fxml;
     exports org.group12.controllerView;
     opens org.group12.controllerView to javafx.fxml;
+    exports org.group12.model.IDFactory;
+    opens org.group12.model.IDFactory to javafx.fxml;
 
 }

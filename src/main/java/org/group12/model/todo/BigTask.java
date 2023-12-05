@@ -1,11 +1,9 @@
 package org.group12.model.todo;
 
-import org.group12.Observers.items_observers.IItemObserver;
-import org.group12.model.INameable;
+import org.group12.model.ItemsSet;
 import org.group12.model.todo.factories.TaskFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -14,11 +12,11 @@ import java.util.HashMap;
 public class BigTask implements IBigTask {
     private String description;
     private LocalDateTime dueDate;
-    private int priority;
+    private boolean isFavourite;
     private final HashMap<String, ITask> subTaskMap;
     private final Task modelTask;
     private final TaskFactory taskFactory;
-    private final ArrayList<IItemObserver> observers;
+    private final ItemsSet items;
 
     /**
      * Constructs a BigTask object with the given title and ID.
@@ -26,12 +24,12 @@ public class BigTask implements IBigTask {
      * @param title The title of the big task.
      * @param ID    The ID of the big task.
      */
-    public BigTask(String title, String ID) {
-        this.observers = new ArrayList<>();
+    public BigTask(String title, String ID, ItemsSet items) {
         this.subTaskMap = new HashMap<>();
         this.taskFactory = new TaskFactory();
         modelTask = new Task("model", ID);
         modelTask.setTitle(title);
+        this.items = items;
     }
 
     /**
@@ -64,6 +62,7 @@ public class BigTask implements IBigTask {
         return dueDate;
     }
 
+
     /**
      * Sets the due date of the big task.
      *
@@ -75,23 +74,23 @@ public class BigTask implements IBigTask {
     }
 
     /**
-     * Gets the priority of the big task.
+     * Gets the status of isFavourite of the big task.
      *
-     * @return The priority of the big task.
+     * @return The status of isFavourite of the big task.
      */
     @Override
-    public int getPriority() {
-        return priority;
+    public boolean isFavourite() {
+        return isFavourite;
     }
 
     /**
-     * Sets the priority of the big task.
+     * Sets the value of isFavourite of the big task.
      *
-     * @param priority The priority to be set.
+     * @param status The value to be set for isFavourite.
      */
     @Override
-    public void setPriority(int priority) {
-        this.priority = priority;
+    public void setFavourite(boolean status) {
+        this.isFavourite = status;
     }
 
     /**
@@ -163,7 +162,7 @@ public class BigTask implements IBigTask {
     public void addSubTask(String title) {
         ITask newTask = taskFactory.createTask(title);
         subTaskMap.put(newTask.getID(), newTask);
-        notifyNewItem(newTask);
+        items.addItem(newTask);
     }
 
     /**
@@ -174,6 +173,7 @@ public class BigTask implements IBigTask {
     @Override
     public void removeSubTask(String subTaskID) {
         subTaskMap.remove(subTaskID);
+        items.removeItem(subTaskID);
     }
 
     /**
@@ -184,49 +184,5 @@ public class BigTask implements IBigTask {
     @Override
     public HashMap<String, ITask> getSubTaskMap() {
         return subTaskMap;
-    }
-
-    /**
-     * Adds an observer to the task.
-     *
-     * @param observer The observer to be added.
-     */
-    @Override
-    public void addItemObserver(IItemObserver observer) {
-        observers.add(observer);
-    }
-
-    /**
-     * Removes an observer from the task.
-     *
-     * @param observer The observer to be removed.
-     */
-    @Override
-    public void removeItemObserver(IItemObserver observer) {
-        observers.remove(observer);
-    }
-
-    /**
-     * Notifies all observers about a new item added to the task.
-     *
-     * @param newItem The new item added to the task.
-     */
-    @Override
-    public void notifyNewItem(INameable newItem) {
-        for (IItemObserver observer : observers) {
-            observer.addItem(newItem);
-        }
-    }
-
-    /**
-     * Notifies all observers about an item removed from the task.
-     *
-     * @param itemID The ID of the item removed from the task.
-     */
-    @Override
-    public void notifyRemoveItem(String itemID) {
-        for (IItemObserver observer : observers) {
-            observer.removeItem(itemID);
-        }
     }
 }

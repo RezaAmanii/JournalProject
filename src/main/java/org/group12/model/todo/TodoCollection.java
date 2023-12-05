@@ -1,10 +1,8 @@
 package org.group12.model.todo;
 
-import org.group12.Observers.items_observers.IItemObserver;
-import org.group12.model.INameable;
+import org.group12.model.ItemsSet;
 import org.group12.model.todo.factories.TaskListFactory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,19 +15,19 @@ public class TodoCollection implements ITodoCollection{
     private final HashMap<String, ITaskList> taskListMap;
     private final TaskListFactory taskListFactory;
 
-    private final ArrayList<IItemObserver> observers;
+    private final ItemsSet items;
 
     /**
      * Constructs a new TodoCollection object with the specified title and ID.
-     * Initializes the taskListMap, taskListFactory, observers, title, and ID.
+     * Initializes the taskListMap, taskListFactory, title, and ID.
      *
      * @param title the title of the TodoCollection
      * @param ID the ID of the TodoCollection
      */
-    public TodoCollection (String title, String ID){
+    public TodoCollection (String title, String ID, ItemsSet items){
         taskListMap = new HashMap<>();
-        taskListFactory = new TaskListFactory();
-        this.observers = new ArrayList<>();
+        taskListFactory = new TaskListFactory(items);
+        this.items = items;
         this.title = title;
         this.ID = ID;
     }
@@ -39,7 +37,7 @@ public class TodoCollection implements ITodoCollection{
     /**
      * Adds a new task list to the collection with the specified title.
      * Creates a new task list using the taskListFactory and adds it to the taskListMap.
-     * Notifies the Item observers about the new item.
+     * Adds the task list to items.
      *
      * @param title the title of the new task list
      */
@@ -47,21 +45,20 @@ public class TodoCollection implements ITodoCollection{
     public void addTaskList(String title) {
         ITaskList newList = taskListFactory.createTaskList(title);
         taskListMap.put(newList.getID(), newList);
-        notifyNewItem(newList);
-        newList.addItemObserver(observers.get(0));
+        items.addItem(newList);
     }
 
     /**
      * Removes the task list with the specified ID from the collection.
      * Removes the task list from the taskListMap.
-     * Notifies the observers about the removed item.
+     * Removes the task list items.
      *
      * @param taskListID the ID of the task list to be removed
      */
     @Override
     public void removeTaskList(String taskListID) {
         taskListMap.remove(taskListID);
-        notifyRemoveItem(taskListID);
+        items.removeItem(taskListID);
     }
 
     /**
@@ -102,49 +99,5 @@ public class TodoCollection implements ITodoCollection{
     @Override
     public String getTitle() {
         return title;
-    }
-
-    /**
-     * Adds an observer to the collection.
-     *
-     * @param observer the observer to be added
-     */
-    @Override
-    public void addItemObserver(IItemObserver observer) {
-        observers.add(observer);
-    }
-
-    /**
-     * Removes an observer from the collection.
-     *
-     * @param observer the observer to be removed
-     */
-    @Override
-    public void removeItemObserver(IItemObserver observer) {
-        observers.remove(observer);
-    }
-
-    /**
-     * Notifies the observers about a new item added to the collection.
-     *
-     * @param newItem the new item added to the collection
-     */
-    @Override
-    public void notifyNewItem(INameable newItem) {
-        for (IItemObserver observer : observers) {
-            observer.addItem(newItem);
-        }
-    }
-
-    /**
-     * Notifies the observers about an item removed from the collection.
-     *
-     * @param itemID the ID of the item removed from the collection
-     */
-    @Override
-    public void notifyRemoveItem(String itemID) {
-        for (IItemObserver observer : observers) {
-            observer.removeItem(itemID);
-        }
     }
 }
