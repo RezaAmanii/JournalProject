@@ -61,16 +61,11 @@ public class TaskController implements IController {
             bigTask.setDueDate(date);
             taskView.update();
         } else{
+            taskView.update();
             //taskView.displayError("Date cannot be in the past");
         }
     }
-
-
-            taskView.update();
-        } else{
-            //taskView.displayError("Priority cannot be negative");
-        }
-    }
+    
 
     public void handleSetStatus(boolean status) {
         //bigTask.setStatus(status);
