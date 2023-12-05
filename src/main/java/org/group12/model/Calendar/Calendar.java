@@ -1,6 +1,7 @@
 package org.group12.model.Calendar;
 
 import javafx.util.Pair;
+import org.group12.model.ItemsSet;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,10 +12,14 @@ public class Calendar {
     private boolean isEmpty;
 //    private List<CalendarObser> observers;
     private eventFactory eventFactory;
+    private final ItemsSet items;
 
-    public Calendar() {
+    public Calendar(ItemsSet items) {
         this.eventList = new ArrayList<>();
         this.isEmpty = true;
+        this.items = items;
+
+
 //        this.observers = new ArrayList<>();
     }
 
@@ -29,11 +34,13 @@ public class Calendar {
         Event newEvent = eventFactory.createEvent(title, description, dateOfEvent, timeFrame);
         eventList.add(newEvent);
         this.isEmpty = false;
+        items.addItem(newEvent);
 //        notifyObservers();
     }
     public void removeEvent(Event event){
         eventList.remove(event);
         isEmpty = eventList.isEmpty();
+        items.removeItem(event.getID());
 //        notifyObservers();
     }
     public void updateEvent(Event event){

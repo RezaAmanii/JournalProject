@@ -18,6 +18,7 @@ import org.group12.model.toDoSubTask.ToDoList;
 import org.group12.model.toDoSubTask.ToDoTask;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class TaskListView implements ITaskListObserver {
 
