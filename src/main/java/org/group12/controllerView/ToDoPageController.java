@@ -166,11 +166,14 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
 
 
     public void renameToDoList(ITaskList list, String newName) {
-        if (taskListController.getTaskListByTitle("Today").equals(list.getTitle()) || taskListController.getTaskListByTitle("Important").equals(list.getTitle())) {
+        if (taskListController.getTaskListByTitle("Today").equals(list) || taskListController.getTaskListByTitle("Important").equals(list)) {
             System.out.println("Choose another list to rename");
         } else{
-            taskListController.changeListTitle(newName);
+            taskListController.changeListTitle(list.getID(),newName);
             refreshSidePanelInfo();
+            if(selectedList.equals(list)){
+                activeListNameLBL.setText(newName);
+            }
         }
     }
 

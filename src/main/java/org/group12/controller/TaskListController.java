@@ -22,20 +22,19 @@ public class TaskListController implements IController, IObservable {
     private List<IPlanITObserver> observers = new ArrayList<>();
 
 
-
-    private TaskListController(){
+    private TaskListController() {
         this.items = Items.getInstance();
         this.todoCollection = Container.getInstance().getTodoCollection();
         this.taskListView = new TaskListView();
 
     }
 
-    public Container getContainer(){
+    public Container getContainer() {
         return this.container;
     }
 
-    public static TaskListController getInstance(){
-        if(instance == null){
+    public static TaskListController getInstance() {
+        if (instance == null) {
             instance = new TaskListController();
         }
         return instance;
@@ -43,28 +42,34 @@ public class TaskListController implements IController, IObservable {
 
 
     // To-do lists methods
-    public String handlerAddToDoList(String title){
+    public String handlerAddToDoList(String title) {
         return todoCollection.addTaskList(title);
     }
 
 
-    public void handlerRemoveToDoList(ITaskList taskList){
+    public void handlerRemoveToDoList(ITaskList taskList) {
         todoCollection.removeTaskList(taskList.getID());
     }
 
 
-    public String getListsTitle(){
+    public String getListsTitle() {
         return todoCollection.getTitle();
     }
 
-    public void changeListTitle(String newTitle){
-        if(TaskController.stringValidation(newTitle)){
-            todoCollection.setTitle(newTitle);
-        } else{
-            System.out.println("Not a String");
-        }
+    public void changeListTitle(String TaskListID, String newTitle) {
+        ITaskList taskList = (ITaskList) items.getItem(TaskListID);
+        if (taskList != null){
+            if (TaskController.stringValidation(newTitle)) {
+                taskList.setTitle(newTitle);
+            } else {
+                System.out.println("Not a String");
+            }
 
+        } else {
+            System.out.println("TaskList not found");
+        }
     }
+
 
 
     public ITaskList getTaskListByID(String taskListID){
