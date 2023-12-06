@@ -57,8 +57,12 @@ public class SubTasksController implements Initializable {
         hrSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,ZonedDateTime.now().getHour()));
         minSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59,ZonedDateTime.now().getMinute()));
         changeDeadlineDP.setValue(LocalDate.now());
-
-        deadlineTF.setText(deadline.get().getDayOfMonth() + "/" + deadline.get().getMonthValue() + "/" + deadline.get().getYear() + " - " + deadline.get().getHour() + ':' + deadline.get().getMinute());
+        if(deadline != null && deadline.get() != null){
+            deadlineTF.setText(deadline.get().getDayOfMonth() + "/" + deadline.get().getMonthValue() + "/" + deadline.get().getYear() + " - " + deadline.get().getHour() + ':' + deadline.get().getMinute());
+        }else{
+            deadline.set(LocalDateTime.now());
+        }
+        //deadlineTF.setText(deadline.get().getDayOfMonth() + "/" + deadline.get().getMonthValue() + "/" + deadline.get().getYear() + " - " + deadline.get().getHour() + ':' + deadline.get().getMinute());
         refreshSubTasksPane();
     }
 
@@ -88,21 +92,31 @@ public class SubTasksController implements Initializable {
         refreshSubTasksPane();
     }
 
-    /**
-     * Adds a new subtask.
-     */
-    /*
+    public String getInputFromUser(){
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("New SubTask");
+        dialog.setHeaderText("Enter the name of the new SubTask");
+        dialog.setContentText("Name:");
+        Optional<String> result = dialog.showAndWait();
+        if (result.isPresent()){
+            return result.get();
+        }
+        return "New subtask";
+    }
+
+
+
     public void addNewSubTask(){
-        ITask subTask = 
-        SubTask subTask=new SubTask(Globals.createNewSeqID(Globals.toDoSubTasksIDs),"newSubTask",false);
-        selectedSubTask=subTask;
-        //allLists.get(findTheToDoList(selectedList)).getTasks().get(findTheTask(selectedTask)).getSubTasks().add(subTask);
-        subTasksPane.getChildren().add(createNewSubTaskObject(subTask));
+        String title = getInputFromUser();
+        String subTaskID = selectedTask.addSubTask(title);
+        ITask newSubTask = taskListController.getSubTaskByID(subTaskID);
+
+        selectedSubTask = newSubTask;
+        subTasksPane.getChildren().add(createNewSubTaskObject(selectedSubTask));
         refreshSubTasksPane();
 
     }
 
-     */
     
 
 
