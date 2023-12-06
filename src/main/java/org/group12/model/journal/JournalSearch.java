@@ -27,6 +27,7 @@ public class JournalSearch {
      * @param keyword the keyword to search for in the journal entries
      * @return a list of JournalEntry objects that contain the keyword in their content
      */
+    /*
     public List<JournalEntry> searchEntries(String keyword) {
         List<JournalEntry> matchingEntries = new ArrayList<>();
         if (keyword.length() < MIN_SEARCH_LENGTH) {
@@ -39,4 +40,6 @@ public class JournalSearch {
         }
         return matchingEntries;
     }
+
+     */
 }

@@ -18,6 +18,7 @@ public class TaskListController implements IController {
     private Container container = Container.getInstance();
 
 
+
     private TaskListController(){
         this.items = Items.getInstance();
         this.todoCollection = Container.getInstance().getTodoCollection();
@@ -36,10 +37,12 @@ public class TaskListController implements IController {
         return instance;
     }
 
+
     // To-do lists methods
-    public void handlerAddToDoList(String title){
-        todoCollection.addTaskList(title);
+    public String handlerAddToDoList(String title){
+        return todoCollection.addTaskList(title);
     }
+
 
     public void handlerRemoveToDoList(ITaskList taskList){
         todoCollection.removeTaskList(taskList.getID());
@@ -64,6 +67,26 @@ public class TaskListController implements IController {
         return (ITaskList) items.getItem(taskListID);
     }
 
+    public IBigTask getBigTaskByID(String bigTaskID){
+        return (IBigTask) items.getItem(bigTaskID);
+    }
+
+
+    public ITask getSubTaskByID(String taskID){
+        return (ITask) items.getItem(taskID);
+    }
+
+
+
+    public ITaskList getTaskListByTitle(String title){
+        for(ITaskList taskList : todoCollection.getTaskList()){
+            if(taskList.getTitle().equals(title)){
+                return taskList;
+            }
+        }
+        return null;
+    }
+
     public IBigTask getTaskByID(String taskID){
         return (IBigTask) items.getItem(taskID);
     }
@@ -81,9 +104,9 @@ public class TaskListController implements IController {
     }
 
 
-    public ArrayList<ITask> fetchCompletedSubTasks(){
-        return items.getItem();
-    }
+
+
+
 
 
 

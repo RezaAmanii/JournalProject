@@ -32,6 +32,7 @@ public class BigTask implements IBigTask {
         modelTask = new Task("model", ID);
         modelTask.setTitle(title);
         this.items = items;
+        this.dueDate = LocalDateTime.now();
     }
 
     /**
@@ -187,6 +188,17 @@ public class BigTask implements IBigTask {
             }
         }
         return compeletedSubTasks;
+    }
+
+    @Override
+    public ArrayList<ITask> getUncompletedSubTasks() {
+        ArrayList<ITask> uncompletedSubTask = new ArrayList<>();
+        for (ITask task: subTaskList){
+            if (!task.getStatus()){
+                uncompletedSubTask.add(task);
+            }
+        }
+        return uncompletedSubTask;
     }
 
 

@@ -23,5 +23,6 @@ public interface IBigTask extends ITask, IDescription {
 
     ArrayList<ITask> getSubTaskList();
     ArrayList<ITask> getCompletedSubTasks();
+    ArrayList<ITask> getUncompletedSubTasks();
 
 }

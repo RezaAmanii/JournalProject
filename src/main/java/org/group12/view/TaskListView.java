@@ -20,6 +20,7 @@ import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITask;
 import org.group12.model.todo.ITaskList;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -119,15 +120,20 @@ public class TaskListView implements ITaskListObserver {
     }
 
     public static Label createDeadlineLabel(IBigTask task){
-        Label deadlineLabel = new Label(task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyy - HH:mm")));
-        deadlineLabel.setFont(new Font("Berlin Sans FB", 16.0));
-        deadlineLabel.setStyle("-fx-text-fill: white");
-        GridPane.setMargin(deadlineLabel,new Insets(3));
-        GridPane.setValignment(deadlineLabel, javafx.geometry.VPos.CENTER);
-        GridPane.setHalignment(deadlineLabel, javafx.geometry.HPos.CENTER);
-        GridPane.setColumnIndex(deadlineLabel,1);
-        GridPane.setRowIndex(deadlineLabel,1);
-        return deadlineLabel;
+        LocalDateTime dueDate = task.getDueDate();
+        if(dueDate != null){
+            Label deadlineLabel = new Label(task.getDueDate().format(DateTimeFormatter.ofPattern("dd/MM/yyy - HH:mm")));
+            deadlineLabel.setFont(new Font("Berlin Sans FB", 16.0));
+            deadlineLabel.setStyle("-fx-text-fill: white");
+            GridPane.setMargin(deadlineLabel,new Insets(3));
+            GridPane.setValignment(deadlineLabel, javafx.geometry.VPos.CENTER);
+            GridPane.setHalignment(deadlineLabel, javafx.geometry.HPos.CENTER);
+            GridPane.setColumnIndex(deadlineLabel,1);
+            GridPane.setRowIndex(deadlineLabel,1);
+            return deadlineLabel;
+        }else{
+            return new Label("No due date");
+        }
     }
 
     public static ImageView createImportantImageView(IBigTask task){
