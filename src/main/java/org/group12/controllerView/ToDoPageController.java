@@ -9,27 +9,22 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.TaskListController;
 import org.group12.model.toDoSubTask.Globals;
-import org.group12.model.toDoSubTask.ToDoList;
-import org.group12.model.toDoSubTask.ToDoTask;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 import static org.group12.view.TaskListView.*;
 
 
-public class ToDoPageController implements Initializable {
+public class ToDoPageController implements Initializable, ITaskListObserver {
 
     // FXML components
     public VBox fixedListsVbox;
@@ -43,6 +38,8 @@ public class ToDoPageController implements Initializable {
     public BorderPane mainWindowBorder;
 
 
+
+
     // Corresponding controller
     public static TaskListController taskListController = TaskListController.getInstance();
 
@@ -51,12 +48,14 @@ public class ToDoPageController implements Initializable {
     public static IBigTask selectedTask = null;
 
 
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (taskListController.fetchAllTaskLists().isEmpty()){
             taskListController.handlerAddToDoList("Today");
             taskListController.handlerAddToDoList("Important");
         }
+        taskListController.addObserver(this);
         refreshAllListVBox();
         refreshSidePanelInfo();
     }
@@ -180,16 +179,6 @@ public class ToDoPageController implements Initializable {
         taskListController.getTaskByID(retriveBigTaskID(task)).setTitle(newName);
     }
 
-
-    public static ITaskList findTheToDoList(String listID) {
-        return taskListController.getTaskListByID(listID);
-    }
-
-
-    public static IBigTask findTheTask(String taskID) {
-        return taskListController.getTaskByID(taskID);
-    }
-
     public  GridPane createNewTaskObject(IBigTask task) {
 
         GridPane newTaskPane = createTaskPane();
@@ -224,7 +213,6 @@ public class ToDoPageController implements Initializable {
 
         GridPane newTask = createNewTaskObject(task);
         ongoingTasksVbox.getChildren().add(newTask);
-        refreshAllListVBox();
 
     }
 
@@ -334,6 +322,7 @@ public class ToDoPageController implements Initializable {
                 imageViewImportant.setImage(new Image("/star.png"));
 
             }
+            taskListController.notifyObservers();
         });
     }
 
@@ -421,4 +410,10 @@ public class ToDoPageController implements Initializable {
 
     }
 
+    @Override
+    public void update() {
+        refreshAllListVBox();
+        refreshSidePanelInfo();
+
+    }
 }

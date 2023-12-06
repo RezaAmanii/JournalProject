@@ -1,14 +1,17 @@
 package org.group12.controller;
 
+import org.group12.Observers.IObservable;
+import org.group12.Observers.IPlanITObserver;
 import org.group12.model.Container;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.*;
 import org.group12.view.TaskListView;
 import java.util.ArrayList;
+import java.util.List;
 
 
-public class TaskListController implements IController {
+public class TaskListController implements IController, IObservable {
 
     private TaskListView taskListView;
 
@@ -16,6 +19,7 @@ public class TaskListController implements IController {
     private TodoCollection todoCollection;
     private static TaskListController instance;
     private Container container = Container.getInstance();
+    private List<IPlanITObserver> observers = new ArrayList<>();
 
 
 
@@ -104,12 +108,24 @@ public class TaskListController implements IController {
     }
 
 
+    @Override
+    public void addObserver(IPlanITObserver observer) {
+        if(!observers.contains(observer)){
+            observers.add(observer);
+        }
 
+    }
 
+    @Override
+    public void removeObserver(IPlanITObserver observer) {
+        observers.remove(observer);
+    }
 
+    @Override
+    public void notifyObservers() {
+        for(IPlanITObserver observer : observers){
+            observer.update();
+        }
 
-
-
-
-
+    }
 }
