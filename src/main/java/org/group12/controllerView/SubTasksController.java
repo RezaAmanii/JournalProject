@@ -13,7 +13,9 @@ import javafx.scene.text.Font;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.toDoSubTask.SubTask;
 import org.group12.model.toDoSubTask.ToDoTask;
+import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITask;
+import org.group12.model.todo.ITaskList;
 
 
 import java.net.URL;
@@ -53,7 +55,7 @@ public class SubTasksController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //taskNameLBL.setText(selectedTask.getTaskName());
+        taskNameLBL.setText(selectedTask.getTitle());
         hrSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,ZonedDateTime.now().getHour()));
         minSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59,ZonedDateTime.now().getMinute()));
         changeDeadlineDP.setValue(LocalDate.now());
@@ -86,10 +88,13 @@ public class SubTasksController implements Initializable {
 
     
     public void removeSubTask(){
-        if (selectedSubTask != null){
-            taskListController.removeAnyObject(selectedSubTask.getID());
+        ITask subTask = taskListController.getSubTaskByID(selectedSubTask.getID());
+        if(subTask != null){
+            subTask.setTitle("Removed");
+            taskListController.getBigTaskByID(selectedTask.getID()).removeSubTask(selectedSubTask.getID());
+            refreshSubTasksPane();
         }
-        refreshSubTasksPane();
+
     }
 
     public String getInputFromUser(){
@@ -124,6 +129,7 @@ public class SubTasksController implements Initializable {
      * Refreshes the subtasks pane.
      */
     void refreshSubTasksPane(){
+
         subTasksPane.getChildren().clear();
 
         for (ITask task: selectedTask.getUncompletedSubTasks()){

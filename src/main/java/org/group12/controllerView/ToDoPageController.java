@@ -38,8 +38,6 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     public BorderPane mainWindowBorder;
 
 
-
-
     // Corresponding controller
     public static TaskListController taskListController = TaskListController.getInstance();
 
@@ -48,10 +46,9 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     public static IBigTask selectedTask = null;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (taskListController.fetchAllTaskLists().isEmpty()){
+        if (taskListController.fetchAllTaskLists().isEmpty()) {
             taskListController.handlerAddToDoList("Today");
             taskListController.handlerAddToDoList("Important");
         }
@@ -61,8 +58,7 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     }
 
 
-
-    public  GridPane createNewListObject(ITaskList newList){
+    public GridPane createNewListObject(ITaskList newList) {
         GridPane listToAppend = createListPane();
         TextField taskNameLBL = createTaskNameLabel(newList);
         Label noOfTasks = createNumberOfTaskLabel(newList);
@@ -73,9 +69,9 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     }
 
 
-    public static String retriveTaskListID(ITaskList taskList){
-        for(ITaskList list: taskListController.fetchAllTaskLists()){
-            if(list.equals(taskList)){
+    public static String retriveTaskListID(ITaskList taskList) {
+        for (ITaskList list : taskListController.fetchAllTaskLists()) {
+            if (list.equals(taskList)) {
                 return list.getID();
             }
         }
@@ -83,9 +79,9 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     }
 
 
-    public static String retriveBigTaskID(IBigTask bigTask){
-        for(IBigTask task : taskListController.fetchAllBigTasks(retriveTaskListID(selectedList))){
-            if(task.equals(bigTask)){
+    public static String retriveBigTaskID(IBigTask bigTask) {
+        for (IBigTask task : taskListController.fetchAllBigTasks(retriveTaskListID(selectedList))) {
+            if (task.equals(bigTask)) {
                 return task.getID();
             }
 
@@ -94,12 +90,12 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     }
 
 
-    public String getInputFromUser(){
+    public String getInputFromUser() {
         TextInputDialog dialog = createTextInputDialog();
         return processDialogResult(dialog);
     }
 
-    private TextInputDialog createTextInputDialog(){
+    private TextInputDialog createTextInputDialog() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("New List");
         dialog.setHeaderText("Enter the name of the new list");
@@ -107,14 +103,14 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
         return dialog;
     }
 
-    private String processDialogResult(TextInputDialog dialog){
+    private String processDialogResult(TextInputDialog dialog) {
         var result = dialog.showAndWait();
-        if(result.isPresent()){
+        if (result.isPresent()) {
             String userInputOriginal = result.get();
             String userInput = result.get().toLowerCase();
-            if(userInput.contains("today") || userInput.contains("important")){
+            if (userInput.contains("today") || userInput.contains("important")) {
                 displayWarningDialog();
-            }else{
+            } else {
                 return userInputOriginal;
             }
         }
@@ -139,14 +135,14 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     }
 
 
-    public void deleteSelectedList(){
-        if(selectedList.getTitle().equals("Today") || selectedList.getTitle().equals("Important")){
+    public void deleteSelectedList() {
+        if (selectedList.getTitle().equals("Today") || selectedList.getTitle().equals("Important")) {
             System.out.println("You can not delete this list");
             return;
         }
 
-        for(ITaskList list : taskListController.fetchAllTaskLists()){
-            if(list.getID().equals(selectedList.getID())){
+        for (ITaskList list : taskListController.fetchAllTaskLists()) {
+            if (list.getID().equals(selectedList.getID())) {
                 taskListController.handlerRemoveToDoList(list);
                 break;
             }
@@ -157,7 +153,7 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     }
 
 
-    public void refreshAllListVBox(){
+    public void refreshAllListVBox() {
         clearListVBoxContent();
         refreshFixedLists();
         refreshAppendableLists();
@@ -168,21 +164,21 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     public void renameToDoList(ITaskList list, String newName) {
         if (taskListController.getTaskListByTitle("Today").equals(list) || taskListController.getTaskListByTitle("Important").equals(list)) {
             System.out.println("Choose another list to rename");
-        } else{
-            taskListController.changeListTitle(list.getID(),newName);
+        } else {
+            taskListController.changeListTitle(list.getID(), newName);
             refreshSidePanelInfo();
-            if(selectedList.equals(list)){
+            if (selectedList.equals(list)) {
                 activeListNameLBL.setText(newName);
             }
         }
     }
 
 
-    void renameTask(IBigTask task, String newName){
+    void renameTask(IBigTask task, String newName) {
         taskListController.getTaskByID(retriveBigTaskID(task)).setTitle(newName);
     }
 
-    public  GridPane createNewTaskObject(IBigTask task) {
+    public GridPane createNewTaskObject(IBigTask task) {
 
         GridPane newTaskPane = createTaskPane();
         Label deadLineLabel = createDeadlineLabel(task);
@@ -206,7 +202,7 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     }
 
     public void addNewTask() {
-        if(selectedList.getTitle().equals(taskListController.getTaskListByTitle("Today")) || selectedList.getTitle().equals(taskListController.getTaskListByTitle("Important"))){
+        if (selectedList.getTitle().equals(taskListController.getTaskListByTitle("Today")) || selectedList.getTitle().equals(taskListController.getTaskListByTitle("Important"))) {
             Globals.showErrorAlert("You can't add tasks to today or important directly, \ncreate a list to add tasks to \nand today and important lists will be updated accordingly.");
             return;
         }
@@ -219,7 +215,7 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
 
     }
 
-    public  void refreshSidePanelInfo() {
+    public void refreshSidePanelInfo() {
         selectedList = taskListController.getTaskListByID(retriveTaskListID(selectedList));
         activeListNameLBL.setText(selectedList.getTitle());
 
@@ -229,7 +225,7 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
         Comparator<IBigTask> comparator = Comparator.comparing(IBigTask::getDueDate);
         selectedList.getBigTaskList().sort(comparator);
 
-        for (IBigTask task : selectedList.getBigTaskList()){
+        for (IBigTask task : selectedList.getBigTaskList()) {
             if (task.getSubTaskList().size() == task.getCompletedSubTasks().size() && !task.getSubTaskList().isEmpty())
                 completedTasksVbox.getChildren().add(createNewTaskObject(task));
             else
@@ -239,7 +235,7 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     }
 
 
-    private void setTaskNameLabelEventHandler(ITaskList newList, TextField taskNameLBL, Label noOfTask){
+    private void setTaskNameLabelEventHandler(ITaskList newList, TextField taskNameLBL, Label noOfTask) {
         taskNameLBL.setOnMouseClicked(event -> {
             handleTaskNameLabelClick(event, newList, taskNameLBL, noOfTask);
         });
@@ -249,7 +245,7 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
         });
     }
 
-    private void handleTaskNameLabelClick(MouseEvent event, ITaskList newList, TextField taskNameLBL, Label noOfTask){
+    private void handleTaskNameLabelClick(MouseEvent event, ITaskList newList, TextField taskNameLBL, Label noOfTask) {
         selectedList = taskListController.getTaskListByID(retriveTaskListID(newList));
         //selectedList = allLists.get(findTheToDoList(newList));
         noOfTask.setText(String.valueOf(selectedList.getBigTaskList().size()));
@@ -301,8 +297,8 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
 
     private void handleDeleteImageViewClick(IBigTask task, ImageView imageViewDelete) {
         imageViewDelete.setOnMouseClicked(event -> {
-            for (IBigTask task1: selectedList.getBigTaskList()){
-                if (task.getID().equals(task1.getID())){
+            for (IBigTask task1 : selectedList.getBigTaskList()) {
+                if (task.getID().equals(task1.getID())) {
                     selectedList.getBigTaskList().remove(task1);
                     break;
                 }
@@ -314,23 +310,22 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
 
     private static void handleImportantImageClick(IBigTask task, ImageView imageViewImportant) {
         imageViewImportant.setOnMouseClicked(event -> {
-            if (task.isFavourite()){
+            if (task.isFavourite()) {
                 task.setFavourite(false);
                 taskListController.getTaskListByTitle("Important").getBigTaskList().remove(task);
                 imageViewImportant.setImage(new Image("/starUnselected.png"));
-            }
-            else{
+            } else {
                 task.setFavourite(true);
                 taskListController.getTaskListByTitle("Important").getBigTaskList().add(task);
                 imageViewImportant.setImage(new Image("/star.png"));
 
             }
-            taskListController.notifyObservers();
+
         });
     }
 
 
-    private void setTaskNameEditEvent(TextField taskNameLabel, IBigTask task){
+    private void setTaskNameEditEvent(TextField taskNameLabel, IBigTask task) {
         taskNameLabel.setOnMouseClicked(event -> {
             handleTaskNameLabelEvents(taskNameLabel, event);
         });
@@ -348,49 +343,49 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
     }
 
     private static void handleTaskNameLabelEvents(TextField taskNameLabel, MouseEvent event) {
-        if(event.getClickCount() == 2 && !selectedList.getTitle().equals(taskListController.getTaskListByTitle("Today")) && !selectedList.getTitle().equals(taskListController.getTaskListByTitle("Important"))){
+        if (event.getClickCount() == 2 && !selectedList.getTitle().equals(taskListController.getTaskListByTitle("Today")) && !selectedList.getTitle().equals(taskListController.getTaskListByTitle("Important"))) {
             taskNameLabel.setEditable(true);
             taskNameLabel.requestFocus();
         }
     }
 
-    private void setViewEvent(ImageView imageView, IBigTask task, ProgressIndicator progressIndicator){
+    private void setViewEvent(ImageView imageView, IBigTask task, ProgressIndicator progressIndicator) {
         imageView.setOnMouseClicked(event -> {
             handleImageViewClick(task, !task.getSubTaskList().isEmpty(), progressIndicator);
 
         });
     }
 
-    private void refreshFixedLists(){
-        for(ITaskList list : taskListController.fetchAllTaskLists()){
-            if (list.getTitle().equals("Today") || list.getTitle().equals("Important")){
+    private void refreshFixedLists() {
+        for (ITaskList list : taskListController.fetchAllTaskLists()) {
+            if (list.getTitle().equals("Today") || list.getTitle().equals("Important")) {
                 fixedListsVbox.getChildren().add(createNewListObject(list));
             }
-            }
         }
+    }
 
 
-    private void refreshAppendableLists(){
-        for(ITaskList list : taskListController.fetchAllTaskLists()){
-            if (!list.getTitle().equals("Today") && !list.getTitle().equals("Important")){
+    private void refreshAppendableLists() {
+        for (ITaskList list : taskListController.fetchAllTaskLists()) {
+            if (!list.getTitle().equals("Today") && !list.getTitle().equals("Important")) {
                 updateListTasks(list);
                 appendableListVbox.getChildren().add(createNewListObject(list));
             }
         }
     }
 
-    private void updateListTasks(ITaskList list){
+    private void updateListTasks(ITaskList list) {
         list.getBigTaskList().forEach(task -> {
             LocalDateTime dueDate = task.getDueDate();
-            if(dueDate != null){
+            if (dueDate != null) {
                 LocalDate date = dueDate.toLocalDate();
-                if(date.isEqual(LocalDateTime.now().toLocalDate())){
+                if (date.isEqual(LocalDateTime.now().toLocalDate())) {
                     updateTodayTask(task);
                 }
 
             }
 
-            if(task.isFavourite()){
+            if (task.isFavourite()) {
                 updateImportantTask(task);
             }
         });
@@ -406,6 +401,8 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
         taskListController.getTaskListByTitle("Important").addBigTask(task.getTitle());
     }
 
+    private String previousListID;
+
     private void clearListVBoxContent() {
         selectedList = taskListController.getTaskListByTitle("Today");
         fixedListsVbox.getChildren().clear();
@@ -415,6 +412,7 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
 
     @Override
     public void update() {
+
         refreshAllListVBox();
         refreshSidePanelInfo();
 
