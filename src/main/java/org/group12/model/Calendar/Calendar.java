@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Calendar implements IObservable {
+public class Calendar implements IObservable, ICalendar {
     private List<Event> eventList;
     private boolean isEmpty;
     private List<IPlanITObserver> observers;
@@ -84,6 +84,11 @@ public class Calendar implements IObservable {
             }
         }
         event.setRecurrence(false);
+        notifyObservers();
+    }
+    public void detachRecurring(Event event){
+        event.setRecurrence(false);
+        event.setParentEvent(null);
         notifyObservers();
     }
 

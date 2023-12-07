@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Event implements IEvent, INameable, IDateCreated, IDescription, IEditEvent, IObservable, IRecurrent {
+public class Event implements IEvent, IObservable {
     private String title;
     private String description;
     private final LocalDateTime dateCreated;
@@ -82,6 +82,11 @@ public class Event implements IEvent, INameable, IDateCreated, IDescription, IEd
     @Override
     public void setRecurrence(boolean recurrence) {
         this.recurrence = recurrence;
+        notifyObservers();
+    }
+    @Override
+    public void setParentEvent(Event parentEvent) {
+        this.parentEvent = parentEvent;
         notifyObservers();
     }
 

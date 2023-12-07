@@ -38,6 +38,6 @@ public class eventFactory {
         List<String> tags = new ArrayList<>();
         String ID = idFactory.generateID();
         LocalDateTime createdTimestamp = LocalDateTime.now();
-        return new Event(ID, title, description, timeFrame, createdTimestamp, tags, false, parentEvent);
+        return new Event(ID, title, description, timeFrame, createdTimestamp, tags, true, parentEvent);
     }
 }
