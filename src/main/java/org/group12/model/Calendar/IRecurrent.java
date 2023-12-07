@@ -1,4 +1,4 @@
-package org.group12.model;
+package org.group12.model.Calendar;
 
 import org.group12.model.Calendar.Event;
 
