@@ -5,7 +5,9 @@ import org.group12.model.IDFactory.IIDFactory;
 import org.group12.model.IDFactory.JournalEntryIDFactory;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 /**
  * Singleton factory class for creating instances of JournalEntry.
@@ -47,6 +49,12 @@ public class JournalEntryFactory implements IJournalEntryFactory {
         String title = dateFormat.format(new Date());
         LocalDateTime createdTimestamp = LocalDateTime.now();
         return new JournalEntry(ID, title, content, createdTimestamp);
+    }
+
+    public JournalEntry createJournalEntryForDate(LocalDate date) {
+        String ID = idFactory.generateID();
+        String title = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE);
+        return new JournalEntry(ID, title, "", date.atStartOfDay());
     }
 
     /**

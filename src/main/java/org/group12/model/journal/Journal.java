@@ -5,13 +5,14 @@ import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.model.INameable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
+
 /**
  * Represents a Journal with a list of entries and associated functionality.
  */
 public class Journal implements INameable, IObservable{
-    private List<JournalEntry> entryList;
+    private final Map<LocalDate,JournalEntry> entries;
     private IJournalEntryFactory entryFactory;
     private String title;
     private final String ID;
@@ -24,7 +25,7 @@ public class Journal implements INameable, IObservable{
      * @param entryFactory  the factory for creating journal entries
      */
     public Journal(String ID, String title, IJournalEntryFactory entryFactory) {
-        this.entryList = new ArrayList<>();
+        this.entries = new HashMap<>();
         this.entryFactory = entryFactory;
         this.title = title;
         this.ID = ID;
@@ -44,7 +45,7 @@ public class Journal implements INameable, IObservable{
         for (IPlanITObserver observer : observers) {
             newEntry.addObserver(observer);
         }
-        entryList.add(newEntry);
+        entries.put(LocalDate.now(), newEntry);
         notifyObservers();
     }
 
@@ -54,8 +55,8 @@ public class Journal implements INameable, IObservable{
      *
      * @param entry the entry to be removed
      */
-    public void removeEntry(JournalEntry entry){
-        entryList.remove(entry);
+    public void removeEntry(LocalDate date){
+        entries.remove(date);
         notifyObservers();
     }
 
@@ -69,6 +70,14 @@ public class Journal implements INameable, IObservable{
         this.title = title;
         notifyObservers();
 
+    }
+
+    public JournalEntry getEntryForDate(LocalDate date) {
+        return entries.getOrDefault(date, JournalEntryFactory.getInstance().createJournalEntryForDate(date));
+    }
+
+    public void addEntryForDate(LocalDate date, JournalEntry entry) {
+        entries.put(date, entry);
     }
 
     /**
@@ -92,7 +101,7 @@ public class Journal implements INameable, IObservable{
      * @return a list of entries in the journal
      */
     public List<JournalEntry> getEntries() {
-        return entryList;
+        return new ArrayList<>(entries.values());
     }
 
     /**

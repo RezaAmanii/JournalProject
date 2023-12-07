@@ -14,6 +14,15 @@ public class Container {
 
     private final ItemsSet items;
 
+    private static Container instance;
+
+    public static Container getInstance() {
+        if(instance == null) {
+            instance = new Container(Items.getInstance());
+        }
+        return instance;
+    }
+
     public Container(ItemsSet items) {
         this.items = items;
 
