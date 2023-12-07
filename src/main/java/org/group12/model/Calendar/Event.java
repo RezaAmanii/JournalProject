@@ -3,16 +3,13 @@ package org.group12.model.Calendar;
 import javafx.util.Pair;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
-import org.group12.model.IDateCreated;
-import org.group12.model.IDescription;
-import org.group12.model.IEditEvent;
-import org.group12.model.INameable;
+import org.group12.model.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Event implements IEvent, INameable, IDateCreated, IDescription, IEditEvent, IObservable {
+public class Event implements IEvent, INameable, IDateCreated, IDescription, IEditEvent, IObservable, IRecurrent {
     private String title;
     private String description;
     private final LocalDateTime dateCreated;
