@@ -58,7 +58,7 @@ public class BigTaskCard extends AnchorPane {
     private void titleClicked() {
         // here should be the code to get the new title
         //String newTitle =
-        //taskListController.changeListTitle(newTitle);
+        //taskListController.changeListTitle(newTitle, ID);
     }
 
     // TODO: hur funkar taskController?

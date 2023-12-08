@@ -5,7 +5,6 @@ import org.group12.model.todo.factories.BigTaskFactory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Represents a task list that contains big tasks.
@@ -89,13 +88,12 @@ public class TaskList implements ITaskList {
     /**
      * Removes a big task from the task list.
      *
-     * @param ID The ID of the big task to be removed.
+     * @param task The big task to be removed.
      */
     @Override
-    public void removeBigTask(String ID) {
-        IBigTask bigTask = (IBigTask) items.getItem(ID);
-        bigTaskList.remove(bigTask);
-        items.removeItem(ID);
+    public void removeBigTask(IBigTask task) {
+        bigTaskList.remove(task);
+        items.removeItem(task.getID());
     }
 
     /**

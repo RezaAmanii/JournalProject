@@ -10,7 +10,7 @@ public interface ITaskList extends INameable, IDateCreated {
     // Methods for editing Bigtasks
     String addBigTask(String title);
 
-    void removeBigTask(String ID);
+    void removeBigTask(IBigTask task);
 
     ArrayList<IBigTask> getBigTaskList();
 }
