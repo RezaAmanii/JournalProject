@@ -3,6 +3,7 @@ package org.group12.model.todo;
 import org.group12.model.IDescription;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface IBigTask extends ITask, IDescription {
@@ -16,9 +17,12 @@ public interface IBigTask extends ITask, IDescription {
 
     // Methods for editing the subTasks
 
-    void addSubTask(String title);
+    String addSubTask(String title);
 
     void removeSubTask(String subTaskID);
 
-    HashMap<String, ITask> getSubTaskMap();
+    ArrayList<ITask> getSubTaskList();
+    ArrayList<ITask> getCompletedSubTasks();
+    ArrayList<ITask> getUncompletedSubTasks();
+
 }

@@ -11,12 +11,13 @@ import java.io.IOException;
 public class TaskCard extends AnchorPane {
     @FXML
     private Label taskTitleLabel;
+    private String ID;
 
-    public TaskCard(String title){
+    public TaskCard(String title, String ID){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("task_card.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-
+        this.ID = ID;
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
@@ -27,5 +28,9 @@ public class TaskCard extends AnchorPane {
     }
 
     public void taskCheckBoxClick(ActionEvent actionEvent) {
+    }
+
+    public String getID(ActionEvent actionEvent) {
+        return this.ID;
     }
 }

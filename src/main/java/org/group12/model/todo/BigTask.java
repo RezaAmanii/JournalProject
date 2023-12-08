@@ -4,6 +4,7 @@ import org.group12.model.ItemsSet;
 import org.group12.model.todo.factories.TaskFactory;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -13,10 +14,11 @@ public class BigTask implements IBigTask {
     private String description;
     private LocalDateTime dueDate;
     private boolean isFavourite;
-    private final HashMap<String, ITask> subTaskMap;
+    private final ArrayList<ITask> subTaskList;
     private final Task modelTask;
     private final TaskFactory taskFactory;
     private final ItemsSet items;
+    private ArrayList<ITask> compeletedSubTasks = new ArrayList<>();
 
     /**
      * Constructs a BigTask object with the given title and ID.
@@ -25,11 +27,12 @@ public class BigTask implements IBigTask {
      * @param ID    The ID of the big task.
      */
     public BigTask(String title, String ID, ItemsSet items) {
-        this.subTaskMap = new HashMap<>();
+        this.subTaskList = new ArrayList<>();
         this.taskFactory = new TaskFactory();
         modelTask = new Task("model", ID);
         modelTask.setTitle(title);
         this.items = items;
+        this.dueDate = LocalDateTime.now();
     }
 
     /**
@@ -159,10 +162,11 @@ public class BigTask implements IBigTask {
      * @param title The title of the subtask to be added.
      */
     @Override
-    public void addSubTask(String title) {
+    public String addSubTask(String title) {
         ITask newTask = taskFactory.createTask(title);
-        subTaskMap.put(newTask.getID(), newTask);
+        subTaskList.add(newTask);
         items.addItem(newTask);
+        return newTask.getID();
     }
 
     /**
@@ -172,9 +176,32 @@ public class BigTask implements IBigTask {
      */
     @Override
     public void removeSubTask(String subTaskID) {
-        subTaskMap.remove(subTaskID);
+        subTaskList.remove(subTaskID);
         items.removeItem(subTaskID);
     }
+
+    @Override
+    public ArrayList<ITask> getCompletedSubTasks(){
+        for (ITask task: subTaskList){
+            if (task.getStatus()){
+                compeletedSubTasks.add(task);
+            }
+        }
+        return compeletedSubTasks;
+    }
+
+    @Override
+    public ArrayList<ITask> getUncompletedSubTasks() {
+        ArrayList<ITask> uncompletedSubTask = new ArrayList<>();
+        for (ITask task: subTaskList){
+            if (!task.getStatus()){
+                uncompletedSubTask.add(task);
+            }
+        }
+        return uncompletedSubTask;
+    }
+
+
 
     /**
      * Gets the map of subtasks in the big task.
@@ -182,7 +209,7 @@ public class BigTask implements IBigTask {
      * @return The map of subtasks in the big task.
      */
     @Override
-    public HashMap<String, ITask> getSubTaskMap() {
-        return subTaskMap;
+    public ArrayList<ITask> getSubTaskList() {
+        return subTaskList;
     }
 }

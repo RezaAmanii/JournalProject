@@ -2,13 +2,14 @@ package org.group12.model.todo;
 
 import org.group12.model.INameable;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public interface ITodoCollection extends INameable {
     // Methods for editing the TaskLists
-    void addTaskList(String title);
+    String addTaskList(String title);
 
     void removeTaskList(String listID);
 
-    HashMap<String, ITaskList> getTaskListMap();
+    ArrayList<ITaskList> getTaskList();
 }
