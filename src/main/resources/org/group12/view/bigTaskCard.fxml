@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="65.0" prefWidth="336.0" style="-fx-background-color: yellow;" type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <CheckBox layoutX="22.0" layoutY="22.0" mnemonicParsing="false" />
+      <Label alignment="CENTER" layoutX="79.0" layoutY="13.0" prefHeight="17.0" prefWidth="177.0" text="bigTask title" />
+      <Label layoutX="127.0" layoutY="30.0" prefHeight="17.0" prefWidth="81.0" text="duedate" />
+   </children>
+</fx:root>
