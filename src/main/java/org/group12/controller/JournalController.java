@@ -16,7 +16,6 @@ import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
 import org.group12.view.JournalView;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -90,11 +89,11 @@ public class JournalController implements IController {
     public void initialize() {
         createBindings();
 
-        entryDate.valueProperty().setValue(LocalDate.now());
+        entryDate.valueProperty().setValue(LocalDateTime.now());
     }
 
     private void createBindings() {
-        journalEntry = new SimpleObjectProperty<>(journalModel.getEntryForDate(LocalDate.now()));
+        journalEntry = new SimpleObjectProperty<>(journalModel.getEntryForDate(LocalDateTime.now()));
         journalEntry.bind(entryDate.valueProperty().map(journalModel::getEntryForDate));
         journalEntry.addListener((observable, oldValue, newValue) -> content.setText(newValue.getContent()));
 
