@@ -6,13 +6,10 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import org.group12.controller.TaskController;
-import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 public class BigTaskCard extends AnchorPane {
     // TODO: hur ska items hanteras? här, I en todoPage?, ska vi casta här, ska det vara INameable?
@@ -66,28 +63,32 @@ public class BigTaskCard extends AnchorPane {
     // TODO: protection måste läggas till
     public void update() {
         // get the BigTask to get the information from
-        IBigTask bigTask = (IBigTask) items.getItem(ID);
+        try {
+            IBigTask bigTask = (IBigTask) items.getItem(ID);
+            // Set the Title
+            String title = bigTask.getTitle();
+            titleLabel.setText(title);
 
-        // Set the Title
-        String title = bigTask.getTitle();
-        titleLabel.setText(title);
+            // TODO: hur ska datumet formateras?
+            // Set the due date
+            String dueDate = bigTask.getDueDate().toString();
+            dueDateLabel.setText(dueDate);
 
-        // TODO: hur ska datumet formateras?
-        // Set the due date
-        String dueDate = bigTask.getDueDate().toString();
-        dueDateLabel.setText(dueDate);
+            // Set the status
+            boolean isCompleted = bigTask.getStatus();
+            statusCheckBox.setSelected(isCompleted);
 
-        // Set the status
-        boolean isCompleted = bigTask.getStatus();
-        statusCheckBox.setSelected(isCompleted);
-
-        // Set the if favourite or not
-        boolean isFavourite = bigTask.isFavourite();
-        // TODO: what happens where depends on Jamals implementation
-        if (isFavourite) {
-            //favouriteImageView.
-        } else {
-            //favouriteImageView.
+            // Set the if favourite or not
+            boolean isFavourite = bigTask.isFavourite();
+            // TODO: what happens here depends on Jamals implementation
+            if (isFavourite) {
+                //favouriteImageView.
+            } else {
+                //favouriteImageView.
+            }
+        } catch (ClassCastException e) {
+            // If the cast fails, print an error message
+            System.out.println("Item with ID " + ID + " is not a IBigTask!");
         }
     }
 

@@ -1,36 +1,70 @@
 package org.group12.view;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import org.group12.model.ItemsSet;
+import org.group12.model.todo.ITask;
 
 import java.io.IOException;
 
 public class TaskCard extends AnchorPane {
+    // TODO: hur ska items hanteras? här, I en todoPage?, ska vi casta här, ska det vara INameable?
+    private final String ID;
+    private final ItemsSet items;
+    //private final TaskController taskController;
     @FXML
-    private Label taskTitleLabel;
-    private String ID;
+    private Label titleLabel;
+    @FXML
+    private CheckBox statusCheckBox;
 
-    public TaskCard(String title, String ID){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("task_card.fxml"));
+    // TODO: lägg till TaskController i konstruktorn
+    public TaskCard(String ID, ItemsSet items){
+        this.items = items;
+        this.ID = ID;
+        //this.taskController = taskController;
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("taskCard.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
-        this.ID = ID;
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
 
-        taskTitleLabel.setText(title);
+        //update();
     }
 
-    public void taskCheckBoxClick(ActionEvent actionEvent) {
+    // TODO: hur funkar taskController?
+    @FXML
+    private void checkBoxToggled() {
+        boolean isSelected = statusCheckBox.isSelected();
+        //taskController.handleSetStatus(ID, isSelected);
     }
 
-    public String getID(ActionEvent actionEvent) {
-        return this.ID;
+    // TODO: protection måste läggas till
+    public void update() {
+        // get the BigTask to get the information from
+        try {
+            ITask task = (ITask) items.getItem(ID);
+            // Set the Title
+            String title = task.getTitle();
+            titleLabel.setText(title);
+
+            // Set the status
+            boolean isCompleted = task.getStatus();
+            statusCheckBox.setSelected(isCompleted);
+
+        } catch (ClassCastException e) {
+            // If the cast fails, print an error message
+            System.out.println("Item with ID " + ID + " is not a ITask!");
+        }
+    }
+
+    public String getID() {
+        return ID;
     }
 }

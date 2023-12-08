@@ -13,9 +13,7 @@ import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.TaskListController;
 import org.group12.model.Items;
 import org.group12.model.toDoSubTask.Globals;
-import org.group12.model.todo.BigTask;
-import org.group12.model.todo.IBigTask;
-import org.group12.model.todo.ITaskList;
+import org.group12.model.todo.*;
 import org.group12.view.BigTaskCard;
 
 import java.io.IOException;
@@ -61,7 +59,7 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
         refreshSidePanelInfo();
 
         // TODO test
-        IBigTask testTask = new BigTask("hejpådig", "1111", Items.getInstance());
+        ITask testTask = new Task("hejpådig", "1111");
         Items.getInstance().addItem(testTask);
         ongoingTasksVbox.getChildren().add(new BigTaskCard("1111", Items.getInstance()));
     }
