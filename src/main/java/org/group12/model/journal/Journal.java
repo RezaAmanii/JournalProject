@@ -13,9 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import java.time.LocalDate;
-import java.util.*;
-
 /**
  * Represents a Journal with a list of entries and associated functionality.
  */
@@ -145,8 +142,13 @@ public class Journal implements INameable, IObservable{
     public List<JournalEntry> getEntries() {
         return new ArrayList<>(entries.values());
     }
-    public JournalEntry getEntryForDate(LocalDate date) {
-        return entries.getOrDefault(date, JournalEntryFactory.getInstance().createJournalEntryForDate(date));
+
+    public JournalEntry getEntryForDate(LocalDateTime date) {
+        return entries.getOrDefault(date, createJournalEntryForDate(date));
+    }
+
+    private JournalEntry createJournalEntryForDate(LocalDateTime date) {
+        return entryFactory.createJournalEntryForDate(date);
     }
     public JournalEntry getEntryByDate(LocalDate date){
         return entries.get(date);
