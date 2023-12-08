@@ -1,4 +1,4 @@
-package org.group12.view.cards;
+package org.group12.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import org.group12.controller.TaskController;
 import org.group12.model.INameable;
+import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
 
 import java.io.IOException;
@@ -16,8 +17,8 @@ import java.util.HashMap;
 public class BigTaskCard extends AnchorPane {
     // TODO: hur ska items hanteras? här, I en todoPage?, ska vi casta här, ska det vara INameable?
     private final String ID;
-    private final HashMap<String, INameable> items;
-    private final TaskController taskController;
+    private final ItemsSet items;
+    //private final TaskController taskController;
     @FXML
     private Label titleLabel;
     @FXML
@@ -27,10 +28,11 @@ public class BigTaskCard extends AnchorPane {
     @FXML
     private ImageView favouriteImageView;
 
-    public BigTaskCard(String ID, HashMap<String, INameable> items, TaskController taskController){
+    // TODO: lägg till TaskController i konstruktorn
+    public BigTaskCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
-        this.taskController = taskController;
+        //this.taskController = taskController;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("bigTaskCard.fxml"));
         fxmlLoader.setRoot(this);
@@ -40,7 +42,8 @@ public class BigTaskCard extends AnchorPane {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-        update();
+
+        //update();
     }
 
     @FXML
@@ -63,7 +66,7 @@ public class BigTaskCard extends AnchorPane {
     // TODO: protection måste läggas till
     public void update() {
         // get the BigTask to get the information from
-        IBigTask bigTask = (IBigTask) items.get(ID);
+        IBigTask bigTask = (IBigTask) items.getItem(ID);
 
         // Set the Title
         String title = bigTask.getTitle();
