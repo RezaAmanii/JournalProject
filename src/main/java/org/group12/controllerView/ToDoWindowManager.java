@@ -26,7 +26,7 @@ import java.util.ResourceBundle;
 import static org.group12.view.TaskListView.*;
 
 
-public class ToDoPageController implements Initializable, ITaskListObserver {
+public class ToDoWindowManager implements Initializable, ITaskListObserver {
 
     // FXML components
     public VBox fixedListsVbox;

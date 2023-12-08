@@ -37,7 +37,7 @@ public class JournalController implements IController {
     private TextArea content;
 
     @FXML
-    private Date // det ska vara datepcicker, datepicker är den delen som kan öppna en ruta som är en mini kalendar där man kan välj datum
+    private DatePicker entryDate;
 
     @FXML
     private Label entryDateLabel;

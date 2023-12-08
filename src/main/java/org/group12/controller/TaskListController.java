@@ -48,7 +48,7 @@ public class TaskListController implements IController, IObservable {
 
 
     public void handlerRemoveToDoList(ITaskList taskList) {
-        todoCollection.removeTaskList(taskList.getID());
+        todoCollection.removeTaskList(taskList);
     }
 
 

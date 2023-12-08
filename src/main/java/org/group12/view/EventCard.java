@@ -3,29 +3,35 @@ package org.group12.view;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import org.group12.controller.CalendarController;
 import org.group12.controller.JournalController;
+import org.group12.model.Calendar.Calendar;
+import org.group12.model.Calendar.Event;
 import org.group12.model.ItemsSet;
 import org.group12.model.journal.JournalEntry;
 
 import java.io.IOException;
 
-public class EventCard extends An {
+public class EventCard extends AnchorPane {
     // TODO: hur ska items hanteras? här, I en todoPage?, ska vi casta här, ska det vara INameable?
     private final String ID;
     private final ItemsSet items;
-    private final JournalController controller;
+    private final CalendarController controller;
+    private final Event event;
     @FXML
     private Label titleLabel;
     @FXML
     private Label contentLabel;
 
     // TODO: lägg till TaskController i konstruktorn
-    public EventCard(String ID, JournalController controller,ItemsSet items){
+    public EventCard(String ID, CalendarController controller,ItemsSet items){
         this.items = items;
         this.ID = ID;
-        this.controller = new JournalController(); // TODO: Gör om till getInstacne()
+        this.controller = new CalendarController(); // TODO: Gör om till getInstacne()
+        this.event = (Event) items.getItem(ID);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("JournalCard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("EventCard.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -36,14 +42,18 @@ public class EventCard extends An {
 
         update();
     }
-
     @FXML
-    private void cardClicked() {
-        // controller.edittext
+    private void descriptionClicked() {
+
+        // controller.editdescription(event)
     }
     @FXML
     private void titleClicked(){
         // controller.edittitle
+    }
+    @FXML
+    private void deleteEvent(){
+        // controller.deleteEvent(event)
     }
 
 
