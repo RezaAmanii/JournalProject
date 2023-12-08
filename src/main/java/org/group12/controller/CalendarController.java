@@ -41,7 +41,7 @@ public class CalendarController implements IController {
                 LocalDateTime endOfEvent = event.getTimeFrame().getValue();
 
                 if(validateEventTiming(startOfEvent, endOfEvent)){
-                    calenderModel.addEvent(event.getTitle(), event.getDescription(), event.getDateOfEvent(), event.getTimeFrame());
+                    calenderModel.addEvent(event.getTitle(), event.getDescription(), event.getTimeFrame());
                 } else {
                     //calenderView.displayErrorMessage("Invalid time frame, start or duration is invalid.");
                 }

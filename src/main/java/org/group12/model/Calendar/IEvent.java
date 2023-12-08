@@ -1,16 +1,15 @@
 package org.group12.model.Calendar;
 
 import javafx.util.Pair;
+import org.group12.model.*;
 
 import java.time.LocalDateTime;
 
-public interface IEvent {
-    String getID();
-    LocalDateTime getDateOfEvent();
+public interface IEvent extends INameable, IDateCreated, IDescription, IRecurrent, ITagable {
 
     Pair<LocalDateTime, LocalDateTime> getTimeFrame();
-
-    boolean getRecurrence();
+    LocalDateTime getDateOfEvent();
+    void setTimeFrame(Pair<LocalDateTime, LocalDateTime> timeFrame);
 
 
 }
