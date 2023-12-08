@@ -4,9 +4,18 @@ package org.group12.model.journal;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.model.INameable;
+import org.group12.model.ItemsSet;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import java.time.LocalDate;
+import java.util.*;
+
 /**
  * Represents a Journal with a list of entries and associated functionality.
  */
@@ -16,19 +25,24 @@ public class Journal implements INameable, IObservable{
     private String title;
     private final String ID;
     private List<IPlanITObserver> observers;
+    private final ItemsSet items;
+    private final Map<LocalDate,JournalEntry> entries;
     /**
      * Constructs a Journal with the given ID, title, and entry factory.
      *
      * @param ID            the ID of the journal
      * @param title         the title of the journal
      * @param entryFactory  the factory for creating journal entries
+     * @param items         the items set to add the journal entries to
      */
-    public Journal(String ID, String title, IJournalEntryFactory entryFactory) {
+    public Journal(String ID, String title, IJournalEntryFactory entryFactory, ItemsSet items) {
         this.entryList = new ArrayList<>();
         this.entryFactory = entryFactory;
         this.title = title;
         this.ID = ID;
         this.observers = new ArrayList<>();
+        this.items = items;
+        this.entries = new HashMap<>();
     }
 
 
@@ -39,14 +53,15 @@ public class Journal implements INameable, IObservable{
      * @param title   the title for the new journal entry
      * @param content the content for the new journal entry
      */
-    public void addEntry(String title, String content){
-        JournalEntry newEntry = entryFactory.createJournalEntry(title, content);
-        for (IPlanITObserver observer : observers) {
-            newEntry.addObserver(observer);
-        }
-        entryList.add(newEntry);
-        notifyObservers();
-    }
+//    public void addEntry(String title, String content){
+//        JournalEntry newEntry = entryFactory.createJournalEntry(title, content);
+//        for (IPlanITObserver observer : observers) {
+//            newEntry.addObserver(observer);
+//        }
+//        entryList.add(newEntry);
+//        items.addItem(newEntry);
+//        notifyObservers();
+//    }
 
     /**
      * Removes the specified entry from the journal.
@@ -56,6 +71,7 @@ public class Journal implements INameable, IObservable{
      */
     public void removeEntry(JournalEntry entry){
         entryList.remove(entry);
+        items.removeItem(entry.getID());
         notifyObservers();
     }
 
@@ -91,9 +107,9 @@ public class Journal implements INameable, IObservable{
      *
      * @return a list of entries in the journal
      */
-    public List<JournalEntry> getEntries() {
-        return entryList;
-    }
+//    public List<JournalEntry> getEntries() {
+//        return entryList;
+//    }
 
     /**
      * Adds an observer to the journal.
@@ -123,4 +139,34 @@ public class Journal implements INameable, IObservable{
         observers.forEach(IPlanITObserver::update);
 
     }
+
+    // ------- parts from jamal ---------------
+
+    public List<JournalEntry> getEntries() {
+        return new ArrayList<>(entries.values());
+    }
+    public JournalEntry getEntryForDate(LocalDate date) {
+        return entries.getOrDefault(date, JournalEntryFactory.getInstance().createJournalEntryForDate(date));
+    }
+    public JournalEntry getEntryByDate(LocalDate date){
+        return entries.get(date);
+    }
+
+    public void addEntryForDate(LocalDate date, JournalEntry entry) {
+        entries.put(date, entry);
+    }
+    public void removeEntry(LocalDate date){
+        entries.remove(date);
+        notifyObservers();
+    }
+    public void addEntry(String title, String content){
+        JournalEntry newEntry = entryFactory.createJournalEntry(title, content);
+        for (IPlanITObserver observer : observers) {
+            newEntry.addObserver(observer);
+        }
+        entries.put(LocalDate.now(), newEntry);
+        items.addItem(newEntry);
+        notifyObservers();
+    }
+
 }

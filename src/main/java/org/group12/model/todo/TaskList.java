@@ -4,6 +4,7 @@ import org.group12.model.ItemsSet;
 import org.group12.model.todo.factories.BigTaskFactory;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -12,7 +13,7 @@ import java.util.HashMap;
 public class TaskList implements ITaskList {
     private String title;
     private LocalDateTime dateCreated;
-    private final HashMap<String, IBigTask> bigTaskMap;
+    private final ArrayList<IBigTask> bigTaskList;
     private final String ID;
     private final BigTaskFactory bigTaskFactory;
     private final ItemsSet items;
@@ -24,7 +25,7 @@ public class TaskList implements ITaskList {
      * @param ID    The ID of the task list.
      */
     public TaskList(String title, String ID, ItemsSet items) {
-        this.bigTaskMap = new HashMap<>();
+        this.bigTaskList = new ArrayList<>();
         this.bigTaskFactory = new BigTaskFactory(items);
         this.ID = ID;
         setTitle(title);
@@ -78,10 +79,11 @@ public class TaskList implements ITaskList {
      * @param title The title of the big task.
      */
     @Override
-    public void addBigTask(String title) {
+    public String addBigTask(String title) {
         IBigTask newTask = bigTaskFactory.createBigTask(title);
-        bigTaskMap.put(newTask.getID(), newTask);
+        bigTaskList.add(newTask);
         items.addItem(newTask);
+        return newTask.getID();
     }
 
     /**
@@ -91,7 +93,8 @@ public class TaskList implements ITaskList {
      */
     @Override
     public void removeBigTask(String ID) {
-        bigTaskMap.remove(ID);
+        IBigTask bigTask = (IBigTask) items.getItem(ID);
+        bigTaskList.remove(bigTask);
         items.removeItem(ID);
     }
 
@@ -101,7 +104,7 @@ public class TaskList implements ITaskList {
      * @return The map of big tasks in the task list.
      */
     @Override
-    public HashMap<String, IBigTask> getBigTaskMap() {
-        return bigTaskMap;
+    public ArrayList<IBigTask> getBigTaskList() {
+        return bigTaskList;
     }
 }

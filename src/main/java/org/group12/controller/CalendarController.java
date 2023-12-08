@@ -2,6 +2,7 @@ package org.group12.controller;
 
 import org.group12.model.Calendar.Calendar;
 import org.group12.model.Calendar.Event;
+import org.group12.model.Container;
 import org.group12.model.INameable;
 import org.group12.model.Items;
 import org.group12.view.CalendarView;
@@ -14,16 +15,17 @@ import org.group12.model.Items;
 public class CalendarController implements IController {
 
     private Calendar calenderModel;
+    private Container container;
+
     private CalendarView calenderView;
 //    private HashMap<String, INameable> itemMap;
-    private Items itemMap;
+    private Items itemMap = Items.getInstance();
 
 
-    public CalendarController(Calendar calenderModel, CalendarView calendarView, Items itemMap){
-        this.calenderModel = calenderModel;
-        this.calenderView = calendarView;
-        this.itemMap = itemMap;
-        //calenderModel.addObserver(calenderView);
+    public CalendarController(){
+        this.calenderModel = container.getCalender();
+        this.itemMap = Items.getInstance();
+
     }
 
     /**
@@ -39,7 +41,7 @@ public class CalendarController implements IController {
                 LocalDateTime endOfEvent = event.getTimeFrame().getValue();
 
                 if(validateEventTiming(startOfEvent, endOfEvent)){
-                    calenderModel.addEvent(event.getTitle(), event.getDescription(), event.getDateOfEvent(), event.getTimeFrame());
+                    calenderModel.addEvent(event.getTitle(), event.getDescription(), event.getTimeFrame());
                 } else {
                     //calenderView.displayErrorMessage("Invalid time frame, start or duration is invalid.");
                 }

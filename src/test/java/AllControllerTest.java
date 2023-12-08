@@ -23,7 +23,7 @@ public class AllControllerTest {
         Calendar calenderModel = new Calendar();
 
         assertDoesNotThrow(() ->
-                calenderModel.addEvent("MyTitle", "School Project", LocalDateTime.now(),
+                calenderModel.addEvent("MyTitle", "School Project",
                         new Pair<>(LocalDateTime.now(), LocalDateTime.now().plusHours(1))));
     }
 
