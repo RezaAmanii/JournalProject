@@ -180,6 +180,8 @@ public class ToDoPageController implements Initializable, ITaskListObserver {
 
     public GridPane createNewTaskObject(IBigTask task) {
 
+
+
         GridPane newTaskPane = createTaskPane();
         Label deadLineLabel = createDeadlineLabel(task);
         ImageView imageViewImportant = createImportantImageView(task);

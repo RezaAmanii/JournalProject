@@ -107,9 +107,9 @@ public class Journal implements INameable, IObservable{
      *
      * @return a list of entries in the journal
      */
-    public List<JournalEntry> getEntries() {
-        return entryList;
-    }
+//    public List<JournalEntry> getEntries() {
+//        return entryList;
+//    }
 
     /**
      * Adds an observer to the journal.
@@ -149,7 +149,7 @@ public class Journal implements INameable, IObservable{
         return entries.getOrDefault(date, JournalEntryFactory.getInstance().createJournalEntryForDate(date));
     }
     public JournalEntry getEntryByDate(LocalDate date){
-        return entries
+        return entries.get(date);
     }
 
     public void addEntryForDate(LocalDate date, JournalEntry entry) {

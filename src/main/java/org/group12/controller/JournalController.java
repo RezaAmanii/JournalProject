@@ -144,7 +144,8 @@ public class JournalController implements IController {
      */
     public void updateJournalEntry(JournalEntry journalEntry, String newContent){
         if(journalEntry != null && !newContent.isEmpty()){
-            entryModel.updateContent(newContent);
+//            entryModel.updateContent(newContent);
+            this.journalEntry.get().updateContent(newContent);
         } else {
             //journalView.displayErrorMessage("Invalid input.");
         }
