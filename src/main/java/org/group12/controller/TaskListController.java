@@ -26,11 +26,6 @@ public class TaskListController implements IController, IObservable {
         this.items = Items.getInstance();
         this.todoCollection = Container.getInstance().getTodoCollection();
         this.taskListView = new TaskListView();
-
-    }
-
-    public Container getContainer() {
-        return this.container;
     }
 
     public static TaskListController getInstance() {
@@ -40,20 +35,18 @@ public class TaskListController implements IController, IObservable {
         return instance;
     }
 
+    public Container getContainer() {
+        return this.container;
+    }
+
 
     // To-do lists methods
     public String handlerAddToDoList(String title) {
         return todoCollection.addTaskList(title);
     }
 
-
     public void handlerRemoveToDoList(ITaskList taskList) {
         todoCollection.removeTaskList(taskList);
-    }
-
-
-    public String getListsTitle() {
-        return todoCollection.getTitle();
     }
 
     public void changeListTitle(String TaskListID, String newTitle) {
@@ -70,22 +63,9 @@ public class TaskListController implements IController, IObservable {
         }
     }
 
-
-
     public ITaskList getTaskListByID(String taskListID){
         return (ITaskList) items.getItem(taskListID);
     }
-
-    public IBigTask getBigTaskByID(String bigTaskID){
-        return (IBigTask) items.getItem(bigTaskID);
-    }
-
-
-    public ITask getSubTaskByID(String taskID){
-        return (ITask) items.getItem(taskID);
-    }
-
-
 
     public ITaskList getTaskListByTitle(String title){
         for(ITaskList taskList : todoCollection.getTaskList()){
@@ -96,6 +76,32 @@ public class TaskListController implements IController, IObservable {
         return null;
     }
 
+    public ArrayList<ITaskList> fetchAllTaskLists(){
+        return todoCollection.getTaskList();
+    }
+
+
+
+    // BigTask methods (Needs to be moved out)
+
+    public IBigTask getBigTaskByID(String bigTaskID){
+        return (IBigTask) items.getItem(bigTaskID);
+    }
+
+    public ArrayList<IBigTask> fetchAllBigTasks(String taskListID){
+        ITaskList taskList = (ITaskList) items.getItem(taskListID);
+        return taskList.getBigTaskList();
+    }
+
+
+    
+
+
+    // Task methods (Need to be moved out)
+    public ITask getSubTaskByID(String taskID){
+        return (ITask) items.getItem(taskID);
+    }
+
     public IBigTask getTaskByID(String taskID){
         return (IBigTask) items.getItem(taskID);
     }
@@ -104,21 +110,15 @@ public class TaskListController implements IController, IObservable {
         items.removeItem(ID);
     }
 
-    public ArrayList<ITaskList> fetchAllTaskLists(){
-        return todoCollection.getTaskList();
-    }
-    public ArrayList<IBigTask> fetchAllBigTasks(String taskListID){
-        ITaskList taskList = (ITaskList) items.getItem(taskListID);
-        return taskList.getBigTaskList();
-    }
 
+
+    // Observer methods
 
     @Override
     public void addObserver(IPlanITObserver observer) {
         if(!observers.contains(observer)){
             observers.add(observer);
         }
-
     }
 
     @Override

@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 import java.util.*;
 
-import static org.group12.controllerView.ToDoPageController.*;
+import static org.group12.controllerView.ToDoWindowManager.*;
 
 /**
  * Controller class for managing subtasks in the application.
@@ -33,7 +33,7 @@ public class SubTasksController implements Initializable {
 
     static public ITask selectedSubTask = null;
     
-
+    // FXMl Components
     public Label taskNameLBL;
     public VBox subTasksPane;
     public AnchorPane deletePane;
