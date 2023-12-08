@@ -45,7 +45,7 @@ public class Calendar implements IObservable, ICalendar {
         eventList.add(event);
         this.isEmpty = false;
         notifyObservers();
-        items.addItem(newEvent);
+        items.addItem(event);
 //        notifyObservers();
     }
 
