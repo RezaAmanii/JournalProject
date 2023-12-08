@@ -2,24 +2,82 @@ package org.group12.controller;
 
 import org.group12.model.Container;
 import org.group12.model.INameable;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder;
+import javafx.beans.property.adapter.JavaBeanStringPropertyBuilder;
+import javafx.beans.value.ObservableObjectValue;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import org.group12.model.Container;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
 import org.group12.view.JournalView;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.group12.model.Items;
+
+import static java.time.format.DateTimeFormatter.ISO_DATE;
 
 public class JournalController implements IController {
 
     private Journal journalModel;
     private Container container;
     private JournalView journalView;
+    private ObjectProperty<JournalEntry> journalEntry;
 
 //    private HashMap<String, INameable> itemMap;
     private Items itemMap;
+
+    @FXML
+    private TextArea content;
+
+    @FXML
+    private DatePicker entryDate;
+
+    @FXML
+    private Label entryDateLabel;
+
+    @FXML
+    private Label prevDayBtn;
+
+    @FXML
+    void onAddEntry(MouseEvent event) {
+        journalEntry.get().updateContent(content.getText());
+        journalModel.addEntryForDate(entryDate.getValue(), journalEntry.get());
+    }
+
+    @FXML
+    void onDeleteClk(MouseEvent event) {
+        var alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Delete");
+        alert.setHeaderText("Confirm");
+        alert.setContentText("Confirm deleting journal?");
+
+        var option = alert.showAndWait().orElse(ButtonType.CANCEL);
+        if(ButtonType.OK.equals(option)) {
+            journalModel.removeEntry(entryDate.getValue());
+            onPrevDayClk(event);
+        }
+    }
+
+    @FXML
+    void onNextDayClk(MouseEvent event) {
+        var currentVal = entryDate.valueProperty().get();
+        entryDate.valueProperty().set(currentVal.plusDays(1));
+    }
+
+    @FXML
+    void onPrevDayClk(MouseEvent event) {
+        var currentVal = entryDate.valueProperty().get();
+        entryDate.valueProperty().set(currentVal.minusDays(1));
+    }
+
 
 
     public JournalController(){
@@ -28,8 +86,23 @@ public class JournalController implements IController {
         //journalModel.addObserver(journalView);
     }
 
+    @FXML
+    public void initialize() {
+        createBindings();
 
-    public void handleButtonClick(){}
+        entryDate.valueProperty().setValue(LocalDate.now());
+    }
+
+    private void createBindings() {
+        journalEntry = new SimpleObjectProperty<>(journalModel.getEntryForDate(LocalDate.now()));
+        journalEntry.bind(entryDate.valueProperty().map(journalModel::getEntryForDate));
+        journalEntry.addListener((observable, oldValue, newValue) -> content.setText(newValue.getContent()));
+
+        entryDateLabel.textProperty()
+                .bind(entryDate.valueProperty()
+                        .map(date -> date.format(ISO_DATE)));
+    }
+
 
     /**
      * Adds a new journal entry to the journal model if the input is valid.
@@ -71,7 +144,7 @@ public class JournalController implements IController {
      */
     public void updateJournalEntry(JournalEntry journalEntry, String newContent){
         if(journalEntry != null && !newContent.isEmpty()){
-            journalEntry.updateContent(newContent);
+            entryModel.updateContent(newContent);
         } else {
             //journalView.displayErrorMessage("Invalid input.");
         }
@@ -113,4 +186,8 @@ public class JournalController implements IController {
         return journalEntry != null && !journalEntry.getContent().isEmpty() && !journalEntry.getTitle().isEmpty();
     }
 
-}
+
+
+
+
+    }
