@@ -53,6 +53,14 @@ public class BigTaskCard extends AnchorPane {
 
     }
 
+    // TODO: method name might be changed to better fit the actual way the title is changed
+    @FXML
+    private void titleClicked() {
+        // here should be the code to get the new title
+        //String newTitle =
+        //taskListController.changeListTitle(newTitle);
+    }
+
     // TODO: hur funkar taskController?
     @FXML
     private void checkBoxToggled() {
