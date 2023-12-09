@@ -80,6 +80,19 @@ public class TaskListController implements IController, IObservable {
         return todoCollection.getTaskList();
     }
 
+    public String getTaskListTitle(String taskListID){
+        return items.getItem(taskListID).getTitle();
+    }
+
+    public String getTaskListDateCreated(String taskListID){
+        //return items.getItem(taskListID).getDateCreated().toString();
+        return "9/12";
+    }
+
+    public void renameTaskList(String taskListID, String newTitle){
+        items.getItem(taskListID).setTitle(newTitle);
+    }
+
 
 
     // BigTask methods (Needs to be moved out)
