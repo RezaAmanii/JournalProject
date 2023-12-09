@@ -15,6 +15,7 @@ import org.group12.model.Items;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.todo.*;
 import org.group12.view.BigTaskCard;
+import org.group12.view.TaskListCard;
 
 import java.io.IOException;
 import java.net.URL;
@@ -137,6 +138,8 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
         String newListID = taskListController.handlerAddToDoList(title);
         ITaskList newList = taskListController.getTaskListByID(newListID);
 
+
+
         GridPane listToAppend = createNewListObject(newList);
         appendableListVbox.getChildren().add(listToAppend);
     }
@@ -219,8 +222,10 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
         String taskID = taskListController.getTaskListByID(selectedList.getID()).addBigTask(title);
         IBigTask task = taskListController.getBigTaskByID(taskID);
 
-        GridPane newTask = createNewTaskObject(task);
-        ongoingTasksVbox.getChildren().add(newTask);
+        BigTaskCard bigTaskCard = new BigTaskCard(task.getID(), Items.getInstance());
+
+        //GridPane newTask = createNewTaskObject(task);
+        ongoingTasksVbox.getChildren().add(bigTaskCard);
 
     }
 

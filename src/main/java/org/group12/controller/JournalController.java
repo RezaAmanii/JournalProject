@@ -84,7 +84,7 @@ public class JournalController implements IController {
         this.journalModel = container.getJournal();
         //journalModel.addObserver(journalView);
     }
-
+/*
     @FXML
     public void initialize() {
         createBindings();
@@ -101,6 +101,8 @@ public class JournalController implements IController {
                 .bind(entryDate.valueProperty()
                         .map(date -> date.format(ISO_DATE)));
     }
+
+ */
 
 
     /**

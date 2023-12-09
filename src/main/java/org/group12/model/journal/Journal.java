@@ -138,7 +138,7 @@ public class Journal implements INameable, IObservable{
     }
 
     // ------- parts from jamal ---------------
-
+/*
     public List<JournalEntry> getEntries() {
         return new ArrayList<>(entries.values());
     }
@@ -147,9 +147,13 @@ public class Journal implements INameable, IObservable{
         return entries.getOrDefault(date, createJournalEntryForDate(date));
     }
 
+ */
+    /*
     private JournalEntry createJournalEntryForDate(LocalDateTime date) {
         return entryFactory.createJournalEntryForDate(date);
     }
+
+     */
     public JournalEntry getEntryByDate(LocalDate date){
         return entries.get(date);
     }

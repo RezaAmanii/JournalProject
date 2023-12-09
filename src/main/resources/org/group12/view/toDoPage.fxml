@@ -13,7 +13,7 @@
 <BorderPane fx:id="mainWindowBorder"
             xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.group12.controllerView.ToDoPageController" prefHeight="800.0" prefWidth="800.0">
+            fx:controller="org.group12.controllerView.ToDoWindowManager" prefHeight="800.0" prefWidth="800.0">
     <top>
         <BorderPane prefHeight="64.0" prefWidth="659.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
             <BorderPane.margin>

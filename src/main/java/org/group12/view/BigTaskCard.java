@@ -6,8 +6,12 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import org.group12.controller.BigTaskController;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
+import javafx.geometry.Insets;
+
 
 import java.io.IOException;
 
@@ -15,7 +19,7 @@ public class BigTaskCard extends AnchorPane {
     // TODO: hur ska items hanteras? här, I en todoPage?, ska vi casta här, ska det vara INameable?
     private final String ID;
     private final ItemsSet items;
-    //private final TaskController taskController;
+    private final BigTaskController bigTaskController = BigTaskController.getInstance();
     @FXML
     private Label titleLabel;
     @FXML
@@ -29,6 +33,8 @@ public class BigTaskCard extends AnchorPane {
     public BigTaskCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
+
+
         //this.taskController = taskController;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("bigTaskCard.fxml"));
@@ -40,7 +46,18 @@ public class BigTaskCard extends AnchorPane {
             throw new RuntimeException(exception);
         }
 
+        double paddingValue = 10.0;
+        VBox.setMargin(this, new Insets(paddingValue));
+
         //update();
+    }
+
+    @FXML
+    private void initialize(){
+        this.titleLabel.setText(items.getItem(ID).getTitle());
+        //this.statusCheckBox.setSelected(items.getItem(ID).getStatus());
+        //this.dueDateLabel.setText(items.getItem(ID).getDueDate().toString());
+
     }
 
     @FXML
