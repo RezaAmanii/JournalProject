@@ -3,7 +3,7 @@ package org.group12.model.Calendar;
 import javafx.util.Pair;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
-import org.group12.model.*;
+import org.group12.model.Calendar.interfaces.IEvent;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

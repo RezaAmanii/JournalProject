@@ -14,7 +14,7 @@ import org.group12.controller.TaskListController;
 import org.group12.model.Items;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.todo.*;
-import org.group12.view.BigTaskCard;
+import org.group12.view.cards.BigTaskCard;
 
 import java.io.IOException;
 import java.net.URL;
