@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.group12.controller.BigTaskController;
+import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
 import javafx.geometry.Insets;
@@ -16,10 +17,15 @@ import javafx.geometry.Insets;
 import java.io.IOException;
 
 public class BigTaskCard extends AnchorPane {
-    // TODO: hur ska items hanteras? här, I en todoPage?, ska vi casta här, ska det vara INameable?
+
+    // Class attributes
     private final String ID;
     private final ItemsSet items;
+
+    // Controller
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
+
+    // FXML components
     @FXML
     private Label titleLabel;
     @FXML
@@ -29,13 +35,11 @@ public class BigTaskCard extends AnchorPane {
     @FXML
     private ImageView favouriteImageView;
 
-    // TODO: lägg till TaskController i konstruktorn
+
+    // Constructor
     public BigTaskCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
-
-
-        //this.taskController = taskController;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("bigTaskCard.fxml"));
         fxmlLoader.setRoot(this);
@@ -46,18 +50,24 @@ public class BigTaskCard extends AnchorPane {
             throw new RuntimeException(exception);
         }
 
+        // Make space between each cards
         double paddingValue = 10.0;
         VBox.setMargin(this, new Insets(paddingValue));
 
-        //update();
+        update();
     }
 
     @FXML
     private void initialize(){
-        this.titleLabel.setText(items.getItem(ID).getTitle());
-        //this.statusCheckBox.setSelected(items.getItem(ID).getStatus());
-        //this.dueDateLabel.setText(items.getItem(ID).getDueDate().toString());
+        this.titleLabel.setText(bigTaskController.getBigTaskTitle(this.ID));
+        this.dueDateLabel.setText(bigTaskController.getBigTaskDueDate(this.ID));
+        this.statusCheckBox.setSelected(bigTaskController.getBigTaskCheckBoxStatus(this.ID));
 
+        if(favouriteImageView != null){
+            this.favouriteImageView.setVisible(bigTaskController.getBigTaskFavouriteStatus(this.ID));
+        } else{
+            System.out.println("favouriteImageView is null");
+        }
     }
 
     @FXML
@@ -85,34 +95,26 @@ public class BigTaskCard extends AnchorPane {
         //taskController.handleSetStatus(ID, isSelected);
     }
 
-    // TODO: protection måste läggas till
     public void update() {
-        // get the BigTask to get the information from
-        try {
-            IBigTask bigTask = (IBigTask) items.getItem(ID);
-            // Set the Title
-            String title = bigTask.getTitle();
-            titleLabel.setText(title);
 
-            // TODO: hur ska datumet formateras?
-            // Set the due date
-            String dueDate = bigTask.getDueDate().toString();
-            dueDateLabel.setText(dueDate);
+        try{
+            INameable item = items.getItem(this.ID);
 
-            // Set the status
-            boolean isCompleted = bigTask.getStatus();
-            statusCheckBox.setSelected(isCompleted);
+            if(item instanceof IBigTask){
+                IBigTask bigTask = (IBigTask) item;
 
-            // Set the if favourite or not
-            boolean isFavourite = bigTask.isFavourite();
-            // TODO: what happens here depends on Jamals implementation
-            if (isFavourite) {
-                //favouriteImageView.
-            } else {
-                //favouriteImageView.
+                this.titleLabel.setText(bigTaskController.getBigTaskTitle(bigTask.getID()));
+                this.dueDateLabel.setText(bigTaskController.getBigTaskDueDate(bigTask.getID()));
+                this.statusCheckBox.setSelected(bigTaskController.getBigTaskCheckBoxStatus(bigTask.getID()));
+                if(favouriteImageView != null){
+                    this.favouriteImageView.setVisible(bigTaskController.getBigTaskFavouriteStatus(bigTask.getID()));
+                } else{
+                    System.out.println("favouriteImageView is null");
+                }
+            } else{
+                System.out.println("Item with ID " + ID + " is not a IBigTask!");
             }
-        } catch (ClassCastException e) {
-            // If the cast fails, print an error message
+        } catch (ClassCastException error){
             System.out.println("Item with ID " + ID + " is not a IBigTask!");
         }
     }

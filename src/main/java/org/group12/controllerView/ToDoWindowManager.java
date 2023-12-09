@@ -59,10 +59,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
         refreshAllListVBox();
         refreshSidePanelInfo();
 
-        // TODO test
-        ITask testTask = new Task("hejpådig", "1111");
-        Items.getInstance().addItem(testTask);
-        ongoingTasksVbox.getChildren().add(new BigTaskCard("1111", Items.getInstance()));
+
     }
 
 

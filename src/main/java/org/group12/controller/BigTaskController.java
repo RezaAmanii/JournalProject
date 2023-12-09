@@ -25,13 +25,23 @@ public class BigTaskController implements IController {
 
 
 
-    private String getBigTaskTitle(IBigTask bigTask){
-        return itemsSet.getItem(bigTask.getID()).getTitle();
+    public String getBigTaskTitle(String bigTaskID){
+        return itemsSet.getItem(bigTaskID).getTitle();
     }
 
-    private String getBigTaskDueDate(IBigTask bigTask){
-        //return itemsSet.getItem(bigTask.getID()).getDueDate().toString();
-        return null;
+    public String getBigTaskDueDate(String bigTaskID){
+        //return itemsSet.getItem(bigTaskID).getDueDate();
+        return "DueDate 9/12/2023";
+    }
+
+    public boolean getBigTaskCheckBoxStatus(String bigTaskID){
+        //return itemsSet.getItem(bigTaskID).getCheckBoxStatus();
+        return false;
+    }
+
+    public boolean getBigTaskFavouriteStatus(String bigTaskID){
+        //return itemsSet.getItem(bigTaskID).getFavouriteStatus();
+        return true;
     }
 
 }
