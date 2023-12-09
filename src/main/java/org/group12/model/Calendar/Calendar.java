@@ -49,6 +49,13 @@ public class Calendar implements IObservable, ICalendar {
 //        notifyObservers();
     }
 
+    /**
+     * Adds a new event to the calendar.
+     *
+     * @param title       The title of the event.
+     * @param description The description of the event.
+     * @param timeFrame   The time frame of the event, represented as a Pair of LocalDatetimes (start and end).
+     */
     @Override
     public void addEvent(String title, String description, Pair<LocalDateTime, LocalDateTime> timeFrame) {
 
