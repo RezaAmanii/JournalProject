@@ -2,8 +2,10 @@ package org.group12.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -15,8 +17,11 @@ import javafx.geometry.Insets;
 
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class BigTaskCard extends AnchorPane {
+public class BigTaskCard extends AnchorPane implements Initializable {
 
     // Class attributes
     private final String ID;
@@ -57,8 +62,14 @@ public class BigTaskCard extends AnchorPane {
         update();
     }
 
-    @FXML
-    private void initialize(){
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initializeFields();
+        setupEventHandlers();
+        update();
+    }
+
+    private void initializeFields(){
         this.titleLabel.setText(bigTaskController.getBigTaskTitle(this.ID));
         this.dueDateLabel.setText(bigTaskController.getBigTaskDueDate(this.ID));
         this.statusCheckBox.setSelected(bigTaskController.getBigTaskCheckBoxStatus(this.ID));
@@ -70,29 +81,46 @@ public class BigTaskCard extends AnchorPane {
         }
     }
 
-    @FXML
-    private void cardClicked() {
+    private void setupEventHandlers(){
+        titleLabel.setOnMouseClicked(event -> {
+            titleClicked();
+        });
 
+        statusCheckBox.setOnMouseClicked(event -> {
+            checkBoxToggled();
+        });
+    }
+
+
+    private void setDoubleClickEvent() {
+        setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                handleDoubleClick();
+            }
+        });
+    }
+
+    @FXML
+    public String cardClicked() {
+        return this.ID;
     }
 
     @FXML
     private void imageViewClicked() {
 
+
     }
 
-    // TODO: method name might be changed to better fit the actual way the title is changed
     @FXML
-    private void titleClicked() {
-        // here should be the code to get the new title
-        //String newTitle =
-        //taskListController.changeListTitle(newTitle, ID);
+    public void titleClicked() {
+        setDoubleClickEvent();
     }
 
-    // TODO: hur funkar taskController?
+
     @FXML
     private void checkBoxToggled() {
         boolean isSelected = statusCheckBox.isSelected();
-        //taskController.handleSetStatus(ID, isSelected);
+        bigTaskController.setBigTaskCheckBoxStatus(ID, isSelected);
     }
 
     public void update() {
@@ -122,4 +150,18 @@ public class BigTaskCard extends AnchorPane {
     public String getID() {
         return ID;
     }
+
+
+    private void handleDoubleClick() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Rename Task");
+        dialog.setHeaderText("Enter new name");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(name -> {
+            bigTaskController.renameTheTask(this.ID, name);
+        });
+    }
+
+
 }

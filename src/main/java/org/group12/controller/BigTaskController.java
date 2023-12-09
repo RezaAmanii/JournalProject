@@ -24,7 +24,7 @@ public class BigTaskController implements IController {
     }
 
 
-
+    // Methods
     public String getBigTaskTitle(String bigTaskID){
         return itemsSet.getItem(bigTaskID).getTitle();
     }
@@ -39,9 +39,19 @@ public class BigTaskController implements IController {
         return false;
     }
 
+    public void setBigTaskCheckBoxStatus(String bigTaskID, boolean status){
+        //itemsSet.getItem(bigTaskID).setCheckBoxStatus(status);
+    }
+
     public boolean getBigTaskFavouriteStatus(String bigTaskID){
         //return itemsSet.getItem(bigTaskID).getFavouriteStatus();
         return true;
     }
+
+    public void renameTheTask(String bigTaskID, String newTitle){
+        itemsSet.getItem(bigTaskID).setTitle(newTitle);
+    }
+
+
 
 }
