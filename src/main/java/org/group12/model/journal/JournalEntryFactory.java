@@ -48,13 +48,13 @@ public class JournalEntryFactory implements IJournalEntryFactory {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String title = dateFormat.format(new Date());
         LocalDateTime createdTimestamp = LocalDateTime.now();
-        return new JournalEntry(ID, title, content, createdTimestamp);
+        return new JournalEntry(ID, title, content, LocalDate.now(), createdTimestamp);
     }
 
     public JournalEntry createJournalEntryForDate(LocalDate date) {
         String ID = idFactory.generateID();
         String title = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE);
-        return new JournalEntry(ID, title, "", date.atStartOfDay());
+        return new JournalEntry(ID, title, "", LocalDate.now(), date.atStartOfDay());
     }
 
     /**
@@ -68,6 +68,7 @@ public class JournalEntryFactory implements IJournalEntryFactory {
     public JournalEntry createJournalEntry(String title, String content) {
         String ID = idFactory.generateID();
         LocalDateTime createdTimestamp = LocalDateTime.now();
-        return new JournalEntry(ID, title, content, createdTimestamp);
+        return new JournalEntry(ID, title, content, LocalDate.now(), createdTimestamp);
     }
+
 }

@@ -5,6 +5,7 @@ import org.group12.Observers.IPlanITObserver;
 import org.group12.model.IDateCreated;
 import org.group12.model.INameable;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 public class JournalEntry implements INameable, IDateCreated, IObservable {
     private String ID;
     private String title;
+    private LocalDate entryDate;
     private LocalDateTime createdTimestamp;
     private LocalDateTime modifiedTimestamp;
     private String content;
@@ -25,13 +27,28 @@ public class JournalEntry implements INameable, IDateCreated, IObservable {
      * @param content          content of the journal entry
      * @param createdTimestamp timestamp when the journal entry was created
      */
-    public JournalEntry(String ID, String title, String content, LocalDateTime createdTimestamp) {
+    public JournalEntry(String ID, String title, String content,LocalDate entryDate, LocalDateTime createdTimestamp) {
         this.ID = ID;
         this.title = title;
+        this.entryDate = entryDate;
         this.createdTimestamp = createdTimestamp;
         this.modifiedTimestamp = createdTimestamp;
         this.content = content;
         this.observers = new ArrayList<>();
+    }
+
+    public JournalEntry(String title, LocalDate entryDate, String content) {
+        this.title = title;
+        this.entryDate = entryDate;
+        this.content = content;
+    }
+
+    public LocalDate getEntryDate() {
+        return entryDate;
+    }
+
+    public void setEntryDate(LocalDate entryDate) {
+        this.entryDate = entryDate;
     }
 
     /**
@@ -52,6 +69,10 @@ public class JournalEntry implements INameable, IDateCreated, IObservable {
         this.content = newContent;
         this.modifiedTimestamp = LocalDateTime.now();
         notifyObservers();
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     /**

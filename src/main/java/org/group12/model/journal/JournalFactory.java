@@ -38,9 +38,9 @@ public class JournalFactory {
      * @param entryFactory the factory to create JournalEntry objects
      * @return the created Journal
      */
-    public Journal createJournal(String title, JournalEntryFactory entryFactory, ItemsSet items) {
+    public Journal createJournal(String title, JournalEntryFactory entryFactory) {
         String ID = idFactory.generateID();
-        return new Journal(ID, title, entryFactory, items);
+        return new Journal(ID, title, entryFactory);
     }
 
 }

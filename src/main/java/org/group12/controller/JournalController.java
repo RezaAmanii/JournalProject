@@ -1,36 +1,27 @@
 package org.group12.controller;
 
-import org.group12.model.Container;
-import org.group12.model.INameable;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder;
-import javafx.beans.property.adapter.JavaBeanStringPropertyBuilder;
-import javafx.beans.value.ObservableObjectValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import org.group12.model.Container;
+import org.group12.model.Items;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
-import org.group12.view.JournalView;
+import org.group12.controllerView.JournalWindowManager;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import org.group12.model.Items;
 
 import static java.time.format.DateTimeFormatter.ISO_DATE;
 
 public class JournalController implements IController {
 
-    private Journal journalModel;
-    private Container container;
-    private JournalView journalView;
-    private ObjectProperty<JournalEntry> journalEntry;
+    private Journal journalModel = Container.getInstance().getJournal();
+    private JournalWindowManager journalWindowManager;
 
-//    private HashMap<String, INameable> itemMap;
     private Items itemMap;
 
     @FXML
@@ -45,62 +36,58 @@ public class JournalController implements IController {
     @FXML
     private Label prevDayBtn;
 
+
+    @FXML
+    public void initialize() {
+        journalWindowManager = new JournalWindowManager();
+        journalWindowManager.loadView(content, entryDate, entryDateLabel,  prevDayBtn);
+        journalWindowManager.createBindings();
+        entryDate.valueProperty().setValue(LocalDate.now());
+        //
+        JournalEntry journalEntry1 = journalModel.getEntryByDate(entryDate.getValue());
+        if(journalEntry1 != null)
+            content.setText(journalEntry1.getContent());
+
+    }
+
+
     @FXML
     void onAddEntry(MouseEvent event) {
-        journalEntry.get().updateContent(content.getText());
-        journalModel.addEntryForDate(entryDate.getValue(), journalEntry.get());
+        journalModel.addEntryForDate(entryDate.getValue(), journalWindowManager.prepareJournal());
     }
 
     @FXML
     void onDeleteClk(MouseEvent event) {
-        var alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm Delete");
-        alert.setHeaderText("Confirm");
-        alert.setContentText("Confirm deleting journal?");
-
-        var option = alert.showAndWait().orElse(ButtonType.CANCEL);
-        if(ButtonType.OK.equals(option)) {
-            journalModel.removeEntry(entryDate.getValue());
+        if(journalWindowManager.deleteJournal()) {
+            journalModel.removeEntry(content.getText());
             onPrevDayClk(event);
         }
     }
 
     @FXML
     void onNextDayClk(MouseEvent event) {
-        var currentVal = entryDate.valueProperty().get();
-        entryDate.valueProperty().set(currentVal.plusDays(1));
+        journalWindowManager.getNexDayClick(journalModel.getEntryByDate(journalWindowManager.getEntryDate().getValue().plusDays(1)));
     }
 
     @FXML
     void onPrevDayClk(MouseEvent event) {
-        var currentVal = entryDate.valueProperty().get();
-        entryDate.valueProperty().set(currentVal.minusDays(1));
+        journalWindowManager.getPevDayClick(journalModel.getEntryByDate(journalWindowManager.getEntryDate().getValue().minusDays(1)));
     }
 
 
 
-    public JournalController(){
-        this.itemMap = Items.getInstance();
-        this.journalModel = container.getJournal();
+    public JournalController(Journal journalModel, JournalWindowManager journalWindowManager, Items itemMap){
+        this();
+        this.journalModel = journalModel;
+        this.journalWindowManager = journalWindowManager;
+        this.itemMap= itemMap;
         //journalModel.addObserver(journalView);
+
     }
 
-    @FXML
-    public void initialize() {
-        createBindings();
-
-        entryDate.valueProperty().setValue(LocalDateTime.now());
+    public JournalController() {
     }
 
-    private void createBindings() {
-        journalEntry = new SimpleObjectProperty<>(journalModel.getEntryForDate(LocalDateTime.now()));
-        journalEntry.bind(entryDate.valueProperty().map(journalModel::getEntryForDate));
-        journalEntry.addListener((observable, oldValue, newValue) -> content.setText(newValue.getContent()));
-
-        entryDateLabel.textProperty()
-                .bind(entryDate.valueProperty()
-                        .map(date -> date.format(ISO_DATE)));
-    }
 
 
     /**
@@ -112,26 +99,11 @@ public class JournalController implements IController {
      *                     (contains title and content for the new journal entry)
      */
     public void addJournalEntry(JournalEntry journalEntry){
-        if(validateAddInput(journalEntry)){
-            journalModel.addEntry(journalEntry.getTitle(), journalEntry.getContent());
-        } else{
-            //journalView.displayErrorMessage("Both title and content should not be empty.");
-        }
-    }
-
-
-    /**
-     * Removes the provided journal entry from the journal model.
-     * Checks if the provided journal entry is not null before attempting removal.
-     *
-     * @param journalEntry the journal entry to be removed
-     */
-    public void removeJournalEntry(JournalEntry journalEntry){
-        if(journalEntry != null){
-            journalModel.removeEntry(journalEntry);
-        } else{
-            //journalView.displayErrorMessage("Invalid entry!");
-        }
+//        if(validateAddInput(journalEntry)){
+//            journalModel.addEntry(journalEntry.getTitle(), journalEntry.getContent());
+//        } else{
+//            //journalView.displayErrorMessage("Both title and content should not be empty.");
+//        }
     }
 
 
@@ -142,12 +114,11 @@ public class JournalController implements IController {
      * @param newContent   the new content to replace the existing content in the journal entry
      */
     public void updateJournalEntry(JournalEntry journalEntry, String newContent){
-        if(journalEntry != null && !newContent.isEmpty()){
-//            entryModel.updateContent(newContent);
-            this.journalEntry.get().updateContent(newContent);
-        } else {
-            //journalView.displayErrorMessage("Invalid input.");
-        }
+//        if(journalEntry != null && !newContent.isEmpty()){
+//            this.journalEntry.get().updateContent(newContent);
+//        } else {
+//            //journalView.displayErrorMessage("Invalid input.");
+//        }
     }
 
 
@@ -186,8 +157,4 @@ public class JournalController implements IController {
         return journalEntry != null && !journalEntry.getContent().isEmpty() && !journalEntry.getTitle().isEmpty();
     }
 
-
-
-
-
-    }
+}
