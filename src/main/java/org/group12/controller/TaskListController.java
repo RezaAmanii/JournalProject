@@ -92,7 +92,10 @@ public class TaskListController implements IController, IObservable {
     public void renameTaskList(String taskListID, String newTitle){
         items.getItem(taskListID).setTitle(newTitle);
     }
-
+    public String getNrOfBigTasks(String taskListID){
+        //return String.valueOf(items.getItem(taskListID).getBigTaskList().size());
+        return "3";
+    }
 
 
     // BigTask methods (Needs to be moved out)

@@ -36,6 +36,8 @@ public class taskListCards extends AnchorPane implements Initializable {
     private Label titleLabel;
     @FXML
     private Label dateCreated;
+    @FXML
+    private Label NrOfBigTasks;
 
 
 
@@ -71,6 +73,7 @@ public class taskListCards extends AnchorPane implements Initializable {
     private void initializeFields(){
         this.titleLabel.setText(taskListController.getTaskListTitle(this.ID));
         this.dateCreated.setText(taskListController.getTaskListDateCreated(this.ID));
+        this.NrOfBigTasks.setText(taskListController.getNrOfBigTasks(this.ID));
 
     }
 
@@ -111,6 +114,7 @@ public class taskListCards extends AnchorPane implements Initializable {
 
                 this.titleLabel.setText(taskListController.getTaskListTitle(taskList.getID()));
                 this.dateCreated.setText(taskListController.getTaskListDateCreated(taskList.getID()));
+                this.NrOfBigTasks.setText(taskListController.getNrOfBigTasks(taskList.getID()));
 
             } else{
                 System.out.println("Item with ID " + ID + " is not a ITaskList!");

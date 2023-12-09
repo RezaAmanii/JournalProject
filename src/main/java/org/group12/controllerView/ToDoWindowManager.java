@@ -16,6 +16,7 @@ import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.todo.*;
 import org.group12.view.BigTaskCard;
 import org.group12.view.TaskListCard;
+import org.group12.view.taskListCards;
 
 import java.io.IOException;
 import java.net.URL;
@@ -58,11 +59,16 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
         taskListController.addObserver(this);
         refreshAllListVBox();
         refreshSidePanelInfo();
-
-
     }
 
+    public taskListCards createNewListObject(ITaskList list){
+        taskListCards newTaskListCard = new taskListCards(list.getID(), Items.getInstance());
+        activeListNameLBL.setText(taskListController.getTaskListTitle(newTaskListCard.getID()));
 
+        return newTaskListCard;
+    }
+
+/*
     public GridPane createNewListObject(ITaskList newList) {
         GridPane listToAppend = createListPane();
         TextField taskNameLBL = createTaskNameLabel(newList);
@@ -72,6 +78,8 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
         VBox.setMargin(listToAppend, new Insets(10.0, 10.0, 0, 10.0));
         return listToAppend;
     }
+
+ */
 
 
     public static String retriveTaskListID(ITaskList taskList) {
@@ -136,8 +144,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
         ITaskList newList = taskListController.getTaskListByID(newListID);
 
 
-
-        GridPane listToAppend = createNewListObject(newList);
+        taskListCards listToAppend = createNewListObject(newList);
         appendableListVbox.getChildren().add(listToAppend);
     }
 
