@@ -34,9 +34,9 @@ public class Calendar implements IObservable, ICalendar {
         EventSorter.sortEvents(eventList);
     }
 
-    public void addEvent(String title, String description,
+    public void addEvent(String title, String description, LocalDateTime dateOfEvent,
                          Pair<LocalDateTime, LocalDateTime> timeFrame){
-        Event newEvent = eventFactory.createEvent(title, description, timeFrame);
+        Event newEvent = eventFactory.createEvent(title, description,dateOfEvent, timeFrame);
         eventList.add(newEvent);
         this.isEmpty = false;
         notifyObservers();
@@ -47,6 +47,11 @@ public class Calendar implements IObservable, ICalendar {
         notifyObservers();
         items.addItem(event);
 //        notifyObservers();
+    }
+
+    @Override
+    public void addEvent(String title, String description, Pair<LocalDateTime, LocalDateTime> timeFrame) {
+
     }
 
     /**

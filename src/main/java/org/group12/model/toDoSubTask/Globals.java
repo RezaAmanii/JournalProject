@@ -86,14 +86,16 @@ public class Globals {
      * @param resizable Indicates if the form should be resizable.
      * @throws IOException If an I/O error occurs while loading the form.
      */
-    public static void openNewForm(String formName,String title,boolean resizable) throws IOException {
-        Parent root= FXMLLoader.load(Globals.class.getResource(formName));
+    public static <T> T openNewForm(String formName,String title,boolean resizable) throws IOException {
+        var loader = new FXMLLoader(Globals.class.getResource(formName));
+        Parent root= loader.load();
         Scene scene=new Scene(root);
         Stage stage=new Stage();
         stage.setResizable(resizable);
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
+        return loader.getController();
     }
 
     /**
@@ -183,6 +185,34 @@ public class Globals {
         }
         ObservableList<String>obs= FXCollections.observableArrayList(strings);
         list.setItems(obs);
+    }
+
+    public static <P extends Parent,C> FxmlUi<P,C> loadFxml(String fxmlUrl) {
+        var loader = new FXMLLoader(Globals.class.getResource(fxmlUrl));
+        try {
+            P root = loader.load();
+            return new FxmlUi<>(root, loader.getController());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static class FxmlUi<P extends Parent,C> {
+        private P root;
+        private C controller;
+
+        public FxmlUi(P root, C controller) {
+            this.root = root;
+            this.controller = controller;
+        }
+
+        public C getController() {
+            return controller;
+        }
+
+        public P getRoot() {
+            return root;
+        }
     }
 
 }

@@ -20,14 +20,15 @@ public class eventFactory {
      * Creates a new Event with a generated ID, title set to the current date,
      * provided content, and timestamps set to the current date.
      *
-     * @param title the name of event
+     * @param title       the name of event
      * @param description the content for the new event
-     * @param timeFrame when the event is happening
+     * @param dateOfEvent
+     * @param timeFrame   when the event is happening
      * @return a new Event object with ID
      */
 
     public Event createEvent(String title, String description,
-                             Pair<LocalDateTime, LocalDateTime> timeFrame) {
+                             LocalDateTime dateOfEvent, Pair<LocalDateTime, LocalDateTime> timeFrame) {
         List<String> tags = new ArrayList<>();
         String ID = idFactory.generateID();
         LocalDateTime createdTimestamp = LocalDateTime.now();

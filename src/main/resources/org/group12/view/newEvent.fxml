@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="root" prefHeight="400.0" prefWidth="518.0" xmlns="http://javafx.com/javafx/20.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.group12.controllerView.NewEventView">
+    <center>
+        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="14.0" layoutY="14.0" text="Name" textFill="#183a4e" VBox.vgrow="NEVER">
+                    <font>
+                        <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                    </font>
+                </Label>
+                <TextField fx:id="titleTxt" layoutX="14.0" layoutY="32.0" prefHeight="23.0" prefWidth="135.0" promptText="Task Name " style="-fx-text-fill: #183a4e;" VBox.vgrow="NEVER">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </TextField>
+                <GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="486.0" vgap="15.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="178.0" minWidth="10.0" prefWidth="168.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="NEVER" maxWidth="156.0" minWidth="10.0" prefWidth="59.0" />
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="295.0" minWidth="10.0" prefWidth="259.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <DatePicker fx:id="eventDate" GridPane.rowIndex="1" />
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="12.0" prefWidth="122.0" text="From :" textAlignment="RIGHT" textFill="#183a4e" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <font>
+                                <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                            </font>
+                            <padding>
+                                <Insets right="10.0" />
+                            </padding>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                            <children>
+                                <HBox alignment="CENTER" spacing="5.0">
+                                    <children>
+                                        <Label prefWidth="20.0" text="HH" />
+                                        <Spinner fx:id="startHr" prefHeight="27.0" prefWidth="60.0" style="-fx-font-family: Berlin Sans FB Demi; -fx-font-size: 11" />
+                                    </children>
+                                </HBox>
+                                <HBox spacing="5.0">
+                                    <children>
+                                        <Label prefHeight="16.0" prefWidth="27.0" text="mm" />
+                                        <Spinner fx:id="startMin" prefHeight="27.0" prefWidth="60.0" style="-fx-font-family: Berlin Sans FB Demi; -fx-font-size: 11" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.columnIndex="2" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+                            <children>
+                                <HBox spacing="5.0">
+                                    <children>
+                                        <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="35.0" prefWidth="20.0" text="HH" />
+                                        <Spinner fx:id="endHr" prefHeight="27.0" prefWidth="60.0" style="-fx-font-family: Berlin Sans FB Demi; -fx-font-size: 11" />
+                                    </children>
+                                </HBox>
+                                <HBox spacing="5.0">
+                                    <children>
+                                        <Label prefHeight="16.0" prefWidth="27.0" text="mm" />
+                                        <Spinner fx:id="endMin" prefHeight="27.0" prefWidth="60.0" style="-fx-font-family: Berlin Sans FB Demi; -fx-font-size: 11" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="61.0" text="To :" textAlignment="RIGHT" textFill="#183a4e" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                            <font>
+                                <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                            </font>
+                            <padding>
+                                <Insets right="10.0" />
+                            </padding>
+                        </Label>
+                    </children>
+                </GridPane>
+                <TextArea fx:id="descriptionTxt" prefHeight="200.0" prefWidth="200.0" promptText="Description" wrapText="true" VBox.vgrow="ALWAYS">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </TextArea>
+                <Button fx:id="saveBtn" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" text="Save" VBox.vgrow="NEVER" />
+            </children>
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </padding>
+        </VBox>
+    </center>
+</BorderPane>
