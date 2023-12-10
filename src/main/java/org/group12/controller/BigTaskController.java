@@ -37,23 +37,30 @@ public class BigTaskController implements IController, IObservable {
         return itemsSet.getItem(bigTaskID).getTitle();
     }
 
-    public String getBigTaskDueDate(String bigTaskID){
-        //return itemsSet.getItem(bigTaskID).getDueDate();
-        return "DueDate 9/12/2023";
+    public String getBigTaskDateCreated(String bigTaskID){
+        IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
+        return bigTask.getDateCreated().toString();
     }
 
     public boolean getBigTaskCheckBoxStatus(String bigTaskID){
-        //return itemsSet.getItem(bigTaskID).getCheckBoxStatus();
-        return false;
+        IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
+        return bigTask.getStatus();
     }
 
     public void setBigTaskCheckBoxStatus(String bigTaskID, boolean status){
-        //itemsSet.getItem(bigTaskID).setCheckBoxStatus(status);
+        IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
+        bigTask.setCompleted(status);
     }
 
     public boolean getBigTaskFavouriteStatus(String bigTaskID){
-        //return itemsSet.getItem(bigTaskID).getFavouriteStatus();
-        return true;
+        IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
+        return bigTask.isFavourite();
+
+    }
+
+    public void setBigTaskFavoriteStatus(String bigTaskID, boolean status){
+        IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
+        bigTask.setFavourite(status);
     }
 
     public void renameTheTask(String bigTaskID, String newTitle){

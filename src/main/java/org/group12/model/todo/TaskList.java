@@ -3,6 +3,7 @@ package org.group12.model.todo;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.factories.BigTaskFactory;
 
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class TaskList implements ITaskList {
         this.ID = ID;
         setTitle(title);
         this.items = items;
+        this.dateCreated = LocalDateTime.now();
 
     }
 

@@ -83,8 +83,9 @@ public class TaskListController implements IController, IObservable {
     }
 
     public String getTaskListDateCreated(String taskListID){
-        //return items.getItem(taskListID).getDateCreated().toString();
-        return "9/12";
+        ITaskList taskList = (ITaskList) items.getItem(taskListID);
+        return taskList.getDateCreated().toString();
+
     }
 
     public void renameTaskList(String taskListID, String newTitle){
@@ -92,8 +93,8 @@ public class TaskListController implements IController, IObservable {
         notifyObservers();
     }
     public String getNrOfBigTasks(String taskListID){
-        //return String.valueOf(items.getItem(taskListID).getBigTaskList().size());
-        return "3";
+        ITaskList taskList = (ITaskList) items.getItem(taskListID);
+        return String.valueOf(taskList.getBigTaskList().size());
     }
 
     public void renameBigTask(String bigTaskID, String newTitle){

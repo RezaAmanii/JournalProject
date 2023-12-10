@@ -2,20 +2,27 @@
 
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <fx:root fx:id="bigTaskAnchorPane" onMouseClicked="#cardClicked" prefHeight="51.0" prefWidth="309.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: White;" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <CheckBox fx:id="statusCheckBox" layoutX="12.0" layoutY="12.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="21.0" AnchorPane.leftAnchor="12.0" AnchorPane.topAnchor="12.0">
+      <CheckBox fx:id="statusCheckBox" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0">
          <font>
             <Font size="18.0" />
          </font></CheckBox>
-      <Label fx:id="titleLabel" contentDisplay="CENTER" layoutX="60.0" layoutY="8.0" prefHeight="24.0" prefWidth="244.0" text="Title" textFill="WHITE">
+      <Label fx:id="titleLabel" contentDisplay="CENTER" layoutX="51.0" layoutY="2.0" prefHeight="28.0" prefWidth="101.0" text="Title" textFill="WHITE" wrapText="true">
          <font>
-            <Font size="22.0" />
+            <Font size="24.0" />
          </font>
       </Label>
-      <Label fx:id="dueDateLabel" layoutX="61.0" layoutY="33.0" text="Label" textFill="WHITE" />
+      <Label fx:id="dueDateLabel" layoutX="54.0" layoutY="30.0" prefHeight="17.0" prefWidth="143.0" text="dateCreated" textFill="WHITE" wrapText="true" />
+      <ImageView fx:id="favouriteImageView" fitHeight="36.0" fitWidth="36.0" layoutX="294.0" layoutY="7.0" onMouseClicked="#imageViewClicked" pickOnBounds="true">
+         <image>
+            <Image url="@../../../starUnselected.png" />
+         </image>
+      </ImageView>
    </children>
 </fx:root>

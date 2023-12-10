@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -77,14 +78,9 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
 
     private void initializeFields(){
         this.titleLabel.setText(bigTaskController.getBigTaskTitle(this.ID));
-        this.dueDateLabel.setText(bigTaskController.getBigTaskDueDate(this.ID));
+        this.dueDateLabel.setText(bigTaskController.getBigTaskDateCreated(this.ID));
         this.statusCheckBox.setSelected(bigTaskController.getBigTaskCheckBoxStatus(this.ID));
 
-        if(favouriteImageView != null){
-            this.favouriteImageView.setVisible(bigTaskController.getBigTaskFavouriteStatus(this.ID));
-        } else{
-            System.out.println("favouriteImageView is null");
-        }
     }
 
     private void setupEventHandlers(){
@@ -113,8 +109,16 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
 
     @FXML
     private void imageViewClicked() {
+        boolean currentStatus = bigTaskController.getBigTaskFavouriteStatus(this.ID);
+        bigTaskController.setBigTaskFavoriteStatus(this.ID, !currentStatus);
+        updateFavoriteImageView(!currentStatus);
+    }
 
-
+    public void updateFavoriteImageView(boolean status) {
+        String imagePath = bigTaskController.getBigTaskFavouriteStatus(this.ID) ? "star.png" : "starUnselected.png";
+        Image image = new Image(imagePath);
+        favouriteImageView.setImage(image);
+        favouriteImageView.setVisible(status);
     }
 
     @FXML
@@ -165,13 +169,9 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
                 IBigTask bigTask = (IBigTask) item;
 
                 this.titleLabel.setText(bigTaskController.getBigTaskTitle(bigTask.getID()));
-                this.dueDateLabel.setText(bigTaskController.getBigTaskDueDate(bigTask.getID()));
+                this.dueDateLabel.setText(bigTaskController.getBigTaskDateCreated(bigTask.getID()));
                 this.statusCheckBox.setSelected(bigTaskController.getBigTaskCheckBoxStatus(bigTask.getID()));
-                if(favouriteImageView != null){
-                    this.favouriteImageView.setVisible(bigTaskController.getBigTaskFavouriteStatus(bigTask.getID()));
-                } else{
-                    System.out.println("favouriteImageView is null");
-                }
+
             } else{
                 System.out.println("Item with ID " + ID + " is not a IBigTask!");
             }
