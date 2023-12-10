@@ -1,14 +1,23 @@
 package org.group12.controllerView;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.concurrent.Task;
+import javafx.stage.Stage;
+import org.group12.controllerView.MainMenuController;
+import org.group12.model.User.UserModel;
 
-public class LoginPageController {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class LoginPageController implements Initializable {
+
+    private UserModel user;
     @FXML
     private TextField usernameField;
 
@@ -18,65 +27,35 @@ public class LoginPageController {
     @FXML
     private ProgressIndicator progressIndicator;
 
+
     @FXML
-    private void login() {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
+    private Label myLable;
 
-        // Disable the login button and show the progress indicator
-        progressIndicator.setVisible(true);
-        progressIndicator.setProgress(-1);
+    @FXML
+    private Button loginButton;
 
-        // Create a background task to validate the username and password
-        Task<Boolean> loginTask = new Task<Boolean>() {
-            @Override
-            protected Boolean call() throws Exception {
-                // Simulate a delay to mimic the validation process
-                Thread.sleep(2000);
-
-                // Validate the username and password
-                return username.equals("admin") && password.equals("password");
-            }
-        };
-
-        // When the task is completed, enable the login button and hide the progress indicator
-        loginTask.setOnSucceeded(event -> {
-            boolean loginSuccessful = loginTask.getValue();
-
-            if (loginSuccessful) {
-                System.out.println("Login successful");
-                // Perform actions after successful login
-            } else {
-                System.out.println("Login failed");
-
-                // Show error message in a popup
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Login Failed");
-                alert.setHeaderText(null);
-                alert.setContentText("Invalid username or password. Please try again.");
-                alert.showAndWait();
-            }
-
-            progressIndicator.setVisible(false);
-            progressIndicator.setProgress(0);
-        });
-
-        // Start the login task in a background thread
-        Thread loginThread = new Thread(loginTask);
-        loginThread.setDaemon(true);
-        loginThread.start();
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        user = new UserModel();
     }
 
     @FXML
-    private void checkCredentials() {
-        String username = usernameField.getText();
-        String password = passwordField.getText();
-        // check the username and password
-        if (username.equals("admin") && password.equals("password")) {
-            System.out.println("Credentials are correct");
+    private void login() throws IOException {
+
+        boolean state = user.checkCredentials(usernameField.getText(), passwordField.getText());
+        if (state) {
+            // open main page
+            FXMLLoader loader = new FXMLLoader(MainMenuController.class.getResource("/org/group12/view/mainMenu.fxml"));
+            Parent root = loader.load();
+            Stage newStage = new Stage(); // Create a new stage
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Main Page");
+            newStage.show();
         } else {
-            System.out.println("Credentials are incorrect");
+            myLable.setText("Invalid Email or Password !");
+            myLable.setStyle("-fx-text-fill: red;");
         }
     }
+
 
 }
