@@ -101,13 +101,7 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
     }
 
 
-    private void setDoubleClickEvent() {
-        setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                handleDoubleClick();
-            }
-        });
-    }
+
 
 
     @FXML
@@ -117,6 +111,25 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
             clickListener.onTaskListCardClicked(this);
         }
 
+    }
+
+    private void setDoubleClickEvent() {
+        setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                handleDoubleClick();
+            }
+        });
+    }
+
+    private void handleDoubleClick() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Rename Task");
+        dialog.setHeaderText("Enter new name");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(name -> {
+            taskListController.renameTaskList(this.ID, name);
+        });
     }
 
 
@@ -145,16 +158,7 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
     }
 
 
-    private void handleDoubleClick() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Rename Task");
-        dialog.setHeaderText("Enter new name");
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> {
-            taskListController.renameTaskList(this.ID, name);
-        });
-    }
 
     // Delete taskList
     @FXML

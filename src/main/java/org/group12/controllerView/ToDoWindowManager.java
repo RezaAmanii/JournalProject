@@ -12,6 +12,8 @@ import javafx.scene.layout.*;
 import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
+import org.group12.controller.BigTaskController;
+import org.group12.controller.TaskController;
 import org.group12.controller.TaskListController;
 import org.group12.model.Items;
 import org.group12.model.toDoSubTask.Globals;
@@ -45,7 +47,9 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
     // Corresponding controller
-    public static TaskListController taskListController = TaskListController.getInstance();
+    private static final TaskListController taskListController = TaskListController.getInstance();
+    private static final BigTaskController bigTaskController = BigTaskController.getInstance();
+    private final TaskController taskController = TaskController.getInstance();
 
     // A reference to the selectedList and selectedBigTask
     public static ITaskList selectedList = null;
@@ -83,7 +87,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
     public static String retriveBigTaskID(IBigTask bigTask) {
-        for (IBigTask task : taskListController.fetchAllBigTasks(retriveTaskListID(selectedList))) {
+        for (IBigTask task : bigTaskController.fetchAllBigTasks(retriveTaskListID(selectedList))) {
             if (task.equals(bigTask)) {
                 return task.getID();
             }
@@ -128,7 +132,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
     void renameTask(IBigTask task, String newName) {
-        taskListController.getTaskByID(retriveBigTaskID(task)).setTitle(newName);
+        taskController.getTaskByID(retriveBigTaskID(task)).setTitle(newName);
     }
 
     public BigTaskCard createNewTaskObject(IBigTask task) {
@@ -170,7 +174,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
         String title = getInputFromUser();
         String taskID = taskListController.getTaskListByID(selectedList.getID()).addBigTask(title);
-        IBigTask task = taskListController.getBigTaskByID(taskID);
+        IBigTask task = bigTaskController.getBigTaskByID(taskID);
 
         BigTaskCard bigTaskCard = new BigTaskCard(task.getID(), Items.getInstance());
 
@@ -239,7 +243,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         });
 
         taskNameLabel.setOnKeyPressed(event -> {
-            handleTaskNameLabelKeyPress(event, taskNameLabel, taskListController.getBigTaskByID(retriveBigTaskID(task)));
+            handleTaskNameLabelKeyPress(event, taskNameLabel, bigTaskController.getBigTaskByID(retriveBigTaskID(task)));
         });
 
         newTaskPane.getChildren().addAll(taskNameLabel, progressIndicator, imageView, imageViewDelete, deadLineLabel, imageViewImportant);
@@ -295,7 +299,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         });
 
         taskNameLabel.setOnKeyPressed(event -> {
-            handleTaskNameLabelKeyPress(event, taskNameLabel, (taskListController.getBigTaskByID(retriveBigTaskID(task))));
+            handleTaskNameLabelKeyPress(event, taskNameLabel, (bigTaskController.getBigTaskByID(retriveBigTaskID(task))));
         });
     }
 

@@ -147,6 +147,7 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
             bigTaskController.renameTheTask(this.ID, name);
+            update();
         });
     }
 

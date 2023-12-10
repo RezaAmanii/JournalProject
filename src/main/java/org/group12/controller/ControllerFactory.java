@@ -22,7 +22,8 @@ public class ControllerFactory {
             case "JournalController" -> new JournalController();
             case "CalendarController" -> new CalendarController();
             case "TaskListController" -> TaskListController.getInstance();
-            case "TaskController" -> new TaskController(model.getTodoCollection(),todoView, itemMap);
+            case "BigTaskController" -> BigTaskController.getInstance();
+            case "TaskController" -> TaskController.getInstance();
             case "EventListController" -> new EventListController();
             default -> throw new IllegalArgumentException("Unknown controller type " + controllerType);
         };

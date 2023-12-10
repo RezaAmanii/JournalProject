@@ -15,19 +15,20 @@ public class TaskListController implements IController, IObservable {
 
     private TaskListView taskListView;
 
-    private ItemsSet items;
-    private TodoCollection todoCollection;
+    private final ItemsSet items;
+    private final TodoCollection todoCollection;
     private static TaskListController instance;
-    private Container container = Container.getInstance();
-    private List<IPlanITObserver> observers = new ArrayList<>();
+    private final Container container = Container.getInstance();
+    private final List<IPlanITObserver> observers = new ArrayList<>();
 
-
+    // Constructor
     private TaskListController() {
         this.items = Items.getInstance();
         this.todoCollection = Container.getInstance().getTodoCollection();
         this.taskListView = new TaskListView();
     }
 
+    // Singleton
     public static TaskListController getInstance() {
         if (instance == null) {
             instance = new TaskListController();
@@ -35,12 +36,8 @@ public class TaskListController implements IController, IObservable {
         return instance;
     }
 
-    public Container getContainer() {
-        return this.container;
-    }
 
-
-    // To-do lists methods
+    // TaskList methods
     public String handlerAddToDoList(String title) {
         return todoCollection.addTaskList(title);
     }
@@ -99,39 +96,15 @@ public class TaskListController implements IController, IObservable {
         return "3";
     }
 
-
-    // BigTask methods (Needs to be moved out)
-
-    public IBigTask getBigTaskByID(String bigTaskID){
-        return (IBigTask) items.getItem(bigTaskID);
+    public void renameBigTask(String bigTaskID, String newTitle){
+        items.getItem(bigTaskID).setTitle(newTitle);
+        notifyObservers();
     }
 
-    public ArrayList<IBigTask> fetchAllBigTasks(String taskListID){
-        ITaskList taskList = (ITaskList) items.getItem(taskListID);
-        return taskList.getBigTaskList();
-    }
-
-
-    
-
-
-    // Task methods (Need to be moved out)
-    public ITask getSubTaskByID(String taskID){
-        return (ITask) items.getItem(taskID);
-    }
-
-    public IBigTask getTaskByID(String taskID){
-        return (IBigTask) items.getItem(taskID);
-    }
-
-    public void removeAnyObject(String ID){
-        items.removeItem(ID);
-    }
 
 
 
     // Observer methods
-
     @Override
     public void addObserver(IPlanITObserver observer) {
         if(!observers.contains(observer)){
