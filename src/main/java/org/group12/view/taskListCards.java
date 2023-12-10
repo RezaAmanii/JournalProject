@@ -60,10 +60,14 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
         }
 
         // Make space between each cards
-        double paddingValue = 10.0;
-        VBox.setMargin(this, new Insets(paddingValue));
+        spacingBetweenCards();
 
         update();
+    }
+
+    private void spacingBetweenCards() {
+        double paddingValue = 10.0;
+        VBox.setMargin(this, new Insets(paddingValue));
     }
 
     @Override
@@ -73,10 +77,15 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
         update();
     }
 
-    private void initializeFields(){
+    private void initializeFields() {
         this.titleLabel.setText(taskListController.getTaskListTitle(this.ID));
         this.dateCreated.setText(taskListController.getTaskListDateCreated(this.ID));
         this.NrOfBigTasks.setText(taskListController.getNrOfBigTasks(this.ID));
+
+        if (taskListController.getTaskListByTitle("Today").getID().equals(this.ID) || taskListController.getTaskListByTitle("Important").getID().equals(this.ID)) {
+            deleteTaskListBtn.setVisible(false);
+
+        }
 
     }
 
@@ -96,10 +105,6 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
         });
     }
 
-    @FXML
-    public String cardClicked() {
-        return this.ID;
-    }
 
     @FXML
     public void titleClicked() {
@@ -143,6 +148,7 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
         });
     }
 
+    // Delete taskList
     @FXML
     private void deleteTaskListBtnClicked(){
         taskListController.handlerRemoveToDoList(taskListController.getTaskListByID(this.ID));

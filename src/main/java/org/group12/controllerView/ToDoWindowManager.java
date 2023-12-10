@@ -149,22 +149,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
     }
 
 
-    public void deleteSelectedList() {
-        if (selectedList.getTitle().equals("Today") || selectedList.getTitle().equals("Important")) {
-            System.out.println("You can not delete this list");
-            return;
-        }
-
-        for (ITaskList list : taskListController.fetchAllTaskLists()) {
-            if (list.getID().equals(selectedList.getID())) {
-                taskListController.handlerRemoveToDoList(list);
-                break;
-            }
-        }
-
-        refreshAllListVBox();
-        refreshSidePanelInfo();
-    }
 
 
     public void refreshAllListVBox() {
