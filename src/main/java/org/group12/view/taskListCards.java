@@ -10,6 +10,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskListController;
@@ -31,6 +32,9 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
 
     // Controller
     private final TaskListController taskListController;
+
+    // Listener
+    private TaskListCardClickListener clickListener;
 
     // FXML components
     @FXML
@@ -109,6 +113,9 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
     @FXML
     public void titleClicked() {
         setDoubleClickEvent();
+        if(clickListener != null){
+            clickListener.onTaskListCardClicked(this);
+        }
 
     }
 
@@ -154,6 +161,10 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
     private void deleteTaskListBtnClicked(){
         taskListController.handlerRemoveToDoList(taskListController.getTaskListByID(this.ID));
         update();
+    }
+
+    public void setClickListener(TaskListCardClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
 

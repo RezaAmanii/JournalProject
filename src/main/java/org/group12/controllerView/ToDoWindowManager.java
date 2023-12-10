@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.TaskListController;
 import org.group12.model.Items;
@@ -28,7 +29,7 @@ import java.util.ResourceBundle;
 import static org.group12.view.TaskListView.*;
 
 
-public class ToDoWindowManager implements Initializable, ITaskListObserver {
+public class ToDoWindowManager implements Initializable, ITaskListObserver, TaskListCardClickListener {
 
     // FXML components
     public VBox fixedListsVbox;
@@ -64,8 +65,8 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
 
     public taskListCards createNewListObject(ITaskList list){
         taskListCards newTaskListCard = new taskListCards(list.getID(), Items.getInstance());
-        activeListNameLBL.setText(taskListController.getTaskListTitle(newTaskListCard.getID()));
-        selectedTaskListCard = newTaskListCard;
+        newTaskListCard.setClickListener(this);
+
 
         return newTaskListCard;
     }
@@ -383,5 +384,10 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
         refreshAllListVBox();
         refreshSidePanelInfo();
 
+    }
+
+    @Override
+    public void onTaskListCardClicked(taskListCards clickedCard) {
+        activeListNameLBL.setText(taskListController.getTaskListByID(clickedCard.getID()).getTitle());
     }
 }
