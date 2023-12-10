@@ -2,6 +2,8 @@ package org.group12.dataHandler;
 
 import org.group12.model.Container;
 import org.group12.model.Items;
+import org.group12.model.todo.ITaskList;
+import org.group12.model.todo.TaskList;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -16,7 +18,9 @@ class SaveLoadTest {
         Container container = Container.getInstance();
         Items items = Items.getInstance();
 
-        container.getTodoCollection().addTaskList("TestList");
+        String ID = container.getTodoCollection().addTaskList("TestList");
+        ITaskList taskList = (ITaskList) items.getItem(ID);
+        taskList.addBigTask("TestTask");
         saveLoad.save(container, items);
     }
 
