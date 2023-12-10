@@ -109,6 +109,7 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
     @FXML
     public void titleClicked() {
         setDoubleClickEvent();
+
     }
 
 

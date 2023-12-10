@@ -44,6 +44,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
 
     // Corresponding controller
     public static TaskListController taskListController = TaskListController.getInstance();
+    public taskListCards selectedTaskListCard = null;
 
     // A reference to the selectedList and selectedBigTask
     public static ITaskList selectedList = null;
@@ -64,6 +65,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
     public taskListCards createNewListObject(ITaskList list){
         taskListCards newTaskListCard = new taskListCards(list.getID(), Items.getInstance());
         activeListNameLBL.setText(taskListController.getTaskListTitle(newTaskListCard.getID()));
+        selectedTaskListCard = newTaskListCard;
 
         return newTaskListCard;
     }
@@ -103,46 +105,10 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
     }
 
 
-    public String getInputFromUser() {
-        TextInputDialog dialog = createTextInputDialog();
-        return processDialogResult(dialog);
-    }
-
-    private TextInputDialog createTextInputDialog() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("New List");
-        dialog.setHeaderText("Enter the name of the new list");
-        dialog.setContentText("Name:");
-        return dialog;
-    }
-
-    private String processDialogResult(TextInputDialog dialog) {
-        var result = dialog.showAndWait();
-        if (result.isPresent()) {
-            String userInputOriginal = result.get();
-            String userInput = result.get().toLowerCase();
-            if (userInput.contains("today") || userInput.contains("important")) {
-                displayWarningDialog();
-            } else {
-                return userInputOriginal;
-            }
-        }
-        return "New list";
-    }
-
-    private void displayWarningDialog() {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Choose another title.");
-        alert.setHeaderText("You can not use this title.");
-        alert.setContentText("The input provided is not allowed");
-        alert.showAndWait();
-    }
-
     public void addNewList() {
         String title = getInputFromUser();
         String newListID = taskListController.handlerAddToDoList(title);
         ITaskList newList = taskListController.getTaskListByID(newListID);
-
 
         taskListCards listToAppend = createNewListObject(newList);
         appendableListVbox.getChildren().add(listToAppend);
@@ -165,6 +131,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
         } else {
             taskListController.changeListTitle(list.getID(), newName);
             refreshSidePanelInfo();
+
             if (selectedList.equals(list)) {
                 activeListNameLBL.setText(newName);
             }
@@ -403,7 +370,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
         taskListController.getTaskListByTitle("Important").addBigTask(task.getTitle());
     }
 
-    private String previousListID;
 
     private void clearListVBoxContent() {
         selectedList = taskListController.getTaskListByTitle("Today");
@@ -414,7 +380,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver {
 
     @Override
     public void update() {
-
         refreshAllListVBox();
         refreshSidePanelInfo();
 

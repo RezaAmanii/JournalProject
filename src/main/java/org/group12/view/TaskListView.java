@@ -4,9 +4,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -204,6 +202,42 @@ public class TaskListView implements ITaskListObserver {
         GridPane.setRowSpan(progressIndicator,2);
         GridPane.setHalignment(imageView, HPos.CENTER);
         GridPane.setMargin(imageView, new Insets(2.0, 2.0, 2.0, 2.0));
+    }
+
+
+    public static String getInputFromUser() {
+        TextInputDialog dialog = createTextInputDialog();
+        return processDialogResult(dialog);
+    }
+
+    public static TextInputDialog createTextInputDialog() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("New List");
+        dialog.setHeaderText("Enter the name of the new list");
+        dialog.setContentText("Name:");
+        return dialog;
+    }
+
+    public static String processDialogResult(TextInputDialog dialog) {
+        var result = dialog.showAndWait();
+        if (result.isPresent()) {
+            String userInputOriginal = result.get();
+            String userInput = result.get().toLowerCase();
+            if (userInput.contains("today") || userInput.contains("important")) {
+                displayWarningDialog();
+            } else {
+                return userInputOriginal;
+            }
+        }
+        return "New list";
+    }
+
+    public static void displayWarningDialog() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Choose another title.");
+        alert.setHeaderText("You can not use this title.");
+        alert.setContentText("The input provided is not allowed");
+        alert.showAndWait();
     }
 
 
