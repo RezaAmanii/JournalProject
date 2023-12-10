@@ -5,11 +5,12 @@ import org.group12.model.IDFactory.EventIdFactory;
 import org.group12.model.IDFactory.IDFactory;
 import org.group12.model.IDFactory.IIDFactory;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class eventFactory {
+public class eventFactory implements Serializable {
     //TODO implement factory in the same way as todo and journal
     private IIDFactory idFactory;
 

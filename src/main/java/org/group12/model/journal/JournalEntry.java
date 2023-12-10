@@ -5,11 +5,12 @@ import org.group12.Observers.IPlanITObserver;
 import org.group12.model.IDateCreated;
 import org.group12.model.INameable;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JournalEntry implements INameable, IDateCreated, IObservable {
+public class JournalEntry implements INameable, IDateCreated, IObservable, Serializable {
     private String ID;
     private String title;
     private LocalDateTime createdTimestamp;

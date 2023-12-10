@@ -7,11 +7,13 @@ import org.group12.model.ItemsSet;
 import org.group12.model.todo.BigTask;
 import org.group12.model.todo.IBigTask;
 
+import java.io.Serializable;
+
 /**
  * Represents a factory for creating BigTask objects.
  * This class uses a BigTaskIDFactory to generate unique IDs for each BigTask.
  */
-public class BigTaskFactory {
+public class BigTaskFactory implements Serializable {
     private final IIDFactory idFactory;
     private final ItemsSet items;
 

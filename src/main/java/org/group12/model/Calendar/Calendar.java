@@ -5,12 +5,13 @@ import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.model.ItemsSet;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Calendar implements IObservable, ICalendar {
+public class Calendar implements IObservable, ICalendar, Serializable {
     private List<Event> eventList;
     private boolean isEmpty;
     private List<IPlanITObserver> observers;

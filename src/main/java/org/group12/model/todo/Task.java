@@ -1,12 +1,13 @@
 package org.group12.model.todo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
  * Represents a subtask in a BigTask.
  */
-public class Task implements ITask {
+public class Task implements ITask, Serializable {
     private String title;
     private final LocalDateTime dateCreated;
     private boolean completed;

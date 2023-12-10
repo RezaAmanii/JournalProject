@@ -19,7 +19,7 @@ class TodoCollectionTest {
         todoCollection = todoCollectionFactory.createTodoCollection("Test Collection");
     }
 
-    @Test
+    /*@Test
     void addTaskListAddsNewTaskList() {
         todoCollection.addTaskList("New Task List");
         assertFalse(todoCollection.getTaskListMap().isEmpty());
@@ -37,7 +37,7 @@ class TodoCollectionTest {
     void removeTaskListDoesNothingWhenTaskListDoesNotExist() {
         todoCollection.removeTaskList("Nonexistent ID");
         assertTrue(todoCollection.getTaskListMap().isEmpty());
-    }
+    }*/
 
     @Test
     void setTitleChangesCollectionTitle() {

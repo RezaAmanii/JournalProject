@@ -7,11 +7,13 @@ import org.group12.model.ItemsSet;
 import org.group12.model.todo.ITaskList;
 import org.group12.model.todo.TaskList;
 
+import java.io.Serializable;
+
 /**
  * Represents a factory for creating TaskList objects.
  * This class uses a TaskListIDFactory to generate unique IDs for each TaskList.
  */
-public class TaskListFactory {
+public class TaskListFactory implements Serializable {
     private IIDFactory idFactory;
     private final ItemsSet items;
 

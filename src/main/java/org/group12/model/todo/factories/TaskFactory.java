@@ -7,11 +7,13 @@ import org.group12.model.ItemsSet;
 import org.group12.model.todo.ITask;
 import org.group12.model.todo.Task;
 
+import java.io.Serializable;
+
 /**
  * Represents a factory for creating Task objects.
  * This class uses a TaskIDFactory to generate unique IDs for each Task.
  */
-public class TaskFactory {
+public class TaskFactory implements Serializable {
     private IIDFactory idFactory;
 
     /**

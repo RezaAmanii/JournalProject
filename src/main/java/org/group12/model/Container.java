@@ -7,7 +7,9 @@ import org.group12.model.journal.JournalFactory;
 import org.group12.model.todo.TodoCollection;
 import org.group12.model.todo.factories.TodoCollectionFactory;
 
-public class Container {
+import java.io.Serializable;
+
+public class Container implements Serializable {
     private TodoCollectionFactory todoCollectionFactory;
 
     private Calendar calender;

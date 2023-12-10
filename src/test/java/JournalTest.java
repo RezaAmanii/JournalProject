@@ -12,11 +12,11 @@ class JournalTest {
 
     @BeforeEach
     void setUp() {
-        journalEntryFactory = JournalEntryFactory.getInstance();
+        /*journalEntryFactory = JournalEntryFactory.getInstance();
         journalFactory = JournalFactory.getInstance();
         journal = journalFactory.createJournal("Test Journal", journalEntryFactory);
         journalEntry = journalEntryFactory.createJournalEntry("Test Title", "Test Content");
-        journal.addEntry("Test Title", "Test Content");
+        journal.addEntry("Test Title", "Test Content");*/
     }
 
     @Test

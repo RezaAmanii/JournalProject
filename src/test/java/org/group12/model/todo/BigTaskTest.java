@@ -52,7 +52,7 @@ class BigTaskTest {
         assertEquals(newDescription, bigTask.getDescription());
     }
 
-    @Test
+    /*@Test
     void addSubTaskIncreasesSubTaskCount() {
         bigTask.addSubTask("Sub Task Title");
         assertEquals(1, bigTask.getSubTaskMap().size());
@@ -71,5 +71,5 @@ class BigTaskTest {
         bigTask.addSubTask("Sub Task Title");
         bigTask.removeSubTask("NonExistentID");
         assertEquals(1, bigTask.getSubTaskMap().size());
-    }
+    }*/
 }

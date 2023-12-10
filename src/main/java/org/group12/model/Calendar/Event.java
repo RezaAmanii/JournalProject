@@ -5,11 +5,12 @@ import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.model.*;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Event implements IEvent, IObservable {
+public class Event implements IEvent, IObservable, Serializable {
     private String title;
     private String description;
     private final LocalDateTime dateCreated;

@@ -1,12 +1,13 @@
 package org.group12.model.Calendar;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class EventSorter {
+public class EventSorter implements Serializable {
 
     // ----- O( nlo(n) ) time complexity -----------
 

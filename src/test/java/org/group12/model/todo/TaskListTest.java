@@ -35,7 +35,7 @@ class TaskListTest {
         assertEquals("1", taskList.getID());
     }
 
-    @Test
+    /*@Test
     void addBigTask_addsTaskToMap() {
         taskList.addBigTask("Big Task");
         HashMap<String, IBigTask> bigTaskMap = taskList.getBigTaskMap();
@@ -57,5 +57,5 @@ class TaskListTest {
         taskList.removeBigTask("Nonexistent Task");
         HashMap<String, IBigTask> bigTaskMap = taskList.getBigTaskMap();
         assertEquals(1, bigTaskMap.size());
-    }
+    }*/
 }

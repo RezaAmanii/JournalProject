@@ -5,10 +5,12 @@ import org.group12.model.IDFactory.IIDFactory;
 import org.group12.model.IDFactory.JournalIDFactory;
 import org.group12.model.ItemsSet;
 
+import java.io.Serializable;
+
 /**
  * Singleton factory class for creating instances of Journal.
  */
-public class JournalFactory {
+public class JournalFactory implements Serializable {
     private IIDFactory idFactory;
     private static JournalFactory instance;
 
