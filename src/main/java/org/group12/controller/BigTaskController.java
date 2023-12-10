@@ -61,6 +61,7 @@ public class BigTaskController implements IController, IObservable {
     public void setBigTaskFavoriteStatus(String bigTaskID, boolean status){
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
         bigTask.setFavourite(status);
+        notifyObservers();
     }
 
     public void renameTheTask(String bigTaskID, String newTitle){

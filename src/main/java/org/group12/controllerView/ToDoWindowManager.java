@@ -312,6 +312,8 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
     private void refreshFixedLists() {
+        fixedListsVbox.getChildren().clear();
+
         for (ITaskList list : taskListController.fetchAllTaskLists()) {
             if (list.getTitle().equals("Today") || list.getTitle().equals("Important")) {
                 fixedListsVbox.getChildren().add(createNewListObject(list));
@@ -366,6 +368,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
     @Override
     public void update() {
+        clearListVBoxContent();
         refreshAllListVBox();
         refreshSidePanelInfo();
 

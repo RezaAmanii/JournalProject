@@ -81,6 +81,7 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         this.dueDateLabel.setText(bigTaskController.getBigTaskDateCreated(this.ID));
         this.statusCheckBox.setSelected(bigTaskController.getBigTaskCheckBoxStatus(this.ID));
 
+
     }
 
     private void setupEventHandlers(){
@@ -115,10 +116,12 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     }
 
     public void updateFavoriteImageView(boolean status) {
-        String imagePath = bigTaskController.getBigTaskFavouriteStatus(this.ID) ? "star.png" : "starUnselected.png";
+        String imagePath = status ? "star.png" : "starUnselected.png";
         Image image = new Image(imagePath);
         favouriteImageView.setImage(image);
-        favouriteImageView.setVisible(status);
+        bigTaskController.setBigTaskFavoriteStatus(this.ID, status);
+
+
     }
 
     @FXML
@@ -171,6 +174,8 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
                 this.titleLabel.setText(bigTaskController.getBigTaskTitle(bigTask.getID()));
                 this.dueDateLabel.setText(bigTaskController.getBigTaskDateCreated(bigTask.getID()));
                 this.statusCheckBox.setSelected(bigTaskController.getBigTaskCheckBoxStatus(bigTask.getID()));
+                boolean isFavourite = bigTaskController.getBigTaskFavouriteStatus(bigTask.getID());
+                updateFavoriteImageView(isFavourite);
 
             } else{
                 System.out.println("Item with ID " + ID + " is not a IBigTask!");
