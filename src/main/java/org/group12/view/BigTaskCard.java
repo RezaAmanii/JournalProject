@@ -9,6 +9,9 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import org.group12.Listeners.BigTaskCardClickListener;
+import org.group12.Listeners.TaskListCardClickListener;
+import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
@@ -21,7 +24,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class BigTaskCard extends AnchorPane implements Initializable {
+public class BigTaskCard extends AnchorPane implements Initializable, ITaskListObserver {
 
     // Class attributes
     private final String ID;
@@ -29,6 +32,9 @@ public class BigTaskCard extends AnchorPane implements Initializable {
 
     // Controller
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
+
+    // Listener
+    private BigTaskCardClickListener clickListener;
 
     // FXML components
     @FXML
@@ -114,6 +120,9 @@ public class BigTaskCard extends AnchorPane implements Initializable {
     @FXML
     public void titleClicked() {
         setDoubleClickEvent();
+        if(clickListener != null){
+            clickListener.onBigTaskCardClicked(this);
+        }
     }
 
 
@@ -123,6 +132,29 @@ public class BigTaskCard extends AnchorPane implements Initializable {
         bigTaskController.setBigTaskCheckBoxStatus(ID, isSelected);
     }
 
+
+
+    public String getID() {
+        return ID;
+    }
+
+
+    private void handleDoubleClick() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Rename Task");
+        dialog.setHeaderText("Enter new name");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(name -> {
+            bigTaskController.renameTheTask(this.ID, name);
+        });
+    }
+
+    public void setBigTaskClickListener(BigTaskCardClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    @Override
     public void update() {
 
         try{
@@ -145,22 +177,6 @@ public class BigTaskCard extends AnchorPane implements Initializable {
         } catch (ClassCastException error){
             System.out.println("Item with ID " + ID + " is not a IBigTask!");
         }
-    }
-
-    public String getID() {
-        return ID;
-    }
-
-
-    private void handleDoubleClick() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Rename Task");
-        dialog.setHeaderText("Enter new name");
-
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> {
-            bigTaskController.renameTheTask(this.ID, name);
-        });
     }
 
 

@@ -9,6 +9,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.TaskListController;
@@ -29,7 +30,7 @@ import java.util.ResourceBundle;
 import static org.group12.view.TaskListView.*;
 
 
-public class ToDoWindowManager implements Initializable, ITaskListObserver, TaskListCardClickListener {
+public class ToDoWindowManager implements Initializable, ITaskListObserver, TaskListCardClickListener, BigTaskCardClickListener {
 
     // FXML components
     public VBox fixedListsVbox;
@@ -45,7 +46,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
     // Corresponding controller
     public static TaskListController taskListController = TaskListController.getInstance();
-    public taskListCards selectedTaskListCard = null;
 
     // A reference to the selectedList and selectedBigTask
     public static ITaskList selectedList = null;
@@ -67,22 +67,9 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         taskListCards newTaskListCard = new taskListCards(list.getID(), Items.getInstance());
         newTaskListCard.setClickListener(this);
 
-
         return newTaskListCard;
     }
 
-/*
-    public GridPane createNewListObject(ITaskList newList) {
-        GridPane listToAppend = createListPane();
-        TextField taskNameLBL = createTaskNameLabel(newList);
-        Label noOfTasks = createNumberOfTaskLabel(newList);
-        setTaskNameLabelEventHandler(newList, taskNameLBL, noOfTasks);
-        listToAppend.getChildren().addAll(taskNameLBL, noOfTasks);
-        VBox.setMargin(listToAppend, new Insets(10.0, 10.0, 0, 10.0));
-        return listToAppend;
-    }
-
- */
 
 
     public static String retriveTaskListID(ITaskList taskList) {
@@ -144,9 +131,14 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         taskListController.getTaskByID(retriveBigTaskID(task)).setTitle(newName);
     }
 
+    public BigTaskCard createNewTaskObject(IBigTask task) {
+        BigTaskCard newBigTaskCard = new BigTaskCard(task.getID(), Items.getInstance());
+        newBigTaskCard.setBigTaskClickListener(this);
+        return newBigTaskCard;
+    }
+
+/*
     public GridPane createNewTaskObject(IBigTask task) {
-
-
 
         GridPane newTaskPane = createTaskPane();
         Label deadLineLabel = createDeadlineLabel(task);
@@ -168,6 +160,8 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         VBox.setMargin(newTaskPane, new Insets(10.0, 10.0, 0, 10.0));
         return newTaskPane;
     }
+
+ */
 
     public void addNewTask() {
         if (selectedList.getTitle().equals(taskListController.getTaskListByTitle("Today")) || selectedList.getTitle().equals(taskListController.getTaskListByTitle("Important"))) {
@@ -389,5 +383,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     @Override
     public void onTaskListCardClicked(taskListCards clickedCard) {
         activeListNameLBL.setText(taskListController.getTaskListByID(clickedCard.getID()).getTitle());
+    }
+
+
+    @Override
+    public void onBigTaskCardClicked(BigTaskCard bigTaskCard) {
+
     }
 }
