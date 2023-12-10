@@ -16,6 +16,7 @@ import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
 import org.group12.view.JournalView;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -28,7 +29,8 @@ public class JournalController implements IController {
     private Journal journalModel;
     private Container container;
     private JournalView journalView;
-    private ObjectProperty<JournalEntry> journalEntry;
+    private ObjectProperty<JournalEntry> journalEntry; // not allowed here ?
+    private static JournalController instance;
 
 //    private HashMap<String, INameable> itemMap;
     private Items itemMap;
@@ -45,62 +47,69 @@ public class JournalController implements IController {
     @FXML
     private Label prevDayBtn;
 
-    @FXML
-    void onAddEntry(MouseEvent event) {
-        journalEntry.get().updateContent(content.getText());
-        journalModel.addEntryForDate(entryDate.getValue(), journalEntry.get());
-    }
+//    @FXML
+//    void onAddEntry(MouseEvent event) {
+//        journalEntry.get().updateContent(content.getText());
+//        journalModel.addEntryForDate(entryDate.getValue(), journalEntry.get());
+//    }
+//
+//    @FXML
+//    void onDeleteClk(MouseEvent event) {
+//        var alert = new Alert(Alert.AlertType.CONFIRMATION);
+//        alert.setTitle("Confirm Delete");
+//        alert.setHeaderText("Confirm");
+//        alert.setContentText("Confirm deleting journal?");
+//
+//        var option = alert.showAndWait().orElse(ButtonType.CANCEL);
+//        if(ButtonType.OK.equals(option)) {
+//            journalModel.removeEntry(entryDate.getValue());
+//            onPrevDayClk(event);
+//        }
+//    }
 
-    @FXML
-    void onDeleteClk(MouseEvent event) {
-        var alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm Delete");
-        alert.setHeaderText("Confirm");
-        alert.setContentText("Confirm deleting journal?");
-
-        var option = alert.showAndWait().orElse(ButtonType.CANCEL);
-        if(ButtonType.OK.equals(option)) {
-            journalModel.removeEntry(entryDate.getValue());
-            onPrevDayClk(event);
-        }
-    }
-
-    @FXML
-    void onNextDayClk(MouseEvent event) {
-        var currentVal = entryDate.valueProperty().get();
-        entryDate.valueProperty().set(currentVal.plusDays(1));
-    }
-
-    @FXML
-    void onPrevDayClk(MouseEvent event) {
-        var currentVal = entryDate.valueProperty().get();
-        entryDate.valueProperty().set(currentVal.minusDays(1));
-    }
+//    @FXML
+//    void onNextDayClk(MouseEvent event) {
+//        var currentVal = entryDate.valueProperty().get();
+//        entryDate.valueProperty().set(currentVal.plusDays(1));
+//    }
+//
+//    @FXML
+//    void onPrevDayClk(MouseEvent event) {
+//        var currentVal = entryDate.valueProperty().get();
+//        entryDate.valueProperty().set(currentVal.minusDays(1));
+//    }
 
 
 
     public JournalController(){
         this.itemMap = Items.getInstance();
+        this.container = Container.getInstance();
         this.journalModel = container.getJournal();
         //journalModel.addObserver(journalView);
     }
-
-    @FXML
-    public void initialize() {
-        createBindings();
-
-        entryDate.valueProperty().setValue(LocalDateTime.now());
+    public static JournalController getInstance(){
+        if(instance == null){
+            instance = new JournalController();
+        }
+        return instance;
     }
 
-    private void createBindings() {
-        journalEntry = new SimpleObjectProperty<>(journalModel.getEntryForDate(LocalDateTime.now()));
-        journalEntry.bind(entryDate.valueProperty().map(journalModel::getEntryForDate));
-        journalEntry.addListener((observable, oldValue, newValue) -> content.setText(newValue.getContent()));
+//    @FXML
+//    public void initialize() {
+//        createBindings();
+//
+//        entryDate.valueProperty().setValue(LocalDate.now());
+//    }
 
-        entryDateLabel.textProperty()
-                .bind(entryDate.valueProperty()
-                        .map(date -> date.format(ISO_DATE)));
-    }
+//    private void createBindings() {
+//        journalEntry = new SimpleObjectProperty<>(journalModel.getEntryForDate(LocalDateTime.now()));
+//        journalEntry.bind(entryDate.valueProperty().map(journalModel::getEntryByDate));
+//        journalEntry.addListener((observable, oldValue, newValue) -> content.setText(newValue.getContent()));
+//
+//        entryDateLabel.textProperty()
+//                .bind(entryDate.valueProperty()
+//                        .map(date -> date.format(ISO_DATE)));
+//    }
 
 
     /**

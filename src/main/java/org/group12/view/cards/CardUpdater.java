@@ -1,10 +1,12 @@
 package org.group12.view.cards;
 
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import org.group12.model.Calendar.Event;
 import org.group12.model.ItemsSet;
+import org.group12.model.journal.JournalEntry;
 import org.group12.view.cards.*;
 
 import java.util.List;
@@ -28,8 +30,19 @@ public class CardUpdater {
         // ... existing update code from TaskCard ...
     }
 
-    public void updateJournalEntryCard(JournalEntryCard card) {
+    public void updateJournalEntryCard(String ID, JournalEntry entry, Label titleLabel, TextArea contentArea) {
         // ... existing update code from JournalEntryCard ...
+        if (entry != null) {
+            // Set title
+            String title = entry.getTitle();
+            titleLabel.setText(title);
+            // Set content
+            String content = entry.getContent();
+            contentArea.setText(content);
+        } else {
+            // If entry is null, print an error message
+            System.out.println("Entry with ID " + ID + " is null!");
+        }
     }
     public void updateEventCard(String ID, Event event, Label titleLabel, Label contentLabel) {
         // ... existing update code from EventCard ...
