@@ -161,7 +161,7 @@
                         </HBox>
                         <HBox alignment="TOP_CENTER" prefHeight="112.0" prefWidth="448.0">
                             <children>
-                                <Text fill="#c61818" strokeType="OUTSIDE" strokeWidth="0.0" text="You">
+                                <Text fill="#c61818" strokeType="OUTSIDE" strokeWidth="0.0" text="Your">
                                     <font>
                                         <Font name="Impact" size="48.0" />
                                     </font>

@@ -53,7 +53,7 @@ public class LoginPageController implements Initializable {
             newStage.show();
         } else {
             myLable.setText("Invalid Email or Password !");
-            myLable.setStyle("-fx-text-fill: red;");
+            myLable.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
         }
     }
 
