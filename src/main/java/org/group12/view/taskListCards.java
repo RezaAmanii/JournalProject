@@ -10,6 +10,7 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskListController;
 import org.group12.model.INameable;
@@ -22,7 +23,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class taskListCards extends AnchorPane implements Initializable {
+public class taskListCards extends AnchorPane implements Initializable, ITaskListObserver {
 
     // Class attributes
     private final String ID;
@@ -38,6 +39,8 @@ public class taskListCards extends AnchorPane implements Initializable {
     private Label dateCreated;
     @FXML
     private Label NrOfBigTasks;
+    @FXML
+    private ImageView deleteTaskListBtn;
 
 
 
@@ -138,6 +141,12 @@ public class taskListCards extends AnchorPane implements Initializable {
         result.ifPresent(name -> {
             taskListController.renameTaskList(this.ID, name);
         });
+    }
+
+    @FXML
+    private void deleteTaskListBtnClicked(){
+        taskListController.handlerRemoveToDoList(taskListController.getTaskListByID(this.ID));
+        update();
     }
 
 
