@@ -34,7 +34,12 @@ public class BigTaskController implements IController, IObservable {
 
     // Methods
     public String getBigTaskTitle(String bigTaskID){
-        return itemsSet.getItem(bigTaskID).getTitle();
+        IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
+        if(bigTask != null){
+            return bigTask.getTitle();
+        } else {
+            return "BigTask not found";
+        }
     }
 
     public String getBigTaskDateCreated(String bigTaskID){

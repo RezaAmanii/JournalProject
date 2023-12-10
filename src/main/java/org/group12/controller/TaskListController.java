@@ -97,10 +97,6 @@ public class TaskListController implements IController, IObservable {
         return String.valueOf(taskList.getBigTaskList().size());
     }
 
-    public void renameBigTask(String bigTaskID, String newTitle){
-        items.getItem(bigTaskID).setTitle(newTitle);
-        notifyObservers();
-    }
 
 
 
