@@ -14,14 +14,16 @@ import java.util.List;
 
 public class BigTaskController implements IController, IObservable {
 
-    private ItemsSet itemsSet;
+    private final ItemsSet itemsSet;
     private static BigTaskController instance;
-    private List<IPlanITObserver> observers = new ArrayList<>();
+    private final List<IPlanITObserver> observers = new ArrayList<>();
 
+    // Constructor
     private BigTaskController() {
         this.itemsSet = Items.getInstance();
     }
 
+    // Singleton
     public static BigTaskController getInstance() {
         if (instance == null) {
             instance = new BigTaskController();
