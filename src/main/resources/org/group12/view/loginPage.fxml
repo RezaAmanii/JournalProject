@@ -29,6 +29,15 @@
                 </VBox>
                 <HBox alignment="CENTER" prefHeight="43.0" prefWidth="332.0">
                     <children>
+                        <Label text="Enter Username and Password" fx:id="myLable"/>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+
+                <HBox alignment="CENTER" prefHeight="43.0" prefWidth="332.0">
+                    <children>
                         <TextField fx:id="usernameField" prefHeight="36.0" prefWidth="267.0" promptText="Username" style="-fx-background-radius: 50; -fx-border-radius: 50;">
                             <font>
                                 <Font size="14.0" />
@@ -56,7 +65,7 @@
                         <Insets top="5.0" />
                     </VBox.margin>
                     <children>
-                        <Button mnemonicParsing="false" onAction="#login" onMouseClicked="#checkCredentials" prefHeight="38.0" prefWidth="267.0" style="-fx-background-radius: 50; -fx-border-radius: 50;" styleClass="login-button" stylesheets="@loginPage.css" text="Login" textFill="WHITE">
+                        <Button mnemonicParsing="false"  onMouseClicked="#login" prefHeight="38.0" prefWidth="267.0" style="-fx-background-radius: 50; -fx-border-radius: 50;" styleClass="login-button" stylesheets="@loginPage.css" text="Login" textFill="WHITE">
                             <font>
                                 <Font name="Calibri Bold" size="18.0" />
                             </font>
@@ -160,7 +169,7 @@
                                         <Insets left="15.0" />
                                     </HBox.margin>
                                 </Text>
-                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Plans">
+                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Plan">
                                     <font>
                                         <Font name="Impact" size="48.0" />
                                     </font>
