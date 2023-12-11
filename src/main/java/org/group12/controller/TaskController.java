@@ -49,8 +49,4 @@ public class TaskController implements IController {
         return stringToCheck != null && !stringToCheck.trim().isEmpty();
     }
 
-    public static boolean dateValidation(LocalDateTime dateToCheck) {
-        return dateToCheck != null && !dateToCheck.isBefore(LocalDateTime.now());
-
-    }
     }

@@ -27,9 +27,7 @@ import java.util.*;
 import static org.group12.controllerView.ToDoWindowManager.*;
 import static org.group12.view.TaskView.*;
 
-/**
- * Controller class for managing subtasks in the application.
- */
+
 public class SubTaskWindowManager implements Initializable {
 
     static public ITask selectedSubTask = null;
@@ -48,13 +46,7 @@ public class SubTaskWindowManager implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         taskNameLabel.setText(selectedTask.getTitle());
-        this.deleteImg.setVisible(true);
-        Image deleteImg = new Image("deleteWhite.png");
-        this.deleteImg.setImage(deleteImg);
 
-
-
-        //deadlineTF.setText(deadline.get().getDayOfMonth() + "/" + deadline.get().getMonthValue() + "/" + deadline.get().getYear() + " - " + deadline.get().getHour() + ':' + deadline.get().getMinute());
         refreshSubTasksPane();
     }
 
