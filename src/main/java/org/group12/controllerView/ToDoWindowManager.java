@@ -114,9 +114,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         if(selectedTaskList != null){
             String taskID = selectedTaskList.addBigTask(title);
             IBigTask task = bigTaskController.getBigTaskByID(taskID);
-
             BigTaskCard bigTaskCard = new BigTaskCard(task.getID(), Items.getInstance());
-
         }
         update();
     }
@@ -238,24 +236,33 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
 
-
+    // TODO need refactoring
     public void refreshSidePanelInfo() {
-        selectedTaskList = taskListController.getTaskListByID(selectedTaskList.getID());
-        activeListNameLBL.setText(selectedTaskList.getTitle());
+        if (selectedTaskList == null) {
+            selectedTaskList = taskListController.getTaskListByTitle("Today");
+        } else {
+            selectedTaskList = taskListController.getTaskListByID(selectedTaskList.getID());
+        }
+        if (selectedTaskList == null) {
+            activeListNameLBL.setText("List Title");
+        } else activeListNameLBL.setText(selectedTaskList.getTitle());
 
         ongoingTasksVbox.getChildren().clear();
         completedTasksVbox.getChildren().clear();
 
-        Comparator<IBigTask> comparator = Comparator.comparing(IBigTask::getDueDate);
-        selectedTaskList.getBigTaskList().sort(comparator);
+        //Comparator<IBigTask> comparator = Comparator.comparing(IBigTask::getDueDate);
+        //selectedTaskList.getBigTaskList().sort(comparator);
 
-        for (IBigTask task : selectedTaskList.getBigTaskList()) {
-            if (task.getSubTaskList().size() == task.getCompletedSubTasks().size() && !task.getSubTaskList().isEmpty())
-                completedTasksVbox.getChildren().add(createNewTaskObject(task));
-            else
-                ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
+        if (selectedTaskList == null) {
+            return;
+        }else {
+            for (IBigTask task : selectedTaskList.getBigTaskList()) {
+                if (task.getSubTaskList().size() == task.getCompletedSubTasks().size() && !task.getSubTaskList().isEmpty())
+                    completedTasksVbox.getChildren().add(createNewTaskObject(task));
+                else
+                    ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
+            }
         }
-
     }
 
 
