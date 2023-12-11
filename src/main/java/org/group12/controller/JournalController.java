@@ -135,7 +135,10 @@ public class JournalController implements IController, IObservable {
      */
     public JournalEntry getEntryByDate(LocalDateTime date) {
         //return List<JournalEntry> todaysEntries = entryModel.getTodaysEntry(date);
-        return null;
+        if (journalModel.getEntryByDate(date) == null) {
+            journalModel.addEntry(date);
+        }
+        return journalModel.getEntryByDate(date);
     }
 
 

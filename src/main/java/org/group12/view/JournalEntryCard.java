@@ -70,6 +70,7 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
 
     @FXML
     private void titleClicked(){
+
         // controller.edittitle(entry, string)
     }
     @FXML
@@ -83,8 +84,9 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
     }
     @FXML
     private void deleteButtonClicked(MouseEvent event){
-         //controller.removeJournalEntry(entry);
+         controller.updateJournalEntry(entry, "");
     }
+
 
     // TODO: hur funkar taskController?
 
