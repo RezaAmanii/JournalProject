@@ -24,8 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static org.group12.view.TaskListView.*;
 
@@ -105,6 +104,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         return newBigTaskCard;
     }
 
+
     public void addNewTask() {
         if(selectedTaskList != null && (selectedTaskList.getTitle().equals("Today") || selectedTaskList.getTitle().equals("Important"))){
             System.out.println("Choose another list to add task");
@@ -123,6 +123,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
     // Populate OngoingTasks
+
     public void populateOngoingTasks(ITaskList taskList){
         ongoingTasksVbox.getChildren().clear();
 
@@ -139,13 +140,68 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
 
-
+    // Refreshing the lists and tasks methods
     public void refreshAllListVBox() {
         clearListVBoxContent();
         refreshFixedLists();
         refreshAppendableLists();
         refreshSidePanelInfo();
     }
+
+    private void clearListVBoxContent() {
+        selectedTaskList = taskListController.getTaskListByTitle("Today");
+        fixedListsVbox.getChildren().clear();
+        appendableListVbox.getChildren().clear();
+
+    }
+
+    private void refreshFixedLists() {
+        fixedListsVbox.getChildren().clear();
+
+        for (ITaskList list : taskListController.fetchAllTaskLists()) {
+            if (list.getTitle().equals("Today") || list.getTitle().equals("Important")) {
+                fixedListsVbox.getChildren().add(createNewListObject(list));
+            }
+        }
+    }
+
+    private void refreshAppendableLists() {
+        for (ITaskList list : taskListController.fetchAllTaskLists()) {
+            if (!list.getTitle().equals("Today") && !list.getTitle().equals("Important")) {
+                updateListTasks(list);
+                appendableListVbox.getChildren().add(createNewListObject(list));
+            }
+        }
+    }
+
+    private void updateListTasks(ITaskList list) {
+        list.getBigTaskList().forEach(task -> {
+            LocalDateTime dueDate = task.getDueDate();
+            if (dueDate != null) {
+                LocalDate date = dueDate.toLocalDate();
+                if (date.isEqual(LocalDateTime.now().toLocalDate())) {
+                    updateTodayTask(task);
+                }
+
+            }
+
+            if (task.isFavourite()) {
+                updateImportantTask(task);
+            }
+        });
+    }
+
+
+    private void updateTodayTask(IBigTask task) {
+        taskListController.getTaskListByTitle("Today").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
+        taskListController.getTaskListByTitle("Today").addBigTask(task.getTitle());
+    }
+
+    private void updateImportantTask(IBigTask task) {
+        taskListController.getTaskListByTitle("Important").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
+        taskListController.getTaskListByTitle("Important").addBigTask(task.getTitle());
+    }
+
 
 
     public void refreshSidePanelInfo() {
@@ -168,6 +224,9 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
 
+
+
+    // Methods that needs to be moved out
     private void setTaskNameLabelEventHandler(ITaskList newList, TextField taskNameLBL, Label noOfTask) {
         taskNameLBL.setOnMouseClicked(event -> {
             handleTaskNameLabelClick(event, newList, taskNameLBL, noOfTask);
@@ -289,60 +348,13 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         });
     }
 
-    private void refreshFixedLists() {
-        fixedListsVbox.getChildren().clear();
-
-        for (ITaskList list : taskListController.fetchAllTaskLists()) {
-            if (list.getTitle().equals("Today") || list.getTitle().equals("Important")) {
-                fixedListsVbox.getChildren().add(createNewListObject(list));
-            }
-        }
-    }
 
 
-    private void refreshAppendableLists() {
-        for (ITaskList list : taskListController.fetchAllTaskLists()) {
-            if (!list.getTitle().equals("Today") && !list.getTitle().equals("Important")) {
-                updateListTasks(list);
-                appendableListVbox.getChildren().add(createNewListObject(list));
-            }
-        }
-    }
-
-    private void updateListTasks(ITaskList list) {
-        list.getBigTaskList().forEach(task -> {
-            LocalDateTime dueDate = task.getDueDate();
-            if (dueDate != null) {
-                LocalDate date = dueDate.toLocalDate();
-                if (date.isEqual(LocalDateTime.now().toLocalDate())) {
-                    updateTodayTask(task);
-                }
-
-            }
-
-            if (task.isFavourite()) {
-                updateImportantTask(task);
-            }
-        });
-    }
-
-    private void updateTodayTask(IBigTask task) {
-        taskListController.getTaskListByTitle("Today").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
-        taskListController.getTaskListByTitle("Today").addBigTask(task.getTitle());
-    }
-
-    private void updateImportantTask(IBigTask task) {
-        taskListController.getTaskListByTitle("Important").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
-        taskListController.getTaskListByTitle("Important").addBigTask(task.getTitle());
-    }
 
 
-    private void clearListVBoxContent() {
-        selectedTaskList = taskListController.getTaskListByTitle("Today");
-        fixedListsVbox.getChildren().clear();
-        appendableListVbox.getChildren().clear();
 
-    }
+
+
 
     @Override
     public void update() {
