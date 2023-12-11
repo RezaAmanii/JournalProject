@@ -1,4 +1,4 @@
-package org.group12.view.cards;
+package org.group12.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

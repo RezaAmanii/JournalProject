@@ -1,4 +1,4 @@
-package org.group12.view.cards;
+package org.group12.view;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import org.group12.model.Calendar.Event;
 import org.group12.model.ItemsSet;
 import org.group12.model.journal.JournalEntry;
-import org.group12.view.cards.*;
 
 import java.util.List;
 

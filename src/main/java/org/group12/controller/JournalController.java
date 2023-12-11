@@ -10,6 +10,7 @@ import org.group12.model.Items;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
 import org.group12.controllerView.JournalWindowManager;
+import org.group12.view.JournalView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

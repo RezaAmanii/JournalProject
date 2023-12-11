@@ -1,19 +1,13 @@
-package org.group12.view.cards;
+package org.group12.view;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import org.group12.controller.CalendarController;
-import org.group12.controller.JournalController;
-import org.group12.model.Calendar.Calendar;
 import org.group12.model.Calendar.Event;
 import org.group12.model.ItemsSet;
-import org.group12.model.journal.JournalEntry;
 import org.group12.util.CastHelper;
-
-import java.io.IOException;
 
 public class EventCard extends AnchorPane {
     // TODO: hur ska items hanteras? här, I en todoPage?, ska vi casta här, ska det vara INameable?

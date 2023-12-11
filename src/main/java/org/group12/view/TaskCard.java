@@ -1,31 +1,32 @@
-package org.group12.view.cards;
+package org.group12.view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import org.group12.controller.TaskListController;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.ITask;
-import org.group12.model.todo.ITaskList;
 
 import java.io.IOException;
 
-public class TaskListCard extends AnchorPane {
+public class TaskCard extends AnchorPane {
     // TODO: hur ska items hanteras? här, I en todoPage?, ska vi casta här, ska det vara INameable?
     private final String ID;
     private final ItemsSet items;
-    private final TaskListController taskListController;
+    //private final TaskController taskController;
     @FXML
     private Label titleLabel;
+    @FXML
+    private CheckBox statusCheckBox;
 
-    public TaskListCard(String ID, ItemsSet items){
+    // TODO: lägg till TaskController i konstruktorn
+    public TaskCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
-        this.taskListController = TaskListController.getInstance();
+        //this.taskController = taskController;
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("taskListCard.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("taskCard.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
@@ -34,12 +35,14 @@ public class TaskListCard extends AnchorPane {
             throw new RuntimeException(exception);
         }
 
-        update();
+        //update();
     }
 
+    // TODO: hur funkar taskController?
     @FXML
-    private void cardClicked() {
-
+    private void checkBoxToggled() {
+        boolean isSelected = statusCheckBox.isSelected();
+        //taskController.handleSetStatus(ID, isSelected);
     }
 
     // TODO: method name might be changed to better fit the actual way the title is changed
@@ -47,21 +50,25 @@ public class TaskListCard extends AnchorPane {
     private void titleClicked() {
         // here should be the code to get the new title
         //String newTitle =
-        //taskListController.changeListTitle(newTitle);
+        //taskController.changeListTitle(newTitle);
     }
 
     // TODO: protection måste läggas till
     public void update() {
-        // get the TaskList to get the information from
+        // get the BigTask to get the information from
         try {
-            ITaskList taskList = (ITaskList) items.getItem(ID);
+            ITask task = (ITask) items.getItem(ID);
             // Set the Title
-            String title = taskList.getTitle();
+            String title = task.getTitle();
             titleLabel.setText(title);
+
+            // Set the status
+            boolean isCompleted = task.getStatus();
+            statusCheckBox.setSelected(isCompleted);
 
         } catch (ClassCastException e) {
             // If the cast fails, print an error message
-            System.out.println("Item with ID " + ID + " is not a ITaskList!");
+            System.out.println("Item with ID " + ID + " is not a ITask!");
         }
     }
 

@@ -1,17 +1,12 @@
-package org.group12.view.cards;
+package org.group12.view;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.paint.Color;
 import org.group12.controller.CalendarController;
 import org.group12.model.Calendar.Event;
 import org.group12.model.ItemsSet;
-
-import java.io.IOException;
-import java.util.List;
 
 public class EventCardTiny extends AnchorPane {
     private final String ID;

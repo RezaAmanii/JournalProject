@@ -1,7 +1,6 @@
 package org.group12.controllerView;
 
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -19,7 +18,6 @@ import org.group12.model.Items;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.todo.*;
 import org.group12.view.BigTaskCard;
-import org.group12.view.TaskListCard;
 import org.group12.view.taskListCards;
 
 import java.io.IOException;
