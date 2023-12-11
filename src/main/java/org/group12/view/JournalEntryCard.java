@@ -1,6 +1,7 @@
 package org.group12.view;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -14,6 +15,7 @@ import org.group12.model.ItemsSet;
 import org.group12.model.journal.JournalEntry;
 import org.group12.util.CastHelper;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -47,8 +49,11 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
 
         this.entry = CastHelper.castObject(JournalEntry.class, items.getItem(ID));
 
+        System.out.println("JournalEntryCard");
         FXMLLoaderService fxmlLoaderService = new FXMLLoaderService();
         fxmlLoaderService.loadFXML(this, this, "JournalEntryCard.fxml");
+
+
 
         this.cardUpdater = new CardUpdater(items);
 

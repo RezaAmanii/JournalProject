@@ -14,6 +14,7 @@ import org.group12.model.journal.JournalEntry;
 import org.group12.view.JournalEntryCard;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
@@ -42,9 +43,14 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (journalController.getEntryByDate(LocalDateTime.now()) == null)
+        entryDate = new DatePicker();
+        entryDate.setValue(LocalDate.now());
+        if (journalController.getEntryByDate(LocalDateTime.now()) == null) {
+            System.out.println("null");
             journalController.addJournalEntry();
-        //populateJournalEntry(journalController.getEntryByDate(LocalDateTime.now()));
+        }
+
+        populateJournalEntry(journalController.getEntryByDate(LocalDateTime.now()));
         journalController.addObserver(this);
 
     }
