@@ -162,7 +162,8 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
 
     @FXML
     private void deleteTaskBtnClicked(){
-        bigTaskController.handleRemoveTask(this.ID);
+        IBigTask bigTaskToRemove = (IBigTask) items.getItem(this.ID);
+        bigTaskController.handleRemoveTask(bigTaskToRemove);
         update();
     }
 

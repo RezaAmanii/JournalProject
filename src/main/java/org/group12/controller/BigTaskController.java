@@ -3,6 +3,7 @@ package org.group12.controller;
 
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
+import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
@@ -80,8 +81,9 @@ public class BigTaskController implements IController, IObservable {
         notifyObservers();
     }
 
-    public void handleRemoveTask(String bigTaskID){
-        itemsSet.removeItem(bigTaskID);
+    public void handleRemoveTask(IBigTask bigTask){
+        ITaskList selectedList = ToDoWindowManager.selectedTaskList;
+        selectedList.removeBigTask(bigTask);
         notifyObservers();
     }
 
