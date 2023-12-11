@@ -17,8 +17,8 @@ class JournalTest {
         journalEntryFactory = JournalEntryFactory.getInstance();
         journalFactory = JournalFactory.getInstance();
         journal = journalFactory.createJournal("Test Journal", journalEntryFactory, items);
-        journalEntry = journalEntryFactory.createJournalEntry("Test Title", "Test Content");
-        journal.addEntry("Test Title", "Test Content");
+        journalEntry = journalEntryFactory.createJournalEntry();
+        journal.addEntry();
     }
 
     @Test

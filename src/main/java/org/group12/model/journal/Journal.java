@@ -6,7 +6,6 @@ import org.group12.Observers.IPlanITObserver;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,7 +63,7 @@ public class Journal implements INameable, IObservable{
      * Removes the specified entry from the journal.
      * Notifies all observers of the journal.
      *
-     * @param entry the entry to be removed
+     * @param ID the entry to be removed
      */
     public void removeEntry(String ID){
         entryList.remove(ID);
@@ -144,12 +143,10 @@ public class Journal implements INameable, IObservable{
     }
 
     public JournalEntry getEntryForDate(LocalDateTime date) {
-        return entries.getOrDefault(date, createJournalEntryForDate(date));
+        return entries.getOrDefault(date, addEntry(date));
     }
 
-    private JournalEntry createJournalEntryForDate(LocalDateTime date) {
-        return entryFactory.createJournalEntryForDate(date);
-    }
+
     public JournalEntry getEntryByDate(LocalDateTime date){
         return entries.get(date);
     }
@@ -161,8 +158,8 @@ public class Journal implements INameable, IObservable{
         entries.remove(date);
         notifyObservers();
     }
-    public void addEntry(String title, String content){
-        JournalEntry newEntry = entryFactory.createJournalEntry(title, content);
+    public void addEntry(){
+        JournalEntry newEntry = entryFactory.createJournalEntry();
         for (IPlanITObserver observer : observers) {
             newEntry.addObserver(observer);
         }
