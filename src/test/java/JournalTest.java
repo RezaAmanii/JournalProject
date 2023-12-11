@@ -1,3 +1,4 @@
+import org.group12.model.ItemsSet;
 import org.group12.model.journal.*;
 import org.group12.util.TextUtils;
 import org.junit.jupiter.api.BeforeEach;
@@ -9,12 +10,13 @@ class JournalTest {
     private JournalFactory journalFactory;
     private JournalEntryFactory journalEntryFactory;
     private JournalEntry journalEntry;
+    private ItemsSet items;
 
     @BeforeEach
     void setUp() {
         journalEntryFactory = JournalEntryFactory.getInstance();
         journalFactory = JournalFactory.getInstance();
-        journal = journalFactory.createJournal("Test Journal", journalEntryFactory);
+        journal = journalFactory.createJournal("Test Journal", journalEntryFactory, items);
         journalEntry = journalEntryFactory.createJournalEntry("Test Title", "Test Content");
         journal.addEntry("Test Title", "Test Content");
     }
@@ -34,7 +36,8 @@ class JournalTest {
     @Test
     void testRemoveEntry() {
         JournalEntry addedEntry = journal.getEntries().get(0);
-        journal.removeEntry(addedEntry);
+        String ID = addedEntry.getID();
+        journal.removeEntry(ID);
         assertEquals(0, journal.getEntries().size(), "Journal should have no entries after removing the added entry.");
     }
 

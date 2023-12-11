@@ -31,6 +31,8 @@ public class JournalWindowManager implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        assert entryDate != null : "fx:id=\"entryDate\" was not injected: check your FXML file 'journalPage.fxml'.";
+
 
     }
     public void loadView(TextArea content,DatePicker entryDate,Label entryDateLabel, Label prevDayBtn)

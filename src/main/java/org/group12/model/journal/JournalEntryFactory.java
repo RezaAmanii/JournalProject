@@ -51,10 +51,10 @@ public class JournalEntryFactory implements IJournalEntryFactory {
         return new JournalEntry(ID, title, content, LocalDate.now(), createdTimestamp);
     }
 
-    public JournalEntry createJournalEntryForDate(LocalDate date) {
+    public JournalEntry createJournalEntryForDate(LocalDateTime date) {
         String ID = idFactory.generateID();
         String title = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE);
-        return new JournalEntry(ID, title, "", LocalDate.now(), date.atStartOfDay());
+        return new JournalEntry(ID, title, "", LocalDate.now(), date);
     }
 
     /**
@@ -70,5 +70,6 @@ public class JournalEntryFactory implements IJournalEntryFactory {
         LocalDateTime createdTimestamp = LocalDateTime.now();
         return new JournalEntry(ID, title, content, LocalDate.now(), createdTimestamp);
     }
+
 
 }

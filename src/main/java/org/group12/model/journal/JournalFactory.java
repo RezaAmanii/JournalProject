@@ -3,6 +3,7 @@ package org.group12.model.journal;
 import org.group12.model.IDFactory.IDFactory;
 import org.group12.model.IDFactory.IIDFactory;
 import org.group12.model.IDFactory.JournalIDFactory;
+import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 
 /**
@@ -11,6 +12,7 @@ import org.group12.model.ItemsSet;
 public class JournalFactory {
     private IIDFactory idFactory;
     private static JournalFactory instance;
+    private ItemsSet items;
 
 
     /**
@@ -38,9 +40,9 @@ public class JournalFactory {
      * @param entryFactory the factory to create JournalEntry objects
      * @return the created Journal
      */
-    public Journal createJournal(String title, JournalEntryFactory entryFactory) {
+    public Journal createJournal(String title, JournalEntryFactory entryFactory, ItemsSet items) {
         String ID = idFactory.generateID();
-        return new Journal(ID, title, entryFactory);
+        return new Journal(ID, title, entryFactory, items);
     }
 
 }

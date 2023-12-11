@@ -35,6 +35,7 @@ public class JournalController implements IController {
 
     @FXML
     private Label prevDayBtn;
+    LocalDateTime entryDateTime;
 
 
     @FXML
@@ -43,8 +44,8 @@ public class JournalController implements IController {
         journalWindowManager.loadView(content, entryDate, entryDateLabel,  prevDayBtn);
         journalWindowManager.createBindings();
         entryDate.valueProperty().setValue(LocalDate.now());
-        //
-        JournalEntry journalEntry1 = journalModel.getEntryByDate(entryDate.getValue());
+        entryDateTime = entryDate.getValue().atStartOfDay();
+        JournalEntry journalEntry1 = journalModel.getEntryByDate(entryDateTime);
         if(journalEntry1 != null)
             content.setText(journalEntry1.getContent());
 
@@ -53,25 +54,26 @@ public class JournalController implements IController {
 
     @FXML
     void onAddEntry(MouseEvent event) {
-        journalModel.addEntryForDate(entryDate.getValue(), journalWindowManager.prepareJournal());
+        journalModel.addEntryForDate(entryDateTime, journalWindowManager.prepareJournal());
     }
 
     @FXML
     void onDeleteClk(MouseEvent event) {
+        String entryID = journalModel.getEntryByDate(entryDateTime).getID();
         if(journalWindowManager.deleteJournal()) {
-            journalModel.removeEntry(content.getText());
+            journalModel.removeEntry(entryID);
             onPrevDayClk(event);
         }
     }
 
     @FXML
     void onNextDayClk(MouseEvent event) {
-        journalWindowManager.getNexDayClick(journalModel.getEntryByDate(journalWindowManager.getEntryDate().getValue().plusDays(1)));
+        journalWindowManager.getNexDayClick(journalModel.getEntryByDate(journalWindowManager.getEntryDate().getValue().plusDays(1).atStartOfDay()));
     }
 
     @FXML
     void onPrevDayClk(MouseEvent event) {
-        journalWindowManager.getPevDayClick(journalModel.getEntryByDate(journalWindowManager.getEntryDate().getValue().minusDays(1)));
+        journalWindowManager.getPevDayClick(journalModel.getEntryByDate(journalWindowManager.getEntryDate().getValue().minusDays(1).atStartOfDay()));
     }
 
 

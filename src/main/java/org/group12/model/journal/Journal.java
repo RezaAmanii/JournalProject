@@ -20,34 +20,36 @@ public class Journal implements INameable, IObservable{
     private List<JournalEntry> entryList;
     private IJournalEntryFactory entryFactory;
     private String title;
-    private static String ID;
+    private final String ID;
     private List<IPlanITObserver> observers;
-    //private final ItemsSet items;
-    private final Map<Integer,JournalEntry> entries;
+    private final ItemsSet items;
+    private final Map<LocalDateTime,JournalEntry> entries;
     /**
      * Constructs a Journal with the given ID, title, and entry factory.
      *
      * @param ID            the ID of the journal
      * @param title         the title of the journal
      * @param entryFactory  the factory for creating journal entries
+     * @param items         the items set to add the journal entries to
      */
-    public Journal(String ID, String title, IJournalEntryFactory entryFactory) {
-        //this.entryList = new ArrayList<>();
+    protected Journal(String ID, String title, IJournalEntryFactory entryFactory, ItemsSet items) {
+        this.entryList = new ArrayList<>();
         this.entryFactory = entryFactory;
         this.title = title;
         this.ID = ID;
         this.observers = new ArrayList<>();
+        this.items = items;
         this.entries = new HashMap<>();
     }
 
-    public Integer getLasID()
-    {
-        Integer id = Integer.parseInt(this.ID) +1;
-        this.ID = id.toString();
-        return id;
-    }
 
-
+    /**
+     * Adds a new entry to the journal with the provided title and content.
+     * Notifies all observers of the journal and the new entry.
+     *
+     * @param title   the title for the new journal entry
+     * @param content the content for the new journal entry
+     */
 //    public void addEntry(String title, String content){
 //        JournalEntry newEntry = entryFactory.createJournalEntry(title, content);
 //        for (IPlanITObserver observer : observers) {
@@ -58,40 +60,17 @@ public class Journal implements INameable, IObservable{
 //        notifyObservers();
 //    }
 
-    /*
-    public void removeEntry(JournalEntry entry){
-        entryList.remove(entry);
-        items.removeItem(entry.getID());
-        notifyObservers();
-    }
+    /**
+     * Removes the specified entry from the journal.
+     * Notifies all observers of the journal.
+     *
+     * @param entry the entry to be removed
      */
-
-    public void removeEntry(String entryName){
-        int entryid= 0;
-        for(JournalEntry e : entries.values())
-        {
-            if(e.getContent().equalsIgnoreCase(entryName)){
-                entryid = Integer.parseInt(e.getID());
-            }
-        }
-        if(entryid != 0 )
-            entries.remove(entryid);
+    public void removeEntry(String ID){
+        entryList.remove(ID);
+        items.removeItem(ID);
         notifyObservers();
     }
-
-    public JournalEntry getEntryByDate(LocalDate date)
-    {
-        JournalEntry journalEntry = null;
-        for (JournalEntry entry : entries.values())
-        {
-            if(date.compareTo(entry.getEntryDate()) == 0 )
-            {
-                journalEntry = entry;
-            }
-        }
-        return  journalEntry;
-    }
-
 
     /**
      * Sets the title of the journal and notifies all observers.
@@ -164,34 +143,32 @@ public class Journal implements INameable, IObservable{
         return new ArrayList<>(entries.values());
     }
 
-    public JournalEntry getEntryForDate(LocalDate date) {
-        //return entries.getOrDefault(date, createJournalEntryForDate(date));
-        return entries.getOrDefault(date, JournalEntryFactory.getInstance().createJournalEntryForDate(date));
+    public JournalEntry getEntryForDate(LocalDateTime date) {
+        return entries.getOrDefault(date, createJournalEntryForDate(date));
     }
 
-    //private JournalEntry createJournalEntryForDate(LocalDateTime date) {
-    //    return entryFactory.createJournalEntryForDate(date);
-    //}
-
-    //public JournalEntry getEntryByDate(LocalDate date){
-    //    return entries.get(date);
-    //}
-
-    public void addEntryForDate(LocalDate date, JournalEntry entry) {
-
-        entry.setID(getLasID().toString());
-        entry.setEntryDate(date);
-        entries.put(Integer.parseInt(entry.getID()), entry);
+    private JournalEntry createJournalEntryForDate(LocalDateTime date) {
+        return entryFactory.createJournalEntryForDate(date);
+    }
+    public JournalEntry getEntryByDate(LocalDateTime date){
+        return entries.get(date);
     }
 
-    //public void addEntry(String title, String content){
-    //    JournalEntry newEntry = entryFactory.createJournalEntry(title, content);
-    //    for (IPlanITObserver observer : observers) {
-    //        newEntry.addObserver(observer);
-    //    }
-    //    entries.put(LocalDate.now(), newEntry);
-    //    items.addItem(newEntry);
-    //    notifyObservers();
-    //}
+    public void addEntryForDate(LocalDateTime date, JournalEntry entry) {
+        entries.put(date, entry);
+    }
+    public void removeEntry(LocalDateTime date){
+        entries.remove(date);
+        notifyObservers();
+    }
+    public void addEntry(String title, String content){
+        JournalEntry newEntry = entryFactory.createJournalEntry(title, content);
+        for (IPlanITObserver observer : observers) {
+            newEntry.addObserver(observer);
+        }
+        entries.put(LocalDateTime.now(), newEntry);
+        items.addItem(newEntry);
+        notifyObservers();
+    }
 
 }

@@ -30,10 +30,10 @@ public class Container {
         //this.calender = new Calendar();
 
         //Journal
-        this.journal = new Journal("0", "temp title", null);
-        //this.journalEntryFactoryInstance = JournalEntryFactory.getInstance();
-        //this.journalFactoryInstance = JournalFactory.getInstance();
-        //journal = journalFactoryInstance.createJournal("Test Journal", journalEntryFactoryInstance, items);
+        //this.journal = new Journal("0", "temp title", null);
+        this.journalEntryFactoryInstance = JournalEntryFactory.getInstance();
+        this.journalFactoryInstance = JournalFactory.getInstance();
+        journal = journalFactoryInstance.createJournal("Test Journal", journalEntryFactoryInstance, items);
     }
 
     public static Container getInstance(){
