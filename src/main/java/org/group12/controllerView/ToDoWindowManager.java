@@ -87,16 +87,14 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
     // Rename Task List
-    public void renameToDoList(ITaskList list, String newName) {
-        if (taskListController.getTaskListByTitle("Today").equals(list) || taskListController.getTaskListByTitle("Important").equals(list)) {
+    public void renameToDoList(String newName) {
+        if (selectedList != null && (selectedList.getTitle().equals("Today") || selectedList.getTitle().equals("Important"))) {
             System.out.println("Choose another list to rename");
-        } else {
-            taskListController.changeListTitle(list.getID(), newName);
+        } else if (selectedList != null){
+            taskListController.changeListTitle(selectedList.getID(), newName);
             refreshSidePanelInfo();
 
-            if (selectedList.equals(list)) {
-                activeListNameLBL.setText(newName);
-            }
+            activeListNameLBL.setText(newName);
         }
     }
 
@@ -110,15 +108,19 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
     public void addNewTask() {
-        if (taskListController.getTaskListByID(taskListCards.getID()).getTitle().equals("Today") || taskListController.getTaskListByID(taskListCards.getID()).getTitle().equals("Important")){
+        if(selectedList != null && (selectedList.getTitle().equals("Today") || selectedList.getTitle().equals("Important"))){
             System.out.println("Choose another list to add task");
             return;
         }
-        String title = getInputFromUser();
-        String taskID = taskListController.getTaskListByID(taskListCards.getID()).addBigTask(title);
-        IBigTask task = bigTaskController.getBigTaskByID(taskID);
 
-        BigTaskCard bigTaskCard = new BigTaskCard(task.getID(), Items.getInstance());
+        String title = getInputFromUser();
+        if(selectedList != null){
+            String taskID = selectedList.addBigTask(title);
+            IBigTask task = bigTaskController.getBigTaskByID(taskID);
+
+            BigTaskCard bigTaskCard = new BigTaskCard(task.getID(), Items.getInstance());
+        }
+
         update();
     }
 
@@ -214,7 +216,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
         if (event.getCode() == KeyCode.ENTER) {
             taskNameLBL.setEditable(false);
-            renameToDoList(selectedList, taskNameLBL.getText());
+            renameToDoList(taskNameLBL.getText());
         }
     }
 
@@ -376,9 +378,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
     @Override
     public void onTaskListCardClicked(taskListCards clickedCard) {
+        ITaskList taskList = taskListController.getTaskListByID(clickedCard.getID());
+        selectedList = taskListController.getTaskListByID(clickedCard.getID());
         taskListCards = clickedCard;
         activeListNameLBL.setText(taskListController.getTaskListByID(clickedCard.getID()).getTitle());
-        ITaskList taskList = taskListController.getTaskListByID(clickedCard.getID());
+
         populateOngoingTasks(taskList);
 
     }
