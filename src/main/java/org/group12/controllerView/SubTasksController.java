@@ -5,19 +5,14 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskController;
-import org.group12.model.toDoSubTask.Globals;
-import org.group12.model.toDoSubTask.SubTask;
-import org.group12.model.toDoSubTask.ToDoTask;
-import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITask;
-import org.group12.model.todo.ITaskList;
+
 
 
 import java.net.URL;

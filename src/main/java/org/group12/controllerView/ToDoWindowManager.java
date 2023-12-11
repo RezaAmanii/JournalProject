@@ -18,6 +18,7 @@ import org.group12.model.Items;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.todo.*;
 import org.group12.view.BigTaskCard;
+import org.group12.view.TaskView;
 import org.group12.view.taskListCards;
 
 import java.io.IOException;
@@ -51,6 +52,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     // A reference to the selected taskList card and selected bigTask card
     public static ITaskList selectedTaskList = null;
     public static IBigTask selectedTask = null;
+
 
 
     @Override
@@ -227,6 +229,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         for (IBigTask todayTask : todayTasks) {
             taskListController.getTaskListByTitle("Today").addBigTask(todayTask.getTitle());
         }
+
     }
 
 
@@ -412,6 +415,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
     @Override
     public void onBigTaskCardClicked(BigTaskCard bigTaskCard) {
+        IBigTask bigtask = bigTaskController.getBigTaskByID(bigTaskCard.getID());
+        selectedTask = bigtask;
+
 
     }
+
+
 }

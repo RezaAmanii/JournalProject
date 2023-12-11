@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<fx:root fx:id="bigTaskAnchorPane" onMouseClicked="#cardClicked" prefHeight="51.0" prefWidth="309.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: White;" type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="bigTaskAnchorPane" onMouseClicked="#openSubTask" prefHeight="51.0" prefWidth="309.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: White;" type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <CheckBox fx:id="statusCheckBox" layoutX="13.0" layoutY="17.0" mnemonicParsing="false" prefHeight="20.0" prefWidth="10.0" AnchorPane.leftAnchor="11.0" AnchorPane.topAnchor="15.0">
          <font>

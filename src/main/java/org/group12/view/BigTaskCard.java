@@ -14,8 +14,10 @@ import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
+import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
+import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.todo.IBigTask;
 import javafx.geometry.Insets;
 
@@ -24,6 +26,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import static org.group12.controllerView.ToDoWindowManager.selectedTask;
 
 public class BigTaskCard extends AnchorPane implements Initializable, ITaskListObserver {
 
@@ -139,6 +143,16 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     private void checkBoxToggled() {
         boolean isSelected = statusCheckBox.isSelected();
         bigTaskController.setBigTaskCheckBoxStatus(ID, isSelected);
+    }
+
+    @FXML
+    private void openSubTask(){
+        selectedTask = bigTaskController.getBigTaskByID(this.ID);
+        try {
+            Globals.openNewForm("/org/group12/view/subTasks.fxml", selectedTask.getTitle(), false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

@@ -1,6 +1,7 @@
 package org.group12.controller;
 
 
+import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.controllerView.ToDoWindowManager;
@@ -8,6 +9,7 @@ import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
+import org.group12.view.BigTaskCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,4 +120,6 @@ public class BigTaskController implements IController, IObservable {
         }
 
     }
+
+
 }
