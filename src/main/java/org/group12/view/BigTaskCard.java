@@ -43,15 +43,15 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
 
     // FXML components
     @FXML
-    private Label titleLabel;
+    public Label titleLabel;
     @FXML
-    private Label dueDateLabel;
+    public Label dueDateLabel;
     @FXML
-    private CheckBox statusCheckBox;
+    public CheckBox statusCheckBox;
     @FXML
-    private ImageView favouriteImageView;
+    public ImageView favouriteImageView;
     @FXML
-    private ImageView deleteTaskBtn;
+    public ImageView deleteTaskBtn;
 
 
     // Constructor
