@@ -25,6 +25,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.group12.view.TaskListView.*;
 
@@ -117,8 +118,8 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
             IBigTask task = bigTaskController.getBigTaskByID(taskID);
 
             BigTaskCard bigTaskCard = new BigTaskCard(task.getID(), Items.getInstance());
-        }
 
+        }
         update();
     }
 
@@ -149,11 +150,15 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
     private void clearListVBoxContent() {
-        selectedTaskList = taskListController.getTaskListByTitle("Today");
+        if (selectedTaskList == null || selectedTaskList.getTitle().equals("Today") || selectedTaskList.getTitle().equals("Important")) {
+            selectedTaskList = taskListController.getTaskListByTitle("Today");
+        }
+
         fixedListsVbox.getChildren().clear();
         appendableListVbox.getChildren().clear();
-
     }
+
+
 
     private void refreshFixedLists() {
         fixedListsVbox.getChildren().clear();
@@ -166,6 +171,8 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
     private void refreshAppendableLists() {
+        appendableListVbox.getChildren().clear();
+
         for (ITaskList list : taskListController.fetchAllTaskLists()) {
             if (!list.getTitle().equals("Today") && !list.getTitle().equals("Important")) {
                 updateListTasks(list);
