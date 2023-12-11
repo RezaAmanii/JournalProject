@@ -7,6 +7,8 @@ import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.*;
 import org.group12.view.TaskListView;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,7 +86,8 @@ public class TaskListController implements IController, IObservable {
 
     public String getTaskListDateCreated(String taskListID){
         ITaskList taskList = (ITaskList) items.getItem(taskListID);
-        return taskList.getDateCreated().toString();
+        LocalDate dateCreated = LocalDate.from(taskList.getDateCreated());
+        return dateCreated.toString();
 
     }
 

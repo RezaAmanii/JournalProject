@@ -3,7 +3,6 @@ package org.group12.controller;
 
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
-import org.group12.Observers.ITaskListObserver;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
@@ -44,12 +43,19 @@ public class BigTaskController implements IController, IObservable {
 
     public String getBigTaskDateCreated(String bigTaskID){
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
-        return bigTask.getDateCreated().toString();
+        if(bigTask != null){
+            return bigTask.getDateCreated().toString();
+        }
+        return "Unknown";
     }
 
     public boolean getBigTaskCheckBoxStatus(String bigTaskID){
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
-        return bigTask.getStatus();
+        if(bigTask != null){
+            return bigTask.getStatus();
+        } else {
+            return false;
+        }
     }
 
     public void setBigTaskCheckBoxStatus(String bigTaskID, boolean status){
@@ -71,6 +77,11 @@ public class BigTaskController implements IController, IObservable {
 
     public void renameTheTask(String bigTaskID, String newTitle){
         itemsSet.getItem(bigTaskID).setTitle(newTitle);
+        notifyObservers();
+    }
+
+    public void handleRemoveTask(String bigTaskID){
+        itemsSet.removeItem(bigTaskID);
         notifyObservers();
     }
 

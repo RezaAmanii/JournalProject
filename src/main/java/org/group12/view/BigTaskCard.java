@@ -46,6 +46,8 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     private CheckBox statusCheckBox;
     @FXML
     private ImageView favouriteImageView;
+    @FXML
+    private ImageView deleteTaskBtn;
 
 
     // Constructor
@@ -156,6 +158,12 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
             bigTaskController.renameTheTask(this.ID, name);
             update();
         });
+    }
+
+    @FXML
+    private void deleteTaskBtnClicked(){
+        bigTaskController.handleRemoveTask(this.ID);
+        update();
     }
 
     public void setBigTaskClickListener(BigTaskCardClickListener clickListener) {
