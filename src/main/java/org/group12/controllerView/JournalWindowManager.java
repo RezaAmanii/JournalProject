@@ -57,16 +57,7 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     }
 
 
-    //public JournalEntry prepareJournal()
-    //{
-    //    return new JournalEntry("Posts",entryDate.getValue(),content.getText());
-    //}
 
-    //public void createBindings() {
-    //    entryDateLabel.textProperty()
-    //            .bind(entryDate.valueProperty()
-    //                    .map(date -> date.format(ISO_DATE)));
-    //}
     @FXML
     public void getPrevDayClick()
     {
@@ -136,6 +127,15 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
 //    void onPrevDayClk(MouseEvent event) {
 //        journalWindowManager.getPevDayClick(journalModel.getEntryByDate(journalWindowManager.getEntryDate().getValue().minusDays(1).atStartOfDay()));
 //    }
+    //public JournalEntry prepareJournal()
+    //{
+    //    return new JournalEntry("Posts",entryDate.getValue(),content.getText());
+    //}
 
+    //public void createBindings() {
+    //    entryDateLabel.textProperty()
+    //            .bind(entryDate.valueProperty()
+    //                    .map(date -> date.format(ISO_DATE)));
+    //}
 
 }
