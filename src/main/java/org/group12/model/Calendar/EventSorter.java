@@ -62,4 +62,15 @@ public class EventSorter {
         }
         return eventsWithTag;
     }
+    public static List<String> getTags(List<Event> eventList){
+        List<String> tags = new ArrayList<>();
+        for (Event event : eventList){
+            for (String tag : event.getTags()){
+                if (!tags.contains(tag)){
+                    tags.add(tag);
+                }
+            }
+        }
+        return tags;
+    }
 }

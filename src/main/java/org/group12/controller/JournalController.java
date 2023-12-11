@@ -19,7 +19,11 @@ import static java.time.format.DateTimeFormatter.ISO_DATE;
 
 public class JournalController implements IController {
 
-    private Journal journalModel = Container.getInstance().getJournal();
+    private Container container;
+    private JournalView journalView;
+    private ObjectProperty<JournalEntry> journalEntry; // not allowed here ?
+    private static JournalController instance;
+    private Journal journalModel;
     private JournalWindowManager journalWindowManager;
 
     private Items itemMap;
@@ -78,13 +82,19 @@ public class JournalController implements IController {
 
 
 
-    public JournalController(Journal journalModel, JournalWindowManager journalWindowManager, Items itemMap){
+    public JournalController(JournalWindowManager journalWindowManager){
         this();
-        this.journalModel = journalModel;
+        this.journalModel = container.getJournal();
         this.journalWindowManager = journalWindowManager;
-        this.itemMap= itemMap;
+        this.itemMap= Items.getInstance();
         //journalModel.addObserver(journalView);
 
+    }
+    public static JournalController getInstance(){
+        if(instance == null){
+            instance = new JournalController();
+        }
+        return instance;
     }
 
     public JournalController() {

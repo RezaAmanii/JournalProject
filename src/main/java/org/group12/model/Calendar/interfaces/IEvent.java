@@ -1,4 +1,4 @@
-package org.group12.model.Calendar;
+package org.group12.model.Calendar.interfaces;
 
 import javafx.util.Pair;
 import org.group12.model.*;
