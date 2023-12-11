@@ -25,8 +25,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
-
 import static org.group12.view.TaskListView.*;
 
 
@@ -160,6 +158,16 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
 
+    /*
+    private void clearListVBoxContent() {
+        selectedTaskList = taskListController.getTaskListByTitle("Important");
+        fixedListsVbox.getChildren().clear();
+        appendableListVbox.getChildren().clear();
+
+    }
+
+     */
+
     private void refreshFixedLists() {
         fixedListsVbox.getChildren().clear();
 
@@ -198,11 +206,31 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         });
     }
 
+    public Set<IBigTask> populateTodayTasks(){
+        Set<IBigTask> bigTasks = new HashSet<>();
+        for(ITaskList taskList : taskListController.fetchAllTaskLists()){
+            bigTasks.addAll(taskList.getBigTaskList());
+        }
+        return bigTasks;
+
+    }
+
 
     private void updateTodayTask(IBigTask task) {
         taskListController.getTaskListByTitle("Today").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
-        taskListController.getTaskListByTitle("Today").addBigTask(task.getTitle());
+
+        // Clear the Today list
+        taskListController.getTaskListByTitle("Today").getBigTaskList().clear();
+
+        Set<IBigTask> todayTasks = populateTodayTasks();
+
+        for (IBigTask todayTask : todayTasks) {
+            taskListController.getTaskListByTitle("Today").addBigTask(todayTask.getTitle());
+        }
     }
+
+
+
 
     private void updateImportantTask(IBigTask task) {
         taskListController.getTaskListByTitle("Important").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
