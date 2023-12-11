@@ -10,6 +10,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import org.group12.controller.BigTaskController;
+import org.group12.controller.TaskController;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.toDoSubTask.SubTask;
 import org.group12.model.toDoSubTask.ToDoTask;
@@ -32,6 +34,8 @@ import static org.group12.controllerView.ToDoWindowManager.*;
 public class SubTasksController implements Initializable {
 
     static public ITask selectedSubTask = null;
+    private final BigTaskController bigTaskController = BigTaskController.getInstance();
+    private final TaskController taskController = TaskController.getInstance();
     
     // FXMl Components
     public Label taskNameLBL;
@@ -88,10 +92,10 @@ public class SubTasksController implements Initializable {
 
     
     public void removeSubTask(){
-        ITask subTask = taskListController.getSubTaskByID(selectedSubTask.getID());
+        ITask subTask = taskController.getSubTaskByID(selectedSubTask.getID());
         if(subTask != null){
             subTask.setTitle("Removed");
-            taskListController.getBigTaskByID(selectedTask.getID()).removeSubTask(selectedSubTask.getID());
+            bigTaskController.getBigTaskByID(selectedTask.getID()).removeSubTask(selectedSubTask.getID());
             refreshSubTasksPane();
         }
 
@@ -114,7 +118,7 @@ public class SubTasksController implements Initializable {
     public void addNewSubTask(){
         String title = getInputFromUser();
         String subTaskID = selectedTask.addSubTask(title);
-        ITask newSubTask = taskListController.getSubTaskByID(subTaskID);
+        ITask newSubTask = taskController.getSubTaskByID(subTaskID);
 
         selectedSubTask = newSubTask;
         subTasksPane.getChildren().add(createNewSubTaskObject(selectedSubTask));
@@ -153,7 +157,7 @@ public class SubTasksController implements Initializable {
 
 
     void renameSubTask(ITask task, String newName){
-        taskListController.getSubTaskByID(task.getID()).setTitle(newName);
+        taskController.getSubTaskByID(task.getID()).setTitle(newName);
     }
 
 
