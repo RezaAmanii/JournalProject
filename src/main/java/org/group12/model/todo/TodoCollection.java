@@ -56,13 +56,12 @@ public class TodoCollection implements ITodoCollection{
      * Removes the task list from the taskListMap.
      * Removes the task list items.
      *
-     * @param taskListID the ID of the task list to be removed
+     * @param list is the task list to be removed
      */
     @Override
-    public void removeTaskList(String taskListID) {
-        ITaskList list = (ITaskList) items.getItem(taskListID);
+    public void removeTaskList(ITaskList list) {
         taskList.remove(list);
-        items.removeItem(taskListID);
+        items.removeItem(list.getID());
     }
 
     /**

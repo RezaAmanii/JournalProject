@@ -4,6 +4,8 @@ package org.group12.controller;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.BigTask;
+import org.group12.model.todo.IBigTask;
+import org.group12.model.todo.ITask;
 import org.group12.model.todo.TodoCollection;
 import org.group12.view.TaskView;
 
@@ -13,69 +15,35 @@ import org.group12.model.Items;
 
 
 public class TaskController implements IController {
-    private TodoCollection taskModel;
-    private TaskView taskView;
-    private Map<String, INameable> taskMap;
-    private BigTask bigTask;
     private ItemsSet itemsSet;
+    private static TaskController instance;
 
 
-
-    public TaskController(TodoCollection taskModel, TaskView taskView, ItemsSet itemsSet){
-        this.taskModel = taskModel;
-        this.taskView = taskView;
-        this.itemsSet = itemsSet;
-        //taskModel.addObserver(taskView);
+    // Constructor
+    private TaskController(){
+        this.itemsSet = Items.getInstance();
     }
 
-    public void handleAddSubTask(){
-        //String newTitle = titleTextField.getText();
-        String newTitle = "test";
-        if(stringValidation(newTitle)){
-            bigTask.addSubTask(newTitle);
-        } else{
-            //taskView.displayError("Title cannot be empty");
+    // Singleton
+    public static TaskController getInstance(){
+        if (instance == null){
+            instance = new TaskController();
         }
+        return instance;
     }
 
-    public void handleRemoveSubTask(){
-        //String subTaskID = subTaskField.getID();
-        String subTaskID = "test";
-        bigTask.removeSubTask(subTaskID);
-        taskView.update();
+    // Methods
+    public ITask getSubTaskByID(String taskID){
+        return (ITask) itemsSet.getItem(taskID);
+    }
+
+    public IBigTask getTaskByID(String taskID){
+        return (IBigTask) itemsSet.getItem(taskID);
     }
 
 
-    public void handleSetTitle(String newTitle){
-        if(stringValidation(newTitle)){
-            bigTask.setTitle(newTitle);
-            taskView.update();
-        } else{
-            //taskView.displayError("Title cannot be empty");
-        }
 
-    }
 
-    public void handleSetDueDate(LocalDateTime date) {
-        if (dateValidation(date)) {
-            bigTask.setDueDate(date);
-            taskView.update();
-        } else{
-            taskView.update();
-            //taskView.displayError("Date cannot be in the past");
-        }
-    }
-    
-
-    public void handleSetStatus(boolean status) {
-        //bigTask.setStatus(status);
-        taskView.update();
-    }
-
-    public void handleGetStatus(){
-        bigTask.getStatus();
-        taskView.update();
-    }
 
     public static boolean stringValidation(String stringToCheck) {
         return stringToCheck != null && !stringToCheck.trim().isEmpty();

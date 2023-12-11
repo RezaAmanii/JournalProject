@@ -6,15 +6,11 @@ import org.group12.Observers.IPlanITObserver;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import java.time.LocalDate;
-import java.util.*;
 
 /**
  * Represents a Journal with a list of entries and associated functionality.
@@ -26,7 +22,7 @@ public class Journal implements INameable, IObservable{
     private final String ID;
     private List<IPlanITObserver> observers;
     private final ItemsSet items;
-    private final Map<LocalDate,JournalEntry> entries;
+    private final Map<LocalDateTime,JournalEntry> entries;
     /**
      * Constructs a Journal with the given ID, title, and entry factory.
      *
@@ -35,7 +31,7 @@ public class Journal implements INameable, IObservable{
      * @param entryFactory  the factory for creating journal entries
      * @param items         the items set to add the journal entries to
      */
-    public Journal(String ID, String title, IJournalEntryFactory entryFactory, ItemsSet items) {
+    protected Journal(String ID, String title, IJournalEntryFactory entryFactory, ItemsSet items) {
         this.entryList = new ArrayList<>();
         this.entryFactory = entryFactory;
         this.title = title;
@@ -67,11 +63,11 @@ public class Journal implements INameable, IObservable{
      * Removes the specified entry from the journal.
      * Notifies all observers of the journal.
      *
-     * @param entry the entry to be removed
+     * @param ID the entry to be removed
      */
-    public void removeEntry(JournalEntry entry){
-        entryList.remove(entry);
-        items.removeItem(entry.getID());
+    public void removeEntry(String ID){
+        entryList.remove(ID);
+        items.removeItem(ID);
         notifyObservers();
     }
 
@@ -145,28 +141,42 @@ public class Journal implements INameable, IObservable{
     public List<JournalEntry> getEntries() {
         return new ArrayList<>(entries.values());
     }
-    public JournalEntry getEntryForDate(LocalDate date) {
-        return entries.getOrDefault(date, JournalEntryFactory.getInstance().createJournalEntryForDate(date));
+
+    public JournalEntry getEntryForDate(LocalDateTime date) {
+        return entries.getOrDefault(date, addEntry(date));
     }
-    public JournalEntry getEntryByDate(LocalDate date){
+
+
+    public JournalEntry getEntryByDate(LocalDateTime date){
         return entries.get(date);
     }
 
-    public void addEntryForDate(LocalDate date, JournalEntry entry) {
+    public void addEntryForDate(LocalDateTime date, JournalEntry entry) {
         entries.put(date, entry);
     }
-    public void removeEntry(LocalDate date){
+    public void removeEntry(LocalDateTime date){
         entries.remove(date);
         notifyObservers();
     }
-    public void addEntry(String title, String content){
-        JournalEntry newEntry = entryFactory.createJournalEntry(title, content);
+    public void addEntry(){
+        JournalEntry newEntry = entryFactory.createJournalEntry();
         for (IPlanITObserver observer : observers) {
             newEntry.addObserver(observer);
         }
-        entries.put(LocalDate.now(), newEntry);
+        entries.put(LocalDateTime.now(), newEntry);
         items.addItem(newEntry);
         notifyObservers();
     }
+    public JournalEntry addEntry(LocalDateTime date) {
+        JournalEntry newEntry = entryFactory.createJournalEntry();
+        for (IPlanITObserver observer : observers) {
+            newEntry.addObserver(observer);
+        }
+        entries.put(LocalDateTime.now(), newEntry);
+        items.addItem(newEntry);
+        notifyObservers();
+        return newEntry;
+    }
+
 
 }

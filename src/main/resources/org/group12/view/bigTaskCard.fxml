@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<fx:root fx:id="bigTaskAnchorPane" onMouseClicked="#cardClicked" prefHeight="51.0" prefWidth="309.0" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: White;" type="AnchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <CheckBox fx:id="statusCheckBox" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="25.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0">
+         <font>
+            <Font size="18.0" />
+         </font></CheckBox>
+      <Label fx:id="titleLabel" contentDisplay="CENTER" layoutX="51.0" layoutY="-1.0" prefHeight="35.0" prefWidth="118.0" text="Title" textFill="WHITE">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="dueDateLabel" layoutX="50.0" layoutY="32.0" prefHeight="17.0" prefWidth="143.0" text="dateCreated" textFill="WHITE" />
+      <ImageView fx:id="favouriteImageView" fitHeight="36.0" fitWidth="36.0" layoutX="294.0" layoutY="7.0" onMouseClicked="#imageViewClicked" pickOnBounds="true" AnchorPane.rightAnchor="10.0">
+         <image>
+            <Image url="@../../../starUnselected.png" />
+         </image>
+      </ImageView>
+   </children>
+</fx:root>

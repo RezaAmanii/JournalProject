@@ -3,6 +3,8 @@ package org.group12.model.Calendar;
 import javafx.util.Pair;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
+import org.group12.model.Calendar.factories.eventFactory;
+import org.group12.model.Calendar.interfaces.ICalendar;
 import org.group12.model.ItemsSet;
 
 import java.time.LocalDateTime;
@@ -14,7 +16,7 @@ public class Calendar implements IObservable, ICalendar {
     private List<Event> eventList;
     private boolean isEmpty;
     private List<IPlanITObserver> observers;
-    private eventFactory eventFactory;
+    private org.group12.model.Calendar.factories.eventFactory eventFactory;
     private final ItemsSet items;
 
     public Calendar(ItemsSet items) {
@@ -134,6 +136,10 @@ public class Calendar implements IObservable, ICalendar {
     }
     public List<Event> getEventsByTag(String tag){
         return EventSorter.getEventsByTag(eventList, tag);
+    }
+
+    public List<String> getTags(){
+        return EventSorter.getTags(eventList);
     }
 
 

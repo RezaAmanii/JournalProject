@@ -15,24 +15,20 @@ public class TaskListController implements IController, IObservable {
 
     private TaskListView taskListView;
 
-    private ItemsSet items;
-    private TodoCollection todoCollection;
+    private final ItemsSet items;
+    private final TodoCollection todoCollection;
     private static TaskListController instance;
-    private Container container = Container.getInstance();
-    private List<IPlanITObserver> observers = new ArrayList<>();
+    private final Container container = Container.getInstance();
+    private final List<IPlanITObserver> observers = new ArrayList<>();
 
-
+    // Constructor
     private TaskListController() {
         this.items = Items.getInstance();
         this.todoCollection = Container.getInstance().getTodoCollection();
         this.taskListView = new TaskListView();
-
     }
 
-    public Container getContainer() {
-        return this.container;
-    }
-
+    // Singleton
     public static TaskListController getInstance() {
         if (instance == null) {
             instance = new TaskListController();
@@ -41,19 +37,14 @@ public class TaskListController implements IController, IObservable {
     }
 
 
-    // To-do lists methods
+    // TaskList methods
     public String handlerAddToDoList(String title) {
         return todoCollection.addTaskList(title);
     }
 
-
     public void handlerRemoveToDoList(ITaskList taskList) {
-        todoCollection.removeTaskList(taskList.getID());
-    }
-
-
-    public String getListsTitle() {
-        return todoCollection.getTitle();
+        todoCollection.removeTaskList(taskList);
+        notifyObservers();
     }
 
     public void changeListTitle(String TaskListID, String newTitle) {
@@ -70,22 +61,9 @@ public class TaskListController implements IController, IObservable {
         }
     }
 
-
-
     public ITaskList getTaskListByID(String taskListID){
         return (ITaskList) items.getItem(taskListID);
     }
-
-    public IBigTask getBigTaskByID(String bigTaskID){
-        return (IBigTask) items.getItem(bigTaskID);
-    }
-
-
-    public ITask getSubTaskByID(String taskID){
-        return (ITask) items.getItem(taskID);
-    }
-
-
 
     public ITaskList getTaskListByTitle(String title){
         for(ITaskList taskList : todoCollection.getTaskList()){
@@ -96,29 +74,39 @@ public class TaskListController implements IController, IObservable {
         return null;
     }
 
-    public IBigTask getTaskByID(String taskID){
-        return (IBigTask) items.getItem(taskID);
-    }
-
-    public void removeAnyObject(String ID){
-        items.removeItem(ID);
-    }
-
     public ArrayList<ITaskList> fetchAllTaskLists(){
         return todoCollection.getTaskList();
     }
-    public ArrayList<IBigTask> fetchAllBigTasks(String taskListID){
+
+    public String getTaskListTitle(String taskListID){
+        return items.getItem(taskListID).getTitle();
+    }
+
+    public String getTaskListDateCreated(String taskListID){
         ITaskList taskList = (ITaskList) items.getItem(taskListID);
-        return taskList.getBigTaskList();
+        return taskList.getDateCreated().toString();
+
+    }
+
+    public void renameTaskList(String taskListID, String newTitle){
+        items.getItem(taskListID).setTitle(newTitle);
+        notifyObservers();
+    }
+    public String getNrOfBigTasks(String taskListID){
+        ITaskList taskList = (ITaskList) items.getItem(taskListID);
+        return String.valueOf(taskList.getBigTaskList().size());
     }
 
 
+
+
+
+    // Observer methods
     @Override
     public void addObserver(IPlanITObserver observer) {
         if(!observers.contains(observer)){
             observers.add(observer);
         }
-
     }
 
     @Override
