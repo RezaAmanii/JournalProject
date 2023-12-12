@@ -1,16 +1,13 @@
 package org.group12.view;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import org.group12.Listeners.JournalClickListener;
 import org.group12.Observers.IJournalObserver;
 import org.group12.controller.JournalController;
 import org.group12.model.ItemsSet;
@@ -27,7 +24,6 @@ import java.util.ResourceBundle;
 
 public class JournalEntryCard extends AnchorPane implements Initializable, IJournalObserver {
     private final String ID;
-    private final ItemsSet items;
     private final JournalController controller;
     private final JournalEntry entry;
     private final CardUpdater cardUpdater;
@@ -55,7 +51,6 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
      * @throws RuntimeException if the FXML file cannot be loaded.
      */
     public JournalEntryCard(String ID, ItemsSet items){
-        this.items = items;
         this.ID = ID;
         this.controller = JournalController.getInstance();
 
@@ -84,7 +79,7 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
     }
 
     /**
-     * Handles a double-click event on the JournalEntryCard.
+     * Handles a double click event on the JournalEntryCard.
      * Opens a dialog to rename the entry, and updates the entry title if a new title is provided.
      *
      * @throws NullPointerException if this.entry or controller is null.
@@ -113,7 +108,7 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
     }
     /**
      * Handles a click event on the title of the JournalEntryCard.
-     * Sets a double-click event handler on the card when the title is clicked.
+     * Sets a double click event handler on the card when the title is clicked.
      */
     @FXML
     public void titleClicked() {

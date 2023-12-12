@@ -4,7 +4,6 @@ package org.group12.controller;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.model.Container;
-import org.group12.model.Items;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
 
@@ -26,7 +25,6 @@ public class JournalController implements IController, IObservable {
     private static JournalController instance;
     private static Journal journalModel;
 
-    private static Items itemMap;
     private final List<IPlanITObserver> observers = new ArrayList<>();
 
     /**
@@ -35,7 +33,6 @@ public class JournalController implements IController, IObservable {
     public JournalController() {
         this.container = Container.getInstance();
         this.journalModel = container.getJournal();
-        this.itemMap = Items.getInstance();
 
     }
 
