@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +18,7 @@ import org.group12.model.journal.JournalEntry;
 import org.group12.util.CastHelper;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class JournalEntryCard extends AnchorPane implements Initializable, IJournalObserver {
@@ -63,36 +65,29 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
         this.dateModified.setText(JournalController.getEntryDateModified(entry));
         this.NrOfWords.setText(JournalController.getNrOfWords(entry));
     }
+    private void handleDoubleClick() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Rename entry");
+        dialog.setHeaderText("Enter new title");
 
-
-    @FXML
-    private void titleClicked(){
-
-        // controller.edittitle(entry, string)
-        update();
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(title -> {
+            controller.setEntryTitle(this.entry, title);
+            update();
+        });
     }
-//    @FXML
-//    private void titleClicked(MouseEvent event) {
-//        Label label = (Label) event.getSource();
-//        TextField textField = new TextField(label.getText());
-//        textField.setOnAction(e -> {
-//            label.setText(textField.getText());
-//            replaceTextFieldWithLabel(textField, label);
-//        });
-//        replaceLabelWithTextField(label, textField);
-//    }
-//
-//    private void replaceLabelWithTextField(Label label, TextField textField) {
-//        VBox parent = (VBox) label.getParent();
-//        int index = parent.getChildren().indexOf(label);
-//        parent.getChildren().set(index, textField);
-//    }
-//
-//    private void replaceTextFieldWithLabel(TextField textField, Label label) {
-//        VBox parent = (VBox) textField.getParent();
-//        int index = parent.getChildren().indexOf(textField);
-//        parent.getChildren().set(index, label);
-//    }
+    private void setDoubleClickEvent() {
+        setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                handleDoubleClick();
+            }
+        });
+    }
+    @FXML
+    public void titleClicked() {
+        setDoubleClickEvent();
+    }
+
     @FXML
     private void saveButtonClicked(MouseEvent event){
 

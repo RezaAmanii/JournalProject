@@ -56,7 +56,7 @@ public class JournalEntryFactory implements IJournalEntryFactory {
         String ID = idFactory.generateID();
         String content = "";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String title = "No title";
+        String title = dateFormat.format(new Date());
         LocalDate createdTimestamp = date;
         return new JournalEntry(ID, title, content, LocalDate.now(), createdTimestamp);
     }

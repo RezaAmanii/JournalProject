@@ -13,6 +13,7 @@ import org.group12.view.JournalView;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,9 +78,14 @@ public class JournalController implements IController, IObservable {
         return entry.getTitle();
 
     }
+    public static void setEntryTitle(JournalEntry entry, String title) {
+        entry.setTitle(title);
+
+    }
 
     public static String getEntryDateModified(JournalEntry entry) {
-        return entry.getModifiedTimestamp().toString();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return entry.getModifiedTimestamp().format(formatter);
     }
 
     public static String getNrOfWords(JournalEntry entry) {
