@@ -29,6 +29,8 @@ public class TaskListView implements ITaskListObserver {
 
     }
 
+
+
     public static GridPane createListPane() {
         GridPane listToAppend = new GridPane();
         listToAppend.setMinHeight(33.0);
@@ -240,6 +242,21 @@ public class TaskListView implements ITaskListObserver {
         alert.showAndWait();
     }
 
+    public static Label createDynamicFontLabel(String text) {
+        Label dynamicLabel = new Label(text);
+        dynamicLabel.setStyle("-fx-border-color: black"); // Just for visualization
+
+        dynamicLabel.textProperty().addListener((observable, oldValue, newValue) -> {
+            int textLength = newValue.length();
+            if (textLength > 15) { // Define your threshold for font resizing
+                dynamicLabel.setStyle("-fx-font-size: " + (100 - textLength) + "%"); // Adjust the font size dynamically
+            } else {
+                dynamicLabel.setStyle("-fx-font-size: 100%"); // Default font size when text is shorter
+            }
+        });
+
+        return dynamicLabel;
+    }
 
 
 

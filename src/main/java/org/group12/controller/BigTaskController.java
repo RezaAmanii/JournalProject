@@ -1,13 +1,16 @@
 package org.group12.controller;
 
 
+import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
-import org.group12.Observers.ITaskListObserver;
+import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
+import org.group12.view.BigTaskCard;
+import org.group12.view.TaskListCards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +20,12 @@ public class BigTaskController implements IController, IObservable {
     private final ItemsSet itemsSet;
     private static BigTaskController instance;
     private final List<IPlanITObserver> observers = new ArrayList<>();
+    private final TaskListController taskListController;
 
     // Constructor
     private BigTaskController() {
         this.itemsSet = Items.getInstance();
+        this.taskListController = TaskListController.getInstance();
     }
 
     // Singleton
@@ -44,12 +49,19 @@ public class BigTaskController implements IController, IObservable {
 
     public String getBigTaskDateCreated(String bigTaskID){
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
-        return bigTask.getDateCreated().toString();
+        if(bigTask != null){
+            return bigTask.getDateCreated().toString();
+        }
+        return "Unknown";
     }
 
     public boolean getBigTaskCheckBoxStatus(String bigTaskID){
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
-        return bigTask.getStatus();
+        if(bigTask != null){
+            return bigTask.getStatus();
+        } else {
+            return false;
+        }
     }
 
     public void setBigTaskCheckBoxStatus(String bigTaskID, boolean status){
@@ -71,6 +83,12 @@ public class BigTaskController implements IController, IObservable {
 
     public void renameTheTask(String bigTaskID, String newTitle){
         itemsSet.getItem(bigTaskID).setTitle(newTitle);
+        notifyObservers();
+    }
+
+    public void handleRemoveTask(IBigTask bigTask){
+        TaskListCards selectedList = ToDoWindowManager.lastClickedTaskListCard;
+        taskListController.getTaskListByID(selectedList.getID()).removeBigTask(bigTask);
         notifyObservers();
     }
 
@@ -105,4 +123,6 @@ public class BigTaskController implements IController, IObservable {
         }
 
     }
+
+
 }
