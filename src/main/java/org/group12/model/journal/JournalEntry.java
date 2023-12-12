@@ -42,12 +42,9 @@ public class JournalEntry implements INameable, IObservable {
     /**
      * Updates the content of the journal entry, updates the modified timestamp, and notifies all observers.
      *
-     * @param newContent the new content for the journal entry. If null, it will be treated as an empty string.
+     * @param newContent the new content for the journal entry.
      */
     public void updateContent(String newContent) {
-        if (newContent == null) {
-            newContent = "";
-        }
         this.content = newContent;
         this.modifiedTimestamp = LocalDateTime.now();
         notifyObservers();

@@ -1,18 +1,16 @@
 package org.group12.controller;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.scene.input.MouseEvent;
+
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.model.Container;
 import org.group12.model.Items;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
-import org.group12.controllerView.JournalWindowManager;
-import org.group12.view.JournalView;
+
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +23,8 @@ import static org.group12.util.TextUtils.getWordCount;
 public class JournalController implements IController, IObservable {
 
     private Container container;
-    private JournalView journalView;
-    private ObjectProperty<JournalEntry> journalEntry; // not allowed here ?
     private static JournalController instance;
     private static Journal journalModel;
-    private JournalWindowManager journalWindowManager;
 
     private static Items itemMap;
     private final List<IPlanITObserver> observers = new ArrayList<>();
@@ -41,7 +36,6 @@ public class JournalController implements IController, IObservable {
         this.container = Container.getInstance();
         this.journalModel = container.getJournal();
         this.itemMap = Items.getInstance();
-        //journalModel.addObserver(journalView);
 
     }
 
@@ -135,16 +129,18 @@ public class JournalController implements IController, IObservable {
     /**
      * Updates the content of the provided journal entry with new content if the entry and new content are valid.
      *
-     * @param journalEntry the journal entry to be updated
-     * @param newContent   the new content to replace the existing content in the journal entry
+     * @param journalEntry the journal entry to be updated. Must not be null.
+     * @param newContent   the new content to replace the existing content in the journal entry. Must not be null.
+     * @throws IllegalArgumentException if journalEntry or newContent is null.
      */
     public void updateJournalEntry(JournalEntry journalEntry, String newContent) {
-        if(journalEntry != null){
-            journalEntry.updateContent(newContent);
-        } else {
-            System.out.println("Saknas content!");
-            //journalView.displayErrorMessage("Invalid input.");
+        if (journalEntry == null) {
+            throw new IllegalArgumentException("JournalEntry cannot be null.");
         }
+        if (newContent == null) {
+            throw new IllegalArgumentException("New content cannot be null.");
+        }
+        journalEntry.updateContent(newContent);
     }
 
 
@@ -160,7 +156,6 @@ public class JournalController implements IController, IObservable {
             throw new IllegalArgumentException("Date cannot be null.");
         }
         if (journalModel.getEntryByDate(date) == null) {
-            System.out.println("getentrybydate is still null so we make another one for this day");
             journalModel.addEntry(date);
         }
         return journalModel.getEntryByDate(date);
