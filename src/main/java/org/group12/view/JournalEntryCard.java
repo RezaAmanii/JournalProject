@@ -50,7 +50,7 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
         this.controller = JournalController.getInstance();
 
         this.entry = CastHelper.castObject(JournalEntry.class, items.getItem(ID));
-
+        System.out.println(entry.getID());
         //System.out.println("JournalEntryCard");
         this.cardUpdater = new CardUpdater(items);
         //FXMLLoaderService fxmlLoaderService = new FXMLLoaderService();
