@@ -60,7 +60,6 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
             throw new RuntimeException(exception);
         }
 
-        // Make space between each cards
         spacingBetweenCards();
         update();
     }
@@ -88,22 +87,26 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
 
     }
 
+    // Event handlers
     private void setupEventHandlers(){
         titleLabel.setOnMouseClicked(this::titleClicked);
         deleteTaskListBtn.setOnMouseClicked(this::deleteTaskListBtnClicked);
     }
-
-    public String getID() {return ID;}
-
-    @FXML
     public void titleClicked(MouseEvent event) {
         if (clickListener != null) {
             clickListener.onTaskListCardClicked(this);
         }
         handleDoubleClick(event);
     }
+    private void deleteTaskListBtnClicked(MouseEvent event){
+        taskListController.handlerRemoveToDoList(taskListController.getTaskListByID(this.ID));
+        update();
+    }
 
+    // Getters
+    public String getID() {return ID;}
 
+    // Rename methods
     private void handleDoubleClick(MouseEvent event) {
         if (event.getSource() instanceof Label && event.getClickCount() == 2) {
             TextInputDialog dialog = new TextInputDialog();
@@ -118,6 +121,7 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     }
 
 
+    // Update method
     public void update() {
 
         try{
@@ -139,14 +143,7 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     }
 
 
-
-
-    // Delete taskList
-    private void deleteTaskListBtnClicked(MouseEvent event){
-        taskListController.handlerRemoveToDoList(taskListController.getTaskListByID(this.ID));
-        update();
-    }
-
+    // Task List card clicked
     public void setClickListener(TaskListCardClickListener clickListener) {
         this.clickListener = clickListener;
     }
