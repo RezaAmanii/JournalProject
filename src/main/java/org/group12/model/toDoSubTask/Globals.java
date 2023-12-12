@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.Random;
 
+import static javafx.scene.control.ButtonType.OK;
+
 /**
  * Contains global utility methods and variables.
  */
@@ -71,11 +73,13 @@ public class Globals {
      *
      * @param content The content of the confirmation alert.
      */
-    public static void showConfirmationAlert(String content){
+    public static void showConfirmationAlert(String content, Runnable onConfirm){
         Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmed");
         alert.setContentText(content);
-        alert.showAndWait();
+        alert.showAndWait()
+                .filter(OK::equals)
+                .ifPresent(ok -> onConfirm.run());
     }
 
     /**
