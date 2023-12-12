@@ -4,6 +4,7 @@ import org.group12.model.IDFactory.IDFactory;
 import org.group12.model.IDFactory.IIDFactory;
 import org.group12.model.IDFactory.JournalEntryIDFactory;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +13,7 @@ import java.util.Date;
 /**
  * Singleton factory class for creating instances of JournalEntry.
  */
-public class JournalEntryFactory implements IJournalEntryFactory {
+public class JournalEntryFactory implements IJournalEntryFactory, Serializable {
     private final IIDFactory idFactory;
     private static JournalEntryFactory instance;
 

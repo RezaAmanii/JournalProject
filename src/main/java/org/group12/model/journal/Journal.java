@@ -6,6 +6,7 @@ import org.group12.Observers.IPlanITObserver;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,7 +16,7 @@ import java.util.Map;
 /**
  * Represents a Journal with a list of entries and associated functionality.
  */
-public class Journal implements INameable, IObservable{
+public class Journal implements INameable, IObservable, Serializable {
     private final IJournalEntryFactory entryFactory;
     private String title;
     private final String ID;
