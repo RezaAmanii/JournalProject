@@ -27,7 +27,7 @@ public class Container {
         this.todoCollection = todoCollectionFactory.createTodoCollection("MainTD");
         items.addItem(todoCollection);
 
-        //this.calender = new Calendar();
+        this.calender = new Calendar(items);
 
         //Journal
         //this.journal = new Journal("0", "temp title", null);
