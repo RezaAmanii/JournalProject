@@ -166,22 +166,33 @@ public class JournalController implements IController, IObservable {
         return journalModel.getEntryByDate(date);
     }
 
+    /**
+     * Adds an observer to the journal.
+     *
+     * @param observer the observer to be added
+     */
+    @Override
     public void addObserver(IPlanITObserver observer) {
-        if (!observers.contains(observer)) {
-            observers.add(observer);
-        }
-    }
+        observers.add(observer);
 
+    }
+    /**
+     * Removes an observer from the journal.
+     *
+     * @param observer the observer to be removed
+     */
     @Override
     public void removeObserver(IPlanITObserver observer) {
         observers.remove(observer);
-    }
 
+    }
+    /**
+     * Notifies all observers of the journal.
+     */
     @Override
     public void notifyObservers() {
-        for (IPlanITObserver observer : observers) {
-            observer.update();
-        }
+        observers.forEach(IPlanITObserver::update);
+
     }
 
 }
