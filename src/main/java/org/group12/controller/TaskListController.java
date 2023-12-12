@@ -9,6 +9,7 @@ import org.group12.model.todo.*;
 import org.group12.view.TaskListView;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,9 +84,9 @@ public class TaskListController implements IController, IObservable {
     }
 
     public String getTaskListDateCreated(String taskListID){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm");
         ITaskList taskList = (ITaskList) items.getItem(taskListID);
-        LocalDate dateCreated = LocalDate.from(taskList.getDateCreated());
-        return dateCreated.toString();
+        return taskList.getDateCreated().format(formatter);
 
     }
     public String getTaskListTitle(String taskListID){
@@ -95,7 +96,6 @@ public class TaskListController implements IController, IObservable {
     public ArrayList<ITaskList> getTasksLists(){
         return todoCollection.getTaskList();
     }
-
 
 
 

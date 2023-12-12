@@ -12,6 +12,8 @@ import org.group12.model.todo.ITaskList;
 import org.group12.view.BigTaskCard;
 import org.group12.view.TaskListCards;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,9 +50,10 @@ public class BigTaskController implements IController, IObservable {
     }
 
     public String getBigTaskDateCreated(String bigTaskID){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm");
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
         if(bigTask != null){
-            return bigTask.getDateCreated().toString();
+            return bigTask.getDateCreated().format(formatter);
         }
         return "Unknown";
     }
