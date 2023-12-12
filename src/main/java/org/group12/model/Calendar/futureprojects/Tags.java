@@ -1,9 +1,10 @@
 package org.group12.model.Calendar.futureprojects;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Tags implements ITag {
+public class Tags implements ITag, Serializable {
     private String ID;
     List<String> tags;
 

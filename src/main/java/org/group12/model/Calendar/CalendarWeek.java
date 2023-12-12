@@ -1,5 +1,6 @@
 package org.group12.model.Calendar;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
@@ -12,7 +13,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * Represents a calendar week.
  */
-public class CalendarWeek {
+public class CalendarWeek implements Serializable {
     private final List<LocalDate> days;
     private final LocalDate firstDay;
     private final LocalDate lastDay;

@@ -12,7 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CalendarTest {
-   /* private Calendar calendar;
+   /*
+   private Calendar calendar;
+
     private Event event;
     private LocalDateTime start1, start2, end1, end2;
     private Pair<LocalDateTime, LocalDateTime> timeFrame1, timeFrame2;
@@ -36,8 +38,9 @@ public class CalendarTest {
         for(int i = 0; i < 10; i++) {
             calendar.addEvent("title" + i, "description" + i, timeFrame2);
         }
-        calendar.addEvent("matte", "jag skall kolla video", timeFrame1);*/
+        calendar.addEvent("matte", "jag skall kolla video", timeFrame1);
     }
+
 
     @Test
     public void testRecurring() {

@@ -44,7 +44,6 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     @FXML
     private ImageView deleteTaskListBtn;
 
-
     // Constructor
     public TaskListCards(String ID, ItemsSet items){
         this.items = items;

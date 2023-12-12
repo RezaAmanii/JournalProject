@@ -1,11 +1,12 @@
 package org.group12.model.Calendar;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
 /**
  * Represents a calendar event.
  */
-public class CalendarEvent {
+public class CalendarEvent implements Serializable {
     private int rowStart;
     private int rowEnd;
     private String title;

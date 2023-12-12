@@ -15,6 +15,7 @@ import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskListController;
+import org.group12.dataHandler.SaveLoad;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
@@ -57,7 +58,7 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
 
     // Constructor
     public BigTaskCard(String ID, ItemsSet items){
-        this.items = items;
+        this.items = SaveLoad.getInstance().getItemsInstance();
         this.ID = ID;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("bigTaskCard.fxml"));

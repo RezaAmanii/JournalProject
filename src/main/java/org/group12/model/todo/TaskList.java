@@ -4,13 +4,14 @@ import org.group12.model.ItemsSet;
 import org.group12.model.todo.factories.BigTaskFactory;
 
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
  * Represents a task list that contains big tasks.
  */
-public class TaskList implements ITaskList {
+public class TaskList implements ITaskList, Serializable {
     private String title;
     private LocalDateTime dateCreated;
     private final ArrayList<IBigTask> bigTaskList;

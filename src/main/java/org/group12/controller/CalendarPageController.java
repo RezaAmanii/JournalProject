@@ -3,6 +3,7 @@ package org.group12.controller;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
+import org.group12.dataHandler.SaveLoad;
 import org.group12.model.Calendar.CalendarWeek;
 import org.group12.controllerView.NewEventView;
 import org.group12.model.Calendar.Calendar;
@@ -26,7 +27,7 @@ import static org.group12.model.toDoSubTask.Globals.loadFxml;
  */
 public class CalendarPageController {
 
-    private Calendar calendarData = Container.getInstance().getCalender();
+    private Calendar calendarData = SaveLoad.getInstance().getContainerInstance().getCalender();
 
     @FXML
     private BorderPane calendarPane;
