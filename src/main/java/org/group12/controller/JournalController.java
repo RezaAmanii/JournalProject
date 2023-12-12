@@ -90,6 +90,11 @@ public class JournalController implements IController, IObservable {
         return journalModel.getEntries();
     }
 
+    public static String getEntryContent(JournalEntry entry) {
+        String entryContent = entry.getContent();
+        return entryContent;
+    }
+
 
     /**
      * Adds a new journal entry to the journal model if the input is valid.

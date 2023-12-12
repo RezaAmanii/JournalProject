@@ -5,20 +5,29 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #9BBEC8;" type="AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.view.JournalEntryCard">
+<fx:root fx:id="cardBorder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #9BBEC8;" type="javafx.scene.layout.AnchorPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="titleLabel" layoutX="265.0" layoutY="14.0" prefHeight="25.0" prefWidth="49.0" text="titleLabel" />
-      <Label fx:id="dateModified" layoutX="14.0" layoutY="365.0" prefHeight="25.0" prefWidth="49.0" text="dateModified" />
-      <Label fx:id="NrOfWords" layoutX="526.0" layoutY="369.0" text="wordCount" />
+      <Label fx:id="titleLabel" layoutX="217.0" layoutY="14.0" onMouseClicked="#titleClicked" prefHeight="35.0" prefWidth="162.0" text="titleLabel" textAlignment="CENTER" textFill="#183a4e">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="30.0" />
+         </font></Label>
+      <Label fx:id="dateModified" layoutX="14.0" layoutY="365.0" prefHeight="25.0" prefWidth="127.0" text="dateModified">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+         </font></Label>
+      <Label fx:id="NrOfWords" layoutX="526.0" layoutY="369.0" text="wordCount">
+         <font>
+            <Font name="Berlin Sans FB Demi Bold" size="12.0" />
+         </font></Label>
       <TextArea fx:id="content" layoutX="39.0" layoutY="73.0" prefHeight="290.0" prefWidth="518.0" />
-      <ImageView fitHeight="50.0" fitWidth="60.0" layoutX="526.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="deleteButton" fitHeight="50.0" fitWidth="60.0" layoutX="526.0" layoutY="14.0" onMouseClicked="#deleteButtonClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../deleteWhite.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="50.0" fitWidth="49.0" layoutX="458.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="saveButton" fitHeight="50.0" fitWidth="49.0" layoutX="458.0" layoutY="14.0" onMouseClicked="#saveButtonClicked" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../Pen.png" />
          </image>

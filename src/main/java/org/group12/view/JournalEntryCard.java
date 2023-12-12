@@ -49,15 +49,21 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
 
         this.entry = CastHelper.castObject(JournalEntry.class, items.getItem(ID));
 
-        System.out.println("JournalEntryCard");
-        FXMLLoaderService fxmlLoaderService = new FXMLLoaderService();
-        fxmlLoaderService.loadFXML(this, this, "JournalEntryCard.fxml");
-
-
-
+        //System.out.println("JournalEntryCard");
         this.cardUpdater = new CardUpdater(items);
+        //FXMLLoaderService fxmlLoaderService = new FXMLLoaderService();
+        //fxmlLoaderService.loadFXML(this, this, "JournalEntryCard.fxml");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group12/view/JournalEntryCard.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+        } catch (IOException exception) {
+            throw new RuntimeException(exception);
+        }
 
-        update();
+
+        //update();
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -68,6 +74,7 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
 
     private void initializeFields() {
         this.titleLabel.setText(JournalController.getEntryTitle(entry));
+        this.content.setText(JournalController.getEntryContent(entry));
         this.dateModified.setText(JournalController.getEntryDateModified(entry));
         this.NrOfWords.setText(JournalController.getNrOfWords(entry));
     }

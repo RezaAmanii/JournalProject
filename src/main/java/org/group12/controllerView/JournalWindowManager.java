@@ -2,7 +2,9 @@ package org.group12.controllerView;
 
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import org.group12.Listeners.JournalClickListener;
@@ -17,6 +19,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import java.io.IOException;
 
 public class JournalWindowManager implements Initializable, IJournalObserver, JournalClickListener {
 
@@ -83,11 +86,28 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     public void update() {
 
     }
-    public void populateJournalEntry(JournalEntry entry){
-        journalEntryPane.getChildren().clear();
-        JournalEntryCard entrycard = createNewEntryObject(entry);
-        journalEntryPane.setCenter(entrycard);
+    //public void populateJournalEntry(JournalEntry entry){
+        //journalEntryPane.getChildren().clear();
+        //JournalEntryCard entrycard = createNewEntryObject(entry);
+        //journalEntryPane.setCenter(entrycard);
+
+    //}
+    public void populateJournalEntry(JournalEntry journalEntry) {
+        if(journalEntry != null) {
+            // Create a new JournalEntryCard
+            JournalEntryCard journalEntryCard = new JournalEntryCard(journalEntry.getID(), Items.getInstance());
+
+
+
+            // Clear the journalEntryPane and add the new card
+            journalEntryPane.getChildren().clear();
+            journalEntryPane.setCenter(journalEntryCard);
+            //journalEntryPane.setCenter(rootNode);
+        } else {
+            journalEntryPane.setCenter(null);
+        }
     }
+
 
     public JournalEntryCard createNewEntryObject(JournalEntry entry) {
         JournalEntryCard newEntryCard = new JournalEntryCard(entry.getID(), Items.getInstance());
