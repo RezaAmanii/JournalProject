@@ -133,10 +133,16 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         refreshFixedLists();
         refreshAppendableLists();
         refreshSidePanelInfo();
+
+        if(appendableListVbox.getChildren().isEmpty()){
+            lastClickedTaskListCard = createNewListObject(taskListController.getTaskListByTitle("Today"));
+        }
     }
 
     private void clearListVBoxContent() {
-        if (lastClickedTaskListCard == null || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).equals("Today") || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Important")) {
+        if (lastClickedTaskListCard == null || taskListController.getTaskListByID(lastClickedTaskListCard.getID()) == null
+                || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Today")
+                || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Important")) {
             lastClickedTaskListCard = createNewListObject(taskListController.getTaskListByTitle("Today"));
         }
 
