@@ -12,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskController;
 import org.group12.model.todo.ITask;
@@ -28,7 +29,7 @@ import static org.group12.controllerView.ToDoWindowManager.*;
 import static org.group12.view.TaskView.*;
 
 
-public class SubTaskWindowManager implements Initializable {
+public class SubTaskWindowManager implements Initializable, ITaskListObserver {
 
     static public ITask selectedSubTask = null;
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
@@ -45,9 +46,8 @@ public class SubTaskWindowManager implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        taskNameLabel.setText(selectedTask.getTitle());
+        taskNameLabel.setText(bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID()).getTitle());
 
-        refreshSubTasksPane();
     }
 
 
@@ -131,7 +131,8 @@ public class SubTaskWindowManager implements Initializable {
     }
 
 
-
-
-
+    @Override
+    public void update() {
+        refreshSubTasksPane();
+    }
 }

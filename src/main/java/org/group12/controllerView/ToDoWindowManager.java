@@ -27,6 +27,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import static org.group12.view.TaskListView.*;
+import static org.group12.view.TaskView.openNewForm;
 
 
 public class ToDoWindowManager implements Initializable, ITaskListObserver, TaskListCardClickListener, BigTaskCardClickListener {
@@ -236,39 +237,13 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
                     }
                 }
             } else {
-                // Handle case when taskList is null
+
                 System.out.println("Task List not found!");
             }
         } else {
-            // Handle case when lastSelectedTaskListCard is null
             System.out.println("No Task List Card selected!");
         }
     }
-
-
-
-/*
-    public void refreshSidePanelInfo() {
-
-        selectedTaskList = taskListController.getTaskListByID(selectedTaskList.getID());
-        activeListNameLBL.setText(selectedTaskList.getTitle());
-
-        ongoingTasksVbox.getChildren().clear();
-        completedTasksVbox.getChildren().clear();
-
-        Comparator<IBigTask> comparator = Comparator.comparing(IBigTask::getDueDate);
-        selectedTaskList.getBigTaskList().sort(comparator);
-
-        for (IBigTask task : selectedTaskList.getBigTaskList()) {
-            if (task.getSubTaskList().size() == task.getCompletedSubTasks().size() && !task.getSubTaskList().isEmpty())
-                completedTasksVbox.getChildren().add(createNewTaskObject(task));
-            else
-                ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
-        }
-
-    }
-
- */
 
 
 
@@ -302,7 +277,13 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
         IBigTask bigtask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
 
+        try {
+            openNewForm("/org/group12/view/subTasks.fxml", bigtask.getTitle(), false);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-
 }
+
+

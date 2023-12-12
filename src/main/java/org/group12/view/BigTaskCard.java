@@ -14,12 +14,14 @@ import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
+import org.group12.controller.TaskListController;
 import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.todo.IBigTask;
 import javafx.geometry.Insets;
+import org.group12.model.todo.ITaskList;
 
 
 import java.io.IOException;
@@ -27,7 +29,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static org.group12.controllerView.ToDoWindowManager.selectedTask;
+import static org.group12.view.TaskView.openNewForm;
 
 public class BigTaskCard extends AnchorPane implements Initializable, ITaskListObserver {
 
@@ -37,6 +39,7 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
 
     // Controller
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
+    private final TaskListController taskListController = TaskListController.getInstance();
 
     // Listener
     private BigTaskCardClickListener clickListener;
@@ -145,15 +148,20 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         bigTaskController.setBigTaskCheckBoxStatus(ID, isSelected);
     }
 
+
+
+    /*
     @FXML
     private void openSubTask(){
         selectedTask = bigTaskController.getBigTaskByID(this.ID);
         try {
-            Globals.openNewForm("/org/group12/view/subTasks.fxml", selectedTask.getTitle(), false);
+            openNewForm("/org/group12/view/subTasks.fxml", taskListController.getTaskListByID(ToDoWindowManager.lastClickedBigTaskCard.getID()).getTitle(), false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
+     */
 
 
 
