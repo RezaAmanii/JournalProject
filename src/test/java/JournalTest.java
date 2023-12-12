@@ -3,6 +3,9 @@ import org.group12.model.journal.*;
 import org.group12.util.TextUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class JournalTest {
@@ -11,6 +14,7 @@ class JournalTest {
     private JournalEntryFactory journalEntryFactory;
     private JournalEntry journalEntry;
     private ItemsSet items;
+    LocalDate date;
 
     @BeforeEach
     void setUp() {
@@ -18,7 +22,8 @@ class JournalTest {
         journalFactory = JournalFactory.getInstance();
         journal = journalFactory.createJournal("Test Journal", journalEntryFactory, items);
         journalEntry = journalEntryFactory.createJournalEntry();
-        journal.addEntry();
+        date = LocalDate.now();
+        journal.addEntry(date);
     }
 
     @Test

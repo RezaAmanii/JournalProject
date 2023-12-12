@@ -22,10 +22,11 @@ public class JournalEntry implements INameable, IObservable {
     /**
      * Constructor for creating a new JournalEntry object.
      *
-     * @param ID               unique identifier for the journal entry
-     * @param title            title of the journal entry
-     * @param content          content of the journal entry
-     * @param createdTimestamp timestamp when the journal entry was created
+     * @param ID               unique identifier for the journal entry. Must not be null or empty.
+     * @param title            title of the journal entry. Must not be null or empty.
+     * @param content          content of the journal entry. Must not be null.
+     * @param entryDate        date of the journal entry. Must not be null.
+     * @param createdTimestamp timestamp when the journal entry was created. Must not be null.
      */
     public JournalEntry(String ID, String title, String content, LocalDate entryDate, LocalDate createdTimestamp) {
         this.ID = ID;
@@ -37,29 +38,16 @@ public class JournalEntry implements INameable, IObservable {
         this.observers = new ArrayList<>();
     }
 
-    public LocalDate getEntryDate() {
-        return entryDate;
-    }
-
-    public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    /**
-     * Removes the content from the journal entry and notifies all observers.
-     */
-    public void removeContentFromEntry() {
-        this.content = null;
-        this.modifiedTimestamp = LocalDateTime.now();
-        notifyObservers();
-    }
 
     /**
      * Updates the content of the journal entry, updates the modified timestamp, and notifies all observers.
      *
-     * @param newContent the new content for the journal entry
+     * @param newContent the new content for the journal entry. If null, it will be treated as an empty string.
      */
     public void updateContent(String newContent) {
+        if (newContent == null) {
+            newContent = "";
+        }
         this.content = newContent;
         this.modifiedTimestamp = LocalDateTime.now();
         notifyObservers();
@@ -70,11 +58,14 @@ public class JournalEntry implements INameable, IObservable {
     }
 
     /**
-     * Updates the title of the journal entry, updates the modified timestamp, and notifies all observers.
+     * Updates the title of the journal entry, updates the modified timestamp to the current date and time, and notifies all observers.
      *
-     * @param newTitle the new title for the journal entry
+     * @param newTitle the new title for the journal entry. If null, it will be treated as an empty string.
      */
     public void setTitle(String newTitle) {
+        if (newTitle == null) {
+            newTitle = "No title set";
+        }
         this.title = newTitle;
         this.modifiedTimestamp = LocalDateTime.now();
         notifyObservers();
