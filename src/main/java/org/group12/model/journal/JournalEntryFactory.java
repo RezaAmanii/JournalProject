@@ -47,17 +47,17 @@ public class JournalEntryFactory implements IJournalEntryFactory {
         String content = "";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String title = dateFormat.format(new Date());
-        LocalDateTime createdTimestamp = LocalDateTime.now();
+        LocalDate createdTimestamp = LocalDate.now();
         return new JournalEntry(ID, title, content, LocalDate.now(), createdTimestamp);
     }
 
     @Override
-    public JournalEntry createJournalEntry(LocalDateTime date) {
+    public JournalEntry createJournalEntry(LocalDate date) {
         String ID = idFactory.generateID();
         String content = "";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String title = dateFormat.format(date);
-        LocalDateTime createdTimestamp = date;
+        String title = "No title";
+        LocalDate createdTimestamp = date;
         return new JournalEntry(ID, title, content, LocalDate.now(), createdTimestamp);
     }
 

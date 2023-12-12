@@ -1,9 +1,9 @@
 package org.group12.model.journal;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public interface IJournalEntryFactory {
     JournalEntry createJournalEntry();
-    JournalEntry createJournalEntry(LocalDateTime date);
+    JournalEntry createJournalEntry(LocalDate date);
 
 }

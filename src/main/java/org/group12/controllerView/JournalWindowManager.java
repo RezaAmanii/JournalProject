@@ -21,6 +21,8 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
+import static java.time.format.DateTimeFormatter.ISO_DATE;
+
 public class JournalWindowManager implements Initializable, IJournalObserver, JournalClickListener {
 
     @FXML
@@ -46,24 +48,23 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        entryDate = new DatePicker();
-        entryDate.setValue(LocalDate.now());
-        if (journalController.getEntryByDate(LocalDateTime.now()) == null) {
-            System.out.println("null");
-            journalController.addJournalEntry();
-        }
+        this.entryDate = new DatePicker();
+        this.entryDate.setValue(LocalDate.now());
 
-        populateJournalEntry(journalController.getEntryByDate(LocalDateTime.now()));
+        // collects todays entry, returns empty new one if one did not exist
+        entry = journalController.getEntryByDate(LocalDate.now());
+        createBindings();
+        populateJournalEntry(entry);
         journalController.addObserver(this);
 
     }
-    public void loadView(TextArea content,DatePicker entryDate,Label entryDateLabel, Label prevDayBtn)
-    {
-        //this.content = content;
-        this.entryDate = entryDate;
-        this.entryDateLabel = entryDateLabel;
-        this.prevDayBtn = prevDayBtn;
-    }
+    //public void loadView(TextArea content,DatePicker entryDate,Label entryDateLabel, Label prevDayBtn)
+    //{
+    //   //this.content = content;
+    //   this.entryDate = entryDate;
+    //this.entryDateLabel = entryDateLabel;
+    //    this.prevDayBtn = prevDayBtn;
+    //}
 
 
 
@@ -72,6 +73,8 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     {
         JournalEntry nextEntry = journalController.getEntryByDate(entryDate.getValue().minusDays(1).atStartOfDay());
         populateJournalEntry(nextEntry);
+        this.entryDate.setValue(entryDate.getValue().minusDays(1));
+        update();
 
 
     }
@@ -80,11 +83,12 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     {
         JournalEntry nextEntry = journalController.getEntryByDate(entryDate.getValue().plusDays(1).atStartOfDay());
         populateJournalEntry(nextEntry);
+        this.entryDate.setValue(entryDate.getValue().plusDays(1));
+        update();
     }
 
     @Override
     public void update() {
-
     }
     //public void populateJournalEntry(JournalEntry entry){
         //journalEntryPane.getChildren().clear();
@@ -96,16 +100,15 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
         if(journalEntry != null) {
             // Create a new JournalEntryCard
             JournalEntryCard journalEntryCard = new JournalEntryCard(journalEntry.getID(), Items.getInstance());
-
-
-
             // Clear the journalEntryPane and add the new card
             journalEntryPane.getChildren().clear();
             journalEntryPane.setCenter(journalEntryCard);
             //journalEntryPane.setCenter(rootNode);
         } else {
-            journalEntryPane.setCenter(null);
+            // If journalEntry is null, print an error message
+            System.out.println("JournalEntry is null!");
         }
+
     }
 
 
@@ -158,10 +161,10 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     //    return new JournalEntry("Posts",entryDate.getValue(),content.getText());
     //}
 
-    //public void createBindings() {
-    //    entryDateLabel.textProperty()
-    //            .bind(entryDate.valueProperty()
-    //                    .map(date -> date.format(ISO_DATE)));
-    //}
+    public void createBindings() {
+        entryDateLabel.textProperty()
+                .bind(entryDate.valueProperty()
+                        .map(date -> date.format(ISO_DATE)));
+    }
 
 }

@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JournalEntry implements INameable, IDateCreated, IObservable {
+public class JournalEntry implements INameable, IObservable {
     private String ID;
     private String title;
     private LocalDate entryDate;
-    private LocalDateTime createdTimestamp;
+    private LocalDate createdTimestamp;
     private LocalDateTime modifiedTimestamp;
     private String content;
     private List<IPlanITObserver> observers;
@@ -27,21 +27,21 @@ public class JournalEntry implements INameable, IDateCreated, IObservable {
      * @param content          content of the journal entry
      * @param createdTimestamp timestamp when the journal entry was created
      */
-    public JournalEntry(String ID, String title, String content,LocalDate entryDate, LocalDateTime createdTimestamp) {
+    public JournalEntry(String ID, String title, String content, LocalDate entryDate, LocalDate createdTimestamp) {
         this.ID = ID;
         this.title = title;
         this.entryDate = entryDate;
         this.createdTimestamp = createdTimestamp;
-        this.modifiedTimestamp = createdTimestamp;
+        this.modifiedTimestamp = createdTimestamp.atStartOfDay();
         this.content = content;
         this.observers = new ArrayList<>();
     }
 
-    public JournalEntry(String title, LocalDate entryDate, String content) {
-        this.title = title;
-        this.entryDate = entryDate;
-        this.content = content;
-    }
+    //public JournalEntry(String title, LocalDateTime entryDate, String content) {
+    //    this.title = title;
+    //    this.entryDate = entryDate;
+    //    this.content = content;
+    //}
 
     public LocalDate getEntryDate() {
         return entryDate;

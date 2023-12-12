@@ -158,17 +158,17 @@ public class Journal implements INameable, IObservable{
         entries.remove(date);
         notifyObservers();
     }
-    public void addEntry(){
-        JournalEntry newEntry = entryFactory.createJournalEntry();
-        for (IPlanITObserver observer : observers) {
-            newEntry.addObserver(observer);
-        }
-        entries.put(LocalDateTime.now(), newEntry);
-        items.addItem(newEntry);
-        notifyObservers();
-    }
-    public JournalEntry addEntry(LocalDateTime date) {
-        JournalEntry newEntry = entryFactory.createJournalEntry();
+    //public void addEntry(){
+    //    JournalEntry newEntry = entryFactory.createJournalEntry();
+    //    for (IPlanITObserver observer : observers) {
+    //        newEntry.addObserver(observer);
+    //    }
+    //    entries.put(LocalDateTime.now(), newEntry);
+    //    items.addItem(newEntry);
+    //    notifyObservers();
+    //}
+    public JournalEntry addEntry(LocalDate date) {
+        JournalEntry newEntry = entryFactory.createJournalEntry(date);
         for (IPlanITObserver observer : observers) {
             newEntry.addObserver(observer);
         }

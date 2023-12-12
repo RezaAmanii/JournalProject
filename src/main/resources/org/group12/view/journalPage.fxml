@@ -79,7 +79,7 @@
             <children>
                 <HBox prefHeight="74.0" prefWidth="389.0" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                     <children>
-                        <Pane onMouseClicked="#getPrevDayClick" prefHeight="23.0" prefWidth="42.0" style="-fx-background-color: #183a4e; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white;">
+                        <Pane prefHeight="23.0" prefWidth="42.0" style="-fx-background-color: #183a4e; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white;">
                             <children>
                                 <Label fx:id="prevDayBtn" alignment="CENTER" layoutX="15.0" layoutY="-4.0" onMouseClicked="#getPrevDayClick" text="&lt;" textFill="WHITE">
                                     <font>

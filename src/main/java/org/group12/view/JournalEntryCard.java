@@ -11,8 +11,10 @@ import javafx.scene.layout.AnchorPane;
 import org.group12.Listeners.JournalClickListener;
 import org.group12.Observers.IJournalObserver;
 import org.group12.controller.JournalController;
+import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.journal.JournalEntry;
+import org.group12.model.todo.IBigTask;
 import org.group12.util.CastHelper;
 
 import java.io.IOException;
@@ -108,7 +110,25 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
 
     // TODO: protection måste läggas till
     public void update() {
-        cardUpdater.updateJournalEntryCard(ID, entry, titleLabel, content);
+//        cardUpdater.updateJournalEntryCard(ID, entry, titleLabel, content);
+
+        try{
+            INameable item = items.getItem(this.ID);
+
+            if(item instanceof JournalEntry){
+                JournalEntry entry = (JournalEntry) item;
+                this.titleLabel.setText(JournalController.getEntryTitle(entry));
+                this.content.setText(JournalController.getEntryContent(entry));
+                this.dateModified.setText(JournalController.getEntryDateModified(entry));
+                this.NrOfWords.setText(JournalController.getNrOfWords(entry));
+
+
+            } else{
+                System.out.println("Entry with ID " + ID + " is null!");
+            }
+        } catch (ClassCastException error){
+            System.out.println("Item with ID " + ID + " is not a JournalEntry!");
+        }
     }
 
     public String getID() {
