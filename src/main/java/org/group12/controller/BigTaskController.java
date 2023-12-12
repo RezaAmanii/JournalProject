@@ -10,6 +10,7 @@ import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
 import org.group12.view.BigTaskCard;
+import org.group12.view.TaskListCards;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,12 @@ public class BigTaskController implements IController, IObservable {
     private final ItemsSet itemsSet;
     private static BigTaskController instance;
     private final List<IPlanITObserver> observers = new ArrayList<>();
+    private final TaskListController taskListController;
 
     // Constructor
     private BigTaskController() {
         this.itemsSet = Items.getInstance();
+        this.taskListController = TaskListController.getInstance();
     }
 
     // Singleton
@@ -84,8 +87,8 @@ public class BigTaskController implements IController, IObservable {
     }
 
     public void handleRemoveTask(IBigTask bigTask){
-        ITaskList selectedList = ToDoWindowManager.selectedTaskList;
-        selectedList.removeBigTask(bigTask);
+        TaskListCards selectedList = ToDoWindowManager.lastClickedTaskListCard;
+        taskListController.getTaskListByID(selectedList.getID()).removeBigTask(bigTask);
         notifyObservers();
     }
 

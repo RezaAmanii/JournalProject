@@ -50,10 +50,10 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
     // A reference to the selected taskList card and selected bigTask card
-    public static ITaskList selectedTaskList = null;
     public static IBigTask selectedTask = null;
 
-    private TaskListCards lastClickedTaskListCard;
+    public static TaskListCards lastClickedTaskListCard;
+    public static BigTaskCard lastClickedBigTaskCard;
 
 
 
@@ -97,7 +97,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
     public void addNewTask() {
-        if(lastClickedTaskListCard != null && (taskListController.getTaskListByID(selectedTaskList.getID()).getTitle().equals("Today") || taskListController.getTaskListByID(selectedTaskList.getID()).getTitle().equals("Important"))){
+        if(lastClickedTaskListCard != null && (taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Today") || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Important"))){
             System.out.println("Choose another list to add task");
         }
 
@@ -135,8 +135,8 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
     private void clearListVBoxContent() {
-        if (selectedTaskList == null || selectedTaskList.getTitle().equals("Today") || selectedTaskList.getTitle().equals("Important")) {
-            selectedTaskList = taskListController.getTaskListByTitle("Today");
+        if (lastClickedTaskListCard == null || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).equals("Today") || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Important")) {
+            lastClickedTaskListCard = createNewListObject(taskListController.getTaskListByTitle("Today"));
         }
 
         fixedListsVbox.getChildren().clear();
@@ -205,6 +205,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
             taskListController.getTaskListByTitle("Today").addBigTask(todayTask.getTitle());
         }
 
+
     }
 
 
@@ -215,9 +216,40 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         taskListController.getTaskListByTitle("Important").addBigTask(task.getTitle());
     }
 
-
-
     public void refreshSidePanelInfo() {
+        if (lastClickedTaskListCard != null) {
+            ITaskList taskList = taskListController.getTaskListByID(lastClickedTaskListCard.getID());
+            if (taskList != null) {
+                activeListNameLBL.setText(taskList.getTitle());
+
+                ongoingTasksVbox.getChildren().clear();
+                completedTasksVbox.getChildren().clear();
+
+                Comparator<IBigTask> comparator = Comparator.comparing(IBigTask::getDueDate);
+                taskList.getBigTaskList().sort(comparator);
+
+                for (IBigTask task : taskList.getBigTaskList()) {
+                    if (task.getSubTaskList().size() == task.getCompletedSubTasks().size() && !task.getSubTaskList().isEmpty()) {
+                        completedTasksVbox.getChildren().add(createNewTaskObject(task));
+                    } else {
+                        ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
+                    }
+                }
+            } else {
+                // Handle case when taskList is null
+                System.out.println("Task List not found!");
+            }
+        } else {
+            // Handle case when lastSelectedTaskListCard is null
+            System.out.println("No Task List Card selected!");
+        }
+    }
+
+
+
+/*
+    public void refreshSidePanelInfo() {
+
         selectedTaskList = taskListController.getTaskListByID(selectedTaskList.getID());
         activeListNameLBL.setText(selectedTaskList.getTitle());
 
@@ -235,6 +267,8 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
 
     }
+
+ */
 
 
 
@@ -254,7 +288,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         lastClickedTaskListCard = clickedCard;
 
         ITaskList taskList = taskListController.getTaskListByID(clickedCard.getID());
-        selectedTaskList = taskList;
 
         activeListNameLBL.setText(taskList.getTitle());
         populateOngoingTasks(taskList);
@@ -262,12 +295,12 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
 
-
     // Event Handlers for clicking on BigTask
     @Override
-    public void onBigTaskCardClicked(BigTaskCard bigTaskCard) {
-        IBigTask bigtask = bigTaskController.getBigTaskByID(bigTaskCard.getID());
-        selectedTask = bigtask;
+    public void onBigTaskCardClicked(BigTaskCard clickedCard) {
+        lastClickedBigTaskCard = clickedCard;
+
+        IBigTask bigtask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
 
     }
 
