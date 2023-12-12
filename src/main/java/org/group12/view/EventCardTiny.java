@@ -37,6 +37,7 @@ public class EventCardTiny extends AnchorPane {
         fxmlLoaderService.loadFXML(this, this, "EventCardTiny.fxml");
 
         this.cardUpdater = new CardUpdater();
+
         update();
 
 
