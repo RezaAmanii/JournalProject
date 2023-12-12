@@ -125,8 +125,9 @@ public class JournalController implements IController, IObservable {
      */
     public void updateJournalEntry(JournalEntry journalEntry, String newContent) {
         if(journalEntry != null && !newContent.isEmpty()){
-            this.journalEntry.get().updateContent(newContent);
+            journalEntry.updateContent(newContent);
         } else {
+            System.out.println("Saknas content!");
             //journalView.displayErrorMessage("Invalid input.");
         }
     }
