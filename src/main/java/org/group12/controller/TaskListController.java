@@ -7,32 +7,28 @@ import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.*;
 import org.group12.view.TaskListView;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class TaskListController implements IController, IObservable {
 
-    private TaskListView taskListView;
-
-    private ItemsSet items;
-    private TodoCollection todoCollection;
+    // Attributes
+    private final ItemsSet items;
+    private final TodoCollection todoCollection;
     private static TaskListController instance;
-    private Container container = Container.getInstance();
-    private List<IPlanITObserver> observers = new ArrayList<>();
+    private final List<IPlanITObserver> observers = new ArrayList<>();
 
-
+    // Constructor
     private TaskListController() {
         this.items = Items.getInstance();
         this.todoCollection = Container.getInstance().getTodoCollection();
-        this.taskListView = new TaskListView();
 
     }
 
-    public Container getContainer() {
-        return this.container;
-    }
-
+    // Singleton
     public static TaskListController getInstance() {
         if (instance == null) {
             instance = new TaskListController();
@@ -41,21 +37,17 @@ public class TaskListController implements IController, IObservable {
     }
 
 
-    // To-do lists methods
+    // Add and remove methods
     public String handlerAddToDoList(String title) {
         return todoCollection.addTaskList(title);
     }
 
-
     public void handlerRemoveToDoList(ITaskList taskList) {
-        todoCollection.removeTaskList(taskList.getID());
+        todoCollection.removeTaskList(taskList);
+        notifyObservers();
     }
 
-
-    public String getListsTitle() {
-        return todoCollection.getTitle();
-    }
-
+    // Rename methods
     public void changeListTitle(String TaskListID, String newTitle) {
         ITaskList taskList = (ITaskList) items.getItem(TaskListID);
         if (taskList != null){
@@ -68,24 +60,13 @@ public class TaskListController implements IController, IObservable {
         } else {
             System.out.println("TaskList not found");
         }
+        notifyObservers();
     }
 
-
-
+    // Getting methods
     public ITaskList getTaskListByID(String taskListID){
         return (ITaskList) items.getItem(taskListID);
     }
-
-    public IBigTask getBigTaskByID(String bigTaskID){
-        return (IBigTask) items.getItem(bigTaskID);
-    }
-
-
-    public ITask getSubTaskByID(String taskID){
-        return (ITask) items.getItem(taskID);
-    }
-
-
 
     public ITaskList getTaskListByTitle(String title){
         for(ITaskList taskList : todoCollection.getTaskList()){
@@ -96,29 +77,35 @@ public class TaskListController implements IController, IObservable {
         return null;
     }
 
-    public IBigTask getTaskByID(String taskID){
-        return (IBigTask) items.getItem(taskID);
+    public String getNrOfBigTasks(String taskListID){
+        ITaskList taskList = (ITaskList) items.getItem(taskListID);
+        return String.valueOf(taskList.getBigTaskList().size());
     }
 
-    public void removeAnyObject(String ID){
-        items.removeItem(ID);
+    public String getTaskListDateCreated(String taskListID){
+        ITaskList taskList = (ITaskList) items.getItem(taskListID);
+        LocalDate dateCreated = LocalDate.from(taskList.getDateCreated());
+        return dateCreated.toString();
+
+    }
+    public String getTaskListTitle(String taskListID){
+        return items.getItem(taskListID).getTitle();
     }
 
-    public ArrayList<ITaskList> fetchAllTaskLists(){
+    public ArrayList<ITaskList> getTasksLists(){
         return todoCollection.getTaskList();
     }
-    public ArrayList<IBigTask> fetchAllBigTasks(String taskListID){
-        ITaskList taskList = (ITaskList) items.getItem(taskListID);
-        return taskList.getBigTaskList();
-    }
 
 
+
+
+
+    // Observer methods
     @Override
     public void addObserver(IPlanITObserver observer) {
         if(!observers.contains(observer)){
             observers.add(observer);
         }
-
     }
 
     @Override

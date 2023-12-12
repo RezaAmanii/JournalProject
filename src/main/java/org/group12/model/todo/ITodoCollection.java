@@ -9,7 +9,7 @@ public interface ITodoCollection extends INameable {
     // Methods for editing the TaskLists
     String addTaskList(String title);
 
-    void removeTaskList(String listID);
+    void removeTaskList(ITaskList list);
 
     ArrayList<ITaskList> getTaskList();
 }

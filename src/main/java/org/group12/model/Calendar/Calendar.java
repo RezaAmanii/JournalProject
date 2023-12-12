@@ -3,18 +3,21 @@ package org.group12.model.Calendar;
 import javafx.util.Pair;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
+import org.group12.model.Calendar.factories.eventFactory;
+import org.group12.model.Calendar.interfaces.ICalendar;
 import org.group12.model.ItemsSet;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class Calendar implements IObservable, ICalendar {
+public class Calendar implements IObservable, ICalendar, Serializable {
     private List<Event> eventList;
     private boolean isEmpty;
     private List<IPlanITObserver> observers;
-    private eventFactory eventFactory;
+    private org.group12.model.Calendar.factories.eventFactory eventFactory;
     private final ItemsSet items;
 
     public Calendar(ItemsSet items) {
@@ -34,9 +37,9 @@ public class Calendar implements IObservable, ICalendar {
         EventSorter.sortEvents(eventList);
     }
 
-    public void addEvent(String title, String description,
+    public void addEvent(String title, String description, LocalDateTime dateOfEvent,
                          Pair<LocalDateTime, LocalDateTime> timeFrame){
-        Event newEvent = eventFactory.createEvent(title, description, timeFrame);
+        Event newEvent = eventFactory.createEvent(title, description,dateOfEvent, timeFrame);
         eventList.add(newEvent);
         this.isEmpty = false;
         notifyObservers();
@@ -47,6 +50,18 @@ public class Calendar implements IObservable, ICalendar {
         notifyObservers();
         items.addItem(event);
 //        notifyObservers();
+    }
+
+    /**
+     * Adds a new event to the calendar.
+     *
+     * @param title       The title of the event.
+     * @param description The description of the event.
+     * @param timeFrame   The time frame of the event, represented as a Pair of LocalDatetimes (start and end).
+     */
+    @Override
+    public void addEvent(String title, String description, Pair<LocalDateTime, LocalDateTime> timeFrame) {
+
     }
 
     /**
@@ -122,6 +137,10 @@ public class Calendar implements IObservable, ICalendar {
     }
     public List<Event> getEventsByTag(String tag){
         return EventSorter.getEventsByTag(eventList, tag);
+    }
+
+    public List<String> getTags(){
+        return EventSorter.getTags(eventList);
     }
 
 

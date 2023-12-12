@@ -1,12 +1,13 @@
 package org.group12.model.Calendar;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class EventSorter {
+public class EventSorter implements Serializable {
 
     // ----- O( nlo(n) ) time complexity -----------
 
@@ -61,5 +62,16 @@ public class EventSorter {
             }
         }
         return eventsWithTag;
+    }
+    public static List<String> getTags(List<Event> eventList){
+        List<String> tags = new ArrayList<>();
+        for (Event event : eventList){
+            for (String tag : event.getTags()){
+                if (!tags.contains(tag)){
+                    tags.add(tag);
+                }
+            }
+        }
+        return tags;
     }
 }

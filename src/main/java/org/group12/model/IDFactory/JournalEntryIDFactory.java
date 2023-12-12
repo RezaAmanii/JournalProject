@@ -1,11 +1,12 @@
 package org.group12.model.IDFactory;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 /**
  * Singleton factory class for generating IDs for JournalEntry objects.
  * This class extends the IDFactory abstract class and provides the specific implementation for JournalEntries.
  */
-public class JournalEntryIDFactory extends IDFactory implements IIDFactory {
+public class JournalEntryIDFactory extends IDFactory implements IIDFactory, Serializable {
     private static final String PREFIX = "JE";
     private static final AtomicLong counter = new AtomicLong(1);
 

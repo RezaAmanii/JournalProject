@@ -1,12 +1,13 @@
 package org.group12.model.journal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents a search functionality for a Journal.
  */
-public class JournalSearch {
+public class JournalSearch implements Serializable {
     private Journal journal;
     private static final int MIN_SEARCH_LENGTH = 3;
 
@@ -26,20 +27,5 @@ public class JournalSearch {
      *
      * @param keyword the keyword to search for in the journal entries
      * @return a list of JournalEntry objects that contain the keyword in their content
-     */
-    /*
-    public List<JournalEntry> searchEntries(String keyword) {
-        List<JournalEntry> matchingEntries = new ArrayList<>();
-        if (keyword.length() < MIN_SEARCH_LENGTH) {
-            return matchingEntries;
-        }
-        for (JournalEntry entry : journal.getEntries()) {
-            if (entry.getContent().toLowerCase().contains(keyword.toLowerCase())) {
-                matchingEntries.add(entry);
-            }
-        }
-        return matchingEntries;
-    }
-
      */
 }

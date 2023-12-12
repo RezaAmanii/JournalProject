@@ -1,194 +1,205 @@
 package org.group12.controller;
 
-import org.group12.model.Container;
-import org.group12.model.INameable;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.adapter.JavaBeanObjectPropertyBuilder;
-import javafx.beans.property.adapter.JavaBeanStringPropertyBuilder;
-import javafx.beans.value.ObservableObjectValue;
-import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import org.group12.Observers.IObservable;
+import org.group12.Observers.IPlanITObserver;
 import org.group12.model.Container;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
-import org.group12.view.JournalView;
+
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
-import org.group12.model.Items;
+import java.util.Optional;
 
-import static java.time.format.DateTimeFormatter.ISO_DATE;
+import static org.group12.util.TextUtils.getWordCount;
+import static org.group12.view.JournalView.createConfirmationDialog;
 
-public class JournalController implements IController {
+/**
+ * Controller class for managing journal entries.
+ */
+public class JournalController implements IController, IObservable {
 
-    private Journal journalModel;
-    private Container container;
-    private JournalView journalView;
-    private ObjectProperty<JournalEntry> journalEntry;
+    private final Container container;
+    private static JournalController instance;
+    private static Journal journalModel;
 
-//    private HashMap<String, INameable> itemMap;
-    private Items itemMap;
+    private final List<IPlanITObserver> observers = new ArrayList<>();
 
-    @FXML
-    private TextArea content;
-
-    @FXML
-    private DatePicker entryDate;
-
-    @FXML
-    private Label entryDateLabel;
-
-    @FXML
-    private Label prevDayBtn;
-
-    @FXML
-    void onAddEntry(MouseEvent event) {
-        journalEntry.get().updateContent(content.getText());
-        journalModel.addEntryForDate(entryDate.getValue(), journalEntry.get());
-    }
-
-    @FXML
-    void onDeleteClk(MouseEvent event) {
-        var alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirm Delete");
-        alert.setHeaderText("Confirm");
-        alert.setContentText("Confirm deleting journal?");
-
-        var option = alert.showAndWait().orElse(ButtonType.CANCEL);
-        if(ButtonType.OK.equals(option)) {
-            journalModel.removeEntry(entryDate.getValue());
-            onPrevDayClk(event);
-        }
-    }
-
-    @FXML
-    void onNextDayClk(MouseEvent event) {
-        var currentVal = entryDate.valueProperty().get();
-        entryDate.valueProperty().set(currentVal.plusDays(1));
-    }
-
-    @FXML
-    void onPrevDayClk(MouseEvent event) {
-        var currentVal = entryDate.valueProperty().get();
-        entryDate.valueProperty().set(currentVal.minusDays(1));
-    }
-
-
-
-    public JournalController(){
-        this.itemMap = Items.getInstance();
+    /**
+     * Constructor for JournalController. Initializes the container, journal model, and item map.
+     */
+    public JournalController() {
+        this.container = Container.getInstance();
         this.journalModel = container.getJournal();
-        //journalModel.addObserver(journalView);
+
     }
-
-    @FXML
-    public void initialize() {
-        createBindings();
-
-        entryDate.valueProperty().setValue(LocalDate.now());
-    }
-
-    private void createBindings() {
-        journalEntry = new SimpleObjectProperty<>(journalModel.getEntryForDate(LocalDate.now()));
-        journalEntry.bind(entryDate.valueProperty().map(journalModel::getEntryForDate));
-        journalEntry.addListener((observable, oldValue, newValue) -> content.setText(newValue.getContent()));
-
-        entryDateLabel.textProperty()
-                .bind(entryDate.valueProperty()
-                        .map(date -> date.format(ISO_DATE)));
-    }
-
 
     /**
-     * Adds a new journal entry to the journal model if the input is valid.
-     * Validates the provided journal entry to ensure that both title and content are not empty
-     * before adding it to the journal.
+     * Returns the single instance of JournalController. If the instance is null, it creates a new instance.
      *
-     * @param journalEntry the journal entry to be added
-     *                     (contains title and content for the new journal entry)
+     * @return the single instance of JournalController
      */
-    public void addJournalEntry(JournalEntry journalEntry){
-        if(validateAddInput(journalEntry)){
-            journalModel.addEntry(journalEntry.getTitle(), journalEntry.getContent());
-        } else{
-            //journalView.displayErrorMessage("Both title and content should not be empty.");
+    public static JournalController getInstance() {
+        if (instance == null) {
+            instance = new JournalController();
         }
+        return instance;
     }
 
+    /**
+     * Returns the title of the provided journal entry.
+     *
+     * @param entry the journal entry to get the title from. Must not be null.
+     * @return the title of the journal entry
+     * @throws IllegalArgumentException if entry is null.
+     */
+    public static String getEntryTitle(JournalEntry entry) {
+        if (entry == null) {
+            throw new IllegalArgumentException("Entry cannot be null.");
+        }
+        return entry.getTitle();
+    }
+    /**
+     * Sets the title of the provided journal entry.
+     *
+     * @param entry the journal entry to set the title for. Must not be null.
+     * @param title the new title for the journal entry. Must not be null.
+     * @throws IllegalArgumentException if entry is null.
+     */
+    public static void setEntryTitle(JournalEntry entry, String title) {
+        if (entry == null) {
+            throw new IllegalArgumentException("Entry cannot be null.");
+        }
+        if (title == null) {
+            title = "No title set";
+        }
+        entry.setTitle(title);
+    }
+    /**
+     * Returns the modified timestamp of the provided journal entry in the format "yyyy-MM-dd HH:mm".
+     *
+     * @param entry The journal entry whose modified timestamp is to be returned. Must not be null.
+     * @return The modified timestamp of the journal entry.
+     * @throws IllegalArgumentException if entry is null.
+     */
+    public static String getEntryDateModified(JournalEntry entry) {
+        if (entry == null) {
+            throw new IllegalArgumentException("Entry cannot be null.");
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return entry.getModifiedTimestamp().format(formatter);
+    }
 
     /**
-     * Removes the provided journal entry from the journal model.
-     * Checks if the provided journal entry is not null before attempting removal.
+     * Returns the number of words in the content of the provided journal entry.
      *
-     * @param journalEntry the journal entry to be removed
+     * @param entry The journal entry whose content's word count is to be returned. Must not be null.
+     * @return The number of words in the content of the journal entry.
+     * @throws IllegalArgumentException if entry is null.
      */
-    public void removeJournalEntry(JournalEntry journalEntry){
-        if(journalEntry != null){
-            journalModel.removeEntry(journalEntry);
-        } else{
-            //journalView.displayErrorMessage("Invalid entry!");
+    public static String getNrOfWords(JournalEntry entry) {
+        if (entry == null) {
+            throw new IllegalArgumentException("Entry cannot be null.");
         }
+        String entryContent = entry.getContent();
+        return String.valueOf(getWordCount(entryContent));
+    }
+
+    /**
+     * Returns the content of the provided journal entry.
+     *
+     * @param entry The journal entry whose content is to be returned. Must not be null.
+     * @return The content of the journal entry.
+     * @throws IllegalArgumentException if entry is null.
+     */
+    public static String getEntryContent(JournalEntry entry) {
+        if (entry == null) {
+            throw new IllegalArgumentException("Entry cannot be null.");
+        }
+        return entry.getContent();
     }
 
 
     /**
      * Updates the content of the provided journal entry with new content if the entry and new content are valid.
      *
-     * @param journalEntry the journal entry to be updated
-     * @param newContent   the new content to replace the existing content in the journal entry
+     * @param journalEntry the journal entry to be updated. Must not be null.
+     * @param newContent   the new content to replace the existing content in the journal entry. Must not be null.
+     * @throws IllegalArgumentException if journalEntry or newContent is null.
      */
-    public void updateJournalEntry(JournalEntry journalEntry, String newContent){
-        if(journalEntry != null && !newContent.isEmpty()){
-//            entryModel.updateContent(newContent);
-            this.journalEntry.get().updateContent(newContent);
+    public void updateJournalEntry(JournalEntry journalEntry, String newContent) {
+        if (journalEntry == null) {
+            throw new IllegalArgumentException("JournalEntry cannot be null.");
+        }
+        if (newContent == null) {
+            throw new IllegalArgumentException("New content cannot be null.");
+        }
+        journalEntry.updateContent(newContent);
+    }
+    public void clearJournalEntry(JournalEntry journalEntry) {
+        if(journalEntry != null){
+            Alert alert = createConfirmationDialog();
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                journalEntry.updateContent("");
+            }
         } else {
-            //journalView.displayErrorMessage("Invalid input.");
+            System.out.println("No journalentry found!");
         }
     }
 
 
-    /**
-     * Retrieves a list of journal entries created on the provided date.
-     *
-     * @param date the date for which journal entries are to be retrieved
-     * @return a list of journal entries created on the specified date,
-     *         an empty list if no entries are found for the given date
-     */
-    public List<JournalEntry> getTodaysEntry(LocalDateTime date){
-        //return List<JournalEntry> todaysEntries = entryModel.getTodaysEntry(date);
-        return null;
-    }
-
 
     /**
-     * Retrieves all journal entries stored in the system.
+     * Retrieves a journal entry created on the provided date. If no entry exists for the given date, a new entry is created.
      *
-     * @return a list containing all journal entries stored in the system,
-     *         or an empty list if there are no entries
+     * @param date the date for which the journal entry is to be retrieved. Must not be null.
+     * @return the journal entry created on the specified date, or a new entry if no entry was found for the given date.
+     * @throws IllegalArgumentException if date is null.
      */
-    public List<JournalEntry> getAllEntries(){
-        //return List<JournalEntry> allEntries = entryModel.getAllEntries();
-        return null;
+    public JournalEntry getEntryByDate(LocalDate date) {
+        if (date == null) {
+            throw new IllegalArgumentException("Date cannot be null.");
+        }
+        if (journalModel.getEntryByDate(date) == null) {
+            journalModel.addEntry(date);
+        }
+        return journalModel.getEntryByDate(date);
     }
-
 
     /**
-     * Validates the provided journal entry to ensure that it contains both non-empty content and title.
+     * Adds an observer to the journal.
      *
-     * @param journalEntry the journal entry to be validated
-     * @return true if the journal entry is not null and both content and title are not empty; false otherwise
+     * @param observer the observer to be added
      */
-    private boolean validateAddInput(JournalEntry journalEntry) {
-        return journalEntry != null && !journalEntry.getContent().isEmpty() && !journalEntry.getTitle().isEmpty();
-    }
-
-
-
-
+    @Override
+    public void addObserver(IPlanITObserver observer) {
+        observers.add(observer);
 
     }
+    /**
+     * Removes an observer from the journal.
+     *
+     * @param observer the observer to be removed
+     */
+    @Override
+    public void removeObserver(IPlanITObserver observer) {
+        observers.remove(observer);
+
+    }
+    /**
+     * Notifies all observers of the journal.
+     */
+    @Override
+    public void notifyObservers() {
+        observers.forEach(IPlanITObserver::update);
+
+    }
+
+}

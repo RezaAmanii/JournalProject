@@ -12,3 +12,7 @@
     -fx-border-width: 2px;
     -fx-border-color: "black";
 }
+
+.big-task-card {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;

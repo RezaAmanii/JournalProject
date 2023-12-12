@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Spinner?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -19,26 +15,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="347.0" style="-fx-background-color: #2f3f4e;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controllerView.SubTasksController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="583.0" prefWidth="347.0" style="-fx-background-color: #2f3f4e;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controllerView.SubTaskWindowManager">
     <top>
         <AnchorPane prefHeight="63.0" prefWidth="327.0" style="-fx-border-radius: 10; -fx-border-color: white;" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </BorderPane.margin>
             <children>
-                <Label fx:id="taskNameLBL" layoutX="14.0" layoutY="14.0" text="taskName" textFill="WHITE">
+                <Label fx:id="taskNameLabel" alignment="CENTER" layoutX="36.0" layoutY="10.0" prefHeight="43.0" prefWidth="255.0" text="Task title" textFill="WHITE">
                     <font>
                         <Font name="Berlin Sans FB Demi Bold" size="29.0" />
                     </font>
                 </Label>
-                <AnchorPane fx:id="addPane" layoutX="272.0" layoutY="6.0" prefHeight="50.0" prefWidth="46.0" style="-fx-border-radius: 10; -fx-border-color: white;">
-                    <children>
-                        <ImageView fx:id="addImg" fitHeight="36.0" fitWidth="36.0" layoutX="5.0" layoutY="7.0" onMouseClicked="#addNewSubTask" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@/addNew.png" />
-                            </image></ImageView>
-                    </children>
-                </AnchorPane>
             </children>
         </AnchorPane>
     </top>
@@ -52,8 +40,9 @@
                     <children>
                         <GridPane prefHeight="57.0" prefWidth="306.0" style="-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white;">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.111083984375" minWidth="10.0" percentWidth="16.0" prefWidth="48.888875325520836" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.3333053588867" minWidth="10.0" percentWidth="84.0" prefWidth="215.11112467447913" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="148.111083984375" minWidth="10.0" percentWidth="30.0" prefWidth="48.888875325520836" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.3333053588867" minWidth="10.0" percentWidth="131.0" prefWidth="215.11112467447913" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="266.3333053588867" minWidth="10.0" percentWidth="23.0" prefWidth="215.11112467447913" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -64,7 +53,7 @@
                             <children>
                                 <Pane prefHeight="35.0" prefWidth="31.0" style="-fx-background-color: white; -fx-background-radius: 5;" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                                     <children>
-                                        <CheckBox layoutX="1.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="32.0">
+                                        <CheckBox fx:id="statusCheckBox" layoutX="1.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="32.0">
                                             <padding>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                             </padding>
@@ -77,14 +66,19 @@
                                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                     </padding>
                                 </Pane>
-                                <Label text="subTaskName" textFill="WHITE" GridPane.columnIndex="1" GridPane.valignment="CENTER">
+                                <Label alignment="CENTER" prefHeight="43.0" prefWidth="187.0" text="Sub-task title" textFill="WHITE" GridPane.columnIndex="1" GridPane.valignment="CENTER">
                                     <font>
-                                        <Font name="Berlin Sans FB Demi Bold" size="29.0" />
+                                        <Font size="21.0" />
                                     </font>
                                     <GridPane.margin>
                                         <Insets left="5.0" />
                                     </GridPane.margin>
                                 </Label>
+                        <ImageView fx:id="deleteImg" fitHeight="29.0" fitWidth="35.0" onMouseClicked="#removeSubTask" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
+                           <image>
+                              <Image url="@../../../deleteWhite.png" />
+                           </image>
+                        </ImageView>
                             </children>
                         </GridPane>
                     </children>
@@ -96,54 +90,17 @@
         </ScrollPane>
     </center>
     <bottom>
-        <AnchorPane prefHeight="121.0" prefWidth="327.0" style="-fx-border-radius: 10; -fx-border-color: white;" BorderPane.alignment="CENTER">
-            <children>
-                <Label layoutX="14.0" layoutY="18.0" text="Deadline" textFill="WHITE">
-                    <font>
-                        <Font name="Berlin Sans FB Demi Bold" size="19.0" />
-                    </font>
-                </Label>
-                <AnchorPane fx:id="deletePane" layoutX="280.0" layoutY="5.0" onMouseClicked="#removeSubTask" prefHeight="43.0" prefWidth="42.0" style="-fx-border-radius: 10; -fx-border-color: white;">
-                    <children>
-                        <ImageView fx:id="deleteImg" fitHeight="32.0" fitWidth="28.0" layoutX="7.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
-                            <image>
-                                <Image url="@/deleteWhite.png" />
-                            </image></ImageView>
-                    </children>
-                </AnchorPane>
-                <TextField fx:id="deadlineTF" editable="false" layoutX="100.0" layoutY="17.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-radius: 5; -fx-text-fill: white">
-                    <cursor>
-                        <Cursor fx:constant="DEFAULT" />
-                    </cursor>
-                    <font>
-                        <Font name="Berlin Sans FB" size="12.0" />
-                    </font>
-                </TextField>
-                <AnchorPane layoutX="5.0" layoutY="52.0" prefHeight="64.0" prefWidth="317.0" style="-fx-border-radius: 10; -fx-border-color: white;">
-                    <children>
-                        <DatePicker fx:id="changeDeadlineDP" layoutX="8.0" layoutY="31.0" prefHeight="27.0" prefWidth="112.0" />
-                        <Label layoutX="8.0" layoutY="2.0" prefHeight="23.0" prefWidth="152.0" text="Change deadline" textFill="WHITE">
-                            <font>
-                                <Font name="Berlin Sans FB Demi Bold" size="19.0" />
-                            </font>
-                        </Label>
-                        <Spinner fx:id="hrSpinner" layoutX="126.0" layoutY="31.0" prefHeight="27.0" prefWidth="56.0" />
-                        <Spinner fx:id="minSpinner" layoutX="189.0" layoutY="31.0" prefHeight="27.0" prefWidth="56.0" />
-                        <AnchorPane fx:id="savePaneBTN" layoutX="251.0" layoutY="31.0" onMouseClicked="#saveNewDeadline" prefHeight="27.0" prefWidth="60.0" style="-fx-border-radius: 10; -fx-border-color: white;">
-                            <children>
-                                <Label layoutX="12.0" layoutY="3.0" text="Save" textFill="WHITE">
-                                    <font>
-                                        <Font name="Berlin Sans FB Demi Bold" size="17.0" />
-                                    </font>
-                                </Label>
-                            </children>
-                        </AnchorPane>
-                    </children>
-                </AnchorPane>
-            </children>
+        <AnchorPane fx:id="addPane" onMouseClicked="#addNewSubTask" prefHeight="41.0" prefWidth="327.0" style="-fx-border-radius: 10; -fx-border-color: white;" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" />
             </BorderPane.margin>
+         <children>
+            <Label layoutX="88.0" layoutY="7.0" text="Add new sub-task" textFill="WHITE">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+         </children>
         </AnchorPane>
     </bottom>
 </BorderPane>

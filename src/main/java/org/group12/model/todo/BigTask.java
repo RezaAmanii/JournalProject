@@ -3,6 +3,7 @@ package org.group12.model.todo;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.factories.TaskFactory;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +11,7 @@ import java.util.HashMap;
 /**
  * Represents a big task that contains subtasks.
  */
-public class BigTask implements IBigTask {
+public class BigTask implements IBigTask, Serializable {
     private String description;
     private LocalDateTime dueDate;
     private boolean isFavourite;
