@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
@@ -12,11 +11,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
-import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskListController;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
-import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
 
 import java.io.IOException;
@@ -24,7 +21,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class taskListCards extends AnchorPane implements Initializable, ITaskListObserver {
+public class TaskListCards extends AnchorPane implements Initializable, ITaskListObserver {
 
     // Class attributes
     private final String ID;
@@ -49,7 +46,7 @@ public class taskListCards extends AnchorPane implements Initializable, ITaskLis
 
 
     // Constructor
-    public taskListCards(String ID, ItemsSet items){
+    public TaskListCards(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
         this.taskListController = TaskListController.getInstance();
