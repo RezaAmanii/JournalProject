@@ -22,7 +22,7 @@
             <Font size="23.0" />
          </font>
       </Label>
-      <ImageView fx:id="deleteTaskListBtn" fitHeight="28.0" fitWidth="25.0" layoutX="276.0" layoutY="13.0" onMouseClicked="#deleteTaskListBtnClicked" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="deleteTaskListBtn" fitHeight="28.0" fitWidth="25.0" layoutX="276.0" layoutY="13.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../deleteWhite.png" />
          </image>

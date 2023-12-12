@@ -7,6 +7,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.group12.Listeners.TaskListCardClickListener;
@@ -44,7 +45,6 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     private ImageView deleteTaskListBtn;
 
 
-
     // Constructor
     public TaskListCards(String ID, ItemsSet items){
         this.items = items;
@@ -62,7 +62,6 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
 
         // Make space between each cards
         spacingBetweenCards();
-
         update();
     }
 
@@ -91,42 +90,31 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     }
 
     private void setupEventHandlers(){
-        titleLabel.setOnMouseClicked(event -> {
-            titleClicked();
-        });
+        titleLabel.setOnMouseClicked(this::titleClicked);
+        deleteTaskListBtn.setOnMouseClicked(this::deleteTaskListBtnClicked);
 
     }
-
-
-
-
 
     @FXML
-    public void titleClicked() {
-        setDoubleClickEvent();
-        if(clickListener != null){
+    public void titleClicked(MouseEvent event) {
+        if (clickListener != null) {
             clickListener.onTaskListCardClicked(this);
         }
-
+        handleDoubleClick(event);
     }
 
-    private void setDoubleClickEvent() {
-        setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                handleDoubleClick();
-            }
-        });
-    }
 
-    private void handleDoubleClick() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Rename Task");
-        dialog.setHeaderText("Enter new name");
+    private void handleDoubleClick(MouseEvent event) {
+        if (event.getSource() instanceof Label && event.getClickCount() == 2) {
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Rename Task");
+            dialog.setHeaderText("Enter new name");
 
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> {
-            taskListController.renameTaskList(this.ID, name);
-        });
+            Optional<String> result = dialog.showAndWait();
+            result.ifPresent(name -> {
+                taskListController.renameTaskList(this.ID, name);
+            });
+        }
     }
 
 
@@ -155,11 +143,8 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     }
 
 
-
-
     // Delete taskList
-    @FXML
-    private void deleteTaskListBtnClicked(){
+    private void deleteTaskListBtnClicked(MouseEvent event){
         taskListController.handlerRemoveToDoList(taskListController.getTaskListByID(this.ID));
         update();
     }

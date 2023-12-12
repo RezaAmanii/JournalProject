@@ -47,7 +47,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     // Corresponding controller
     private static final TaskListController taskListController = TaskListController.getInstance();
     private static final BigTaskController bigTaskController = BigTaskController.getInstance();
-    private static final TaskController taskController = TaskController.getInstance();
 
 
     // A reference to the selected taskList card and selected bigTask card
