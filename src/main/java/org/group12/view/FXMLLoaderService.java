@@ -18,7 +18,6 @@ public class FXMLLoaderService {
             FXMLLoader fxmlLoader = new FXMLLoader(url);
             fxmlLoader.setRoot(root);
             fxmlLoader.setController(controller);
-            System.out.println("Loading file: " + fxmlFile);
             fxmlLoader.load();
         } catch (IOException exception) {
             System.out.println("Could not load file: " + fxmlFile);

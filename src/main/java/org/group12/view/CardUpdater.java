@@ -4,6 +4,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
+import org.group12.controller.JournalController;
 import org.group12.model.Calendar.Event;
 import org.group12.model.ItemsSet;
 import org.group12.model.journal.JournalEntry;
@@ -29,18 +30,24 @@ public class CardUpdater {
         // ... existing update code from TaskCard ...
     }
 
-    public void updateJournalEntryCard(String ID, JournalEntry entry, Label titleLabel, TextArea contentArea) {
+    public void updateJournalEntryCard(JournalEntry entry, JournalController controller, Label titleLabel, TextArea contentArea, Label dateModified, Label NrOfWords) {
         // ... existing update code from JournalEntryCard ...
         if (entry != null) {
             // Set title
-            String title = entry.getTitle();
+            String title = controller.getEntryTitle(entry);
             titleLabel.setText(title);
             // Set content
-            String content = entry.getContent();
+            String content = controller.getEntryContent(entry);
             contentArea.setText(content);
+//            Set datemodified
+            String datemod = controller.getEntryDateModified(entry);
+            dateModified.setText(datemod);
+//            Set wordcount
+            String words = controller.getNrOfWords(entry);
+            NrOfWords.setText(words);
         } else {
             // If entry is null, print an error message
-            System.out.println("Entry with ID " + ID + " is null!");
+            System.out.println("Entry with ID " + entry.getID() + " is null!");
         }
     }
     public void updateEventCard(String ID, Event event, Label titleLabel, Label contentLabel) {

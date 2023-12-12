@@ -12,18 +12,14 @@ import javafx.scene.layout.AnchorPane;
 import org.group12.Listeners.JournalClickListener;
 import org.group12.Observers.IJournalObserver;
 import org.group12.controller.JournalController;
-import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.journal.JournalEntry;
-import org.group12.model.todo.IBigTask;
 import org.group12.util.CastHelper;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class JournalEntryCard extends AnchorPane implements Initializable, IJournalObserver {
-    // TODO: hur ska items hanteras? här, I en todoPage?, ska vi casta här, ska det vara INameable?
     private final String ID;
     private final ItemsSet items;
     private final JournalController controller;
@@ -44,29 +40,15 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
 
     private JournalClickListener clickListener;
 
-    // TODO: lägg till TaskController i konstruktorn
     public JournalEntryCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
         this.controller = JournalController.getInstance();
 
         this.entry = CastHelper.castObject(JournalEntry.class, items.getItem(ID));
-        System.out.println(entry.getID());
-        //System.out.println("JournalEntryCard");
         this.cardUpdater = new CardUpdater(items);
-        //FXMLLoaderService fxmlLoaderService = new FXMLLoaderService();
-        //fxmlLoaderService.loadFXML(this, this, "JournalEntryCard.fxml");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/group12/view/JournalEntryCard.fxml"));
-        fxmlLoader.setRoot(this);
-        fxmlLoader.setController(this);
-        try {
-            fxmlLoader.load();
-        } catch (IOException exception) {
-            throw new RuntimeException(exception);
-        }
-
-
-        //update();
+        FXMLLoaderService fxmlLoaderService = new FXMLLoaderService();
+        fxmlLoaderService.loadFXML(this, this, "JournalEntryCard.fxml");
     }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -89,6 +71,28 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
         // controller.edittitle(entry, string)
         update();
     }
+//    @FXML
+//    private void titleClicked(MouseEvent event) {
+//        Label label = (Label) event.getSource();
+//        TextField textField = new TextField(label.getText());
+//        textField.setOnAction(e -> {
+//            label.setText(textField.getText());
+//            replaceTextFieldWithLabel(textField, label);
+//        });
+//        replaceLabelWithTextField(label, textField);
+//    }
+//
+//    private void replaceLabelWithTextField(Label label, TextField textField) {
+//        VBox parent = (VBox) label.getParent();
+//        int index = parent.getChildren().indexOf(label);
+//        parent.getChildren().set(index, textField);
+//    }
+//
+//    private void replaceTextFieldWithLabel(TextField textField, Label label) {
+//        VBox parent = (VBox) textField.getParent();
+//        int index = parent.getChildren().indexOf(textField);
+//        parent.getChildren().set(index, label);
+//    }
     @FXML
     private void saveButtonClicked(MouseEvent event){
 
@@ -116,29 +120,10 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
     }
 
 
-    // TODO: hur funkar taskController?
-
     // TODO: protection måste läggas till
     public void update() {
-//        cardUpdater.updateJournalEntryCard(ID, entry, titleLabel, content);
+        cardUpdater.updateJournalEntryCard(entry, controller, titleLabel, content, dateModified, NrOfWords);
 
-        try{
-            INameable item = items.getItem(this.ID);
-
-            if(item instanceof JournalEntry){
-                JournalEntry entry = (JournalEntry) item;
-                this.titleLabel.setText(JournalController.getEntryTitle(entry));
-                this.content.setText(JournalController.getEntryContent(entry));
-                this.dateModified.setText(JournalController.getEntryDateModified(entry));
-                this.NrOfWords.setText(JournalController.getNrOfWords(entry));
-
-
-            } else{
-                System.out.println("Entry with ID " + ID + " is null!");
-            }
-        } catch (ClassCastException error){
-            System.out.println("Item with ID " + ID + " is not a JournalEntry!");
-        }
     }
 
     public String getID() {
