@@ -12,15 +12,11 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.text.Font;
 import org.group12.Observers.ITaskListObserver;
-import org.group12.model.toDoSubTask.ToDoList;
-import org.group12.model.toDoSubTask.ToDoTask;
 import org.group12.model.todo.IBigTask;
-import org.group12.model.todo.ITask;
 import org.group12.model.todo.ITaskList;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 
 public class TaskListView implements ITaskListObserver {
 
