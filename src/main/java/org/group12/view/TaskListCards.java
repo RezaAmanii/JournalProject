@@ -84,7 +84,6 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
 
         if (taskListController.getTaskListByTitle("Today").getID().equals(this.ID) || taskListController.getTaskListByTitle("Important").getID().equals(this.ID)) {
             deleteTaskListBtn.setVisible(false);
-
         }
 
     }
@@ -92,8 +91,9 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     private void setupEventHandlers(){
         titleLabel.setOnMouseClicked(this::titleClicked);
         deleteTaskListBtn.setOnMouseClicked(this::deleteTaskListBtnClicked);
-
     }
+
+    public String getID() {return ID;}
 
     @FXML
     public void titleClicked(MouseEvent event) {
@@ -112,7 +112,7 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
 
             Optional<String> result = dialog.showAndWait();
             result.ifPresent(name -> {
-                taskListController.renameTaskList(this.ID, name);
+                taskListController.changeListTitle(this.ID, name);
             });
         }
     }
@@ -138,9 +138,7 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
         }
     }
 
-    public String getID() {
-        return ID;
-    }
+
 
 
     // Delete taskList

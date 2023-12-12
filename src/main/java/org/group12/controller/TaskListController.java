@@ -15,19 +15,17 @@ import java.util.List;
 
 public class TaskListController implements IController, IObservable {
 
-    private TaskListView taskListView;
-
+    // Attributes
     private final ItemsSet items;
     private final TodoCollection todoCollection;
     private static TaskListController instance;
-    private final Container container = Container.getInstance();
     private final List<IPlanITObserver> observers = new ArrayList<>();
 
     // Constructor
     private TaskListController() {
         this.items = Items.getInstance();
         this.todoCollection = Container.getInstance().getTodoCollection();
-        this.taskListView = new TaskListView();
+
     }
 
     // Singleton
@@ -39,7 +37,7 @@ public class TaskListController implements IController, IObservable {
     }
 
 
-    // TaskList methods
+    // Add and remove methods
     public String handlerAddToDoList(String title) {
         return todoCollection.addTaskList(title);
     }
@@ -49,6 +47,7 @@ public class TaskListController implements IController, IObservable {
         notifyObservers();
     }
 
+    // Rename methods
     public void changeListTitle(String TaskListID, String newTitle) {
         ITaskList taskList = (ITaskList) items.getItem(TaskListID);
         if (taskList != null){
@@ -61,8 +60,10 @@ public class TaskListController implements IController, IObservable {
         } else {
             System.out.println("TaskList not found");
         }
+        notifyObservers();
     }
 
+    // Getting methods
     public ITaskList getTaskListByID(String taskListID){
         return (ITaskList) items.getItem(taskListID);
     }
@@ -76,12 +77,9 @@ public class TaskListController implements IController, IObservable {
         return null;
     }
 
-    public ArrayList<ITaskList> fetchAllTaskLists(){
-        return todoCollection.getTaskList();
-    }
-
-    public String getTaskListTitle(String taskListID){
-        return items.getItem(taskListID).getTitle();
+    public String getNrOfBigTasks(String taskListID){
+        ITaskList taskList = (ITaskList) items.getItem(taskListID);
+        return String.valueOf(taskList.getBigTaskList().size());
     }
 
     public String getTaskListDateCreated(String taskListID){
@@ -90,14 +88,12 @@ public class TaskListController implements IController, IObservable {
         return dateCreated.toString();
 
     }
-
-    public void renameTaskList(String taskListID, String newTitle){
-        items.getItem(taskListID).setTitle(newTitle);
-        notifyObservers();
+    public String getTaskListTitle(String taskListID){
+        return items.getItem(taskListID).getTitle();
     }
-    public String getNrOfBigTasks(String taskListID){
-        ITaskList taskList = (ITaskList) items.getItem(taskListID);
-        return String.valueOf(taskList.getBigTaskList().size());
+
+    public ArrayList<ITaskList> getTasksLists(){
+        return todoCollection.getTaskList();
     }
 
 

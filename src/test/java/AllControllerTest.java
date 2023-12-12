@@ -3,7 +3,6 @@ import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskListController;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
-import org.group12.model.todo.BigTask;
 import org.group12.model.todo.ITaskList;
 import org.group12.model.todo.TaskList;
 import org.junit.jupiter.api.BeforeEach;
@@ -90,14 +89,14 @@ public class AllControllerTest {
 
     @Test
     public void testFetchAllTaskLists(){
-        int size = taskListController.fetchAllTaskLists().size();
+        int size = taskListController.getTasksLists().size();
         String title1 = "List 1";
         String title2 = "List 2";
 
         taskListController.handlerAddToDoList(title1);
         taskListController.handlerAddToDoList(title2);
 
-        ArrayList<ITaskList> taskList = taskListController.fetchAllTaskLists();
+        ArrayList<ITaskList> taskList = taskListController.getTasksLists();
         assertNotNull(taskList);
         assertEquals(size + 2, taskList.size());
     }
@@ -108,7 +107,7 @@ public class AllControllerTest {
         String newTitle = "New Title";
         String id = taskListController.handlerAddToDoList(title);
 
-        taskListController.renameTaskList(id, newTitle);
+        taskListController.changeListTitle(id, newTitle);
         assertEquals(newTitle, taskListController.getTaskListByID(id).getTitle());
     }
 

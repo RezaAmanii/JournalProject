@@ -2,23 +2,15 @@ package org.group12.controllerView;
 
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
-import org.group12.controller.TaskController;
 import org.group12.controller.TaskListController;
 import org.group12.model.Items;
-import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.todo.*;
 import org.group12.view.BigTaskCard;
-import org.group12.view.TaskListCard;
 import org.group12.view.TaskListCards;
 
 import java.io.IOException;
@@ -59,7 +51,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (taskListController.fetchAllTaskLists().isEmpty()) {
+        if (taskListController.getTasksLists().isEmpty()) {
             taskListController.handlerAddToDoList("Today");
             taskListController.handlerAddToDoList("Important");
         }
@@ -154,7 +146,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     private void refreshFixedLists() {
         fixedListsVbox.getChildren().clear();
 
-        for (ITaskList list : taskListController.fetchAllTaskLists()) {
+        for (ITaskList list : taskListController.getTasksLists()) {
             if (list.getTitle().equals("Today") || list.getTitle().equals("Important")) {
                 fixedListsVbox.getChildren().add(createNewListObject(list));
             }
@@ -164,7 +156,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     private void refreshAppendableLists() {
         appendableListVbox.getChildren().clear();
 
-        for (ITaskList list : taskListController.fetchAllTaskLists()) {
+        for (ITaskList list : taskListController.getTasksLists()) {
             if (!list.getTitle().equals("Today") && !list.getTitle().equals("Important")) {
                 updateListTasks(list);
                 appendableListVbox.getChildren().add(createNewListObject(list));
@@ -191,7 +183,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
     public Set<IBigTask> populateTodayTasks(){
         Set<IBigTask> bigTasks = new HashSet<>();
-        for(ITaskList taskList : taskListController.fetchAllTaskLists()){
+        for(ITaskList taskList : taskListController.getTasksLists()){
             bigTasks.addAll(taskList.getBigTaskList());
         }
         return bigTasks;
