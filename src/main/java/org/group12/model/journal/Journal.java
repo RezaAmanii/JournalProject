@@ -6,6 +6,7 @@ import org.group12.Observers.IPlanITObserver;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class Journal implements INameable, IObservable{
     private final String ID;
     private List<IPlanITObserver> observers;
     private final ItemsSet items;
-    private final Map<LocalDateTime,JournalEntry> entries;
+    private final Map<LocalDate,JournalEntry> entries;
     /**
      * Constructs a Journal with the given ID, title, and entry factory.
      *
@@ -142,19 +143,19 @@ public class Journal implements INameable, IObservable{
         return new ArrayList<>(entries.values());
     }
 
-    public JournalEntry getEntryForDate(LocalDateTime date) {
-        return entries.getOrDefault(date, addEntry(date));
-    }
+//    public JournalEntry getEntryForDate(LocalDateTime date) {
+//        return entries.getOrDefault(date, addEntry(date));
+//    }
 
 
-    public JournalEntry getEntryByDate(LocalDateTime date){
+    public JournalEntry getEntryByDate(LocalDate date){
         return entries.get(date);
     }
 
-    public void addEntryForDate(LocalDateTime date, JournalEntry entry) {
-        entries.put(date, entry);
-    }
-    public void removeEntry(LocalDateTime date){
+//    public void addEntryForDate(LocalDate date, JournalEntry entry) {
+//        entries.put(date, entry);
+//    }
+    public void removeEntry(LocalDate date){
         entries.remove(date);
         notifyObservers();
     }
@@ -172,7 +173,7 @@ public class Journal implements INameable, IObservable{
         for (IPlanITObserver observer : observers) {
             newEntry.addObserver(observer);
         }
-        entries.put(LocalDateTime.now(), newEntry);
+        entries.put(date, newEntry);
         items.addItem(newEntry);
         notifyObservers();
         return newEntry;

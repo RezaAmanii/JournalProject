@@ -90,7 +90,8 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
     }
     @FXML
     private void saveButtonClicked(MouseEvent event){
-         controller.updateJournalEntry(entry, content.getText());
+         controller.updateJournalEntry(this.entry, content.getText());
+         System.out.println("saving");
          update();
     }
     @FXML

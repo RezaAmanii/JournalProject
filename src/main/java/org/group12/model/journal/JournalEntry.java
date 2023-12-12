@@ -109,7 +109,7 @@ public class JournalEntry implements INameable, IObservable {
      *
      * @return the timestamp when the journal entry was created
      */
-    public LocalDateTime getDateCreated() {
+    public LocalDate getDateCreated() {
         return createdTimestamp;
     }
 

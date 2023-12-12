@@ -45,6 +45,7 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
 
     public static JournalEntryCard journalEntryCard = null;
     public static Journal journal = null;
+    public static JournalEntry entry = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -71,9 +72,10 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     @FXML
     public void getPrevDayClick()
     {
-        JournalEntry nextEntry = journalController.getEntryByDate(entryDate.getValue().minusDays(1).atStartOfDay());
+        JournalEntry nextEntry = journalController.getEntryByDate(entryDate.getValue().minusDays(1));
         populateJournalEntry(nextEntry);
         this.entryDate.setValue(entryDate.getValue().minusDays(1));
+        entry = nextEntry;
         update();
 
 
@@ -81,9 +83,10 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     @FXML
     public void getNexDayClick()
     {
-        JournalEntry nextEntry = journalController.getEntryByDate(entryDate.getValue().plusDays(1).atStartOfDay());
+        JournalEntry nextEntry = journalController.getEntryByDate(entryDate.getValue().plusDays(1));
         populateJournalEntry(nextEntry);
         this.entryDate.setValue(entryDate.getValue().plusDays(1));
+        entry = nextEntry;
         update();
     }
 
@@ -99,14 +102,15 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     public void populateJournalEntry(JournalEntry journalEntry) {
         if(journalEntry != null) {
             // Create a new JournalEntryCard
-            JournalEntryCard journalEntryCard = new JournalEntryCard(journalEntry.getID(), Items.getInstance());
+            JournalEntryCard journalEntryCard = createNewEntryObject(journalEntry);
             // Clear the journalEntryPane and add the new card
             journalEntryPane.getChildren().clear();
             journalEntryPane.setCenter(journalEntryCard);
+
             //journalEntryPane.setCenter(rootNode);
         } else {
             // If journalEntry is null, print an error message
-            System.out.println("JournalEntry is null!");
+            System.out.println("JournalEntry is null in populate");
         }
 
     }

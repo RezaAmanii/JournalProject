@@ -11,6 +11,7 @@ import org.group12.model.journal.JournalEntry;
 import org.group12.controllerView.JournalWindowManager;
 import org.group12.view.JournalView;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,8 +112,8 @@ public class JournalController implements IController, IObservable {
 //            //journalView.displayErrorMessage("Both title and content should not be empty.");
 //        }
 //    }
-    public void addJournalEntry(){
-        journalModel.addEntry();
+    public void addJournalEntry(LocalDate date){
+        journalModel.addEntry(date);
     }
 
 
@@ -123,11 +124,11 @@ public class JournalController implements IController, IObservable {
      * @param newContent   the new content to replace the existing content in the journal entry
      */
     public void updateJournalEntry(JournalEntry journalEntry, String newContent) {
-//        if(journalEntry != null && !newContent.isEmpty()){
-//            this.journalEntry.get().updateContent(newContent);
-//        } else {
-//            //journalView.displayErrorMessage("Invalid input.");
-//        }
+        if(journalEntry != null && !newContent.isEmpty()){
+            this.journalEntry.get().updateContent(newContent);
+        } else {
+            //journalView.displayErrorMessage("Invalid input.");
+        }
     }
 
 
@@ -138,9 +139,10 @@ public class JournalController implements IController, IObservable {
      * @return a list of journal entries created on the specified date,
      * an empty list if no entries are found for the given date
      */
-    public JournalEntry getEntryByDate(LocalDateTime date) {
+    public JournalEntry getEntryByDate(LocalDate date) {
         //return List<JournalEntry> todaysEntries = entryModel.getTodaysEntry(date);
         if (journalModel.getEntryByDate(date) == null) {
+            System.out.println("getentrybydate is still null so we make another one for this day");
             journalModel.addEntry(date);
         }
         return journalModel.getEntryByDate(date);
