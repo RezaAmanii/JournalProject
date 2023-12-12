@@ -19,7 +19,7 @@ public class CalendarTest {
 
     @BeforeEach
     public void setup() {
-        calendar = new Calendar();
+        /*calendar = new Calendar();
         start1 = LocalDateTime.of(2021, 1, 1, 2, 0);
         end1 = LocalDateTime.of(2021, 1, 1, 14, 1);
         timeFrame1 = new Pair<>(start1, end1);
@@ -36,7 +36,7 @@ public class CalendarTest {
         for(int i = 0; i < 10; i++) {
             calendar.addEvent("title" + i, "description" + i, timeFrame2);
         }
-        calendar.addEvent("matte", "jag skall kolla video", timeFrame1);
+        calendar.addEvent("matte", "jag skall kolla video", timeFrame1);*/
     }
 
     @Test

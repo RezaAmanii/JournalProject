@@ -8,11 +8,13 @@ import org.group12.model.todo.ITaskList;
 import org.group12.model.todo.TaskList;
 import org.group12.model.todo.TodoCollection;
 
+import java.io.Serializable;
+
 /**
  * Represents a factory for creating TodoCollection objects.
  * This class uses a TodoCollectionIDFactory to generate unique IDs for each TodoCollection.
  */
-public class TodoCollectionFactory {
+public class TodoCollectionFactory implements Serializable {
     private IIDFactory idFactory;
     private final ItemsSet items;
 

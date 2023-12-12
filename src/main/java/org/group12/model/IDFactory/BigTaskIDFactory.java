@@ -1,12 +1,13 @@
 package org.group12.model.IDFactory;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Singleton factory for generating IDs for BigTask objects.
  * This class extends the IDFactory abstract class and provides the specific implementation for BigTask.
  */
-public class BigTaskIDFactory extends IDFactory implements IIDFactory {
+public class BigTaskIDFactory extends IDFactory implements IIDFactory, Serializable {
     private static final String PREFIX = "BTK";
     private static final AtomicLong counter = new AtomicLong(1);
 

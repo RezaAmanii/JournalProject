@@ -1,5 +1,6 @@
 package org.group12.model.IDFactory;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -8,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
     * This class provides a template for creating ID factories, with some common functionality defined,
     * and some methods left abstract for subclasses to implement.
     **/
-public abstract class IDFactory {
+public abstract class IDFactory implements Serializable {
         private static final Map<Class<? extends IDFactory>, IDFactory> instances = new HashMap<>();
         protected IDFactory() {}
         protected abstract String getPrefix();

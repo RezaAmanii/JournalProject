@@ -1,12 +1,13 @@
 package org.group12.model.journal;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents a search functionality for a Journal.
  */
-public class JournalSearch {
+public class JournalSearch implements Serializable {
     private Journal journal;
     private static final int MIN_SEARCH_LENGTH = 3;
 

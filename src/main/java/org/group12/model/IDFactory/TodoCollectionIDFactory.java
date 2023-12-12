@@ -1,12 +1,13 @@
 package org.group12.model.IDFactory;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Singleton factory for generating IDs for TodoCollection objects.
  * This class extends the IDFactory abstract class and provides the specific implementation for TodoCollection.
  */
-public class TodoCollectionIDFactory extends IDFactory implements IIDFactory {
+public class TodoCollectionIDFactory extends IDFactory implements IIDFactory, Serializable {
     private static final String PREFIX = "TL";
     private static final AtomicLong counter = new AtomicLong(1);
 
