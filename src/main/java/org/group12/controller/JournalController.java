@@ -1,6 +1,8 @@
 package org.group12.controller;
 
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.model.Container;
@@ -13,8 +15,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.group12.util.TextUtils.getWordCount;
+import static org.group12.view.JournalView.createConfirmationDialog;
 
 /**
  * Controller class for managing journal entries.
@@ -138,6 +142,18 @@ public class JournalController implements IController, IObservable {
         }
         journalEntry.updateContent(newContent);
     }
+    public void clearJournalEntry(JournalEntry journalEntry) {
+        if(journalEntry != null){
+            Alert alert = createConfirmationDialog();
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
+                journalEntry.updateContent("");
+            }
+        } else {
+            System.out.println("No journalentry found!");
+        }
+    }
+
 
 
     /**

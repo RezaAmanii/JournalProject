@@ -6,6 +6,7 @@ import org.group12.model.IDFactory.JournalEntryIDFactory;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -61,8 +62,8 @@ public class JournalEntryFactory implements IJournalEntryFactory {
         }
 
         String content = "";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String title = dateFormat.format(new Date());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String title = date.format(formatter);
 
         return new JournalEntry(ID, title, content, LocalDate.now(), date);
     }

@@ -16,7 +16,7 @@ import java.util.Map;
  * Represents a Journal with a list of entries and associated functionality.
  */
 public class Journal implements INameable, IObservable{
-    private final List<JournalEntry> entryList;
+//    private final List<JournalEntry> entryList;
     private final IJournalEntryFactory entryFactory;
     private String title;
     private final String ID;
@@ -32,7 +32,7 @@ public class Journal implements INameable, IObservable{
      * @param items         the items set to add the journal entries to. Must not be null.
      */
     protected Journal(String ID, String title, IJournalEntryFactory entryFactory, ItemsSet items) {
-        this.entryList = new ArrayList<>();
+//        this.entryList = new ArrayList<>();
         this.entryFactory = entryFactory;
         this.title = title;
         this.ID = ID;
