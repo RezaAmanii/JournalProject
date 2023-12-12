@@ -53,7 +53,7 @@ public class EventCard extends AnchorPane {
         FXMLLoaderService fxmlLoaderService = new FXMLLoaderService();
         fxmlLoaderService.loadFXML(this, this, "EventCard.fxml");
 
-        this.cardUpdater = new CardUpdater(items);
+        this.cardUpdater = new CardUpdater();
         update();
 
     }

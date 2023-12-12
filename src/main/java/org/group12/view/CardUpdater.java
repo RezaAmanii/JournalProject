@@ -12,23 +12,23 @@ import org.group12.model.journal.JournalEntry;
 import java.util.List;
 
 public class CardUpdater {
-    private final ItemsSet items;
+//    private final ItemsSet items;
 
-    public CardUpdater(ItemsSet items) {
-        this.items = items;
+    public CardUpdater() {
+//        this.items = items;
     }
-    public void updateTodoListCard(TodoListCard card) {
-        // ... existing update code from TodoListCard ...
-    }
-    public void updateTaskListCard(TaskListCard card) {
-        // ... existing update code from TaskListCard ...
-    }
-    public void updateBigTaskCard(BigTaskCard card) {
-        // ... existing update code from BigTaskCard ...
-    }
-    public void updateTaskCard(TaskCard card) {
-        // ... existing update code from TaskCard ...
-    }
+//    public void updateTodoListCard(TodoListCard card) {
+//        // ... existing update code from TodoListCard ...
+//    }
+//    public void updateTaskListCard(TaskListCard card) {
+//        // ... existing update code from TaskListCard ...
+//    }
+//    public void updateBigTaskCard(BigTaskCard card) {
+//        // ... existing update code from BigTaskCard ...
+//    }
+//    public void updateTaskCard(TaskCard card) {
+//        // ... existing update code from TaskCard ...
+//    }
 
     public void updateJournalEntryCard(JournalEntry entry, JournalController controller, Label titleLabel, TextArea contentArea, Label dateModified, Label NrOfWords) {
         // ... existing update code from JournalEntryCard ...
