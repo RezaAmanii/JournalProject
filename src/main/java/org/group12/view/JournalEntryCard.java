@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import org.group12.Listeners.JournalClickListener;
@@ -96,10 +97,17 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
          update();
     }
     @FXML
-    private void enterClicked(MouseEvent event){
-         controller.updateJournalEntry(entry, content.getText());
-//         controller.updateJournalEntryTitel(entry, titleLabel.getText();
+    private void saveContent(KeyEvent event){
+        // Get the current caret position
+        int caretPosition = content.getCaretPosition();
+
+        // Update the content
+        controller.updateJournalEntry(this.entry, this.content.getText());
+
+
         update();
+        // Set the caret position back to its original position
+        content.positionCaret(caretPosition);
     }
     @FXML
     private void deleteButtonClicked(MouseEvent event){

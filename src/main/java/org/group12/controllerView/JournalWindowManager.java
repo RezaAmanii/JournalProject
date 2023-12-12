@@ -2,9 +2,7 @@ package org.group12.controllerView;
 
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import org.group12.Listeners.JournalClickListener;
@@ -17,9 +15,7 @@ import org.group12.view.JournalEntryCard;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ResourceBundle;
-import java.io.IOException;
 
 import static java.time.format.DateTimeFormatter.ISO_DATE;
 
@@ -28,19 +24,11 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     @FXML
     private DatePicker entryDate;
 
-    //private Label entryDateLabel;
-    @FXML
-    private Label prevDayBtn;
     @FXML
     private Label entryDateLabel;
     @FXML
     public BorderPane journalEntryPane;
 
-    public DatePicker getEntryDate() {
-        return entryDate;
-    }
-
-//    private TextArea content;
     private static final JournalController journalController = JournalController.getInstance();
 
     public static JournalEntryCard journalEntryCard = null;
@@ -59,15 +47,6 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
         journalController.addObserver(this);
 
     }
-    //public void loadView(TextArea content,DatePicker entryDate,Label entryDateLabel, Label prevDayBtn)
-    //{
-    //   //this.content = content;
-    //   this.entryDate = entryDate;
-    //this.entryDateLabel = entryDateLabel;
-    //    this.prevDayBtn = prevDayBtn;
-    //}
-
-
 
     @FXML
     public void getPrevDayClick()
@@ -93,12 +72,7 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     @Override
     public void update() {
     }
-    //public void populateJournalEntry(JournalEntry entry){
-        //journalEntryPane.getChildren().clear();
-        //JournalEntryCard entrycard = createNewEntryObject(entry);
-        //journalEntryPane.setCenter(entrycard);
 
-    //}
     public void populateJournalEntry(JournalEntry journalEntry) {
         if(journalEntry != null) {
             // Create a new JournalEntryCard
@@ -106,8 +80,7 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
             // Clear the journalEntryPane and add the new card
             journalEntryPane.getChildren().clear();
             journalEntryPane.setCenter(journalEntryCard);
-
-            //journalEntryPane.setCenter(rootNode);
+;
         } else {
             // If journalEntry is null, print an error message
             System.out.println("JournalEntry is null in populate");
@@ -123,47 +96,6 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     }
 
 
-
-//    public boolean deleteJournal()
-//    {
-//        var alert = new Alert(Alert.AlertType.CONFIRMATION);
-//        alert.setTitle("Confirm Delete");
-//        alert.setHeaderText("Confirm");
-//        alert.setContentText("Confirm deleting journal?");
-//
-//        var option = alert.showAndWait().orElse(ButtonType.CANCEL);
-//        if(ButtonType.OK.equals(option)) {
-//            return true;
-//        }else
-//            return false;
-//    }
-
-//    @FXML
-//    void onAddEntry(MouseEvent event) {journalController.addEntryForDate(entryDateTime, journalWindowManager.prepareJournal());
-//    }
-//
-//    @FXML
-//    void onDeleteClk(MouseEvent event) {
-//        String entryID = journalModel.getEntryByDate(entryDateTime).getID();
-//        if(journalWindowManager.deleteJournal()) {
-//            journalModel.removeEntry(entryID);
-//            onPrevDayClk(event);
-//        }
-//    }
-//
-//    @FXML
-//    void onNextDayClk(MouseEvent event) {
-//        journalWindowManager.getNexDayClick(journalModel.getEntryByDate(journalWindowManager.getEntryDate().getValue().plusDays(1).atStartOfDay()));
-//    }
-//
-//    @FXML
-//    void onPrevDayClk(MouseEvent event) {
-//        journalWindowManager.getPevDayClick(journalModel.getEntryByDate(journalWindowManager.getEntryDate().getValue().minusDays(1).atStartOfDay()));
-//    }
-    //public JournalEntry prepareJournal()
-    //{
-    //    return new JournalEntry("Posts",entryDate.getValue(),content.getText());
-    //}
 
     public void createBindings() {
         entryDateLabel.textProperty()

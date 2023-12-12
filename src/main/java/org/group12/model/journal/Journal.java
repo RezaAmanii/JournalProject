@@ -50,15 +50,7 @@ public class Journal implements INameable, IObservable{
      * @param title   the title for the new journal entry
      * @param content the content for the new journal entry
      */
-//    public void addEntry(String title, String content){
-//        JournalEntry newEntry = entryFactory.createJournalEntry(title, content);
-//        for (IPlanITObserver observer : observers) {
-//            newEntry.addObserver(observer);
-//        }
-//        entryList.add(newEntry);
-//        items.addItem(newEntry);
-//        notifyObservers();
-//    }
+
 
     /**
      * Removes the specified entry from the journal.
@@ -104,9 +96,7 @@ public class Journal implements INameable, IObservable{
      *
      * @return a list of entries in the journal
      */
-//    public List<JournalEntry> getEntries() {
-//        return entryList;
-//    }
+
 
     /**
      * Adds an observer to the journal.
@@ -137,37 +127,24 @@ public class Journal implements INameable, IObservable{
 
     }
 
-    // ------- parts from jamal ---------------
 
     public List<JournalEntry> getEntries() {
         return new ArrayList<>(entries.values());
     }
 
-//    public JournalEntry getEntryForDate(LocalDateTime date) {
-//        return entries.getOrDefault(date, addEntry(date));
-//    }
+
 
 
     public JournalEntry getEntryByDate(LocalDate date){
         return entries.get(date);
     }
 
-//    public void addEntryForDate(LocalDate date, JournalEntry entry) {
-//        entries.put(date, entry);
-//    }
+
     public void removeEntry(LocalDate date){
         entries.remove(date);
         notifyObservers();
     }
-    //public void addEntry(){
-    //    JournalEntry newEntry = entryFactory.createJournalEntry();
-    //    for (IPlanITObserver observer : observers) {
-    //        newEntry.addObserver(observer);
-    //    }
-    //    entries.put(LocalDateTime.now(), newEntry);
-    //    items.addItem(newEntry);
-    //    notifyObservers();
-    //}
+
     public JournalEntry addEntry(LocalDate date) {
         JournalEntry newEntry = entryFactory.createJournalEntry(date);
         for (IPlanITObserver observer : observers) {

@@ -61,25 +61,7 @@ public class JournalEntryFactory implements IJournalEntryFactory {
         return new JournalEntry(ID, title, content, LocalDate.now(), createdTimestamp);
     }
 
-    //public JournalEntry createJournalEntryForDate(LocalDateTime date) {
-    //    String ID = idFactory.generateID();
-    //    String title = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE);
-    //    return new JournalEntry(ID, title, "", LocalDate.now(), date);
-    //}
 
-    /**
-     * Creates a new JournalEntry with a generated ID, provided title,
-     * provided content, and timestamps set to the current date.
-     *
-     * @param title   the title for the new journal entry
-     * @param content the content for the new journal entry
-     * @return a new JournalEntry object
-     */
-    //public JournalEntry createJournalEntry(String title, String content) {
-    //    String ID = idFactory.generateID();
-    //    LocalDateTime createdTimestamp = LocalDateTime.now();
-    //    return new JournalEntry(ID, title, content, LocalDate.now(), createdTimestamp);
-    //}
 
 
 }

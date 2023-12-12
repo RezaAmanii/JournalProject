@@ -37,12 +37,6 @@ public class JournalEntry implements INameable, IObservable {
         this.observers = new ArrayList<>();
     }
 
-    //public JournalEntry(String title, LocalDateTime entryDate, String content) {
-    //    this.title = title;
-    //    this.entryDate = entryDate;
-    //    this.content = content;
-    //}
-
     public LocalDate getEntryDate() {
         return entryDate;
     }
