@@ -2,7 +2,6 @@ package org.group12.model.journal;
 
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
-import org.group12.model.IDateCreated;
 import org.group12.model.INameable;
 
 import java.time.LocalDate;
@@ -13,11 +12,11 @@ import java.util.List;
 public class JournalEntry implements INameable, IObservable {
     private String ID;
     private String title;
-    private LocalDate entryDate;
-    private LocalDate createdTimestamp;
+    private final LocalDate entryDate;
+    private final LocalDate createdTimestamp;
     private LocalDateTime modifiedTimestamp;
     private String content;
-    private List<IPlanITObserver> observers;
+    private final List<IPlanITObserver> observers;
 
     /**
      * Constructor for creating a new JournalEntry object.

@@ -6,15 +6,13 @@ import org.group12.model.IDFactory.JournalEntryIDFactory;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
  * Singleton factory class for creating instances of JournalEntry.
  */
 public class JournalEntryFactory implements IJournalEntryFactory {
-    private IIDFactory idFactory;
+    private final IIDFactory idFactory;
     private static JournalEntryFactory instance;
 
     /**
@@ -65,8 +63,7 @@ public class JournalEntryFactory implements IJournalEntryFactory {
         String content = "";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String title = dateFormat.format(new Date());
-        LocalDate createdTimestamp = date;
 
-        return new JournalEntry(ID, title, content, LocalDate.now(), createdTimestamp);
+        return new JournalEntry(ID, title, content, LocalDate.now(), date);
     }
 }

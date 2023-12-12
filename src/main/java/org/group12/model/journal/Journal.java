@@ -7,7 +7,6 @@ import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,11 +16,11 @@ import java.util.Map;
  * Represents a Journal with a list of entries and associated functionality.
  */
 public class Journal implements INameable, IObservable{
-    private List<JournalEntry> entryList;
-    private IJournalEntryFactory entryFactory;
+    private final List<JournalEntry> entryList;
+    private final IJournalEntryFactory entryFactory;
     private String title;
     private final String ID;
-    private List<IPlanITObserver> observers;
+    private final List<IPlanITObserver> observers;
     private final ItemsSet items;
     private final Map<LocalDate,JournalEntry> entries;
     /**
@@ -112,13 +111,12 @@ public class Journal implements INameable, IObservable{
     }
 
     /**
-     * Adds a new JournalEntry with the specified date, notifies all observers, and returns the new JournalEntry.
+     * Adds a new JournalEntry with the specified date, notifies all observers.
      *
      * @param date The date of the JournalEntry to add. Must not be null.
-     * @return The newly created JournalEntry.
      * @throws IllegalArgumentException if date is null.
      */
-    public JournalEntry addEntry(LocalDate date) {
+    public void addEntry(LocalDate date) {
         if (date == null) {
             throw new IllegalArgumentException("Date cannot be null.");
         }
@@ -129,7 +127,6 @@ public class Journal implements INameable, IObservable{
         entries.put(date, newEntry);
         items.addItem(newEntry);
         notifyObservers();
-        return newEntry;
     }
 
     /**

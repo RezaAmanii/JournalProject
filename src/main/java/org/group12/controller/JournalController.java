@@ -22,7 +22,7 @@ import static org.group12.util.TextUtils.getWordCount;
  */
 public class JournalController implements IController, IObservable {
 
-    private Container container;
+    private final Container container;
     private static JournalController instance;
     private static Journal journalModel;
 
@@ -121,8 +121,7 @@ public class JournalController implements IController, IObservable {
         if (entry == null) {
             throw new IllegalArgumentException("Entry cannot be null.");
         }
-        String entryContent = entry.getContent();
-        return entryContent;
+        return entry.getContent();
     }
 
 
