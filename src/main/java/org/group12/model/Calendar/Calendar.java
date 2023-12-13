@@ -40,11 +40,13 @@ public class Calendar implements IObservable, ICalendar, Serializable {
 
     public void addEvent(String title, String description, LocalDateTime dateOfEvent,
                          Pair<LocalDateTime, LocalDateTime> timeFrame){
-        Event newEvent = eventFactory.createEvent(title, description,dateOfEvent, timeFrame);
+        Event newEvent = eventFactory.createEvent(title, description, dateOfEvent, timeFrame);
         eventList.add(newEvent);
         this.isEmpty = false;
         notifyObservers();
+        System.out.println(eventList.size());
     }
+
     // for testing
     public void addEvent(Event event){
         eventList.add(event);

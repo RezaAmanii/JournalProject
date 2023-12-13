@@ -1,5 +1,5 @@
 package org.group12.controllerView;
-import org.group12.model.Calendar.EventData;
+//import org.group12.controllerView.Calendar.EventData;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.group12.controllerView.Calendar.EventData;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ import java.util.function.Consumer;
 import static javafx.beans.binding.Bindings.isEmpty;
 import static javafx.beans.binding.Bindings.or;
 
-public class NewEventView {
+public class NewEventWindowManager {
 
     @FXML
     private TextArea descriptionTxt;

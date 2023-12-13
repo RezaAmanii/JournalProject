@@ -37,8 +37,8 @@ public class EventDetailsView {
     @FXML
     private Label toDate;
 
-
-    public void _initialize(Event eventData, Consumer<String> deleteEventAction) {
+//public void _initialize(Event eventData, Consumer<String> deleteEventAction, Consumer<Event> editEventAction, Consumer<Event> saveEventAction, Consumer<Event> makeRecurringAction)
+    public void _initialize(Event eventData, Consumer<String> deleteEventAction){
         this.descriptionTxt.setText(eventData.getDescription());
         this.titleLbl.setText(eventData.getTitle());
         this.fromDate.setText(getFromData(eventData));

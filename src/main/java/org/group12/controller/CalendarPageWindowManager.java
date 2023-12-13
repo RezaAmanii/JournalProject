@@ -4,10 +4,10 @@ import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
 import org.group12.model.Calendar.CalendarWeek;
-import org.group12.controllerView.NewEventView;
+import org.group12.controllerView.NewEventWindowManager;
 import org.group12.model.Calendar.Calendar;
 import org.group12.model.Calendar.Event;
-import org.group12.model.Calendar.EventData;
+import org.group12.controllerView.Calendar.EventData;
 import org.group12.model.Container;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -21,11 +21,8 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 import static org.group12.model.toDoSubTask.Globals.loadFxml;
 
-/**
- * This class is a controller for the Calendar Page.
- * It implements the Initializable interface.
- */
-public class CalendarPageController {
+
+public class CalendarPageWindowManager {
 
     private Calendar calendarData = Container.getInstance().getCalender();
 
@@ -45,6 +42,7 @@ public class CalendarPageController {
     private Label yearLBL;
 
     private SimpleObjectProperty<CalendarWeek> calendarWeek;
+//    private static final CalendarController calendarcontroller = CalendarController.getInstance();
 
     public void initialize() {
         calendarWeek = new SimpleObjectProperty<>();
@@ -75,11 +73,14 @@ public class CalendarPageController {
 
     @FXML
     void onAddEvent(MouseEvent msEvent) throws IOException {
-        NewEventView controller =  Globals.openNewForm("/org/group12/view/newEvent.fxml", "New Event", false);
-        controller._initialize(this::addNewEvent);
+        NewEventWindowManager controller =  Globals.openNewForm("/org/group12/view/newEvent.fxml", "New Event", false);
+        controller._initialize(this::addNewEvent); // Vad gör denna??
+        // betyder att vi anropar _initialize-metoden i controller-objektet
+        // och skickar med en referens till addNewEvent-metoden som ett argument.
     }
 
     private void addNewEvent(EventData ev) {
+//        calendarcontroller.addEvent(ev.getTitle(), ev.getDescription(), ev.getFrom(), ev.getTo());
         calendarData.addEvent(ev.getTitle(), ev.getDescription(), ev.getFrom(), new Pair<>(ev.getFrom(), ev.getTo()));
         drawCalendar(calendarWeek.getValue());
     }

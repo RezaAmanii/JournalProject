@@ -17,7 +17,7 @@
 
 <BorderPane fx:id="root" prefHeight="400.0" prefWidth="518.0" xmlns="http://javafx.com/javafx/20.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.group12.controllerView.NewEventView">
+            fx:controller="org.group12.controllerView.NewEventWindowManager">
     <center>
         <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;" BorderPane.alignment="CENTER">
             <children>

@@ -14,7 +14,7 @@
 
 <BorderPane fx:id="mainWindowBorder" prefHeight="663.0" prefWidth="783.0" xmlns="http://javafx.com/javafx/21.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="org.group12.controller.CalendarPageController">
+            fx:controller="org.group12.controller.CalendarPageWindowManager">
     <top>
         <BorderPane prefHeight="64.0" prefWidth="659.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
             <BorderPane.margin>

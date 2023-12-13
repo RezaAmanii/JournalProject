@@ -1,4 +1,4 @@
-package org.group12.model.Calendar;
+package org.group12.controllerView.Calendar;
 
 import java.time.LocalDateTime;
 

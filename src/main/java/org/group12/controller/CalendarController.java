@@ -1,6 +1,8 @@
 package org.group12.controller;
 
+import javafx.util.Pair;
 import org.group12.model.Calendar.Calendar;
+import org.group12.model.Calendar.CalendarWeek;
 import org.group12.model.Calendar.Event;
 import org.group12.model.Container;
 import org.group12.model.INameable;
@@ -16,10 +18,12 @@ public class CalendarController implements IController {
 
     private Calendar calenderModel;
     private Container container;
+    private static CalendarController instance;
 
     private CalendarView calenderView;
 //    private HashMap<String, INameable> itemMap;
     private Items itemMap = Items.getInstance();
+
 
 
     public CalendarController(){
@@ -27,6 +31,21 @@ public class CalendarController implements IController {
         this.itemMap = Items.getInstance();
 
     }
+
+    public static CalendarController getInstance() {
+        if (instance == null) {
+            instance = new CalendarController();
+        }
+        return instance;
+    }
+
+    public void addEvent(String title, String description,
+                         LocalDateTime startOfEvent, LocalDateTime endOfEvent){
+        LocalDateTime dateOfEvent = startOfEvent;
+        Pair<LocalDateTime, LocalDateTime> timeFrame = new Pair<>(startOfEvent, endOfEvent);
+        calenderModel.addEvent(title, description, dateOfEvent, timeFrame);
+    }
+
 
     /**
      * Handles the addition of an event to the calendar.
