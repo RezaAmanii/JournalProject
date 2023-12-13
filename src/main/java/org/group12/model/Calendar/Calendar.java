@@ -45,6 +45,7 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         this.isEmpty = false;
         notifyObservers();
     }
+    // for testing
     public void addEvent(Event event){
         eventList.add(event);
         this.isEmpty = false;
@@ -96,6 +97,9 @@ public class Calendar implements IObservable, ICalendar, Serializable {
      *                     example: makeRecurring(event, 7, 30) makes the event repeat weekly for a month which is 4 times because 30/7 = 4
      */
     public void makeRecurring(Event event, int frequency, int durationDays){
+        if (frequency <= 0 || durationDays <= 0) {
+            throw new IllegalArgumentException("Frequency and duration days must be positive");
+        } // added controll to check if frequency or durationDays.
         event.setRecurrence(true);
         int iterations = durationDays/frequency;
         for (int i = 1; i < iterations+1; i++){
