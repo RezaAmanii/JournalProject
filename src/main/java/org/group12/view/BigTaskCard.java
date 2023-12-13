@@ -38,7 +38,6 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
 
     // Controller
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
-    private final TaskListController taskListController = TaskListController.getInstance();
     private final ToDoWindowManager toDoWindowManager = new ToDoWindowManager();
     // Listener
     private BigTaskCardClickListener clickListener;

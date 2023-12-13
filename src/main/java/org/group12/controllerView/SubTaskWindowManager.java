@@ -1,6 +1,7 @@
 package org.group12.controllerView;
 
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -32,16 +33,19 @@ import static org.group12.view.TaskView.*;
 
 public class SubTaskWindowManager implements Initializable, ITaskListObserver {
 
+    // Class attributes
     static public ITask selectedSubTask = null;
+
+    // Controller
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
     private final TaskController taskController = TaskController.getInstance();
     
     // FXMl Components
-    public Label taskNameLabel;
-    public VBox subTasksPane;
-    public ImageView deleteImg;
-    public AnchorPane addPane;
-    public CheckBox statusCheckBox;
+    @FXML public Label taskNameLabel;
+    @FXML public VBox subTasksPane;
+    @FXML public ImageView deleteImg;
+    @FXML public AnchorPane addPane;
+    @FXML public CheckBox statusCheckBox;
 
 
 
@@ -51,7 +55,57 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
 
     }
 
+    // Add methods
+    public void addNewSubTask(){
+        String title = getInputFromUser();
+        BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
+        IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
+        String subTaskID = bigTask.addSubTask(title);
 
+        selectedSubTask = taskController.getSubTaskByID(subTaskID);
+        subTasksPane.getChildren().add(createNewSubTaskObject(selectedSubTask));
+        refreshSubTasksPane();
+    }
+
+    
+    public void removeSubTask(){
+        ITask subTask = taskController.getSubTaskByID(selectedSubTask.getID());
+        if(subTask != null){
+            BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
+            IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
+            bigTaskController.getBigTaskByID(bigTask.getID()).removeSubTask(selectedSubTask.getID());
+            refreshSubTasksPane();
+        }
+    }
+
+    void renameSubTask(ITask task, String newName){
+        taskController.getSubTaskByID(task.getID()).setTitle(newName);
+    }
+
+
+
+    void refreshSubTasksPane(){
+
+        subTasksPane.getChildren().clear();
+        BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
+        IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
+
+        for (ITask task: bigTask.getUncompletedSubTasks()){
+            subTasksPane.getChildren().add(createNewSubTaskObject(task));
+        }
+        for (ITask task: bigTask.getCompletedSubTasks()){
+            subTasksPane.getChildren().add(createNewSubTaskObject(task));
+        }
+    }
+
+
+    @Override
+    public void update() {
+        refreshSubTasksPane();
+    }
+
+
+    // View
     public GridPane createNewSubTaskObject(ITask task){
         GridPane newTaskPane = createNewTaskPane();
         Pane checkBoxPane = createCheckBoxPane(task);
@@ -92,54 +146,5 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
             subTaskTF.setEditable(true);
             subTaskTF.requestFocus();
         }
-    }
-
-    public void addNewSubTask(){
-        String title = getInputFromUser();
-        BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
-        IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
-        String subTaskID = bigTask.addSubTask(title);
-
-        selectedSubTask = taskController.getSubTaskByID(subTaskID);
-        subTasksPane.getChildren().add(createNewSubTaskObject(selectedSubTask));
-        refreshSubTasksPane();
-    }
-
-    
-    public void removeSubTask(){
-        ITask subTask = taskController.getSubTaskByID(selectedSubTask.getID());
-        if(subTask != null){
-            subTask.setTitle("Removed");
-            BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
-            IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
-            bigTaskController.getBigTaskByID(bigTask.getID()).removeSubTask(selectedSubTask.getID());
-            refreshSubTasksPane();
-        }
-    }
-
-    void renameSubTask(ITask task, String newName){
-        taskController.getSubTaskByID(task.getID()).setTitle(newName);
-    }
-
-
-
-    void refreshSubTasksPane(){
-
-        subTasksPane.getChildren().clear();
-        BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
-        IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
-
-        for (ITask task: bigTask.getUncompletedSubTasks()){
-            subTasksPane.getChildren().add(createNewSubTaskObject(task));
-        }
-        for (ITask task: bigTask.getCompletedSubTasks()){
-            subTasksPane.getChildren().add(createNewSubTaskObject(task));
-        }
-    }
-
-
-    @Override
-    public void update() {
-        refreshSubTasksPane();
     }
 }

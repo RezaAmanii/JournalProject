@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ProgressIndicator?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -14,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainWindowBorder" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controllerView.ToDoWindowManager">
+<BorderPane fx:id="mainWindowBorder" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controllerView.ToDoWindowManager">
     <top>
         <BorderPane prefHeight="64.0" prefWidth="659.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
             <BorderPane.margin>
@@ -46,7 +45,7 @@
                 </HBox>
             </right>
             <left>
-                <Label fx:id="nameLBL11" text="ToDo" textFill="#183a4e" BorderPane.alignment="CENTER">
+                <Label fx:id="nameLBL11" text="Todo" textFill="#183a4e" BorderPane.alignment="CENTER">
                     <font>
                         <Font name="Berlin Sans FB Demi Bold" size="47.0" />
                     </font>
@@ -133,32 +132,6 @@
                                     </children>
                                 </VBox>
                             </center>
-                            <top>
-                                <GridPane prefHeight="31.0" prefWidth="320.0" style="-fx-background-color: #183a4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.77783203125" minWidth="10.0" percentWidth="70.0" prefWidth="218.5555419921875" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="167.5555894639757" minWidth="10.0" percentWidth="30.0" prefWidth="100.33334689670141" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                    <BorderPane.margin>
-                                        <Insets bottom="10.0" />
-                                    </BorderPane.margin>
-                                    <children>
-                                        <Label fx:id="nameLBL12" alignment="CENTER" text="List name" textFill="WHITE" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                            <font>
-                                                <Font name="Berlin Sans FB Demi Bold" size="22.0" />
-                                            </font>
-                                        </Label>
-                                        <Label fx:id="nameLBL121" alignment="CENTER" text="ToDo" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER">
-                                            <font>
-                                                <Font name="Berlin Sans FB Demi Bold" size="22.0" />
-                                            </font>
-                                        </Label>
-                                    </children>
-                                </GridPane>
-                            </top>
                         </BorderPane>
                     </top>
                     <center>
@@ -233,93 +206,24 @@
                 </Label>
             </top>
             <center>
-                <BorderPane fx:id="ongoingTasksBorderPane" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                <BorderPane fx:id="ongoingTasksBorderPane" prefHeight="432.0" prefWidth="408.0" BorderPane.alignment="CENTER">
                     <center>
                         <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" style="-fx-background-color: #183a4e; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white;" vbarPolicy="NEVER" BorderPane.alignment="CENTER">
                             <BorderPane.margin>
                                 <Insets bottom="10.0" left="10.0" right="10.0" />
                             </BorderPane.margin>
                             <content>
-                                <VBox fx:id="ongoingTasksVbox" prefHeight="200.0" prefWidth="292.0" style="-fx-background-color: #183a4e;">
-                                    <children>
-                                        <GridPane fx:id="importantList1" prefHeight="72.0" prefWidth="279.0" style="-fx-background-color: #2f3f4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;">
-                                            <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.77783203125" minWidth="10.0" percentWidth="20.0" prefWidth="216.44439019097223" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="221.77783203125" minWidth="10.0" percentWidth="75.0" prefWidth="216.44439019097223" />
-                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="151.5555419921875" minWidth="10.0" percentWidth="20.0" prefWidth="104.00005425347223" />
-                                            </columnConstraints>
-                                            <rowConstraints>
-                                                <RowConstraints maxHeight="37.77776421440973" minHeight="10.0" percentHeight="60.0" prefHeight="32.88887871636285" vgrow="SOMETIMES" />
-                                                <RowConstraints maxHeight="21.777794731987843" minHeight="10.0" percentHeight="40.0" prefHeight="19.55556572808159" vgrow="SOMETIMES" />
-                                            </rowConstraints>
-                                            <children>
-                                                <Label fx:id="nameLBL12112" alignment="CENTER" text="taskName" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-                                                    <font>
-                                                        <Font name="Berlin Sans FB Demi Bold" size="22.0" />
-                                                    </font>
-                                                </Label>
-                                                <ProgressIndicator prefHeight="39.0" prefWidth="18.0" progress="0.4" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
-                                                    <GridPane.margin>
-                                                        <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-                                                    </GridPane.margin>
-                                                </ProgressIndicator>
-                                                <ImageView fitHeight="43.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowSpan="2" GridPane.valignment="CENTER">
-                                                    <GridPane.margin>
-                                                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-                                                    </GridPane.margin>
-                                                </ImageView>
-                                                <Label fx:id="nameLBL121121" alignment="CENTER" text="deadline" textFill="WHITE" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                                                    <font>
-                                                        <Font name="Berlin Sans FB" size="16.0" />
-                                                    </font>
-                                                    <GridPane.margin>
-                                                        <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
-                                                    </GridPane.margin>
-                                                </Label>
-                                            </children>
-                                            <VBox.margin>
-                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                            </VBox.margin>
-                                        </GridPane>
-                                    </children>
-                                </VBox>
+                                <VBox fx:id="ongoingTasksVbox" prefHeight="200.0" prefWidth="292.0" style="-fx-background-color: #183a4e;" />
                             </content>
                             <padding>
                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                             </padding>
                         </ScrollPane>
                     </center>
-                    <top>
-                        <Label fx:id="nameLBL131" text="Ongoing" textFill="#183a4e" BorderPane.alignment="CENTER_LEFT">
-                            <font>
-                                <Font name="Berlin Sans FB Demi Bold" size="25.0" />
-                            </font>
-                            <BorderPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </BorderPane.margin>
-                        </Label>
-                    </top>
                 </BorderPane>
             </center>
             <bottom>
-                <BorderPane fx:id="completedTasksBorderPane" prefHeight="218.0" prefWidth="329.0" BorderPane.alignment="CENTER">
-                    <center>
-                        <VBox fx:id="completedTasksVbox" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #183a4e; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: white;" BorderPane.alignment="CENTER">
-                            <BorderPane.margin>
-                                <Insets bottom="10.0" left="10.0" right="10.0" />
-                            </BorderPane.margin>
-                        </VBox>
-                    </center>
-                    <top>
-                        <Label fx:id="nameLBL1311" text="Completed" textFill="#183a4e" BorderPane.alignment="CENTER_LEFT">
-                            <font>
-                                <Font name="Berlin Sans FB Demi Bold" size="25.0" />
-                            </font>
-                            <BorderPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                            </BorderPane.margin>
-                        </Label>
-                    </top>
+                <BorderPane fx:id="completedTasksBorderPane" prefHeight="63.0" prefWidth="408.0" BorderPane.alignment="CENTER">
                     <bottom>
                         <VBox fx:id="fixedListsVbox11" prefHeight="52.0" prefWidth="307.0" style="-fx-background-color: #183a4e; -fx-background-radius: 10; -fx-border-color: white; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
                             <children>
