@@ -13,8 +13,10 @@ import javafx.scene.layout.VBox;
 import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.TaskListController;
+import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
+import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
 
 import java.io.IOException;
@@ -30,6 +32,8 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
 
     // Controller
     private final TaskListController taskListController;
+
+    private final ToDoWindowManager toDoWindowManager;
 
     // Listener
     private TaskListCardClickListener clickListener;
@@ -50,6 +54,7 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
         this.items = items;
         this.ID = ID;
         this.taskListController = TaskListController.getInstance();
+        this.toDoWindowManager = new ToDoWindowManager();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("taskListCards.fxml"));
         fxmlLoader.setRoot(this);
@@ -99,6 +104,10 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
         handleDoubleClick(event);
     }
     private void deleteTaskListBtnClicked(MouseEvent event){
+        for(IBigTask tasks : taskListController.getTaskListByID(this.ID).getBigTaskList()){
+            toDoWindowManager.removeTodayTask(tasks);
+            toDoWindowManager.removeImportantTasks(tasks);
+        }
         taskListController.handlerRemoveToDoList(taskListController.getTaskListByID(this.ID));
         update();
     }

@@ -114,6 +114,8 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     private void checkBoxToggled(MouseEvent event) {
         boolean isSelected = statusCheckBox.isSelected();
         bigTaskController.setBigTaskCheckBoxStatus(ID, isSelected);
+        toDoWindowManager.moveToCompletedVBox(this.ID);
+        update();
     }
 
     private void imageViewClicked(MouseEvent event) {

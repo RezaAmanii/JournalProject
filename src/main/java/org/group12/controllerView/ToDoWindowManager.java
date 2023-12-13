@@ -1,5 +1,6 @@
 package org.group12.controllerView;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -25,15 +26,15 @@ import static org.group12.view.TaskView.openNewForm;
 public class ToDoWindowManager implements Initializable, ITaskListObserver, TaskListCardClickListener, BigTaskCardClickListener {
 
     // FXML components
-    public VBox fixedListsVbox;
-    public Label todayToDoLBL;
-    public Label importantToDoLBL;
-    public VBox appendableListVbox;
-    public Label activeListNameLBL;
-    public VBox ongoingTasksVbox;
-    public VBox completedTasksVbox;
-    public GridPane addNewListBtn;
-    public BorderPane mainWindowBorder;
+    @FXML public VBox fixedListsVbox;
+    @FXML public Label todayToDoLBL;
+    @FXML public Label importantToDoLBL;
+    @FXML public VBox appendableListVbox;
+    @FXML public Label activeListNameLBL;
+    @FXML public VBox ongoingTasksVbox;
+    @FXML public VBox completedTasksVbox;
+    @FXML public GridPane addNewListBtn;
+    @FXML public BorderPane mainWindowBorder;
 
 
     // Corresponding controller
@@ -54,6 +55,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         bigTaskController.addObserver(this);
         refreshAllListVBox();
         refreshSidePanelInfo();
+
     }
 
     private static void checkFixedList() {
@@ -128,21 +130,19 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
+    public void moveToCompletedVBox(String bigTaskID){
+        BigTaskCard bigTaskCard = new BigTaskCard(bigTaskID, Items.getInstance());
+        this.completedTasksVbox.getChildren().add(bigTaskCard);
+
+    }
+
 
     // Populate OngoingTasks VBox
     public void populateOngoingTasks(ITaskList taskList){
         ongoingTasksVbox.getChildren().clear();
 
         for(IBigTask task : taskList.getBigTaskList()){
-            /*if(taskList.equals(taskListController.getTaskListByTitle("Today"))){
-                taskListController.getTaskListByTitle("Today").getBigTaskList().add(task);
 
-            }else if(taskList.equals(taskListController.getTaskListByTitle("Important"))){
-                taskListController.getTaskListByTitle("Important").getBigTaskList().add(task);
-
-            } else {
-
-            }*/
             BigTaskCard bigTaskCard = createNewTaskObject(task);
             ongoingTasksVbox.getChildren().add((bigTaskCard));
         }
