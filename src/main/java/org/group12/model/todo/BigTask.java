@@ -34,6 +34,7 @@ public class BigTask implements IBigTask, Serializable {
         modelTask.setTitle(title);
         this.items = items;
         this.dueDate = LocalDateTime.now();
+        System.out.println(this.getID());
     }
 
     /**

@@ -51,6 +51,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     public void initialize(URL location, ResourceBundle resources) {
         checkFixedList();
         taskListController.addObserver(this);
+        bigTaskController.addObserver(this);
         refreshAllListVBox();
         refreshSidePanelInfo();
     }
@@ -108,12 +109,40 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
+    // Removing Big Task
+    public void removeTodayTask(IBigTask taskToRemove){
+        for(IBigTask task : taskListController.getTaskListByTitle("Today").getBigTaskList()){
+            if(task.getID().equals(taskToRemove.getID())){
+                taskListController.getTaskListByTitle("Today").getBigTaskList().remove(task);
+                break;
+            }
+        }
+    }
+
+    public void removeImportantTasks(IBigTask taskToRemove){
+        for(IBigTask task : taskListController.getTaskListByTitle("Important").getBigTaskList()){
+            if(task.getID().equals(taskToRemove.getID())){
+                taskListController.getTaskListByTitle("Important").getBigTaskList().remove(task);
+                break;
+            }
+        }
+    }
+
 
     // Populate OngoingTasks VBox
     public void populateOngoingTasks(ITaskList taskList){
         ongoingTasksVbox.getChildren().clear();
 
         for(IBigTask task : taskList.getBigTaskList()){
+            /*if(taskList.equals(taskListController.getTaskListByTitle("Today"))){
+                taskListController.getTaskListByTitle("Today").getBigTaskList().add(task);
+
+            }else if(taskList.equals(taskListController.getTaskListByTitle("Important"))){
+                taskListController.getTaskListByTitle("Important").getBigTaskList().add(task);
+
+            } else {
+
+            }*/
             BigTaskCard bigTaskCard = createNewTaskObject(task);
             ongoingTasksVbox.getChildren().add((bigTaskCard));
         }
@@ -182,41 +211,12 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         });
     }
 
-    public Set<IBigTask> populateTodayTasks(){
-        Set<IBigTask> todayTask = new HashSet<>();
-        for(ITaskList taskList : taskListController.getTasksLists()){
-            todayTask.addAll(taskList.getBigTaskList());
-        }
-        return todayTask;
-
-    }
-
 
     private void updateTodayTask(IBigTask task) {
         taskListController.getTaskListByTitle("Today").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
 
-        // Clear the Today list
-        taskListController.getTaskListByTitle("Today").getBigTaskList().clear();
+        taskListController.getTaskListByTitle("Today").getBigTaskList().add(task);
 
-        Set<IBigTask> todayTasks = populateTodayTasks();
-
-        for (IBigTask todayTask : todayTasks) {
-            taskListController.getTaskListByTitle("Today").addBigTask(todayTask.getTitle());
-        }
-
-    }
-
-
-    public Set<IBigTask> populateImportantTasks(){
-        Set<IBigTask> importantTask = new HashSet<>();
-        for(ITaskList taskList : taskListController.getTasksLists()){
-            for(IBigTask task : taskList.getBigTaskList()){
-                if(task.isFavourite()){
-                    importantTask.add(task);
-                }
-            }
-        }
-        return importantTask;
     }
 
 
@@ -224,12 +224,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     private void updateImportantTask(IBigTask task) {
         taskListController.getTaskListByTitle("Important").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
 
-        taskListController.getTaskListByTitle("Important").getBigTaskList().clear();
-
-        Set<IBigTask> importantTasks = populateImportantTasks();
-        for(IBigTask importantTask : importantTasks){
-            taskListController.getTaskListByTitle("Important").addBigTask(importantTask.getTitle());
-        }
+        taskListController.getTaskListByTitle("Important").getBigTaskList().add(task);
     }
 
     public void refreshSidePanelInfo() {
@@ -264,7 +259,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         clearListVBoxContent();
         refreshAllListVBox();
         refreshSidePanelInfo();
-
     }
 
 

@@ -15,6 +15,7 @@ import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskListController;
+import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
@@ -38,7 +39,7 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     // Controller
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
     private final TaskListController taskListController = TaskListController.getInstance();
-
+    private final ToDoWindowManager toDoWindowManager = new ToDoWindowManager();
     // Listener
     private BigTaskCardClickListener clickListener;
 
@@ -73,14 +74,12 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         double paddingValue = 10.0;
         VBox.setMargin(this, new Insets(paddingValue));
 
-        update();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initializeFields();
         setupEventHandlers();
-        update();
     }
 
     private void initializeFields(){
@@ -106,6 +105,8 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     }
     private void deleteTaskBtnClicked(MouseEvent event){
         IBigTask bigTaskToRemove = (IBigTask) items.getItem(this.ID);
+        toDoWindowManager.removeTodayTask(bigTaskToRemove);
+        toDoWindowManager.removeImportantTasks(bigTaskToRemove);
         bigTaskController.handleRemoveTask(bigTaskToRemove);
         update();
     }
