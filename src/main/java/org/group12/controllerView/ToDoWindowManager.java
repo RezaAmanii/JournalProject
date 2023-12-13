@@ -185,11 +185,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
     public Set<IBigTask> populateTodayTasks(){
-        Set<IBigTask> bigTasks = new HashSet<>();
+        Set<IBigTask> todayTask = new HashSet<>();
         for(ITaskList taskList : taskListController.getTasksLists()){
-            bigTasks.addAll(taskList.getBigTaskList());
+            todayTask.addAll(taskList.getBigTaskList());
         }
-        return bigTasks;
+        return todayTask;
 
     }
 
@@ -209,11 +209,29 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
 
+    public Set<IBigTask> populateImportantTasks(){
+        Set<IBigTask> importantTask = new HashSet<>();
+        for(ITaskList taskList : taskListController.getTasksLists()){
+            for(IBigTask task : taskList.getBigTaskList()){
+                if(task.isFavourite()){
+                    importantTask.add(task);
+                }
+            }
+        }
+        return importantTask;
+    }
+
 
 
     private void updateImportantTask(IBigTask task) {
         taskListController.getTaskListByTitle("Important").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
-        taskListController.getTaskListByTitle("Important").addBigTask(task.getTitle());
+
+        taskListController.getTaskListByTitle("Important").getBigTaskList().clear();
+
+        Set<IBigTask> importantTasks = populateImportantTasks();
+        for(IBigTask importantTask : importantTasks){
+            taskListController.getTaskListByTitle("Important").addBigTask(importantTask.getTitle());
+        }
     }
 
     public void refreshSidePanelInfo() {
@@ -224,9 +242,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
                 ongoingTasksVbox.getChildren().clear();
                 completedTasksVbox.getChildren().clear();
-
-                Comparator<IBigTask> comparator = Comparator.comparing(IBigTask::getDueDate);
-                taskList.getBigTaskList().sort(comparator);
 
                 for (IBigTask task : taskList.getBigTaskList()) {
                     if (task.getSubTaskList().size() == task.getCompletedSubTasks().size() && !task.getSubTaskList().isEmpty()) {
