@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class EventSorter implements Serializable {
 
@@ -23,7 +24,7 @@ public class EventSorter implements Serializable {
     // ----- O( n ) time complexity -----------
     // these methods does not require the list to be sorted
 
-    public static List<Event> getEventsAfterNow(List<Event> eventList) {
+/*    public static List<Event> getEventsAfterNow(List<Event> eventList) {
         LocalDateTime now = LocalDateTime.now();
         List<Event> result = new ArrayList<>();
         for (Event event : eventList) {
@@ -43,9 +44,32 @@ public class EventSorter implements Serializable {
             }
         }
         return result;
+    }*/
+
+    private static List<Event> getEventsByCondition(List<Event> eventList, Predicate<Event> condition) {
+        List<Event> result = new ArrayList<>();
+        for (Event event : eventList) {
+            if (condition.test(event)) {
+                result.add(event);
+            }
+        }
+        return result;
+    }
+    public static List<Event> getEventsAfterNow(List<Event> eventList) {
+        LocalDateTime now = LocalDateTime.now();
+        return getEventsByCondition(eventList, event -> event.getDateOfEvent().isAfter(now));
+    }
+
+    public static List<Event> getEventsBeforeNow(List<Event> eventList) {
+        LocalDateTime now = LocalDateTime.now();
+        return getEventsByCondition(eventList, event -> event.getDateOfEvent().isBefore(now));
     }
 
     public static List<Event> getEventsBetweenDates(List<Event> eventList, LocalDateTime date1, LocalDateTime date2) {
+        return getEventsByCondition(eventList, event -> event.getDateOfEvent().isAfter(date1) && event.getDateOfEvent().isBefore(date2));
+    }
+
+    /*public static List<Event> getEventsBetweenDates(List<Event> eventList, LocalDateTime date1, LocalDateTime date2) {
         List<Event> result = new ArrayList<>();
         for (Event event : eventList) {
             if (event.getDateOfEvent().isAfter(date1) && event.getDateOfEvent().isBefore(date2)) {
@@ -53,7 +77,7 @@ public class EventSorter implements Serializable {
             }
         }
         return result;
-    }
+    }*/
     public static List<Event> getEventsByTag(List<Event> eventList, String tag){
         List<Event> eventsWithTag = new ArrayList<>();
         for (Event event : eventList){
