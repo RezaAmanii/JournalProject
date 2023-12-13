@@ -97,7 +97,7 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="settingsPane" prefHeight="76.0" prefWidth="170.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
+                <Pane fx:id="settingsPane" onMouseClicked="#switchToSettingsPane" prefHeight="76.0" prefWidth="170.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
                     <children>
                         <Label fx:id="settingsLBL" layoutX="57.0" layoutY="24.0" text="Settings" textFill="#183a4e">
                             <font>
