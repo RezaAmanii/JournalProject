@@ -80,6 +80,7 @@ public class NewEventWindowManager {
     }
 
     private void onSaveClk(MouseEvent msEvt) {
+
         var event = getEventData();
         this.onSaveAction.accept(event);
         ((Stage)root.getScene().getWindow()).close();

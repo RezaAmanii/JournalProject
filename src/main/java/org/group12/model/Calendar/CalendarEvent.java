@@ -9,7 +9,7 @@ public class CalendarEvent {
     private int rowStart;
     private int rowEnd;
     private String title;
-    private String discription;
+    private String description;
     private String id;
 
     /**
@@ -26,7 +26,7 @@ public class CalendarEvent {
         this.rowStart = getGridRow(startHr.getHour(), FIRST_HR_ROW, FIRST_HR);
         this.rowEnd = getGridRow(endHrNormalized.getHour(), FIRST_HR_ROW, FIRST_HR);
         this.title = event.getTitle();
-        this.discription= event.getDescription();
+        this.description = event.getDescription();
         this.id = event.getID();
     }
 
@@ -35,8 +35,8 @@ public class CalendarEvent {
      *
      * @return The description of the calendar event.
      */
-    public String getDiscription() {
-        return discription;
+    public String getDescription() {
+        return description;
     }
 
     /**
