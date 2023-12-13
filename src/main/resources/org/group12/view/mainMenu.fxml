@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import java.net.URL?>
 <BorderPane fx:id="mainWindowBorder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="872.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controllerView.MainMenuController">
     <left>
         <VBox fx:id="sideBar" maxWidth="180.0" minWidth="68.0" onMouseEntered="#sideBarOnMouseEnter" onMouseExited="#sideBarOnMouseEnter" prefHeight="573.0" prefWidth="180.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
@@ -30,7 +31,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="homeBtn" onMouseClicked="#switchToHomePane" prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
+                <Pane fx:id="homeBtn" onMouseClicked="#switchToHomePane" prefHeight="80.0" prefWidth="173.0" styleClass="my-2" style="-fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
                     <children>
                         <Label fx:id="homeLBL" layoutX="59.0" layoutY="23.0" text="Home" textFill="#183a4e">
                             <font>
@@ -46,7 +47,7 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="journalPane" onMouseClicked="#switchToJournalPane" prefHeight="80.0" prefWidth="173.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
+                <Pane fx:id="journalPane" onMouseClicked="#switchToJournalPane" prefHeight="80.0" prefWidth="173.0" styleClass="my-2" style="-fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
                     <children>
                         <Label fx:id="journalLBL" layoutX="59.0" layoutY="23.0" text="Journal" textFill="#183a4e">
                             <font>
@@ -63,7 +64,7 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="todoBTN" onMouseClicked="#switchToTabPane" prefHeight="69.0" prefWidth="170.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
+                <Pane fx:id="todoBTN" onMouseClicked="#switchToTabPane" prefHeight="69.0" prefWidth="170.0" styleClass="my-2" style="-fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
                     <children>
                         <Label fx:id="todoLBL" layoutX="56.0" layoutY="21.0" text="ToDo" textFill="#183a4e">
                             <font>
@@ -80,7 +81,7 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="calendarBTN" onMouseClicked="#switchToCalendarPane" prefHeight="72.0" prefWidth="170.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
+                <Pane fx:id="calendarBTN" onMouseClicked="#switchToCalendarPane" prefHeight="72.0" prefWidth="170.0" styleClass="my-2" style="-fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
                     <children>
                         <Label fx:id="calendarLBL" layoutX="56.0" layoutY="19.0" text="Calendar" textFill="#183a4e">
                             <font>
@@ -97,7 +98,7 @@
                         <Insets left="5.0" right="5.0" top="5.0" />
                     </VBox.margin>
                 </Pane>
-                <Pane fx:id="settingsPane" onMouseClicked="#switchToSettingsPane" prefHeight="76.0" prefWidth="170.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
+                <Pane fx:id="settingsPane" onMouseClicked="#switchToSettingsPane" prefHeight="76.0" prefWidth="170.0" styleClass="my-2" style="-fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;">
                     <children>
                         <Label fx:id="settingsLBL" layoutX="57.0" layoutY="24.0" text="Settings" textFill="#183a4e">
                             <font>
@@ -125,4 +126,7 @@
 
 
     </center>
+    <stylesheets>
+        <URL value="@settingStyle.css" />
+    </stylesheets>
 </BorderPane>

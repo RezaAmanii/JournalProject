@@ -14,9 +14,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import java.net.URL?>
 <BorderPane fx:id="mainWindowBorder" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controllerView.ToDoWindowManager">
     <top>
-        <BorderPane prefHeight="64.0" prefWidth="659.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
+        <BorderPane prefHeight="64.0" prefWidth="659.0" styleClass="my-2" style="-fx-background-radius: 10; -fx-border-color: #183a4e; -fx-border-radius: 10;" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </BorderPane.margin>
@@ -58,7 +59,7 @@
         </BorderPane>
     </top>
     <left>
-        <BorderPane prefHeight="501.0" prefWidth="360.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;" BorderPane.alignment="CENTER">
+        <BorderPane prefHeight="501.0" prefWidth="360.0" styleClass="my-2" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="10.0" left="10.0" right="10.0" />
             </BorderPane.margin>
@@ -218,7 +219,7 @@
         </BorderPane>
     </left>
     <center>
-        <BorderPane prefHeight="503.0" prefWidth="329.0" style="-fx-background-color: #9BBEC8; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;" BorderPane.alignment="CENTER">
+        <BorderPane prefHeight="503.0" prefWidth="329.0" styleClass="my-2" style="-fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;" BorderPane.alignment="CENTER">
             <BorderPane.margin>
                 <Insets bottom="10.0" right="10.0" />
             </BorderPane.margin>
@@ -363,4 +364,9 @@
             </bottom>
         </BorderPane>
     </center>
+
+    <stylesheets>
+        <URL value="@settingStyle.css" />
+    </stylesheets>
+
 </BorderPane>
