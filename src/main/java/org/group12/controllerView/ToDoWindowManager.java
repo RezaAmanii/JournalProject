@@ -51,13 +51,22 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (taskListController.getTasksLists().isEmpty()) {
-            taskListController.handlerAddToDoList("Today");
-            taskListController.handlerAddToDoList("Important");
-        }
+        checkFixedList();
         taskListController.addObserver(this);
         refreshAllListVBox();
         refreshSidePanelInfo();
+    }
+
+    private static void checkFixedList() {
+        boolean todayListExists = taskListController.getTaskListByTitle("Today") != null;
+        boolean importantListExists = taskListController.getTaskListByTitle("Important") != null;
+
+        if(!todayListExists){
+            taskListController.handlerAddToDoList("Today");
+        }
+        if(!importantListExists){
+            taskListController.handlerAddToDoList("Important");
+        }
     }
 
     // Adding Task List
