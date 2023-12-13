@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.groupingBy;
@@ -54,6 +56,9 @@ public class WeekCalendarController {
     List<Event> events;
     Map<LocalDate,List<Event>> eventsPerDay;
 
+    Consumer<String> deleteEventAction;
+    Function<String,Event> getEventFn;
+
     public WeekCalenderView getViewInstance()
     {
         if(weekCalenderView == null)
@@ -62,7 +67,7 @@ public class WeekCalendarController {
         }else
             return   this.weekCalenderView;
     }
-    public void initialize(CalendarWeek week, List<Event> weekEvents) {
+    public void initialize(CalendarWeek week, List<Event> weekEvents, Consumer<String> deleteEventAction, Function<String,Event> getEventFn) {
         weekCalenderView = getViewInstance();
         this.events = weekEvents;
         this.eventsPerDay = weekEvents
@@ -79,7 +84,7 @@ public class WeekCalendarController {
         eventsPerDay
                 .entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
-                .forEach(day -> weekCalenderView.drawDayColumn(day.getKey(), day.getValue()));
+                .forEach(day -> weekCalenderView.drawDayColumn(day.getKey(), day.getValue(), deleteEventAction, getEventFn));
     }
 
 
