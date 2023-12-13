@@ -63,6 +63,7 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        bigTaskController.addObserver(this);
         if(lastClickedBigTaskCard != null) {
             taskNameLabel.setText(bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID()).getTitle());
         } else{
@@ -72,10 +73,10 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
 
     // Add methods
     public SubTaskCard createNewSubTaskObject(ITask task){
-        SubTaskCard subTaskCard = new SubTaskCard(task.getID(), Items.getInstance());
-        subTaskCard.setSubTaskCardListener(this);
+        SubTaskCard newSubTaskCard = new SubTaskCard(task.getID(), Items.getInstance());
+        newSubTaskCard.setSubTaskCardListener(this);
 
-        return subTaskCard;
+        return newSubTaskCard;
     }
 
     public void addNewSubTask(){
@@ -88,17 +89,9 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
     }
 
 
-    void renameSubTask(ITask task, String newName){
-        taskController.renameSubTask(task.getID(), newName);
-        update();
-    }
-
-
-
     void refreshSubTasksPane(){
 
         subTasksPane.getChildren().clear();
-
 
         IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
 
@@ -110,55 +103,14 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
         }
     }
 
-
+    // Observer update method
     @Override
     public void update() {
         refreshSubTasksPane();
     }
 
 
-    // View
-
-
-
-
-    /*
-    private TextField createSubTaskTextField(ITask task){
-        TextField subTaskTF = new TextField(task.getTitle());
-        subTaskTF.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
-        subTaskTF.setEditable(false);
-        subTaskTF.setAlignment(Pos.CENTER);
-
-        GridPane.setColumnIndex(subTaskTF, 1);
-        GridPane.setValignment(subTaskTF, javafx.geometry.VPos.CENTER);
-        GridPane.setMargin(subTaskTF, new Insets(0, 0, 0, 5.0));
-        subTaskTF.setFont(new Font("Berlin Sans FB Demi Bold", 29.0));
-        subTaskTF.setOnMouseClicked(event -> {
-            handleSubTaskTestFieldClick(task, event, subTaskTF);
-        });
-        subTaskTF.setOnKeyPressed(event -> {
-            handleSubTaskTextFieldKeyPress(task, event, subTaskTF);
-        });
-        return subTaskTF;
-    }
-
-     */
-
-    private void handleSubTaskTextFieldKeyPress(ITask task, KeyEvent event, TextField subTaskTF) {
-        if (event.getCode() == KeyCode.ENTER) {
-            subTaskTF.setEditable(false);
-            renameSubTask(task, subTaskTF.getText());
-        }
-    }
-
-    private void handleSubTaskTestFieldClick(ITask task, MouseEvent event, TextField subTaskTF) {
-        selectedSubTask = task;
-        if (event.getClickCount() == 2) {
-            subTaskTF.setEditable(true);
-            subTaskTF.requestFocus();
-        }
-    }
-
+    // On card clicked method
     @Override
     public void onSubTaskCardClicked(SubTaskCard subTaskCard) {
         lastClickedSubTaskCard = subTaskCard;

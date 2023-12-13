@@ -79,29 +79,24 @@ public class TaskController implements IController, IObservable {
 
     public void handleAddSubTask(String title){
         IBigTask bigTask = bigTaskController.getBigTaskByID(ToDoWindowManager.lastClickedBigTaskCard.getID());
-        String subTaskID = bigTask.addSubTask(title);
-        bigTask.addSubTask(subTaskID);
+        bigTask.addSubTask(title);
         notifyObservers();
     }
 
     public void handleRemoveSubTask(ITask subTask){
-        IBigTask bigTask = bigTaskController.getBigTaskByID(subTask.getID());
-        bigTask.removeSubTask(subTask.getID());
+        IBigTask selectedBigTask = bigTaskController.getBigTaskByID(ToDoWindowManager.lastClickedBigTaskCard.getID());
+        selectedBigTask.removeSubTask(subTask.getID());
         notifyObservers();
 
     }
-
-
-
-
-
-
 
 
 
     public static boolean stringValidation(String stringToCheck) {
         return stringToCheck != null && !stringToCheck.trim().isEmpty();
     }
+
+
 
     // Observer methods
     @Override

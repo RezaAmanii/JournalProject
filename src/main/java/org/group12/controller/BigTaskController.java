@@ -106,12 +106,6 @@ public class BigTaskController implements IController, IObservable {
         return (IBigTask) itemsSet.getItem(bigTaskID);
     }
 
-    public ArrayList<IBigTask> fetchAllBigTasks(String taskListID){
-        ITaskList taskList = (ITaskList) itemsSet.getItem(taskListID);
-        return taskList.getBigTaskList();
-    }
-
-
 
     // Observer methods
     @Override
