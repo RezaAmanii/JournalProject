@@ -1,6 +1,9 @@
 package org.group12.controller;
 
 
+import org.group12.Observers.IObservable;
+import org.group12.Observers.IPlanITObserver;
+import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.BigTask;
@@ -11,15 +14,19 @@ import org.group12.view.TaskView;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import org.group12.model.Items;
 
 
-public class TaskController implements IController {
+public class TaskController implements IController, IObservable {
 
     // Attributes
     private ItemsSet itemSet;
     private static TaskController instance;
+    private List<IPlanITObserver> observers;
+    private final ToDoWindowManager toDoWindowManager;
 
     // Controller
     private final BigTaskController bigTaskController;
@@ -29,6 +36,8 @@ public class TaskController implements IController {
     private TaskController(){
         this.itemSet = Items.getInstance();
         this.bigTaskController = BigTaskController.getInstance();
+        this.observers = new ArrayList<>();
+        this.toDoWindowManager = new ToDoWindowManager();
     }
 
     // Singleton
@@ -68,6 +77,21 @@ public class TaskController implements IController {
     }
 
 
+    public void handleAddSubTask(String title){
+        IBigTask bigTask = bigTaskController.getBigTaskByID(ToDoWindowManager.lastClickedBigTaskCard.getID());
+        String subTaskID = bigTask.addSubTask(title);
+        bigTask.addSubTask(subTaskID);
+        notifyObservers();
+    }
+
+    public void handleRemoveSubTask(ITask subTask){
+        IBigTask bigTask = bigTaskController.getBigTaskByID(subTask.getID());
+        bigTask.removeSubTask(subTask.getID());
+        notifyObservers();
+
+    }
+
+
 
 
 
@@ -79,4 +103,25 @@ public class TaskController implements IController {
         return stringToCheck != null && !stringToCheck.trim().isEmpty();
     }
 
+    // Observer methods
+    @Override
+    public void addObserver(IPlanITObserver observer) {
+        if(!observers.contains(observer)){
+            observers.add(observer);
+        }
     }
+
+    @Override
+    public void removeObserver(IPlanITObserver observer) {
+        observers.remove(observer);
+
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(IPlanITObserver observer : observers){
+            observer.update();
+        }
+
+    }
+}

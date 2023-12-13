@@ -5,6 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import org.group12.Listeners.BigTaskCardClickListener;
+import org.group12.Listeners.SubTaskCardClickListener;
 import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
@@ -12,6 +13,7 @@ import org.group12.controller.TaskListController;
 import org.group12.model.Items;
 import org.group12.model.todo.*;
 import org.group12.view.BigTaskCard;
+import org.group12.view.SubTaskCard;
 import org.group12.view.TaskListCards;
 
 import java.io.IOException;
@@ -23,7 +25,7 @@ import static org.group12.view.TaskListView.*;
 import static org.group12.view.TaskView.openNewForm;
 
 
-public class ToDoWindowManager implements Initializable, ITaskListObserver, TaskListCardClickListener, BigTaskCardClickListener {
+public class ToDoWindowManager implements Initializable, ITaskListObserver, TaskListCardClickListener, BigTaskCardClickListener, SubTaskCardClickListener {
 
     // FXML components
     @FXML public VBox fixedListsVbox;
@@ -229,7 +231,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
                 ongoingTasksVbox.getChildren().clear();
 
                 for (IBigTask task : taskList.getBigTaskList()) {
-                    if (task.getSubTaskList().size() == task.getCompletedSubTasks().size() && !task.getSubTaskList().isEmpty()) {
+                    if(task.getSubTaskList().size() == task.getCompletedSubTasks().size() && !task.getSubTaskList().isEmpty()) {
                     } else {
                         ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
                     }
@@ -272,15 +274,19 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     public void onBigTaskCardClicked(BigTaskCard clickedCard) {
         lastClickedBigTaskCard = clickedCard;
 
-        IBigTask bigtask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
+        IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
 
         try {
-            openNewForm("/org/group12/view/subTasks.fxml", bigtask.getTitle(), false);
+            openNewForm("/org/group12/view/subTasks.fxml", bigTask.getTitle(), false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    @Override
+    public void onSubTaskCardClicked(SubTaskCard subTaskCard) {
+
+    }
 }
 
 

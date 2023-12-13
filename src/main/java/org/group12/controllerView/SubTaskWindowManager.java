@@ -13,12 +13,17 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import org.group12.Listeners.SubTaskCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskController;
+import org.group12.model.Items;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITask;
+import org.group12.model.todo.ITaskList;
 import org.group12.view.BigTaskCard;
+import org.group12.view.SubTaskCard;
+import org.group12.view.TaskListCards;
 
 
 import java.net.URL;
@@ -28,17 +33,25 @@ import java.time.ZonedDateTime;
 import java.util.*;
 
 import static org.group12.controllerView.ToDoWindowManager.*;
+import static org.group12.view.TaskListView.getInputFromUser;
 import static org.group12.view.TaskView.*;
 
 
-public class SubTaskWindowManager implements Initializable, ITaskListObserver {
+public class SubTaskWindowManager implements Initializable, ITaskListObserver, SubTaskCardClickListener {
 
     // Class attributes
     private ITask selectedSubTask = null;
 
+
     // Controller
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
     private final TaskController taskController = TaskController.getInstance();
+
+
+
+    // Reference to the last clicked subtask cards
+    private static SubTaskCard lastClickedSubTaskCard;
+
     
     // FXMl Components
     @FXML public Label taskNameLabel;
@@ -58,28 +71,22 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
     }
 
     // Add methods
+    public SubTaskCard createNewSubTaskObject(ITask task){
+        SubTaskCard subTaskCard = new SubTaskCard(task.getID(), Items.getInstance());
+        subTaskCard.setSubTaskCardListener(this);
+
+        return subTaskCard;
+    }
+
     public void addNewSubTask(){
         String title = getInputFromUser();
 
-        IBigTask bigTask = bigTaskController.getBigTaskByID(ToDoWindowManager.lastClickedBigTaskCard.getID());
-        String subTaskID = bigTask.addSubTask(title);
-        selectedSubTask = taskController.getSubTaskByID(subTaskID);
-        subTasksPane.getChildren().add(createNewSubTaskObject(selectedSubTask));
-
-        update();
-    }
-
-    
-    public void removeSubTask(){
-        ITask subTask = taskController.getSubTaskByID(selectedSubTask.getID());
-        if(subTask != null){
-
-            IBigTask bigTask = bigTaskController.getBigTaskByID(ToDoWindowManager.lastClickedBigTaskCard.getID());
-            bigTaskController.getBigTaskByID(bigTask.getID()).removeSubTask(selectedSubTask.getID());
-
+        if(lastClickedBigTaskCard != null){
+            taskController.handleAddSubTask(title);
             update();
         }
     }
+
 
     void renameSubTask(ITask task, String newName){
         taskController.renameSubTask(task.getID(), newName);
@@ -111,14 +118,11 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
 
 
     // View
-    public GridPane createNewSubTaskObject(ITask task){
-        GridPane newTaskPane = createNewTaskPane();
-        Pane checkBoxPane = createCheckBoxPane(task);
-        TextField subTaskTF = createSubTaskTextField(task);
-        newTaskPane.getChildren().addAll(subTaskTF, checkBoxPane);
-        return newTaskPane;
-    }
 
+
+
+
+    /*
     private TextField createSubTaskTextField(ITask task){
         TextField subTaskTF = new TextField(task.getTitle());
         subTaskTF.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
@@ -138,6 +142,8 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
         return subTaskTF;
     }
 
+     */
+
     private void handleSubTaskTextFieldKeyPress(ITask task, KeyEvent event, TextField subTaskTF) {
         if (event.getCode() == KeyCode.ENTER) {
             subTaskTF.setEditable(false);
@@ -151,5 +157,10 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
             subTaskTF.setEditable(true);
             subTaskTF.requestFocus();
         }
+    }
+
+    @Override
+    public void onSubTaskCardClicked(SubTaskCard subTaskCard) {
+        lastClickedSubTaskCard = subTaskCard;
     }
 }
