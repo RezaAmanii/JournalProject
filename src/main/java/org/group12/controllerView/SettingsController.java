@@ -22,7 +22,12 @@ import java.util.ResourceBundle;
 
 public class SettingsController implements Initializable {
 
+    private static String homePage = "/org/group12/view/homePage.fxml";
+    private static String toDoPage = "/org/group12/view/toDoPage.fxml";
+    private static String calender = "/org/group12/view/calendarPage.fxml";
+    private static String journal = "/org/group12/view/journalPage.fxml";
     private static String settings = "/org/group12/view/settingsPage.fxml";
+    private static String mainMenue = "/org/group12/view/mainMenu.fxml";
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,7 +45,7 @@ public class SettingsController implements Initializable {
     {
         try {
 
-            List<String> fxmlPaths =List.of(settings);
+            List<String> fxmlPaths =List.of(homePage,toDoPage,calender,journal,settings,mainMenue);
 
             for(String filePath : fxmlPaths) {
                 InputStream inputStream = getClass().getResourceAsStream(filePath);
@@ -68,10 +73,16 @@ public class SettingsController implements Initializable {
 
             }
 
+            Main.newStart();
+
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 
 
 }
+
+

@@ -9,16 +9,24 @@ import javafx.stage.Stage;
 import org.group12.Observers.IObservable;
 
 public class Main extends Application{
+
+    public  static Stage mainStage;
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/org/group12/view/mainMenu.fxml"));
+        mainStage = stage;
+        newStart();
+    }
+
+    public static void newStart() throws Exception {
+        Parent root = FXMLLoader.load(Main.class.getResource("/org/group12/view/mainMenu.fxml"));
 
         Scene scene = new Scene(root);
 
-        stage.setTitle("PlanIT");
-        stage.setScene(scene);
-        stage.show();
+        mainStage.setTitle("PlanIT");
+        mainStage.setScene(scene);
+        mainStage.show();
     }
+
 
     public static void main(String[] args) {
         launch();
