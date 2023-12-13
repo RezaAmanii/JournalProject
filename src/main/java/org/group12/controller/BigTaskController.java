@@ -95,6 +95,13 @@ public class BigTaskController implements IController, IObservable {
         notifyObservers();
     }
 
+    public void handleAddTask(String title){
+        TaskListCards selectedTaskListCard = ToDoWindowManager.lastClickedTaskListCard;
+        ITaskList taskList = taskListController.getTaskListByID(selectedTaskListCard.getID());
+        taskList.addBigTask(title);
+        notifyObservers();
+    }
+
     public IBigTask getBigTaskByID(String bigTaskID){
         return (IBigTask) itemsSet.getItem(bigTaskID);
     }

@@ -98,23 +98,18 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
     public void addNewTask() {
-        if(lastClickedTaskListCard != null && (taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Today") || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Important"))){
+        if (lastClickedTaskListCard != null && (taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Today") || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Important"))) {
             System.out.println("Choose another list to add task");
+            return;
         }
 
         String title = getInputFromUser();
-        if(lastClickedTaskListCard != null){
-            String taskID = taskListController.getTaskListByID(lastClickedTaskListCard.getID()).addBigTask(title);
-            IBigTask task = bigTaskController.getBigTaskByID(taskID);
-
-            BigTaskCard bigTaskCard = createNewTaskObject(task);
-
-            ongoingTasksVbox.getChildren().clear();
-            ongoingTasksVbox.getChildren().add(bigTaskCard);
-
+        if (lastClickedTaskListCard != null) {
+            bigTaskController.handleAddTask(title);
+            update();
         }
-        update();
     }
+
 
     // Populate OngoingTasks VBox
     public void populateOngoingTasks(ITaskList taskList){
@@ -154,7 +149,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
     private void refreshFixedLists() {
         fixedListsVbox.getChildren().clear();
-
         for (ITaskList list : taskListController.getTasksLists()) {
             if (list.getTitle().equals("Today") || list.getTitle().equals("Important")) {
                 fixedListsVbox.getChildren().add(createNewListObject(list));
@@ -211,7 +205,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         for (IBigTask todayTask : todayTasks) {
             taskListController.getTaskListByTitle("Today").addBigTask(todayTask.getTitle());
         }
-
 
     }
 
