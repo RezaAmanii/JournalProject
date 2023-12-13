@@ -56,9 +56,7 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
     // FXMl Components
     @FXML public Label taskNameLabel;
     @FXML public VBox subTasksPane;
-    @FXML public ImageView deleteImg;
     @FXML public AnchorPane addPane;
-    @FXML public CheckBox statusCheckBox;
 
 
     @Override
@@ -69,6 +67,7 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
         } else{
             taskNameLabel.setText("No task selected");
         }
+        update();
     }
 
     // Add methods

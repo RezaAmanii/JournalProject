@@ -52,19 +52,34 @@ public class TaskController implements IController, IObservable {
     // Methods
     public ITask getSubTaskByID(String taskID){
         return (ITask) itemSet.getItem(taskID);
+
     }
 
     public String getSubTaskTitle(String taskID){
-        return getSubTaskByID(taskID).getTitle();
+        ITask subTask = getSubTaskByID(taskID);
+        if(subTask != null){
+            return subTask.getTitle();
+        } else {
+            return "BigTask not found";
+        }
     }
 
     public String getSubTaskDateCreated(String taskID){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm");
-        return getSubTaskByID(taskID).getDateCreated().format(formatter);
+        ITask subTask = getSubTaskByID(taskID);
+        if(subTask != null){
+            return subTask.getDateCreated().format(formatter);
+        }
+        return "Unknown";
     }
 
     public boolean getSubTaskStatus(String taskID){
-        return getSubTaskByID(taskID).getStatus();
+        ITask subTask = getSubTaskByID(taskID);
+        if(subTask != null){
+            return subTask.getStatus();
+        } else {
+            return false;
+        }
     }
 
     // Setters

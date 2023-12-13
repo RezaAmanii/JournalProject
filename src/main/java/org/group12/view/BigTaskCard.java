@@ -68,11 +68,12 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        spacingBetweenCards();
+    }
 
-
+    private void spacingBetweenCards() {
         double paddingValue = 10.0;
         VBox.setMargin(this, new Insets(paddingValue));
-
     }
 
     @Override

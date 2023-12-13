@@ -31,10 +31,10 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
     // Class attributes
     private final String ID;
     private final ItemsSet items;
-    private SubTaskWindowManager subTaskWindowManager;
+    private final SubTaskWindowManager subTaskWindowManager;
 
     // Controller
-    private final TaskController taskController = TaskController.getInstance();
+    private final TaskController taskController;
 
     // Listener
     private SubTaskCardClickListener clickListener;
@@ -51,6 +51,7 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
         this.items = items;
         this.ID = ID;
         this.subTaskWindowManager = new SubTaskWindowManager();
+        this.taskController = TaskController.getInstance();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("subTaskCard.fxml"));
         fxmlLoader.setRoot(this);
@@ -61,10 +62,13 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
             throw new RuntimeException(exception);
         }
 
+        spacingBetweenCards();
+        update();
+    }
 
+    private void spacingBetweenCards() {
         double paddingValue = 10.0;
         VBox.setMargin(this, new Insets(paddingValue));
-
     }
 
     @Override
