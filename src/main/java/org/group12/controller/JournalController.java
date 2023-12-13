@@ -131,19 +131,23 @@ public class JournalController implements IController, IObservable {
      *
      * @param journalEntry the journal entry to be updated. Must not be null.
      * @param newContent   the new content to replace the existing content in the journal entry. Must not be null.
-     * @throws IllegalArgumentException if journalEntry or newContent is null.
+     * @throws IllegalArgumentException if the journal entry or new content is null.
      */
     public void updateJournalEntry(JournalEntry journalEntry, String newContent) {
-        if (journalEntry == null) {
-            throw new IllegalArgumentException("JournalEntry cannot be null.");
+        if (validateJournalEntry(journalEntry, newContent)) {
+            journalEntry.updateContent(newContent);
         }
-        if (newContent == null) {
-            throw new IllegalArgumentException("New content cannot be null.");
-        }
-        journalEntry.updateContent(newContent);
     }
+
+    /**
+     * Clears the content of the provided journal entry if the entry is valid.
+     * If the entry is not valid, it prints "No journalentry found!" to the console.
+     *
+     * @param journalEntry the journal entry to be cleared. Must not be null.
+     * @throws IllegalArgumentException if the journal entry is null.
+     */
     public void clearJournalEntry(JournalEntry journalEntry) {
-        if(journalEntry != null){
+        if(validateJournalEntry(journalEntry, "")){
             Alert alert = createConfirmationDialog();
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
@@ -171,6 +175,24 @@ public class JournalController implements IController, IObservable {
             journalModel.addEntry(date);
         }
         return journalModel.getEntryByDate(date);
+    }
+
+    /**
+     * Validates a journal entry and its new content.
+     *
+     * @param journalEntry the journal entry to be validated. Must not be null.
+     * @param newContent the new content to be validated. Must not be null.
+     * @return true if the journal entry and new content are valid.
+     * @throws IllegalArgumentException if the journal entry or new content is null.
+     */
+    private boolean validateJournalEntry(JournalEntry journalEntry, String newContent) {
+        if(journalEntry == null) {
+            throw new IllegalArgumentException("Journal entry cannot be null.");
+        }
+        if(newContent == null) {
+            throw new IllegalArgumentException("New content cannot be null.");
+        }
+        return true;
     }
 
     /**

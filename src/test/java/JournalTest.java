@@ -40,7 +40,7 @@ class JournalTest {
 
     @Test
     void testRemoveEntry() {
-        JournalEntry addedEntry = journal.getEntries().get(0);
+        IJournalEntry addedEntry = journal.getEntries().get(0);
         String ID = addedEntry.getID();
         journal.removeEntry(ID);
         assertEquals(0, journal.getEntries().size(), "Journal should have no entries after removing the added entry.");
