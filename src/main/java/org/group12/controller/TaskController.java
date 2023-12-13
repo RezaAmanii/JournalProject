@@ -10,18 +10,25 @@ import org.group12.model.todo.TodoCollection;
 import org.group12.view.TaskView;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import org.group12.model.Items;
 
 
 public class TaskController implements IController {
-    private ItemsSet itemsSet;
+
+    // Attributes
+    private ItemsSet itemSet;
     private static TaskController instance;
+
+    // Controller
+    private final BigTaskController bigTaskController;
 
 
     // Constructor
     private TaskController(){
-        this.itemsSet = Items.getInstance();
+        this.itemSet = Items.getInstance();
+        this.bigTaskController = BigTaskController.getInstance();
     }
 
     // Singleton
@@ -32,14 +39,37 @@ public class TaskController implements IController {
         return instance;
     }
 
+
     // Methods
     public ITask getSubTaskByID(String taskID){
-        return (ITask) itemsSet.getItem(taskID);
+        return (ITask) itemSet.getItem(taskID);
     }
 
-    public IBigTask getTaskByID(String taskID){
-        return (IBigTask) itemsSet.getItem(taskID);
+    public String getSubTaskTitle(String taskID){
+        return getSubTaskByID(taskID).getTitle();
     }
+
+    public String getSubTaskDateCreated(String taskID){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm");
+        return getSubTaskByID(taskID).getDateCreated().format(formatter);
+    }
+
+    public boolean getSubTaskStatus(String taskID){
+        return getSubTaskByID(taskID).getStatus();
+    }
+
+    // Setters
+    public void setSubTaskStatus(String taskID, boolean status){
+        getSubTaskByID(taskID).setCompleted(status);
+    }
+
+    public void renameSubTask(String taskID, String newTitle){
+        getSubTaskByID(taskID).setTitle(newTitle);
+    }
+
+
+
+
 
 
 

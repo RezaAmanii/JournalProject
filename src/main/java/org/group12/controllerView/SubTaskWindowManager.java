@@ -34,7 +34,7 @@ import static org.group12.view.TaskView.*;
 public class SubTaskWindowManager implements Initializable, ITaskListObserver {
 
     // Class attributes
-    static public ITask selectedSubTask = null;
+    private ITask selectedSubTask = null;
 
     // Controller
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
@@ -48,11 +48,13 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
     @FXML public CheckBox statusCheckBox;
 
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        taskNameLabel.setText(bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID()).getTitle());
-
+        if(lastClickedBigTaskCard != null) {
+            taskNameLabel.setText(bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID()).getTitle());
+        } else{
+            taskNameLabel.setText("No task selected");
+        }
     }
 
     // Add methods
@@ -61,7 +63,6 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
         BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
         IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
         String subTaskID = bigTask.addSubTask(title);
-
         selectedSubTask = taskController.getSubTaskByID(subTaskID);
         subTasksPane.getChildren().add(createNewSubTaskObject(selectedSubTask));
         refreshSubTasksPane();
@@ -79,7 +80,7 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
     }
 
     void renameSubTask(ITask task, String newName){
-        taskController.getSubTaskByID(task.getID()).setTitle(newName);
+        taskController.renameSubTask(task.getID(), newName);
     }
 
 
@@ -140,7 +141,7 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
         }
     }
 
-    private static void handleSubTaskTestFieldClick(ITask task, MouseEvent event, TextField subTaskTF) {
+    private void handleSubTaskTestFieldClick(ITask task, MouseEvent event, TextField subTaskTF) {
         selectedSubTask = task;
         if (event.getClickCount() == 2) {
             subTaskTF.setEditable(true);
