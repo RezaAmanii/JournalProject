@@ -32,7 +32,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     @FXML public VBox appendableListVbox;
     @FXML public Label activeListNameLBL;
     @FXML public VBox ongoingTasksVbox;
-    @FXML public VBox completedTasksVbox;
     @FXML public GridPane addNewListBtn;
     @FXML public BorderPane mainWindowBorder;
 
@@ -128,12 +127,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
                 break;
             }
         }
-    }
-
-    public void moveToCompletedVBox(String bigTaskID){
-        BigTaskCard bigTaskCard = new BigTaskCard(bigTaskID, Items.getInstance());
-        this.completedTasksVbox.getChildren().add(bigTaskCard);
-
     }
 
 
@@ -234,11 +227,9 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
                 activeListNameLBL.setText(taskList.getTitle());
 
                 ongoingTasksVbox.getChildren().clear();
-                completedTasksVbox.getChildren().clear();
 
                 for (IBigTask task : taskList.getBigTaskList()) {
                     if (task.getSubTaskList().size() == task.getCompletedSubTasks().size() && !task.getSubTaskList().isEmpty()) {
-                        completedTasksVbox.getChildren().add(createNewTaskObject(task));
                     } else {
                         ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
                     }
