@@ -72,6 +72,9 @@ public class Calendar implements IObservable, ICalendar, Serializable {
      *              if the event is recurring, all events with the same parent ID are also removed
      */
     public void removeEvent(Event event){
+        if(event == null || !eventList.contains(event)) {
+            throw new IllegalArgumentException("Event is null or not found in the event list.");
+        }
         eventList.remove(event);
         isEmpty = eventList.isEmpty();
         notifyObservers();
@@ -80,12 +83,17 @@ public class Calendar implements IObservable, ICalendar, Serializable {
     }
 
     public void removeEvent(String eventId){
-        eventList.removeIf(ev -> eventId.equals(ev.getID()));
+        Event event = getEvent(eventId);
+        if(event == null) {
+            throw new IllegalArgumentException("Event is null or not found in the event list.");
+        }
+        eventList.remove(event);
         isEmpty = eventList.isEmpty();
         notifyObservers();
         items.removeItem(eventId);
 //        notifyObservers();
     }
+
 
     /**
      *

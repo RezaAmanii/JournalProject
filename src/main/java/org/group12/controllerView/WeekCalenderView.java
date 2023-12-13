@@ -130,7 +130,7 @@ public class WeekCalenderView implements Initializable {
 
     public void addEventToCalendar(CalendarEvent event, int calendarColIndex, Consumer<String> deleteEventAction, Function<String, Event> getEventFn) {
         var pane = new BorderPane();
-        pane.setTop(new Label(event.getTitle()+" : "+ event.getDiscription()));
+        pane.setTop(new Label(event.getTitle()+" : "+ event.getDescription()));
         pane.setStyle("-fx-background-color: orange;");
         pane.setId(event.getId());
         pane.setOnMouseClicked(mouseEvent -> {
