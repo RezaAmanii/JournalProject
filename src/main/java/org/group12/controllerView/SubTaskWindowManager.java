@@ -60,27 +60,30 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
     // Add methods
     public void addNewSubTask(){
         String title = getInputFromUser();
-        BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
-        IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
+
+        IBigTask bigTask = bigTaskController.getBigTaskByID(ToDoWindowManager.lastClickedBigTaskCard.getID());
         String subTaskID = bigTask.addSubTask(title);
         selectedSubTask = taskController.getSubTaskByID(subTaskID);
         subTasksPane.getChildren().add(createNewSubTaskObject(selectedSubTask));
-        refreshSubTasksPane();
+
+        update();
     }
 
     
     public void removeSubTask(){
         ITask subTask = taskController.getSubTaskByID(selectedSubTask.getID());
         if(subTask != null){
-            BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
-            IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
+
+            IBigTask bigTask = bigTaskController.getBigTaskByID(ToDoWindowManager.lastClickedBigTaskCard.getID());
             bigTaskController.getBigTaskByID(bigTask.getID()).removeSubTask(selectedSubTask.getID());
-            refreshSubTasksPane();
+
+            update();
         }
     }
 
     void renameSubTask(ITask task, String newName){
         taskController.renameSubTask(task.getID(), newName);
+        update();
     }
 
 
@@ -88,7 +91,8 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
     void refreshSubTasksPane(){
 
         subTasksPane.getChildren().clear();
-        BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
+
+
         IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
 
         for (ITask task: bigTask.getUncompletedSubTasks()){
