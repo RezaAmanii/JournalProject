@@ -15,8 +15,9 @@ import javafx.scene.text.Font;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskController;
+import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITask;
-
+import org.group12.view.BigTaskCard;
 
 
 import java.net.URL;
@@ -95,7 +96,9 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
 
     public void addNewSubTask(){
         String title = getInputFromUser();
-        String subTaskID = selectedTask.addSubTask(title);
+        BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
+        IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
+        String subTaskID = bigTask.addSubTask(title);
 
         selectedSubTask = taskController.getSubTaskByID(subTaskID);
         subTasksPane.getChildren().add(createNewSubTaskObject(selectedSubTask));
@@ -107,7 +110,9 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
         ITask subTask = taskController.getSubTaskByID(selectedSubTask.getID());
         if(subTask != null){
             subTask.setTitle("Removed");
-            bigTaskController.getBigTaskByID(selectedTask.getID()).removeSubTask(selectedSubTask.getID());
+            BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
+            IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
+            bigTaskController.getBigTaskByID(bigTask.getID()).removeSubTask(selectedSubTask.getID());
             refreshSubTasksPane();
         }
     }
@@ -121,11 +126,13 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
     void refreshSubTasksPane(){
 
         subTasksPane.getChildren().clear();
+        BigTaskCard lastClickedBigTaskCard = ToDoWindowManager.lastClickedBigTaskCard;
+        IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
 
-        for (ITask task: selectedTask.getUncompletedSubTasks()){
+        for (ITask task: bigTask.getUncompletedSubTasks()){
             subTasksPane.getChildren().add(createNewSubTaskObject(task));
         }
-        for (ITask task: selectedTask.getCompletedSubTasks()){
+        for (ITask task: bigTask.getCompletedSubTasks()){
             subTasksPane.getChildren().add(createNewSubTaskObject(task));
         }
     }

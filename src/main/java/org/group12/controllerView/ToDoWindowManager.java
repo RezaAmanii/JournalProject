@@ -42,8 +42,6 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
     // A reference to the selected taskList card and selected bigTask card
-    public static IBigTask selectedTask = null;
-
     public static TaskListCards lastClickedTaskListCard;
     public static BigTaskCard lastClickedBigTaskCard;
 
