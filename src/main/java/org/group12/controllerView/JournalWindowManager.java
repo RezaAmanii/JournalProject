@@ -9,6 +9,7 @@ import org.group12.Listeners.JournalClickListener;
 import org.group12.Observers.IJournalObserver;
 import org.group12.controller.JournalController;
 import org.group12.model.Items;
+import org.group12.model.journal.IEntry;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
 import org.group12.view.JournalEntryCard;
@@ -33,7 +34,7 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
 
     public static JournalEntryCard journalEntryCard = null;
     public static Journal journal = null;
-    public static JournalEntry entry = null;
+    public static IEntry entry = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,7 +52,7 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     @FXML
     public void getPrevDayClick()
     {
-        JournalEntry nextEntry = journalController.getEntryByDate(entryDate.getValue().minusDays(1));
+        IEntry nextEntry = journalController.getEntryByDate(entryDate.getValue().minusDays(1));
         populateJournalEntry(nextEntry);
         this.entryDate.setValue(entryDate.getValue().minusDays(1));
         entry = nextEntry;
@@ -62,7 +63,7 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     @FXML
     public void getNexDayClick()
     {
-        JournalEntry nextEntry = journalController.getEntryByDate(entryDate.getValue().plusDays(1));
+        IEntry nextEntry = journalController.getEntryByDate(entryDate.getValue().plusDays(1));
         populateJournalEntry(nextEntry);
         this.entryDate.setValue(entryDate.getValue().plusDays(1));
         entry = nextEntry;
@@ -73,7 +74,7 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     public void update() {
     }
 
-    public void populateJournalEntry(JournalEntry journalEntry) {
+    public void populateJournalEntry(IEntry journalEntry) {
         if(journalEntry != null) {
             // Create a new JournalEntryCard
             JournalEntryCard journalEntryCard = createNewEntryObject(journalEntry);
@@ -89,7 +90,7 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
     }
 
 
-    public JournalEntryCard createNewEntryObject(JournalEntry entry) {
+    public JournalEntryCard createNewEntryObject(IEntry entry) {
         JournalEntryCard newEntryCard = new JournalEntryCard(entry.getID(), Items.getInstance());
         //newEntryCard.setClickListener(this);
         return newEntryCard;
