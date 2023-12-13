@@ -25,7 +25,6 @@ public class CalendarController implements IController {
     public CalendarController(){
         this.calenderModel = container.getCalender();
         this.itemMap = Items.getInstance();
-
     }
 
     /**
