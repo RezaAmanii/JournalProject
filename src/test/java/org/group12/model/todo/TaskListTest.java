@@ -5,7 +5,7 @@ import org.group12.model.ItemsSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,24 +38,24 @@ class TaskListTest {
     @Test
     void addBigTask_addsTaskToMap() {
         taskList.addBigTask("Big Task");
-        //HashMap<String, IBigTask> bigTaskMap = taskList.getBigTaskMap();
-        //assertFalse(bigTaskMap.isEmpty());
+        ArrayList<IBigTask> bigTaskMap = taskList.getBigTaskList();
+        assertFalse(bigTaskMap.isEmpty());
     }
 
     @Test
     void removeBigTask_removesTaskFromMap() {
         taskList.addBigTask("Big Task");
-        //HashMap<String, IBigTask> bigTaskMap = taskList.getBigTaskMap();
-        //String taskId = bigTaskMap.keySet().iterator().next();
-        //taskList.removeBigTask(taskId);
-        //assertTrue(bigTaskMap.isEmpty());
+        ArrayList<IBigTask> bigTaskMap = taskList.getBigTaskList();
+        IBigTask taskId = bigTaskMap.get(0);
+        taskList.removeBigTask(taskId);
+        assertTrue(bigTaskMap.isEmpty());
     }
 
     @Test
     void removeBigTask_doesNotRemoveNonexistentTask() {
         taskList.addBigTask("Big Task");
-        //taskList.removeBigTask("Nonexistent Task");
-        //HashMap<String, IBigTask> bigTaskMap = taskList.getBigTaskMap();
-        //assertEquals(1, bigTaskMap.size());
+        taskList.removeBigTask(new BigTask("Nonexistent Task", "2", itemsSet));
+        ArrayList<IBigTask> bigTaskMap = taskList.getBigTaskList();
+        assertEquals(1, bigTaskMap.size());
     }
 }

@@ -4,6 +4,7 @@ import org.group12.model.IDFactory.IDFactory;
 import org.group12.model.IDFactory.IIDFactory;
 import org.group12.model.IDFactory.TodoCollectionIDFactory;
 import org.group12.model.ItemsSet;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.todo.ITaskList;
 import org.group12.model.todo.TaskList;
 import org.group12.model.todo.TodoCollection;
@@ -17,14 +18,23 @@ import java.io.Serializable;
 public class TodoCollectionFactory implements Serializable {
     private IIDFactory idFactory;
     private final ItemsSet items;
+    private static TodoCollectionFactory instance;
+
 
     /**
      * Constructs a new TodoCollection.
      * Initializes the TodoCollectionIDFactory used to generate IDs.
      */
-    public TodoCollectionFactory(ItemsSet items){
+    private TodoCollectionFactory(){
         this.idFactory = IDFactory.getInstance(TodoCollectionIDFactory.class);
-        this.items = items;
+        this.items = SaveLoad.getInstance().getItemsInstance();
+    }
+
+    public static TodoCollectionFactory getInstance(){
+        if(instance == null){
+            instance = new TodoCollectionFactory();
+        }
+        return instance;
     }
 
     /**

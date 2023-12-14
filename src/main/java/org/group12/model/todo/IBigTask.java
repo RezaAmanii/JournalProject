@@ -19,7 +19,7 @@ public interface IBigTask extends ITask, IDescription {
 
     String addSubTask(String title);
 
-    void removeSubTask(String subTaskID);
+    void removeSubTask(ITask subTask);
 
     ArrayList<ITask> getSubTaskList();
     ArrayList<ITask> getCompletedSubTasks();

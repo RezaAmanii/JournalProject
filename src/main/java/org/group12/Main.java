@@ -5,9 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
-import org.group12.Observers.IObservable;
-import org.group12.dataHandler.SaveLoad;
+import org.group12.model.dataHandler.SaveLoad;
 
 public class Main extends Application{
     @Override
@@ -25,7 +23,7 @@ public class Main extends Application{
         launch();
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
-                SaveLoad.getInstance().save();
+                //SaveLoad.getInstance().save();
             }
         }));
 

@@ -2,10 +2,8 @@ package org.group12.controller;
 
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
-import org.group12.dataHandler.SaveLoad;
-import org.group12.model.Container;
-import org.group12.model.Items;
 import org.group12.model.ItemsSet;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.todo.*;
 
 import java.time.format.DateTimeFormatter;

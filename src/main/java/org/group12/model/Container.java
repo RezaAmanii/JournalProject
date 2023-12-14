@@ -1,6 +1,7 @@
 package org.group12.model;
 
 import org.group12.model.Calendar.Calendar;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntryFactory;
 import org.group12.model.journal.JournalFactory;
@@ -21,11 +22,11 @@ public class Container implements Serializable {
 
     private final ItemsSet items;
 
-    private Container(ItemsSet items) {
+    private Container() {
 
-        this.items = items;
+        this.items = SaveLoad.getInstance().getItemsInstance();
 
-        this.todoCollectionFactory = new TodoCollectionFactory(items);
+        this.todoCollectionFactory = TodoCollectionFactory.getInstance();
         this.todoCollection = todoCollectionFactory.createTodoCollection("MainTD");
         items.addItem(todoCollection);
 
@@ -40,7 +41,7 @@ public class Container implements Serializable {
 
     public static Container getInstance(){
         if(instance == null){
-            instance = new Container(Items.getInstance());
+            instance = new Container();
         }
         return instance;
     }

@@ -4,6 +4,7 @@ import org.group12.model.IDFactory.BigTaskIDFactory;
 import org.group12.model.IDFactory.IDFactory;
 import org.group12.model.IDFactory.IIDFactory;
 import org.group12.model.ItemsSet;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.todo.BigTask;
 import org.group12.model.todo.IBigTask;
 
@@ -16,15 +17,22 @@ import java.io.Serializable;
 public class BigTaskFactory implements Serializable {
     private final IIDFactory idFactory;
     private final ItemsSet items;
-
+    private static BigTaskFactory instance;
 
     /**
      * Constructs a new BigTaskFactory.
      * Initializes the BigTaskIDFactory used to generate IDs.
      */
-    public BigTaskFactory(ItemsSet items ) {
+    private BigTaskFactory() {
         this.idFactory = IDFactory.getInstance(BigTaskIDFactory.class);
-        this.items = items;
+        this.items = SaveLoad.getInstance().getItemsInstance();
+    }
+
+    public static BigTaskFactory getInstance() {
+        if (instance == null) {
+            instance = new BigTaskFactory();
+        }
+        return instance;
     }
 
     /**
