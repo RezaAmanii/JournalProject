@@ -5,7 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import org.group12.Listeners.SubTaskCardClickListener;
-import org.group12.Observers.ITaskListObserver;
+import org.group12.Observers.ITodoObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.SubTaskController;
 import org.group12.model.Items;
@@ -22,7 +22,7 @@ import static org.group12.controllerView.ToDoWindowManager.*;
 /**
  * Manages the display and actions related to subtasks within a task.
  */
-public class SubTaskWindowManager implements Initializable, ITaskListObserver, SubTaskCardClickListener {
+public class SubTaskWindowManager implements Initializable, ITodoObserver, SubTaskCardClickListener {
 
 
     // Corresponding Controllers

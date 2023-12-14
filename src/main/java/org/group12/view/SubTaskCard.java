@@ -6,26 +6,24 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.group12.Listeners.SubTaskCardClickListener;
-import org.group12.Observers.ITaskListObserver;
+import org.group12.Observers.ITodoObserver;
 import org.group12.controller.SubTaskController;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.ITask;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
  * Represents a SubTaskCard view element in the application.
  */
-public class SubTaskCard extends AnchorPane implements Initializable, ITaskListObserver {
+public class SubTaskCard extends AnchorPane implements Initializable, ITodoObserver {
 
     // Class attributes
     private final String ID;

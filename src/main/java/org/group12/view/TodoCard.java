@@ -10,7 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.group12.Listeners.TaskListCardClickListener;
-import org.group12.Observers.ITaskListObserver;
+import org.group12.Observers.ITodoObserver;
 import org.group12.controller.TaskListController;
 import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.INameable;
@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Represents a visual representation of task lists as cards in the user interface.
  * Extends AnchorPane and implements Initializable, ITaskListObserver.
  */
-public class TaskListCard extends AnchorPane implements Initializable, ITaskListObserver {
+public class TodoCard extends AnchorPane implements Initializable, ITodoObserver {
 
     // Class attributes
     private final String ID;
@@ -49,7 +49,7 @@ public class TaskListCard extends AnchorPane implements Initializable, ITaskList
 
 
     // Constructor
-    public TaskListCard(String ID, ItemsSet items){
+    public TodoCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
         this.taskListController = TaskListController.getInstance();

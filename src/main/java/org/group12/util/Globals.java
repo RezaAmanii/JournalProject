@@ -1,4 +1,4 @@
-package org.group12.model.toDoSubTask;
+package org.group12.util;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

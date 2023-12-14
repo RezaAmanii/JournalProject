@@ -5,14 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.group12.Listeners.BigTaskCardClickListener;
-import org.group12.Observers.ITaskListObserver;
+import org.group12.Observers.ITodoObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.INameable;
@@ -23,7 +22,6 @@ import org.group12.model.todo.ITask;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -31,7 +29,7 @@ import java.util.ResourceBundle;
  * Represents a graphical card displaying detailed information about a significant task (IBigTask).
  * Allows user interactions such as renaming tasks, toggling checkboxes, and marking tasks as favorites or deleting them.
  */
-public class BigTaskCard extends AnchorPane implements Initializable, ITaskListObserver {
+public class BigTaskCard extends AnchorPane implements Initializable, ITodoObserver {
 
     // Class attributes
     private final String ID;
