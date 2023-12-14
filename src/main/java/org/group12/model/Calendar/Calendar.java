@@ -177,7 +177,7 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         }
     }
 
-    public Event getEvent(String eventId) {
+    public IEvent getEvent(String eventId) {
         return this.eventList.stream().filter(ev -> Objects.equals(ev.getID(), eventId)).findFirst().orElse(null);
     }
 }

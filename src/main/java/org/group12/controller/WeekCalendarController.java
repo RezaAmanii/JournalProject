@@ -68,7 +68,7 @@ public class WeekCalendarController {
         }else
             return   this.weekCalenderView;
     }
-    public void initialize(CalendarWeek week, List<IEvent> weekEvents, Consumer<String> deleteEventAction, Function<String,Event> getEventFn) {
+    public void initialize(CalendarWeek week, List<IEvent> weekEvents, Consumer<String> deleteEventAction, Function<String, IEvent> getEventFn) {
         weekCalenderView = getViewInstance();
         this.events = weekEvents;
         this.eventsPerDay = weekEvents

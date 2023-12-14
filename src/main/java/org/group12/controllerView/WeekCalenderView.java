@@ -7,8 +7,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import org.group12.model.Calendar.CalendarEvent;
-import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.Calendar.interfaces.IEvent;
+import org.group12.util.Globals;
 
 import java.io.IOException;
 import java.net.URL;
@@ -128,7 +128,7 @@ public class WeekCalenderView implements Initializable {
     }
 
 
-    public void addEventToCalendar(CalendarEvent event, int calendarColIndex) {
+    public void addEventToCalendar(CalendarEvent event, int calendarColIndex, Consumer<String> deleteEventAction, Function<String, IEvent> getEventFn) {
         var pane = new BorderPane();
         pane.setTop(new Label(event.getTitle()+" : "+ event.getDiscription()));
         pane.setStyle("-fx-background-color: orange;");

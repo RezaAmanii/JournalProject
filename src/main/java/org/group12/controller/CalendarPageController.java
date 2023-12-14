@@ -91,7 +91,7 @@ public class CalendarPageController {
         drawCalendar(calendarWeek.getValue());
     }
 
-    private Event getEvent(String eventId) {
+    private IEvent getEvent(String eventId) {
         return calendarData.getEvent(eventId);
     }
 

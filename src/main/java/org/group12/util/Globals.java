@@ -3,8 +3,11 @@ package org.group12.util;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import java.io.IOException;
+
+import static javafx.scene.control.ButtonType.OK;
 
 
 public class Globals {
@@ -88,6 +91,15 @@ public class Globals {
         public P getRoot() {
             return root;
         }
+    }
+
+    public static void showConfirmationAlert(String content, Runnable onConfirm){
+        Alert alert=new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmed");
+        alert.setContentText(content);
+        alert.showAndWait()
+                .filter(OK::equals)
+                .ifPresent(ok -> onConfirm.run());
     }
 
 }
