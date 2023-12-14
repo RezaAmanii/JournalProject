@@ -8,6 +8,7 @@ import javafx.scene.layout.BorderPane;
 import org.group12.Listeners.JournalClickListener;
 import org.group12.Observers.IJournalObserver;
 import org.group12.controller.JournalController;
+import org.group12.dataHandler.SaveLoad;
 import org.group12.model.Items;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
@@ -90,7 +91,7 @@ public class JournalWindowManager implements Initializable, IJournalObserver, Jo
 
 
     public JournalEntryCard createNewEntryObject(JournalEntry entry) {
-        JournalEntryCard newEntryCard = new JournalEntryCard(entry.getID(), Items.getInstance());
+        JournalEntryCard newEntryCard = new JournalEntryCard(entry.getID(), SaveLoad.getInstance().getItemsInstance());
         //newEntryCard.setClickListener(this);
         return newEntryCard;
     }

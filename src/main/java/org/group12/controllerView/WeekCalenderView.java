@@ -1,12 +1,11 @@
 package org.group12.controllerView;
 
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import org.group12.model.Calendar.CalendarEvent;
-import org.group12.model.Calendar.Event;
+import org.group12.model.Calendar.interfaces.IEvent;
 
 import java.net.URL;
 import java.time.DayOfWeek;
@@ -103,7 +102,7 @@ public class WeekCalenderView implements Initializable {
         }
     }
 
-    public void drawDayColumn(LocalDate day, List<Event> events) {
+    public void drawDayColumn(LocalDate day, List<IEvent> events) {
         var col = getCalendarGridCol(day);
         fillWithLightGrey(col);
         toCalendarEvents(events).forEach(ev -> addEventToCalendar(ev, col));
@@ -130,7 +129,7 @@ public class WeekCalenderView implements Initializable {
         calendarGrid.add(pane, calendarColIndex, event.getRowStart(), 1, event.getRowEnd() - event.getRowStart() + 1);
     }
 
-    public static List<CalendarEvent> toCalendarEvents(List<Event> events) {
+    public static List<CalendarEvent> toCalendarEvents(List<IEvent> events) {
         return events.stream()
                 .map(x -> new CalendarEvent(x,FIRST_HR_ROW,FIRST_HR))
                 .sorted(comparing(CalendarEvent::getRowStart))

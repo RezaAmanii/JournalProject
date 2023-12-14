@@ -1,16 +1,15 @@
 package org.group12.controller;
 
+import org.group12.dataHandler.SaveLoad;
 import org.group12.model.Calendar.Calendar;
 import org.group12.model.Calendar.Event;
+import org.group12.model.Calendar.interfaces.IEvent;
 import org.group12.model.Container;
-import org.group12.model.INameable;
 import org.group12.model.Items;
 import org.group12.view.CalendarView;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import org.group12.model.Items;
 
 public class CalendarController implements IController {
 
@@ -19,12 +18,13 @@ public class CalendarController implements IController {
 
     private CalendarView calenderView;
 //    private HashMap<String, INameable> itemMap;
-    private Items itemMap = Items.getInstance();
+    private Items itemMap;
 
 
     public CalendarController(){
+        this.container = SaveLoad.getInstance().getContainerInstance();
+        this.itemMap = SaveLoad.getInstance().getItemsInstance();
         this.calenderModel = container.getCalender();
-        this.itemMap = Items.getInstance();
 
     }
 
@@ -138,7 +138,7 @@ public class CalendarController implements IController {
      *
      * @return A list of upcoming events.
      */
-    public List<Event> getUpcomingEvents(){
+    public List<IEvent> getUpcomingEvents(){
         return calenderModel.getUpcomingEvents();
     }
 
@@ -148,7 +148,7 @@ public class CalendarController implements IController {
      *
      * @return A list of past events.
      */
-    public List<Event> getPastEvents(){
+    public List<IEvent> getPastEvents(){
         return calenderModel.getPastEvents();
     }
 
@@ -157,7 +157,7 @@ public class CalendarController implements IController {
      *
      * @return A list of all events.
      */
-    public List<Event> getAllEvents(){
+    public List<IEvent> getAllEvents(){
         return calenderModel.getEvents();
     }
 

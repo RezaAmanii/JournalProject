@@ -8,6 +8,7 @@ import org.group12.Listeners.TaskListCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskListController;
+import org.group12.dataHandler.SaveLoad;
 import org.group12.model.Items;
 import org.group12.model.todo.*;
 import org.group12.view.BigTaskCard;
@@ -62,7 +63,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
     // Adding Task List
     public TaskListCards createNewListObject(ITaskList list){
-        TaskListCards newTaskListCard = new TaskListCards(list.getID(), Items.getInstance());
+        TaskListCards newTaskListCard = new TaskListCards(list.getID(), SaveLoad.getInstance().getItemsInstance());
         newTaskListCard.setClickListener(this);
 
         return newTaskListCard;

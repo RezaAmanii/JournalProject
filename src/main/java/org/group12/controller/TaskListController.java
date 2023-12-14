@@ -2,6 +2,7 @@ package org.group12.controller;
 
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
+import org.group12.dataHandler.SaveLoad;
 import org.group12.model.Container;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
@@ -23,8 +24,8 @@ public class TaskListController implements IController, IObservable {
 
     // Constructor
     private TaskListController() {
-        this.items = Items.getInstance();
-        this.todoCollection = Container.getInstance().getTodoCollection();
+        this.items = SaveLoad.getInstance().getItemsInstance();
+        this.todoCollection = SaveLoad.getInstance().getContainerInstance().getTodoCollection();
 
     }
 

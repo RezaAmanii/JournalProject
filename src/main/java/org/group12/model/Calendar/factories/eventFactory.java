@@ -2,6 +2,7 @@ package org.group12.model.Calendar.factories;
 
 import javafx.util.Pair;
 import org.group12.model.Calendar.Event;
+import org.group12.model.Calendar.interfaces.IEvent;
 import org.group12.model.IDFactory.EventIdFactory;
 import org.group12.model.IDFactory.IDFactory;
 import org.group12.model.IDFactory.IIDFactory;
@@ -14,9 +15,16 @@ import java.util.List;
 public class eventFactory implements Serializable {
     //TODO implement factory in the same way as todo and journal
     private IIDFactory idFactory;
+    private static eventFactory instance;
 
     public eventFactory() {
         this.idFactory = IDFactory.getInstance(EventIdFactory.class);
+    }
+    public static synchronized eventFactory getInstance() {
+        if (instance == null) {
+            instance = new eventFactory();
+        }
+        return instance;
     }
     /**
      * Creates a new Event with a generated ID, title set to the current date,
@@ -37,7 +45,7 @@ public class eventFactory implements Serializable {
         return new Event(ID, title, description, timeFrame, createdTimestamp, tags, false, null);
     }
     public Event createEvent(String title, String description,
-                             Pair<LocalDateTime, LocalDateTime> timeFrame, Event parentEvent){
+                             Pair<LocalDateTime, LocalDateTime> timeFrame, IEvent parentEvent){
         List<String> tags = new ArrayList<>();
         String ID = idFactory.generateID();
         LocalDateTime createdTimestamp = LocalDateTime.now();

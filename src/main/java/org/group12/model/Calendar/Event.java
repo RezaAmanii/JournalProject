@@ -3,6 +3,7 @@ package org.group12.model.Calendar;
 import javafx.util.Pair;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
+import org.group12.model.Calendar.interfaces.ICalendar;
 import org.group12.model.Calendar.interfaces.IEvent;
 
 import java.io.Serializable;
@@ -18,11 +19,11 @@ public class Event implements IEvent, IObservable, Serializable {
     private Pair<LocalDateTime, LocalDateTime> timeFrame;
     private List<String> tags;
     private boolean recurrence;
-    private Event parentEvent;
+    private IEvent parentEvent;
     private List<IPlanITObserver> observers;
 
     public Event(String ID, String title, String description,
-                 Pair<LocalDateTime, LocalDateTime> timeFrame, LocalDateTime dateCreated, List<String> tags, boolean recurrence, Event parentEvent){
+                 Pair<LocalDateTime, LocalDateTime> timeFrame, LocalDateTime dateCreated, List<String> tags, boolean recurrence, IEvent parentEvent){
 
         this.dateCreated = dateCreated;
         this.title = title;
@@ -124,8 +125,11 @@ public class Event implements IEvent, IObservable, Serializable {
     public LocalDateTime getDateOfEvent() {
         return timeFrame.getKey();
     }
+    public LocalDateTime getEndDateOfEvent() {
+        return timeFrame.getValue();
+    }
 
-    public Event getParentEvent() {
+    public IEvent getParentEvent() {
         return parentEvent;
     }
     public List<String> getTags() {
