@@ -1,8 +1,6 @@
 package org.group12.model.journal;
 
-import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
-import org.group12.model.INameable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,10 +8,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JournalEntry implements INameable, IObservable, Serializable {
+public class JournalEntry implements Serializable, IEntry {
     private String ID;
     private String title;
-    private final LocalDate entryDate;
     private final LocalDate createdTimestamp;
     private LocalDateTime modifiedTimestamp;
     private String content;
@@ -25,13 +22,11 @@ public class JournalEntry implements INameable, IObservable, Serializable {
      * @param ID               unique identifier for the journal entry. Must not be null or empty.
      * @param title            title of the journal entry. Must not be null or empty.
      * @param content          content of the journal entry. Must not be null.
-     * @param entryDate        date of the journal entry. Must not be null.
      * @param createdTimestamp timestamp when the journal entry was created. Must not be null.
      */
-    public JournalEntry(String ID, String title, String content, LocalDate entryDate, LocalDate createdTimestamp) {
+    public JournalEntry(String ID, String title, String content, LocalDate createdTimestamp) {
         this.ID = ID;
         this.title = title;
-        this.entryDate = entryDate;
         this.createdTimestamp = createdTimestamp;
         this.modifiedTimestamp = createdTimestamp.atStartOfDay();
         this.content = content;

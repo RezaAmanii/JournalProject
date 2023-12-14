@@ -6,6 +6,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import org.group12.controller.JournalController;
 import org.group12.model.Calendar.Event;
+import org.group12.model.ItemsSet;
+import org.group12.model.journal.IEntry;
 import org.group12.model.journal.JournalEntry;
 
 import java.util.List;
@@ -29,7 +31,7 @@ public class CardUpdater {
 //        // ... existing update code from TaskCard ...
 //    }
 
-    public void updateJournalEntryCard(JournalEntry entry, JournalController controller, Label titleLabel, TextArea contentArea, Label dateModified, Label NrOfWords) {
+    public void updateJournalEntryCard(IEntry entry, JournalController controller, Label titleLabel, TextArea contentArea, Label dateModified, Label NrOfWords) {
         // ... existing update code from JournalEntryCard ...
         if (entry != null) {
             // Set title
