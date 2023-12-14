@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -20,6 +19,8 @@ import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
 import javafx.geometry.Insets;
+import org.group12.model.todo.ITask;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -43,7 +44,6 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     // FXML components
     @FXML public Label titleLabel;
     @FXML public Label dueDateLabel;
-    @FXML public ProgressIndicator progressIndicator;
     @FXML public CheckBox statusCheckBox;
     @FXML public ImageView favouriteImageView;
     @FXML public ImageView deleteTaskBtn;
@@ -110,8 +110,29 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     private void checkBoxToggled(MouseEvent event) {
         boolean isSelected = statusCheckBox.isSelected();
         bigTaskController.setBigTaskCheckBoxStatus(ID, isSelected);
+
+        toggleCheckBoxForSubTasks(isSelected);
         update();
     }
+
+    private void toggleCheckBoxForSubTasks(boolean isSelected) {
+        IBigTask bigTask = bigTaskController.getBigTaskByID(ID);
+        if (bigTask != null) {
+            boolean allSubtasksCompleted = true;
+
+            for (ITask subTask : bigTask.getSubTaskList()) {
+                subTask.setCompleted(isSelected);
+
+                if (!subTask.getStatus()) {
+                    allSubtasksCompleted = false;
+                }
+            }
+
+            bigTaskController.setBigTaskCheckBoxStatus(ID, allSubtasksCompleted);
+        }
+    }
+
+
 
     private void imageViewClicked(MouseEvent event) {
         boolean currentStatus = bigTaskController.getBigTaskFavouriteStatus(this.ID);
