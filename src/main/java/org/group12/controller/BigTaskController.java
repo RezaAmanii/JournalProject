@@ -6,6 +6,7 @@ import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
+import org.group12.model.todo.ITask;
 import org.group12.model.todo.ITaskList;
 import org.group12.view.TaskListCard;
 import java.time.format.DateTimeFormatter;
@@ -184,4 +185,12 @@ public class BigTaskController implements IController, IObservable {
     }
 
 
+    public boolean bigTaskContains(IBigTask bigTask, ITask subTask) {
+        if (bigTask != null && subTask != null) {
+            // Assuming there's a method in IBigTask to get its associated tasks
+            List<ITask> tasks = bigTask.getSubTaskList();
+            return tasks.contains(subTask);
+        }
+        return false;
+    }
 }

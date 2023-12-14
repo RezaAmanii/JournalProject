@@ -29,6 +29,7 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITodoObser
     // Class attributes
     private final String ID;
     private final ItemsSet items;
+    private final VBox parentPane;
 
     // Controller
     private final SubTaskController subTaskController;
@@ -47,7 +48,8 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITodoObser
 
 
     // Constructor
-    public SubTaskCard(String ID, ItemsSet items){
+    public SubTaskCard(String ID, ItemsSet items, VBox parentPane){
+        this.parentPane = parentPane;
         this.items = items;
         this.ID = ID;
         this.subTaskController = SubTaskController.getInstance();
@@ -118,6 +120,7 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITodoObser
     private void deleteSubTaskBtnClicked(MouseEvent event){
         ITask subTaskToRemove = subTaskController.getSubTaskByID(this.ID);
         subTaskController.handleRemoveSubTask(subTaskToRemove);
+        parentPane.getChildren().remove(this);
         update();
     }
 

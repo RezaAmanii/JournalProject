@@ -61,7 +61,7 @@ public class SubTaskWindowManager implements Initializable, ITodoObserver, SubTa
      * @return The created SubTaskCard object.
      */
     public SubTaskCard createNewSubTaskObject(ITask task){
-        SubTaskCard newSubTaskCard = new SubTaskCard(task.getID(), Items.getInstance());
+        SubTaskCard newSubTaskCard = new SubTaskCard(task.getID(), Items.getInstance(), subTasksPane);
         newSubTaskCard.setSubTaskCardListener(this);
 
         return newSubTaskCard;
