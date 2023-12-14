@@ -34,6 +34,9 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
     // Controller
     private final SubTaskController subTaskController;
 
+    // View
+    private final SubTaskView subTaskView;
+
     // Listener
     private SubTaskCardClickListener clickListener;
 
@@ -49,6 +52,7 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
         this.items = items;
         this.ID = ID;
         this.subTaskController = SubTaskController.getInstance();
+        this.subTaskView = new SubTaskView();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("subTaskCard.fxml"));
         fxmlLoader.setRoot(this);
@@ -58,7 +62,7 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
+        initializeFields();
         spacingBetweenCards();
         update();
     }
@@ -73,7 +77,6 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeFields();
         setupEventHandlers();
     }
 
@@ -151,15 +154,11 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
      * Handles the action when the subtask is double-clicked for renaming.
      */
     private void handleDoubleClick() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Rename Task");
-        dialog.setHeaderText("Enter new name");
-
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> {
-            subTaskController.renameSubTask(this.ID, name);
-            update();
-        });
+        String newName = subTaskView.getInputFromUser();
+        if(!newName.isEmpty()){
+            subTaskController.renameSubTask(this.ID, newName);
+            this.titleLabel.setText(newName);
+        }
     }
 
 

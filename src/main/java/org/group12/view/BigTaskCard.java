@@ -41,6 +41,9 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     private final BigTaskController bigTaskController;
     private final ToDoWindowManager toDoWindowManager;
 
+    // View
+    private final BigTaskView bigTaskView;
+
     // Listener
     private BigTaskCardClickListener clickListener;
 
@@ -63,6 +66,7 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         this.ID = ID;
         this.bigTaskController = BigTaskController.getInstance();
         this.toDoWindowManager = new ToDoWindowManager();
+        this.bigTaskView = new BigTaskView();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("bigTaskCard.fxml"));
         fxmlLoader.setRoot(this);
@@ -72,6 +76,7 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+        initializeFields();
         spacingBetweenCards();
     }
 
@@ -89,7 +94,6 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeFields();
         setupEventHandlers();
     }
 
@@ -224,15 +228,11 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
      * Renames the task using the entered name and updates the card.
      */
     private void handleDoubleClick() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Rename Task");
-        dialog.setHeaderText("Enter new name");
-
-        Optional<String> result = dialog.showAndWait();
-        result.ifPresent(name -> {
-            bigTaskController.renameTheTask(this.ID, name);
-            update();
-        });
+        String newName = bigTaskView.getInputFromUser();
+        if(!newName.isEmpty()){
+            bigTaskController.renameTheTask(this.ID, newName);
+            this.titleLabel.setText(newName);
+        }
     }
 
 

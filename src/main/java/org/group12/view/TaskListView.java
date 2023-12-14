@@ -1,15 +1,20 @@
 package org.group12.view;
 
 import javafx.scene.control.*;
+import org.group12.util.UserInputHandler;
 
 
-public class TaskListView {
+/**
+ * Represents a view for handling task lists and user input.
+ */
+public class TaskListView implements UserInputHandler {
 
     /**
-     * Gets user input from a text input dialog for creating a new list, ensuring certain restrictions on the title.
+     * Retrieves input from the user for creating a new task list.
      *
-     * @return The validated user input for the new list title or "New list" if restrictions are violated.
+     * @return The user-input task list name or "New list" if no input is provided.
      */
+    @Override
     public String getInputFromUser() {
         TextInputDialog dialog = createTextInputDialog();
         return processDialogResult(dialog);
@@ -17,27 +22,14 @@ public class TaskListView {
 
 
     /**
-     * Creates a TextInputDialog for entering the new list title.
+     * Processes the result obtained from the input dialog.
      *
-     * @return The created TextInputDialog.
+     * @param dialog The input dialog to process.
+     * @return The user-input task list name or "New list" if canceled or invalid input.
      */
-    public TextInputDialog createTextInputDialog() {
-        TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("New List");
-        dialog.setHeaderText("Enter the name of the new list");
-        dialog.setContentText("Name:");
-        return dialog;
-    }
-
-
-    /**
-     * Processes the result from the TextInputDialog, validates the user input, and handles restricted words.
-     *
-     * @param dialog The TextInputDialog to process.
-     * @return The validated user input or "New list" if restrictions are violated.
-     */
-    public String processDialogResult(TextInputDialog dialog) {
+    private String processDialogResult(TextInputDialog dialog) {
         var result = dialog.showAndWait();
+
         if (result.isPresent()) {
             String userInputOriginal = result.get();
             String userInput = result.get().toLowerCase();
@@ -50,9 +42,11 @@ public class TaskListView {
         return "New list";
     }
 
+
     /**
-     * Displays a warning alert when restricted words are used in the input.
+     * Displays a warning dialog for prohibited input.
      */
+    @Override
     public void displayWarningDialog() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Choose another title.");
@@ -61,4 +55,16 @@ public class TaskListView {
         alert.showAndWait();
     }
 
+    /**
+     * Creates a text input dialog for getting user input.
+     *
+     * @return A configured TextInputDialog object.
+     */
+    private TextInputDialog createTextInputDialog() {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("New List");
+        dialog.setHeaderText("Enter the name of the new list");
+        dialog.setContentText("Name:");
+        return dialog;
+    }
 }

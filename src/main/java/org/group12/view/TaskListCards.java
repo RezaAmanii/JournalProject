@@ -32,6 +32,8 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     // Controller
     private final TaskListController taskListController;
 
+    // View
+    private final TaskListView taskListView;
     private final ToDoWindowManager toDoWindowManager;
 
     // Listener
@@ -50,6 +52,7 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
         this.ID = ID;
         this.taskListController = TaskListController.getInstance();
         this.toDoWindowManager = new ToDoWindowManager();
+        this.taskListView = new TaskListView();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("taskListCards.fxml"));
         fxmlLoader.setRoot(this);
@@ -59,7 +62,7 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-
+        initializeFields();
         spacingBetweenCards();
         update();
     }
@@ -71,9 +74,7 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeFields();
         setupEventHandlers();
-        update();
     }
 
     private void initializeFields() {
@@ -113,12 +114,12 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     // Rename methods
     private void handleDoubleClick(MouseEvent event) {
         if (event.getSource() instanceof Label && event.getClickCount() == 2) {
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Rename Task");
-            dialog.setHeaderText("Enter new name");
+            String newName = taskListView.getInputFromUser();
 
-            Optional<String> result = dialog.showAndWait();
-            result.ifPresent(name -> taskListController.changeListTitle(this.ID, name));
+            if (newName != null) {
+                taskListController.changeListTitle(this.ID, newName);
+                this.titleLabel.setText(newName);
+            }
         }
     }
 
