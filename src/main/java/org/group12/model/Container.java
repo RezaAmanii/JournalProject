@@ -45,6 +45,9 @@ public class Container implements Serializable {
         }
         return instance;
     }
+    public void setTodoCollection(TodoCollection todoCollection) {
+        this.todoCollection = todoCollection;
+    }
 
     public Calendar getCalender() {
         return calender;

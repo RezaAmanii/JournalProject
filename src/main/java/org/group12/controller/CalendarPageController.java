@@ -3,17 +3,15 @@ package org.group12.controller;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Pair;
-import org.group12.dataHandler.SaveLoad;
 import org.group12.model.Calendar.CalendarWeek;
 import org.group12.controllerView.NewEventView;
 import org.group12.model.Calendar.Calendar;
-import org.group12.model.Calendar.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.util.Globals;
 import org.group12.model.Calendar.interfaces.IEvent;
-//import org.group12.model.toDoSubTask.Globals;
 
 import java.io.IOException;
 import java.util.*;

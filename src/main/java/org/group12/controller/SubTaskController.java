@@ -142,7 +142,7 @@ public class SubTaskController implements IController, IObservable {
      */
     public void handleRemoveSubTask(ITask subTask){
         IBigTask selectedBigTask = bigTaskController.getBigTaskByID(ToDoWindowManager.lastClickedBigTaskCard.getID());
-        selectedBigTask.removeSubTask(subTask.getID());
+        selectedBigTask.removeSubTask(subTask);
         notifyObservers();
 
     }

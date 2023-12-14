@@ -23,7 +23,8 @@ public class Main extends Application{
         launch();
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
-                //SaveLoad.getInstance().save();
+                // Out commonted because it was causing errors with todoCollection not loading saved container
+//                SaveLoad.getInstance().save();
             }
         }));
 
