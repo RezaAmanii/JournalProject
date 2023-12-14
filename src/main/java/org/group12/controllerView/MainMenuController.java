@@ -120,6 +120,9 @@ public class MainMenuController implements Initializable {
     }
     public void switchToCalendarPane() {loadPage("/org/group12/view/calendarPage.fxml");}
     public void switchToJournalPane() {loadPage("/org/group12/view/journalPage.fxml");}
+
+    public void switchToSettingsPane() {loadPage("/org/group12/view/settingsPage.fxml");}
+
     public boolean sideBarExpanded = false;
 
     /**
