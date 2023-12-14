@@ -25,7 +25,7 @@ public class Main extends Application{
         launch();
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
             public void run() {
-                SaveLoad.getInstance().save();
+//                SaveLoad.getInstance().save();
             }
         }));
 
