@@ -11,6 +11,5 @@ public interface IEntry extends INameable, IObservable, Serializable {
     void updateContent(String newContent);
     LocalDate getDateCreated();
     LocalDateTime getModifiedTimestamp();
-
     String getContent();
 }

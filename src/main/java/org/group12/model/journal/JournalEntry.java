@@ -11,7 +11,6 @@ import java.util.List;
 public class JournalEntry implements Serializable, IEntry {
     private String ID;
     private String title;
-    //private final LocalDate entryDate;
     private final LocalDate createdTimestamp;
     private LocalDateTime modifiedTimestamp;
     private String content;
@@ -23,13 +22,11 @@ public class JournalEntry implements Serializable, IEntry {
      * @param ID               unique identifier for the journal entry. Must not be null or empty.
      * @param title            title of the journal entry. Must not be null or empty.
      * @param content          content of the journal entry. Must not be null.
-     * @param entryDate        date of the journal entry. Must not be null.
      * @param createdTimestamp timestamp when the journal entry was created. Must not be null.
      */
     public JournalEntry(String ID, String title, String content, LocalDate createdTimestamp) {
         this.ID = ID;
         this.title = title;
-        //this.entryDate = entryDate;
         this.createdTimestamp = createdTimestamp;
         this.modifiedTimestamp = createdTimestamp.atStartOfDay();
         this.content = content;
