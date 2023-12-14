@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import org.group12.Observers.IJournalObserver;
 import org.group12.controller.JournalController;
 import org.group12.model.ItemsSet;
+import org.group12.model.journal.IEntry;
 import org.group12.model.journal.JournalEntry;
 import org.group12.util.CastHelper;
 
@@ -25,7 +26,7 @@ import java.util.ResourceBundle;
 public class JournalEntryCard extends AnchorPane implements Initializable, IJournalObserver {
     private final String ID;
     private final JournalController controller;
-    private final JournalEntry entry;
+    private final IEntry entry;
     private final CardUpdater cardUpdater;
 
     // UI elements
@@ -183,7 +184,7 @@ public class JournalEntryCard extends AnchorPane implements Initializable, IJour
      *
      * @return The JournalEntry associated with the JournalEntryCard.
      */
-    public JournalEntry getEntry(){
+    public IEntry getEntry(){
         return entry;
     }
 

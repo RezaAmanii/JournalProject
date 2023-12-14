@@ -3,6 +3,7 @@ package org.group12.controller;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.controllerView.ToDoWindowManager;
+import org.group12.dataHandler.SaveLoad;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
@@ -25,7 +26,7 @@ public class BigTaskController implements IController, IObservable {
 
     // Constructor
     private BigTaskController() {
-        this.itemsSet = Items.getInstance();
+        this.itemsSet = SaveLoad.getInstance().getItemsInstance();
         this.taskListController = TaskListController.getInstance();
     }
 

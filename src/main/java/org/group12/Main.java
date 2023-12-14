@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import org.group12.Observers.IObservable;
+import org.group12.dataHandler.SaveLoad;
 
 public class Main extends Application{
     @Override
@@ -22,7 +23,11 @@ public class Main extends Application{
 
     public static void main(String[] args) {
         launch();
-
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                SaveLoad.getInstance().save();
+            }
+        }));
 
     }
 }

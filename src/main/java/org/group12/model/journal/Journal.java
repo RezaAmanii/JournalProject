@@ -22,7 +22,7 @@ public class Journal implements INameable, IObservable, Serializable {
     private final String ID;
     private final List<IPlanITObserver> observers;
     private final ItemsSet items;
-    private final Map<LocalDate,JournalEntry> entries;
+    private final Map<LocalDate,IEntry> entries;
     /**
      * Constructs a Journal with the given ID, title, and entry factory.
      *
@@ -75,7 +75,7 @@ public class Journal implements INameable, IObservable, Serializable {
      * @return the list of journal entries
      */
 
-    public List<JournalEntry> getEntries() {
+    public List<IEntry> getEntries() {
         return new ArrayList<>(entries.values());
     }
 
@@ -88,7 +88,7 @@ public class Journal implements INameable, IObservable, Serializable {
      * @return The JournalEntry with the specified date, or null if no such JournalEntry exists.
      * @throws IllegalArgumentException if date is null.
      */
-    public JournalEntry getEntryByDate(LocalDate date) {
+    public IEntry getEntryByDate(LocalDate date) {
         if (date == null) {
             throw new IllegalArgumentException("Date cannot be null.");
         }
@@ -119,7 +119,7 @@ public class Journal implements INameable, IObservable, Serializable {
         if (date == null) {
             throw new IllegalArgumentException("Date cannot be null.");
         }
-        JournalEntry newEntry = entryFactory.createJournalEntry(date);
+        IEntry newEntry = entryFactory.createJournalEntry(date);
         for (IPlanITObserver observer : observers) {
             newEntry.addObserver(observer);
         }

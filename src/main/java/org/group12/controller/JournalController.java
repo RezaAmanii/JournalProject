@@ -5,7 +5,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
+import org.group12.dataHandler.SaveLoad;
 import org.group12.model.Container;
+import org.group12.model.journal.IEntry;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
 
@@ -35,7 +37,7 @@ public class JournalController implements IController, IObservable {
      * Constructor for JournalController. Initializes the container, journal model, and item map.
      */
     public JournalController() {
-        this.container = Container.getInstance();
+        this.container = SaveLoad.getInstance().getContainerInstance();
         this.journalModel = container.getJournal();
 
     }
@@ -59,7 +61,7 @@ public class JournalController implements IController, IObservable {
      * @return the title of the journal entry
      * @throws IllegalArgumentException if entry is null.
      */
-    public static String getEntryTitle(JournalEntry entry) {
+    public static String getEntryTitle(IEntry entry) {
         if (entry == null) {
             throw new IllegalArgumentException("Entry cannot be null.");
         }
@@ -72,7 +74,7 @@ public class JournalController implements IController, IObservable {
      * @param title the new title for the journal entry. Must not be null.
      * @throws IllegalArgumentException if entry is null.
      */
-    public static void setEntryTitle(JournalEntry entry, String title) {
+    public static void setEntryTitle(IEntry entry, String title) {
         if (entry == null) {
             throw new IllegalArgumentException("Entry cannot be null.");
         }
@@ -88,7 +90,7 @@ public class JournalController implements IController, IObservable {
      * @return The modified timestamp of the journal entry.
      * @throws IllegalArgumentException if entry is null.
      */
-    public static String getEntryDateModified(JournalEntry entry) {
+    public static String getEntryDateModified(IEntry entry) {
         if (entry == null) {
             throw new IllegalArgumentException("Entry cannot be null.");
         }
@@ -103,7 +105,7 @@ public class JournalController implements IController, IObservable {
      * @return The number of words in the content of the journal entry.
      * @throws IllegalArgumentException if entry is null.
      */
-    public static String getNrOfWords(JournalEntry entry) {
+    public static String getNrOfWords(IEntry entry) {
         if (entry == null) {
             throw new IllegalArgumentException("Entry cannot be null.");
         }
@@ -118,7 +120,7 @@ public class JournalController implements IController, IObservable {
      * @return The content of the journal entry.
      * @throws IllegalArgumentException if entry is null.
      */
-    public static String getEntryContent(JournalEntry entry) {
+    public static String getEntryContent(IEntry entry) {
         if (entry == null) {
             throw new IllegalArgumentException("Entry cannot be null.");
         }
@@ -131,19 +133,23 @@ public class JournalController implements IController, IObservable {
      *
      * @param journalEntry the journal entry to be updated. Must not be null.
      * @param newContent   the new content to replace the existing content in the journal entry. Must not be null.
-     * @throws IllegalArgumentException if journalEntry or newContent is null.
+     * @throws IllegalArgumentException if the journal entry or new content is null.
      */
-    public void updateJournalEntry(JournalEntry journalEntry, String newContent) {
-        if (journalEntry == null) {
-            throw new IllegalArgumentException("JournalEntry cannot be null.");
+    public void updateJournalEntry(IEntry journalEntry, String newContent) {
+        if (validateJournalEntry(journalEntry, newContent)) {
+            journalEntry.updateContent(newContent);
         }
-        if (newContent == null) {
-            throw new IllegalArgumentException("New content cannot be null.");
-        }
-        journalEntry.updateContent(newContent);
     }
-    public void clearJournalEntry(JournalEntry journalEntry) {
-        if(journalEntry != null){
+
+    /**
+     * Clears the content of the provided journal entry if the entry is valid.
+     * If the entry is not valid, it prints "No journalentry found!" to the console.
+     *
+     * @param journalEntry the journal entry to be cleared. Must not be null.
+     * @throws IllegalArgumentException if the journal entry is null.
+     */
+    public void clearJournalEntry(IEntry journalEntry) {
+        if(validateJournalEntry(journalEntry, "")){
             Alert alert = createConfirmationDialog();
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK){
@@ -163,7 +169,7 @@ public class JournalController implements IController, IObservable {
      * @return the journal entry created on the specified date, or a new entry if no entry was found for the given date.
      * @throws IllegalArgumentException if date is null.
      */
-    public JournalEntry getEntryByDate(LocalDate date) {
+    public IEntry getEntryByDate(LocalDate date) {
         if (date == null) {
             throw new IllegalArgumentException("Date cannot be null.");
         }
@@ -171,6 +177,24 @@ public class JournalController implements IController, IObservable {
             journalModel.addEntry(date);
         }
         return journalModel.getEntryByDate(date);
+    }
+
+    /**
+     * Validates a journal entry and its new content.
+     *
+     * @param journalEntry the journal entry to be validated. Must not be null.
+     * @param newContent the new content to be validated. Must not be null.
+     * @return true if the journal entry and new content are valid.
+     * @throws IllegalArgumentException if the journal entry or new content is null.
+     */
+    private boolean validateJournalEntry(IEntry journalEntry, String newContent) {
+        if(journalEntry == null) {
+            throw new IllegalArgumentException("Journal entry cannot be null.");
+        }
+        if(newContent == null) {
+            throw new IllegalArgumentException("New content cannot be null.");
+        }
+        return true;
     }
 
     /**

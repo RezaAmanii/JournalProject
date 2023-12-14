@@ -47,7 +47,6 @@ public class TaskListCard extends AnchorPane implements Initializable, ITodoObse
     @FXML public Label NrOfBigTasks;
     @FXML public ImageView deleteTaskListBtn;
 
-
     // Constructor
     public TaskListCard(String ID, ItemsSet items){
         this.items = items;

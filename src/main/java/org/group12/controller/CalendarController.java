@@ -1,5 +1,6 @@
 package org.group12.controller;
 
+import org.group12.dataHandler.SaveLoad;
 import org.group12.model.Calendar.Calendar;
 import org.group12.model.Calendar.Event;
 import org.group12.model.Container;
@@ -19,12 +20,13 @@ public class CalendarController implements IController {
 
     private CalendarView calenderView;
 //    private HashMap<String, INameable> itemMap;
-    private Items itemMap = Items.getInstance();
+    private Items itemMap;
 
 
     public CalendarController(){
+        this.container = SaveLoad.getInstance().getContainerInstance();
+        this.itemMap = SaveLoad.getInstance().getItemsInstance();
         this.calenderModel = container.getCalender();
-        this.itemMap = Items.getInstance();
 
     }
 
