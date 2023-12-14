@@ -90,8 +90,8 @@ public class ToDoWindowManager implements Initializable, ITodoObserver, TaskList
      */
 
     // Adding Task List
-    public TaskListCards createNewListObject(ITaskList list){
-        TaskListCards newTaskListCard = new TaskListCards(list.getID(), SaveLoad.getInstance().getItemsInstance());
+    public TaskListCard createNewListObject(ITaskList list){
+        TaskListCard newTaskListCard = new TaskListCard(list.getID(), SaveLoad.getInstance().getItemsInstance());
         newTaskListCard.setClickListener(this);
 
         return newTaskListCard;

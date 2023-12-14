@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import org.group12.util.Globals;
 import org.group12.model.Calendar.interfaces.IEvent;
-import org.group12.model.toDoSubTask.Globals;
+//import org.group12.model.toDoSubTask.Globals;
 
 import java.io.IOException;
 import java.util.*;
