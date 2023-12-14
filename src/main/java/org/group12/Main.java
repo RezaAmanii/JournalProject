@@ -17,8 +17,8 @@ public class Main extends Application{
     }
 
     public static void newStart() throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/org/group12/view/loginPage.fxml"));
-        //Parent root = FXMLLoader.load(Main.class.getResource("/org/group12/view/mainMenu.fxml"));
+        //Parent root = FXMLLoader.load(Main.class.getResource("/org/group12/view/loginPage.fxml"));
+        Parent root = FXMLLoader.load(Main.class.getResource("/org/group12/view/mainMenu.fxml"));
 
         Scene scene = new Scene(root);
 
