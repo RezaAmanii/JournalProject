@@ -1,4 +1,4 @@
-package org.group12.dataHandler;
+package org.group12.model.dataHandler;
 
 import org.group12.model.Container;
 import org.group12.model.Items;
