@@ -5,24 +5,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.group12.Listeners.TaskListCardClickListener;
-import org.group12.Observers.ITaskListObserver;
+import org.group12.Observers.ITodoObserver;
 import org.group12.controller.TaskListController;
+import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
+import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
-
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class TaskListCards extends AnchorPane implements Initializable, ITaskListObserver {
+/**
+ * Represents a visual representation of task lists as cards in the user interface.
+ * Extends AnchorPane and implements Initializable, ITaskListObserver.
+ */
+public class TaskListCard extends AnchorPane implements Initializable, ITodoObserver {
 
     // Class attributes
     private final String ID;
@@ -31,24 +34,26 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     // Controller
     private final TaskListController taskListController;
 
+    // View
+    private final TaskListView taskListView;
+    private final ToDoWindowManager toDoWindowManager;
+
     // Listener
     private TaskListCardClickListener clickListener;
 
     // FXML components
-    @FXML
-    private Label titleLabel;
-    @FXML
-    private Label dateCreated;
-    @FXML
-    private Label NrOfBigTasks;
-    @FXML
-    private ImageView deleteTaskListBtn;
+    @FXML public Label titleLabel;
+    @FXML public Label dateCreated;
+    @FXML public Label NrOfBigTasks;
+    @FXML public ImageView deleteTaskListBtn;
 
     // Constructor
-    public TaskListCards(String ID, ItemsSet items){
+    public TaskListCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
         this.taskListController = TaskListController.getInstance();
+        this.toDoWindowManager = new ToDoWindowManager();
+        this.taskListView = new TaskListView();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("taskListCards.fxml"));
         fxmlLoader.setRoot(this);
@@ -59,22 +64,33 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
             throw new RuntimeException(exception);
         }
 
+        initializeFields();
         spacingBetweenCards();
-        update();
     }
 
+    /**
+     * Sets spacing between the cards.
+     */
     private void spacingBetweenCards() {
         double paddingValue = 10.0;
         VBox.setMargin(this, new Insets(paddingValue));
     }
 
+
+    /**
+     * Overrides the initialize method from Initializable.
+     *
+     * @param location  The URL location.
+     * @param resources The ResourceBundle.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initializeFields();
         setupEventHandlers();
-        update();
     }
 
+    /**
+     * Initializes the controller fields and loads FXML components.
+     */
     private void initializeFields() {
         this.titleLabel.setText(taskListController.getTaskListTitle(this.ID));
         this.dateCreated.setText(taskListController.getTaskListDateCreated(this.ID));
@@ -86,7 +102,9 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
 
     }
 
-    // Event handlers
+    /**
+     * Initializes the event handlers for the UI components.
+     */
     private void setupEventHandlers(){
         titleLabel.setOnMouseClicked(this::titleClicked);
         deleteTaskListBtn.setOnMouseClicked(this::deleteTaskListBtnClicked);
@@ -97,7 +115,17 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
         }
         handleDoubleClick(event);
     }
+
+    /**
+     * Deletes the task list button clicked event.
+     *
+     * @param event The MouseEvent for the delete button click.
+     */
     private void deleteTaskListBtnClicked(MouseEvent event){
+        for(IBigTask tasks : taskListController.getTaskListByID(this.ID).getBigTaskList()){
+            toDoWindowManager.removeTodayTask(tasks);
+            toDoWindowManager.removeImportantTasks(tasks);
+        }
         taskListController.handlerRemoveToDoList(taskListController.getTaskListByID(this.ID));
         update();
     }
@@ -105,22 +133,26 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     // Getters
     public String getID() {return ID;}
 
-    // Rename methods
+    /**
+     * Handles double-clicking on the title for renaming.
+     *
+     * @param event The MouseEvent triggering the double click.
+     */
     private void handleDoubleClick(MouseEvent event) {
         if (event.getSource() instanceof Label && event.getClickCount() == 2) {
-            TextInputDialog dialog = new TextInputDialog();
-            dialog.setTitle("Rename Task");
-            dialog.setHeaderText("Enter new name");
+            String newName = taskListView.getInputFromUser();
 
-            Optional<String> result = dialog.showAndWait();
-            result.ifPresent(name -> {
-                taskListController.changeListTitle(this.ID, name);
-            });
+            if (newName != null) {
+                taskListController.changeListTitle(this.ID, newName);
+                this.titleLabel.setText(newName);
+            }
         }
     }
 
 
-    // Update method
+    /**
+     * Updates the displayed information on the TaskListCards.
+     */
     public void update() {
 
         try{
@@ -142,7 +174,11 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     }
 
 
-    // Task List card clicked
+    /**
+     * Sets the click listener for the TaskListCardClickListener.
+     *
+     * @param clickListener The TaskListCardClickListener.
+     */
     public void setClickListener(TaskListCardClickListener clickListener) {
         this.clickListener = clickListener;
     }

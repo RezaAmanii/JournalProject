@@ -1,7 +1,6 @@
 package org.group12.controller;
 
 
-import org.group12.dataHandler.SaveLoad;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.BigTask;
@@ -22,7 +21,7 @@ public class TaskController implements IController {
 
     // Constructor
     private TaskController(){
-        this.itemsSet = SaveLoad.getInstance().getItemsInstance();
+        this.itemsSet = Items.getInstance();
     }
 
     // Singleton

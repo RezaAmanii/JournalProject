@@ -11,6 +11,7 @@ import org.group12.model.Calendar.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import org.group12.util.Globals;
 import org.group12.model.Calendar.interfaces.IEvent;
 import org.group12.model.toDoSubTask.Globals;
 
@@ -19,7 +20,7 @@ import java.util.*;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
-import static org.group12.model.toDoSubTask.Globals.loadFxml;
+import static org.group12.util.Globals.loadFxml;
 
 /**
  * This class is a controller for the Calendar Page.
