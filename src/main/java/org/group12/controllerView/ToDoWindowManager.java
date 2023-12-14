@@ -11,18 +11,15 @@ import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskListController;
 import org.group12.model.Items;
+import org.group12.model.toDoSubTask.Globals;
 import org.group12.model.todo.*;
-import org.group12.view.BigTaskCard;
-import org.group12.view.SubTaskCard;
-import org.group12.view.TaskListCards;
-
+import org.group12.view.*;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-import static org.group12.view.TaskListView.*;
-import static org.group12.view.TaskView.openNewForm;
+
 
 
 public class ToDoWindowManager implements Initializable, ITaskListObserver, TaskListCardClickListener, BigTaskCardClickListener, SubTaskCardClickListener {
@@ -38,9 +35,13 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     @FXML public BorderPane mainWindowBorder;
 
 
-    // Corresponding controller
+    // Corresponding Controller
     private static final TaskListController taskListController = TaskListController.getInstance();
     private static final BigTaskController bigTaskController = BigTaskController.getInstance();
+
+    // Corresponding View
+    private final TaskListView taskListView = new TaskListView();
+    private final BigTaskView bigTaskView = new BigTaskView();
 
 
     // A reference to the selected taskList card and selected bigTask card
@@ -80,7 +81,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
     public void addNewList() {
-        String title = getInputFromUser();
+        String title = taskListView.getInputFromUser();
         String newListID = taskListController.handlerAddToDoList(title);
         ITaskList newList = taskListController.getTaskListByID(newListID);
 
@@ -105,7 +106,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
             return;
         }
 
-        String title = getInputFromUser();
+        String title = bigTaskView.getInputFromUser();
         if (lastClickedTaskListCard != null) {
             bigTaskController.handleAddTask(title);
             update();
@@ -274,7 +275,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
 
         try {
-            openNewForm("/org/group12/view/subTasks.fxml", bigTask.getTitle(), false);
+            Globals.openNewForm("/org/group12/view/subTasks.fxml", bigTask.getTitle(), false);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -1,23 +1,18 @@
 package org.group12.view;
 
 import javafx.scene.control.TextInputDialog;
+
 import java.util.Optional;
 
-public class TaskView  {
-
+public class BigTaskView {
 
     public String getInputFromUser(){
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("New SubTask");
-        dialog.setHeaderText("Enter the name of the new SubTask");
+        dialog.setTitle("New Task");
+        dialog.setHeaderText("Enter the name of the new task");
         dialog.setContentText("Name:");
         Optional<String> result = dialog.showAndWait();
-        return result.orElse("New subtask");
+        return result.orElse("New task");
     }
-
-
-
-
-
 
 }

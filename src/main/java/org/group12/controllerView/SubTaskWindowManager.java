@@ -12,19 +12,23 @@ import org.group12.model.Items;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITask;
 import org.group12.view.SubTaskCard;
+import org.group12.view.TaskView;
 import java.net.URL;
 import java.util.*;
 import static org.group12.controllerView.ToDoWindowManager.*;
-import static org.group12.view.TaskListView.getInputFromUser;
+
 
 
 
 public class SubTaskWindowManager implements Initializable, ITaskListObserver, SubTaskCardClickListener {
 
 
-    // Controller
+    // Corresponding Controllers
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
     private final TaskController taskController = TaskController.getInstance();
+
+    // Corresponding View
+    private final TaskView taskView = new TaskView();
 
 
     // Reference to the last clicked subtask cards
@@ -57,7 +61,7 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
     }
 
     public void addNewSubTask(){
-        String title = getInputFromUser();
+        String title = taskView.getInputFromUser();
 
         if(lastClickedBigTaskCard != null){
             taskController.handleAddSubTask(title);
