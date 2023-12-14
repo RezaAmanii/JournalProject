@@ -5,16 +5,18 @@ import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.model.Calendar.factories.eventFactory;
 import org.group12.model.Calendar.interfaces.ICalendar;
+import org.group12.model.Calendar.interfaces.IEvent;
 import org.group12.model.ItemsSet;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-public class Calendar implements IObservable, ICalendar {
-    private List<Event> eventList;
+public class Calendar implements IObservable, ICalendar, Serializable {
+    private List<IEvent> eventList;
     private boolean isEmpty;
     private List<IPlanITObserver> observers;
     private org.group12.model.Calendar.factories.eventFactory eventFactory;
@@ -39,12 +41,13 @@ public class Calendar implements IObservable, ICalendar {
 
     public void addEvent(String title, String description, LocalDateTime dateOfEvent,
                          Pair<LocalDateTime, LocalDateTime> timeFrame){
-        Event newEvent = eventFactory.createEvent(title, description,dateOfEvent, timeFrame);
+        IEvent newEvent = eventFactory.createEvent(title, description,dateOfEvent, timeFrame);
         eventList.add(newEvent);
+        items.addItem(newEvent);
         this.isEmpty = false;
         notifyObservers();
     }
-    public void addEvent(Event event){
+    public void addEvent(IEvent event){
         eventList.add(event);
         this.isEmpty = false;
         notifyObservers();
@@ -61,7 +64,11 @@ public class Calendar implements IObservable, ICalendar {
      */
     @Override
     public void addEvent(String title, String description, Pair<LocalDateTime, LocalDateTime> timeFrame) {
-
+        IEvent newEvent = eventFactory.createEvent(title, description, timeFrame.getKey(), timeFrame);
+        eventList.add(newEvent);
+        items.addItem(newEvent);
+        this.isEmpty = false;
+        notifyObservers();
     }
 
     /**
@@ -69,7 +76,7 @@ public class Calendar implements IObservable, ICalendar {
      * @param event is removed from the eventList
      *              if the event is recurring, all events with the same parent ID are also removed
      */
-    public void removeEvent(Event event){
+    public void removeEvent(IEvent event){
         eventList.remove(event);
         isEmpty = eventList.isEmpty();
         notifyObservers();
@@ -94,7 +101,7 @@ public class Calendar implements IObservable, ICalendar {
      *           Call this method when you want to make an event recurring, and the event is not recurring already
      *                     example: makeRecurring(event, 7, 30) makes the event repeat weekly for a month which is 4 times because 30/7 = 4
      */
-    public void makeRecurring(Event event, int frequency, int durationDays){
+    public void makeRecurring(IEvent event, int frequency, int durationDays){
         event.setRecurrence(true);
         int iterations = durationDays/frequency;
         for (int i = 1; i < iterations+1; i++){
@@ -103,15 +110,15 @@ public class Calendar implements IObservable, ICalendar {
             LocalDateTime newStart = oldStart.plusDays(frequency*i);
             LocalDateTime newEnd = oldEnd.plusDays(frequency*i);
             Pair<LocalDateTime, LocalDateTime> newTimeFrame = new Pair<>(newStart, newEnd);
-            Event newEvent = eventFactory.createEvent(event.getTitle(), event.getDescription(), newTimeFrame, event);
+            IEvent newEvent = eventFactory.createEvent(event.getTitle(), event.getDescription(), newTimeFrame, event);
             eventList.add(newEvent);
         }
         notifyObservers(); // dangerous to notify observers here, since it will notify the observers multiple times
     }
-    public void removeRecurring(Event event){
-        Iterator<Event> iterator = eventList.iterator();
+    public void removeRecurring(IEvent event){
+        Iterator<IEvent> iterator = eventList.iterator();
         while (iterator.hasNext()) {
-            Event e = iterator.next();
+            IEvent e = iterator.next();
             if (e.getParentEvent() != null && e.getParentEvent().getID().equals(event.getID())) {
                 iterator.remove();
             }
@@ -119,7 +126,7 @@ public class Calendar implements IObservable, ICalendar {
         event.setRecurrence(false);
         notifyObservers();
     }
-    public void detachRecurring(Event event){
+    public void detachRecurring(IEvent event){
         event.setRecurrence(false);
         event.setParentEvent(null);
         notifyObservers();
@@ -131,19 +138,19 @@ public class Calendar implements IObservable, ICalendar {
     }
 
     // ----------- getters ----------------
-    public List<Event> getUpcomingEvents(){
+    public List<IEvent> getUpcomingEvents(){
         return EventSorter.getEventsAfterNow(eventList);
     }
-    public List<Event> getPastEvents(){
+    public List<IEvent> getPastEvents(){
         return EventSorter.getEventsBeforeNow(eventList);
     }
-    public List<Event> getEvents(){
+    public List<IEvent> getEvents(){
         return eventList;
     }
-    public List<Event> getEventsBetweenDates(LocalDateTime date1, LocalDateTime date2){
+    public List<IEvent> getEventsBetweenDates(LocalDateTime date1, LocalDateTime date2){
         return EventSorter.getEventsBetweenDates(eventList, date1, date2);
     }
-    public List<Event> getEventsByTag(String tag){
+    public List<IEvent> getEventsByTag(String tag){
         return EventSorter.getEventsByTag(eventList, tag);
     }
 

@@ -12,14 +12,16 @@ import org.group12.model.Container;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import org.group12.model.toDoSubTask.Globals;
+import org.group12.model.dataHandler.SaveLoad;
+import org.group12.util.Globals;
+import org.group12.model.Calendar.interfaces.IEvent;
 
 import java.io.IOException;
 import java.util.*;
 
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
-import static org.group12.model.toDoSubTask.Globals.loadFxml;
+import static org.group12.util.Globals.loadFxml;
 
 /**
  * This class is a controller for the Calendar Page.
@@ -27,7 +29,7 @@ import static org.group12.model.toDoSubTask.Globals.loadFxml;
  */
 public class CalendarPageController {
 
-    private Calendar calendarData = Container.getInstance().getCalender();
+    private Calendar calendarData = SaveLoad.getInstance().getContainerInstance().getCalender();
 
     @FXML
     private BorderPane calendarPane;
@@ -99,10 +101,10 @@ public class CalendarPageController {
         calendarPane.setCenter(form.getRoot());
     }
 
-    private List<Event> getWeekEvents(CalendarWeek week) {
+    private List<IEvent> getWeekEvents(CalendarWeek week) {
         return calendarData.getEvents().stream()
                 .filter(week::isEventInThisWeek)
-                .sorted(comparing(Event::getDateOfEvent))
+                .sorted(comparing(IEvent::getDateOfEvent))
                 .collect(toList());
     }
 

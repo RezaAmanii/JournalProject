@@ -4,6 +4,7 @@ import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.factories.TaskListFactory;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -11,7 +12,7 @@ import java.util.HashMap;
  * Represents a collection of todo lists.
  * Implements the ITodoCollection interface.
  */
-public class TodoCollection implements ITodoCollection{
+public class TodoCollection implements ITodoCollection, Serializable {
     String ID;
     String title;
     private final ArrayList<ITaskList> taskList;
@@ -28,7 +29,7 @@ public class TodoCollection implements ITodoCollection{
      */
     public TodoCollection (String title, String ID, ItemsSet items){
         taskList = new ArrayList<>();
-        taskListFactory = new TaskListFactory(items);
+        taskListFactory = TaskListFactory.getInstance();
         this.items = items;
         this.title = title;
         this.ID = ID;

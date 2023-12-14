@@ -4,16 +4,25 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class FXMLLoaderService {
     public void loadFXML(AnchorPane root, Object controller, String fxmlFile) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFile));
-        fxmlLoader.setRoot(root);
-        fxmlLoader.setController(controller);
         try {
+            URL url = getClass().getResource(fxmlFile);
+            if (url == null) {
+                System.out.println("Could not find file: " + fxmlFile);
+                return;
+            }
+
+            FXMLLoader fxmlLoader = new FXMLLoader(url);
+            fxmlLoader.setRoot(root);
+            fxmlLoader.setController(controller);
             fxmlLoader.load();
         } catch (IOException exception) {
-            throw new RuntimeException(exception);
+            System.out.println("Could not load file: " + fxmlFile);
+            exception.printStackTrace();
         }
     }
+
 }

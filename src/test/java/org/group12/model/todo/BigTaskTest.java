@@ -55,21 +55,21 @@ class BigTaskTest {
     @Test
     void addSubTaskIncreasesSubTaskCount() {
         bigTask.addSubTask("Sub Task Title");
-        assertEquals(1, bigTask.getSubTaskMap().size());
+        assertEquals(1, bigTask.getSubTaskList().size());
     }
 
     @Test
     void removeSubTaskDecreasesSubTaskCount() {
         bigTask.addSubTask("Sub Task Title");
-        String subTaskID = bigTask.getSubTaskMap().keySet().iterator().next();
-        bigTask.removeSubTask(subTaskID);
-        assertTrue(bigTask.getSubTaskMap().isEmpty());
+        ITask subTask = bigTask.getSubTaskList().get(0);
+        bigTask.removeSubTask(subTask);
+        assertTrue(bigTask.getSubTaskList().isEmpty());
     }
 
     @Test
     void removeNonExistentSubTaskDoesNotChangeSubTaskCount() {
         bigTask.addSubTask("Sub Task Title");
-        bigTask.removeSubTask("NonExistentID");
-        assertEquals(1, bigTask.getSubTaskMap().size());
+        bigTask.removeSubTask(new Task("Non Existent Sub Task", "1"));
+        assertEquals(1, bigTask.getSubTaskList().size());
     }
 }

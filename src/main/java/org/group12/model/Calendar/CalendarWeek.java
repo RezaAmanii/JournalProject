@@ -1,5 +1,8 @@
 package org.group12.model.Calendar;
 
+import org.group12.model.Calendar.interfaces.IEvent;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
@@ -12,7 +15,7 @@ import static java.util.stream.Collectors.toList;
 /**
  * Represents a calendar week.
  */
-public class CalendarWeek {
+public class CalendarWeek implements Serializable {
     private final List<LocalDate> days;
     private final LocalDate firstDay;
     private final LocalDate lastDay;
@@ -62,7 +65,7 @@ public class CalendarWeek {
      * @param event The Event object to check.
      * @return True if the event falls within this week, false otherwise.
      */
-    public boolean isEventInThisWeek(Event event) {
+    public boolean isEventInThisWeek(IEvent event) {
         return event.getTimeFrame().getKey().toLocalDate().isAfter(firstDay.minusDays(1))
                 && event.getTimeFrame().getValue().toLocalDate().isBefore(lastDay.plusDays(1));
     }

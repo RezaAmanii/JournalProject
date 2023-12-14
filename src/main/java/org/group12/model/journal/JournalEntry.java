@@ -1,69 +1,43 @@
 package org.group12.model.journal;
 
-import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
-import org.group12.model.IDateCreated;
-import org.group12.model.INameable;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JournalEntry implements INameable, IDateCreated, IObservable {
+public class JournalEntry implements Serializable, IEntry {
     private String ID;
     private String title;
-    private LocalDate entryDate;
-    private LocalDateTime createdTimestamp;
+    private final LocalDate createdTimestamp;
     private LocalDateTime modifiedTimestamp;
     private String content;
-    private List<IPlanITObserver> observers;
+    private final List<IPlanITObserver> observers;
 
     /**
      * Constructor for creating a new JournalEntry object.
      *
-     * @param ID               unique identifier for the journal entry
-     * @param title            title of the journal entry
-     * @param content          content of the journal entry
-     * @param createdTimestamp timestamp when the journal entry was created
+     * @param ID               unique identifier for the journal entry. Must not be null or empty.
+     * @param title            title of the journal entry. Must not be null or empty.
+     * @param content          content of the journal entry. Must not be null.
+     * @param createdTimestamp timestamp when the journal entry was created. Must not be null.
      */
-    public JournalEntry(String ID, String title, String content,LocalDate entryDate, LocalDateTime createdTimestamp) {
+    public JournalEntry(String ID, String title, String content, LocalDate createdTimestamp) {
         this.ID = ID;
         this.title = title;
-        this.entryDate = entryDate;
         this.createdTimestamp = createdTimestamp;
-        this.modifiedTimestamp = createdTimestamp;
+        this.modifiedTimestamp = createdTimestamp.atStartOfDay();
         this.content = content;
         this.observers = new ArrayList<>();
     }
 
-    public JournalEntry(String title, LocalDate entryDate, String content) {
-        this.title = title;
-        this.entryDate = entryDate;
-        this.content = content;
-    }
-
-    public LocalDate getEntryDate() {
-        return entryDate;
-    }
-
-    public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    /**
-     * Removes the content from the journal entry and notifies all observers.
-     */
-    public void removeContentFromEntry() {
-        this.content = null;
-        this.modifiedTimestamp = LocalDateTime.now();
-        notifyObservers();
-    }
 
     /**
      * Updates the content of the journal entry, updates the modified timestamp, and notifies all observers.
      *
-     * @param newContent the new content for the journal entry
+     * @param newContent the new content for the journal entry.
      */
     public void updateContent(String newContent) {
         this.content = newContent;
@@ -76,11 +50,14 @@ public class JournalEntry implements INameable, IDateCreated, IObservable {
     }
 
     /**
-     * Updates the title of the journal entry, updates the modified timestamp, and notifies all observers.
+     * Updates the title of the journal entry, updates the modified timestamp to the current date and time, and notifies all observers.
      *
-     * @param newTitle the new title for the journal entry
+     * @param newTitle the new title for the journal entry. If null, it will be treated as an empty string.
      */
     public void setTitle(String newTitle) {
+        if (newTitle == null) {
+            newTitle = "No title set";
+        }
         this.title = newTitle;
         this.modifiedTimestamp = LocalDateTime.now();
         notifyObservers();
@@ -109,7 +86,7 @@ public class JournalEntry implements INameable, IDateCreated, IObservable {
      *
      * @return the timestamp when the journal entry was created
      */
-    public LocalDateTime getDateCreated() {
+    public LocalDate getDateCreated() {
         return createdTimestamp;
     }
 

@@ -1,8 +1,10 @@
 package org.group12.model.todo;
 
 import org.group12.model.ItemsSet;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.todo.factories.TaskFactory;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +12,7 @@ import java.util.HashMap;
 /**
  * Represents a big task that contains subtasks.
  */
-public class BigTask implements IBigTask {
+public class BigTask implements IBigTask, Serializable {
     private String description;
     private LocalDateTime dueDate;
     private boolean isFavourite;
@@ -28,11 +30,12 @@ public class BigTask implements IBigTask {
      */
     public BigTask(String title, String ID, ItemsSet items) {
         this.subTaskList = new ArrayList<>();
-        this.taskFactory = new TaskFactory();
+        this.taskFactory = TaskFactory.getInstance();
         modelTask = new Task("model", ID);
         modelTask.setTitle(title);
         this.items = items;
         this.dueDate = LocalDateTime.now();
+        System.out.println(this.getID());
     }
 
     /**
@@ -172,12 +175,12 @@ public class BigTask implements IBigTask {
     /**
      * Removes a subtask from the big task.
      *
-     * @param subTaskID The ID of the subtask to be removed.
+     * @param subTask The ID of the subtask to be removed.
      */
     @Override
-    public void removeSubTask(String subTaskID) {
-        subTaskList.remove(subTaskID);
-        items.removeItem(subTaskID);
+    public void removeSubTask(ITask subTask) {
+        subTaskList.remove(subTask);
+        items.removeItem(subTask.getID());
     }
 
     @Override

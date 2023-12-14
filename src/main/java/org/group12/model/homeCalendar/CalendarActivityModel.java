@@ -1,5 +1,6 @@
 package org.group12.model.homeCalendar;
 
+import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,7 +10,7 @@ import java.util.Map;
 /**
  * Model class for calendar activities.
  */
-public class CalendarActivityModel {
+public class CalendarActivityModel implements Serializable {
 
     private ZonedDateTime date;
     private String taskName;

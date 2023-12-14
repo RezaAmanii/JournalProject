@@ -7,8 +7,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import org.group12.model.Calendar.CalendarEvent;
-import org.group12.model.Calendar.Event;
 import org.group12.model.toDoSubTask.Globals;
+import org.group12.model.Calendar.interfaces.IEvent;
 
 import java.io.IOException;
 import java.net.URL;
@@ -108,7 +108,7 @@ public class WeekCalenderView implements Initializable {
         }
     }
 
-    public void drawDayColumn(LocalDate day, List<Event> events, Consumer<String> deleteEventAction, Function<String, Event> getEventFn) {
+    public void drawDayColumn(LocalDate day, List<IEvent> events, Consumer<String> deleteEventAction, Function<String, IEvent> getEventFn) {
         var col = getCalendarGridCol(day);
         fillWithLightGrey(col);
         toCalendarEvents(events).forEach(ev -> addEventToCalendar(ev, col, deleteEventAction, getEventFn));
@@ -128,7 +128,7 @@ public class WeekCalenderView implements Initializable {
     }
 
 
-    public void addEventToCalendar(CalendarEvent event, int calendarColIndex, Consumer<String> deleteEventAction, Function<String, Event> getEventFn) {
+    public void addEventToCalendar(CalendarEvent event, int calendarColIndex) {
         var pane = new BorderPane();
         pane.setTop(new Label(event.getTitle()+" : "+ event.getDiscription()));
         pane.setStyle("-fx-background-color: orange;");
@@ -141,7 +141,7 @@ public class WeekCalenderView implements Initializable {
         calendarGrid.add(pane, calendarColIndex, event.getRowStart(), 1, event.getRowEnd() - event.getRowStart() + 1);
     }
 
-    private static void openEventDetailsWindow(Consumer<String> deleteEventAction, Function<String, Event> getEventFn, MouseEvent mouseEvent) {
+    private static void openEventDetailsWindow(Consumer<String> deleteEventAction, Function<String, IEvent> getEventFn, MouseEvent mouseEvent) {
         try {
             var eventId = ((Parent) mouseEvent.getSource()).getId();
             var eventData = getEventFn.apply(eventId);
@@ -155,7 +155,7 @@ public class WeekCalenderView implements Initializable {
         }
     }
 
-    public static List<CalendarEvent> toCalendarEvents(List<Event> events) {
+    public static List<CalendarEvent> toCalendarEvents(List<IEvent> events) {
         return events.stream()
                 .map(x -> new CalendarEvent(x,FIRST_HR_ROW,FIRST_HR))
                 .sorted(comparing(CalendarEvent::getRowStart))

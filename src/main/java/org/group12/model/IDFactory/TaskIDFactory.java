@@ -1,12 +1,13 @@
 package org.group12.model.IDFactory;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Singleton factory for generating IDs for Task objects.
  * This class extends the IDFactory abstract class and provides the specific implementation for Task.
  */
-public class TaskIDFactory extends IDFactory implements IIDFactory {
+public class TaskIDFactory extends IDFactory implements IIDFactory, Serializable {
     private static final String PREFIX = "TK";
     private static final AtomicLong counter = new AtomicLong(1);
 

@@ -35,6 +35,7 @@ public class EventCard extends AnchorPane {
     private Button tagRemoveButton;
 
     // TODO: lägg till CalendarController i konstruktorn
+    // TODO: OBS att items måste komma från SaveLoad
     public EventCard(String ID, CalendarController controller,ItemsSet items){
         this.items = items;
         this.ID = ID;
@@ -53,7 +54,7 @@ public class EventCard extends AnchorPane {
         FXMLLoaderService fxmlLoaderService = new FXMLLoaderService();
         fxmlLoaderService.loadFXML(this, this, "EventCard.fxml");
 
-        this.cardUpdater = new CardUpdater(items);
+        this.cardUpdater = new CardUpdater();
         update();
 
     }

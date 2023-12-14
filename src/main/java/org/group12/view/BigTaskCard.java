@@ -8,16 +8,19 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.group12.Listeners.BigTaskCardClickListener;
-import org.group12.Listeners.TaskListCardClickListener;
-import org.group12.Observers.ITaskListObserver;
+import org.group12.Observers.ITodoObserver;
 import org.group12.controller.BigTaskController;
+import org.group12.controller.TaskListController;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.todo.IBigTask;
 import javafx.geometry.Insets;
+
 
 
 import java.io.IOException;
@@ -25,7 +28,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class BigTaskCard extends AnchorPane implements Initializable, ITaskListObserver {
+
+public class BigTaskCard extends AnchorPane implements Initializable, ITodoObserver {
 
     // Class attributes
     private final String ID;
@@ -33,24 +37,27 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
 
     // Controller
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
+    private final TaskListController taskListController = TaskListController.getInstance();
 
     // Listener
     private BigTaskCardClickListener clickListener;
 
     // FXML components
     @FXML
-    private Label titleLabel;
+    public Label titleLabel;
     @FXML
-    private Label dueDateLabel;
+    public Label dueDateLabel;
     @FXML
-    private CheckBox statusCheckBox;
+    public CheckBox statusCheckBox;
     @FXML
-    private ImageView favouriteImageView;
+    public ImageView favouriteImageView;
+    @FXML
+    public ImageView deleteTaskBtn;
 
 
     // Constructor
     public BigTaskCard(String ID, ItemsSet items){
-        this.items = items;
+        this.items = SaveLoad.getInstance().getItemsInstance();
         this.ID = ID;
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("bigTaskCard.fxml"));
@@ -62,7 +69,7 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
             throw new RuntimeException(exception);
         }
 
-        // Make space between each cards
+
         double paddingValue = 10.0;
         VBox.setMargin(this, new Insets(paddingValue));
 
@@ -80,36 +87,35 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         this.titleLabel.setText(bigTaskController.getBigTaskTitle(this.ID));
         this.dueDateLabel.setText(bigTaskController.getBigTaskDateCreated(this.ID));
         this.statusCheckBox.setSelected(bigTaskController.getBigTaskCheckBoxStatus(this.ID));
-
-
     }
 
+
+    // Event handlers
     private void setupEventHandlers(){
-        titleLabel.setOnMouseClicked(event -> {
-            titleClicked();
-        });
-
-        statusCheckBox.setOnMouseClicked(event -> {
-            checkBoxToggled();
-        });
+        titleLabel.setOnMouseClicked(this::titleClicked);
+        deleteTaskBtn.setOnMouseClicked(this::deleteTaskBtnClicked);
+        statusCheckBox.setOnMouseClicked(this::checkBoxToggled);
+        favouriteImageView.setOnMouseClicked(this::imageViewClicked);
     }
 
-
-    private void setDoubleClickEvent() {
-        setOnMouseClicked(event -> {
-            if (event.getClickCount() == 2) {
-                handleDoubleClick();
-            }
-        });
+    public void titleClicked(MouseEvent event) {
+        setDoubleClickEvent();
+        if(clickListener != null){
+            clickListener.onBigTaskCardClicked(this);
+        }
+    }
+    private void deleteTaskBtnClicked(MouseEvent event){
+        IBigTask bigTaskToRemove = (IBigTask) items.getItem(this.ID);
+        bigTaskController.handleRemoveTask(bigTaskToRemove);
+        update();
     }
 
-    @FXML
-    public String cardClicked() {
-        return this.ID;
+    private void checkBoxToggled(MouseEvent event) {
+        boolean isSelected = statusCheckBox.isSelected();
+        bigTaskController.setBigTaskCheckBoxStatus(ID, isSelected);
     }
 
-    @FXML
-    private void imageViewClicked() {
+    private void imageViewClicked(MouseEvent event) {
         boolean currentStatus = bigTaskController.getBigTaskFavouriteStatus(this.ID);
         bigTaskController.setBigTaskFavoriteStatus(this.ID, !currentStatus);
         updateFavoriteImageView(!currentStatus);
@@ -120,31 +126,21 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         Image image = new Image(imagePath);
         favouriteImageView.setImage(image);
         bigTaskController.setBigTaskFavoriteStatus(this.ID, status);
-
-
     }
 
-    @FXML
-    public void titleClicked() {
-        setDoubleClickEvent();
-        if(clickListener != null){
-            clickListener.onBigTaskCardClicked(this);
-        }
-    }
-
-
-    @FXML
-    private void checkBoxToggled() {
-        boolean isSelected = statusCheckBox.isSelected();
-        bigTaskController.setBigTaskCheckBoxStatus(ID, isSelected);
-    }
-
-
-
+    // Getters
     public String getID() {
         return ID;
     }
 
+    // Rename methods
+    private void setDoubleClickEvent() {
+        setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                handleDoubleClick();
+            }
+        });
+    }
 
     private void handleDoubleClick() {
         TextInputDialog dialog = new TextInputDialog();
@@ -158,10 +154,12 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         });
     }
 
-    public void setBigTaskClickListener(BigTaskCardClickListener clickListener) {
-        this.clickListener = clickListener;
+    @FXML
+    public String cardClicked() {
+        return this.ID;
     }
 
+    // Update method
     @Override
     public void update() {
 
@@ -183,6 +181,11 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         } catch (ClassCastException error){
             System.out.println("Item with ID " + ID + " is not a IBigTask!");
         }
+    }
+
+    // On BigTask clicked
+    public void setBigTaskClickListener(BigTaskCardClickListener clickListener) {
+        this.clickListener = clickListener;
     }
 
 
