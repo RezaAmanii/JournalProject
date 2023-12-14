@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -20,10 +19,13 @@ import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
-public class TaskListCards extends AnchorPane implements Initializable, ITaskListObserver {
+/**
+ * Represents a visual representation of task lists as cards in the user interface.
+ * Extends AnchorPane and implements Initializable, ITaskListObserver.
+ */
+public class TaskListCard extends AnchorPane implements Initializable, ITaskListObserver {
 
     // Class attributes
     private final String ID;
@@ -47,7 +49,7 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
 
 
     // Constructor
-    public TaskListCards(String ID, ItemsSet items){
+    public TaskListCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
         this.taskListController = TaskListController.getInstance();
@@ -62,21 +64,34 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
         initializeFields();
         spacingBetweenCards();
-        update();
     }
 
+    /**
+     * Sets spacing between the cards.
+     */
     private void spacingBetweenCards() {
         double paddingValue = 10.0;
         VBox.setMargin(this, new Insets(paddingValue));
     }
 
+
+    /**
+     * Overrides the initialize method from Initializable.
+     *
+     * @param location  The URL location.
+     * @param resources The ResourceBundle.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         setupEventHandlers();
     }
 
+    /**
+     * Initializes the controller fields and loads FXML components.
+     */
     private void initializeFields() {
         this.titleLabel.setText(taskListController.getTaskListTitle(this.ID));
         this.dateCreated.setText(taskListController.getTaskListDateCreated(this.ID));
@@ -88,7 +103,9 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
 
     }
 
-    // Event handlers
+    /**
+     * Initializes the event handlers for the UI components.
+     */
     private void setupEventHandlers(){
         titleLabel.setOnMouseClicked(this::titleClicked);
         deleteTaskListBtn.setOnMouseClicked(this::deleteTaskListBtnClicked);
@@ -99,6 +116,12 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
         }
         handleDoubleClick(event);
     }
+
+    /**
+     * Deletes the task list button clicked event.
+     *
+     * @param event The MouseEvent for the delete button click.
+     */
     private void deleteTaskListBtnClicked(MouseEvent event){
         for(IBigTask tasks : taskListController.getTaskListByID(this.ID).getBigTaskList()){
             toDoWindowManager.removeTodayTask(tasks);
@@ -111,7 +134,11 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     // Getters
     public String getID() {return ID;}
 
-    // Rename methods
+    /**
+     * Handles double-clicking on the title for renaming.
+     *
+     * @param event The MouseEvent triggering the double click.
+     */
     private void handleDoubleClick(MouseEvent event) {
         if (event.getSource() instanceof Label && event.getClickCount() == 2) {
             String newName = taskListView.getInputFromUser();
@@ -124,7 +151,9 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     }
 
 
-    // Update method
+    /**
+     * Updates the displayed information on the TaskListCards.
+     */
     public void update() {
 
         try{
@@ -146,7 +175,11 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     }
 
 
-    // Task List card clicked
+    /**
+     * Sets the click listener for the TaskListCardClickListener.
+     *
+     * @param clickListener The TaskListCardClickListener.
+     */
     public void setClickListener(TaskListCardClickListener clickListener) {
         this.clickListener = clickListener;
     }

@@ -47,7 +47,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
     // A reference to the selected taskList card and selected bigTask card
-    public static TaskListCards lastClickedTaskListCard;
+    public static TaskListCard lastClickedTaskListCard;
     public static BigTaskCard lastClickedBigTaskCard;
 
 
@@ -89,8 +89,8 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
      * @param list The task list to create the card for.
      * @return The created TaskListCards object.
      */
-    public TaskListCards createNewListObject(ITaskList list){
-        TaskListCards newTaskListCard = new TaskListCards(list.getID(), Items.getInstance());
+    public TaskListCard createNewListObject(ITaskList list){
+        TaskListCard newTaskListCard = new TaskListCard(list.getID(), Items.getInstance());
         newTaskListCard.setClickListener(this);
 
         return newTaskListCard;
@@ -104,7 +104,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         String newListID = taskListController.handlerAddToDoList(title);
         ITaskList newList = taskListController.getTaskListByID(newListID);
 
-        TaskListCards listToAppend = createNewListObject(newList);
+        TaskListCard listToAppend = createNewListObject(newList);
         appendableListVbox.getChildren().add(listToAppend);
     }
 
@@ -323,7 +323,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
      * @param clickedCard The task list card that was clicked.
      */
     @Override
-    public void onTaskListCardClicked(TaskListCards clickedCard) {
+    public void onTaskListCardClicked(TaskListCard clickedCard) {
         lastClickedTaskListCard = clickedCard;
 
         ITaskList taskList = taskListController.getTaskListByID(clickedCard.getID());

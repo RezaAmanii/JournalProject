@@ -7,7 +7,7 @@ import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
-import org.group12.view.TaskListCards;
+import org.group12.view.TaskListCard;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,7 +134,7 @@ public class BigTaskController implements IController, IObservable {
      * @param bigTask The IBigTask instance to remove.
      */
     public void handleRemoveTask(IBigTask bigTask){
-        TaskListCards selectedList = ToDoWindowManager.lastClickedTaskListCard;
+        TaskListCard selectedList = ToDoWindowManager.lastClickedTaskListCard;
         taskListController.getTaskListByID(selectedList.getID()).removeBigTask(bigTask);
         notifyObservers();
     }
@@ -145,7 +145,7 @@ public class BigTaskController implements IController, IObservable {
      * @param title The title for the new IBigTask.
      */
     public void handleAddTask(String title){
-        TaskListCards selectedTaskListCard = ToDoWindowManager.lastClickedTaskListCard;
+        TaskListCard selectedTaskListCard = ToDoWindowManager.lastClickedTaskListCard;
         ITaskList taskList = taskListController.getTaskListByID(selectedTaskListCard.getID());
         taskList.addBigTask(title);
         notifyObservers();
