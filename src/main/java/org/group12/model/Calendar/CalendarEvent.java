@@ -1,5 +1,7 @@
 package org.group12.model.Calendar;
 
+import org.group12.model.Calendar.interfaces.IEvent;
+
 import java.io.Serializable;
 import java.time.LocalTime;
 
@@ -19,7 +21,7 @@ public class CalendarEvent implements Serializable {
      * @param FIRST_HR_ROW The row number corresponding to the first hour in the grid.
      * @param FIRST_HR    The LocalTime representing the first hour in the grid.
      */
-    public CalendarEvent(Event event, int FIRST_HR_ROW, LocalTime FIRST_HR) {
+    public CalendarEvent(IEvent event, int FIRST_HR_ROW, LocalTime FIRST_HR) {
         var startHr = event.getTimeFrame().getKey();
         var endHr = event.getTimeFrame().getValue();
         var endHrNormalized = !endHr.toLocalDate().isEqual(startHr.toLocalDate()) ? startHr.withHour(23) : endHr;

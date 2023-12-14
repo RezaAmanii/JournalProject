@@ -6,7 +6,6 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
 import org.group12.controller.JournalController;
 import org.group12.model.Calendar.Event;
-import org.group12.model.ItemsSet;
 import org.group12.model.journal.JournalEntry;
 
 import java.util.List;

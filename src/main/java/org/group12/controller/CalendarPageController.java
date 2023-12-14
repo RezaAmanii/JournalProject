@@ -8,10 +8,10 @@ import org.group12.model.Calendar.CalendarWeek;
 import org.group12.controllerView.NewEventView;
 import org.group12.model.Calendar.Calendar;
 import org.group12.model.Calendar.Event;
-import org.group12.model.Container;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
+import org.group12.model.Calendar.interfaces.IEvent;
 import org.group12.model.toDoSubTask.Globals;
 
 import java.io.IOException;
@@ -88,10 +88,10 @@ public class CalendarPageController {
         calendarPane.setCenter(form.getRoot());
     }
 
-    private List<Event> getWeekEvents(CalendarWeek week) {
+    private List<IEvent> getWeekEvents(CalendarWeek week) {
         return calendarData.getEvents().stream()
                 .filter(week::isEventInThisWeek)
-                .sorted(comparing(Event::getDateOfEvent))
+                .sorted(comparing(IEvent::getDateOfEvent))
                 .collect(toList());
     }
 
