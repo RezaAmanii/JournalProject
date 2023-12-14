@@ -1,8 +1,8 @@
 package org.group12.Listeners;
 
 
-import org.group12.view.TodoCard;
+import org.group12.view.TaskListCard;
 
 public interface TaskListCardClickListener {
-    void onTaskListCardClicked(TodoCard clickedCard);
+    void onTaskListCardClicked(TaskListCard clickedCard);
 }

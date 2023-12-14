@@ -79,6 +79,7 @@ public class SubTaskWindowManager implements Initializable, ITodoObserver, SubTa
         }
     }
 
+
     /**
      * Refreshes the subTasksPane with the updated subtasks related to the currently selected big task.
      */

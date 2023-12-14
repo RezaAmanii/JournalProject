@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Represents a visual representation of task lists as cards in the user interface.
  * Extends AnchorPane and implements Initializable, ITaskListObserver.
  */
-public class TodoCard extends AnchorPane implements Initializable, ITodoObserver {
+public class TaskListCard extends AnchorPane implements Initializable, ITodoObserver {
 
     // Class attributes
     private final String ID;
@@ -49,7 +49,7 @@ public class TodoCard extends AnchorPane implements Initializable, ITodoObserver
 
 
     // Constructor
-    public TodoCard(String ID, ItemsSet items){
+    public TaskListCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
         this.taskListController = TaskListController.getInstance();

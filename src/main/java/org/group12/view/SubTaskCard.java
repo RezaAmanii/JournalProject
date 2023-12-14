@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import org.group12.Listeners.SubTaskCardClickListener;
 import org.group12.Observers.ITodoObserver;
 import org.group12.controller.SubTaskController;
+import org.group12.controllerView.SubTaskWindowManager;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.ITask;
