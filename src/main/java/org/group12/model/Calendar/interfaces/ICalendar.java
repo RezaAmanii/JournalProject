@@ -19,4 +19,5 @@ public interface ICalendar {
     List<IEvent> getEventsBetweenDates(LocalDateTime date1, LocalDateTime date2);
     List<IEvent> getEventsByTag(String tag);
 
+
 }
