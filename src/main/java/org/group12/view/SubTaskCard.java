@@ -13,14 +13,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.group12.Listeners.SubTaskCardClickListener;
 import org.group12.Observers.ITaskListObserver;
-import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskController;
-import org.group12.controllerView.SubTaskWindowManager;
-import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.ITask;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -31,7 +27,6 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
     // Class attributes
     private final String ID;
     private final ItemsSet items;
-    private final SubTaskWindowManager subTaskWindowManager;
 
     // Controller
     private final TaskController taskController;
@@ -50,7 +45,6 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
     public SubTaskCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
-        this.subTaskWindowManager = new SubTaskWindowManager();
         this.taskController = TaskController.getInstance();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("subTaskCard.fxml"));
@@ -100,7 +94,7 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
     private void deleteSubTaskBtnClicked(MouseEvent event){
         ITask subTaskToRemove = taskController.getSubTaskByID(this.ID);
         taskController.handleRemoveSubTask(subTaskToRemove);
-        update();
+        //update();
     }
 
     private void checkBoxToggled(MouseEvent event) {
@@ -136,10 +130,6 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
         });
     }
 
-    @FXML
-    public String cardClicked() {
-        return this.ID;
-    }
 
     // Update method
     @Override

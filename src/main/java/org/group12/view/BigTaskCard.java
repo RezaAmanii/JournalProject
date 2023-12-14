@@ -14,21 +14,17 @@ import javafx.scene.layout.VBox;
 import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
-import org.group12.controller.TaskListController;
 import org.group12.controllerView.ToDoWindowManager;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
 import javafx.geometry.Insets;
-
-
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
-import static org.group12.view.TaskView.openNewForm;
+
 
 public class BigTaskCard extends AnchorPane implements Initializable, ITaskListObserver {
 
@@ -37,8 +33,9 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     private final ItemsSet items;
 
     // Controller
-    private final BigTaskController bigTaskController = BigTaskController.getInstance();
-    private final ToDoWindowManager toDoWindowManager = new ToDoWindowManager();
+    private final BigTaskController bigTaskController;
+    private final ToDoWindowManager toDoWindowManager;
+
     // Listener
     private BigTaskCardClickListener clickListener;
 
@@ -59,6 +56,8 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     public BigTaskCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
+        this.bigTaskController = BigTaskController.getInstance();
+        this.toDoWindowManager = new ToDoWindowManager();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("bigTaskCard.fxml"));
         fxmlLoader.setRoot(this);
@@ -156,10 +155,6 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
         });
     }
 
-    @FXML
-    public String cardClicked() {
-        return this.ID;
-    }
 
     // Update method
     @Override

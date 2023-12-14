@@ -225,19 +225,16 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     public void refreshSidePanelInfo() {
         if (lastClickedTaskListCard != null) {
             ITaskList taskList = taskListController.getTaskListByID(lastClickedTaskListCard.getID());
+
             if (taskList != null) {
                 activeListNameLBL.setText(taskList.getTitle());
-
                 ongoingTasksVbox.getChildren().clear();
 
                 for (IBigTask task : taskList.getBigTaskList()) {
-                    if(task.getSubTaskList().size() == task.getCompletedSubTasks().size() && !task.getSubTaskList().isEmpty()) {
-                    } else {
-                        ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
-                    }
+                    ongoingTasksVbox.getChildren().add(createNewTaskObject(task));
                 }
-            } else {
 
+            } else {
                 System.out.println("Task List not found!");
             }
         } else {

@@ -18,7 +18,6 @@ import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITaskList;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -39,14 +38,10 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
     private TaskListCardClickListener clickListener;
 
     // FXML components
-    @FXML
-    private Label titleLabel;
-    @FXML
-    private Label dateCreated;
-    @FXML
-    private Label NrOfBigTasks;
-    @FXML
-    private ImageView deleteTaskListBtn;
+    @FXML public Label titleLabel;
+    @FXML public Label dateCreated;
+    @FXML public Label NrOfBigTasks;
+    @FXML public ImageView deleteTaskListBtn;
 
 
     // Constructor
@@ -123,9 +118,7 @@ public class TaskListCards extends AnchorPane implements Initializable, ITaskLis
             dialog.setHeaderText("Enter new name");
 
             Optional<String> result = dialog.showAndWait();
-            result.ifPresent(name -> {
-                taskListController.changeListTitle(this.ID, name);
-            });
+            result.ifPresent(name -> taskListController.changeListTitle(this.ID, name));
         }
     }
 

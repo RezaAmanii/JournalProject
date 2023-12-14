@@ -4,29 +4,22 @@ package org.group12.controller;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
 import org.group12.controllerView.ToDoWindowManager;
-import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
-import org.group12.model.todo.BigTask;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITask;
-import org.group12.model.todo.TodoCollection;
-import org.group12.view.TaskView;
-
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import org.group12.model.Items;
 
 
 public class TaskController implements IController, IObservable {
 
     // Attributes
-    private ItemsSet itemSet;
+    private final ItemsSet itemSet;
     private static TaskController instance;
-    private List<IPlanITObserver> observers;
-    private final ToDoWindowManager toDoWindowManager;
+    private final List<IPlanITObserver> observers;
+
 
     // Controller
     private final BigTaskController bigTaskController;
@@ -37,7 +30,6 @@ public class TaskController implements IController, IObservable {
         this.itemSet = Items.getInstance();
         this.bigTaskController = BigTaskController.getInstance();
         this.observers = new ArrayList<>();
-        this.toDoWindowManager = new ToDoWindowManager();
     }
 
     // Singleton
@@ -53,6 +45,11 @@ public class TaskController implements IController, IObservable {
     public ITask getSubTaskByID(String taskID){
         return (ITask) itemSet.getItem(taskID);
 
+    }
+
+    public ArrayList<ITask> getAllSubTasks(){
+        IBigTask bigTask = bigTaskController.getBigTaskByID(ToDoWindowManager.lastClickedBigTaskCard.getID());
+        return bigTask.getSubTaskList();
     }
 
     public String getSubTaskTitle(String taskID){
@@ -104,7 +101,6 @@ public class TaskController implements IController, IObservable {
         notifyObservers();
 
     }
-
 
 
     public static boolean stringValidation(String stringToCheck) {
