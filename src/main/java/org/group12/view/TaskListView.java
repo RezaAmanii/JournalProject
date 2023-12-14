@@ -1,38 +1,10 @@
 package org.group12.view;
 
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-import org.group12.model.toDoSubTask.Globals;
-import org.group12.model.todo.IBigTask;
-import java.io.IOException;
-import java.util.Objects;
+
 
 public class TaskListView {
 
-
-    public static ProgressIndicator createProgressIndicator(IBigTask task){
-        double finishedTaskPercentage = calculateTaskPercentage(task);
-        ProgressIndicator progressIndicator = new ProgressIndicator(finishedTaskPercentage);
-        GridPane.setHalignment(progressIndicator, HPos.CENTER);
-        GridPane.setMargin(progressIndicator, new Insets(3.0, 3.0, 3.0, 3.0));
-        return progressIndicator;
-    }
-
-    public static double calculateTaskPercentage(IBigTask task) {
-        double percentageCompleted = 0;
-        if(!task.getSubTaskList().isEmpty()){
-            percentageCompleted = (double) task.getCompletedSubTasks().size() / task.getSubTaskList().size();
-        } else{
-            return 0;
-        }
-        return percentageCompleted;
-    }
 
 
     public String getInputFromUser() {

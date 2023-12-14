@@ -5,7 +5,7 @@ import org.group12.model.Container;
 import org.group12.view.CalendarView;
 import org.group12.view.HomeCalendarView;
 import org.group12.view.JournalView;
-import org.group12.view.TaskView;
+import org.group12.view.SubTaskView;
 import org.group12.model.Items;
 
 public class ControllerFactory {
@@ -14,7 +14,7 @@ public class ControllerFactory {
     private HomeCalendarView homeCalendarView;
     private JournalView journalView;
     private CalendarView calenderView;
-    private TaskView todoView;
+    private SubTaskView todoView;
     private Items itemMap;
 
     public  IController createController(String controllerType, Items itemMap) {
@@ -23,7 +23,7 @@ public class ControllerFactory {
             case "CalendarController" -> new CalendarController();
             case "TaskListController" -> TaskListController.getInstance();
             case "BigTaskController" -> BigTaskController.getInstance();
-            case "TaskController" -> TaskController.getInstance();
+            case "TaskController" -> SubTaskController.getInstance();
             case "EventListController" -> new EventListController();
             default -> throw new IllegalArgumentException("Unknown controller type " + controllerType);
         };

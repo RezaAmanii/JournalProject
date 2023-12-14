@@ -7,12 +7,12 @@ import javafx.scene.layout.*;
 import org.group12.Listeners.SubTaskCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
-import org.group12.controller.TaskController;
+import org.group12.controller.SubTaskController;
 import org.group12.model.Items;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITask;
 import org.group12.view.SubTaskCard;
-import org.group12.view.TaskView;
+import org.group12.view.SubTaskView;
 import java.net.URL;
 import java.util.*;
 import static org.group12.controllerView.ToDoWindowManager.*;
@@ -25,10 +25,10 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
 
     // Corresponding Controllers
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
-    private final TaskController taskController = TaskController.getInstance();
+    private final SubTaskController subTaskController = SubTaskController.getInstance();
 
     // Corresponding View
-    private final TaskView taskView = new TaskView();
+    private final SubTaskView subTaskView = new SubTaskView();
 
 
     // Reference to the last clicked subtask cards
@@ -61,10 +61,10 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
     }
 
     public void addNewSubTask(){
-        String title = taskView.getInputFromUser();
+        String title = subTaskView.getInputFromUser();
 
         if(lastClickedBigTaskCard != null){
-            taskController.handleAddSubTask(title);
+            subTaskController.handleAddSubTask(title);
             update();
         }
     }
@@ -76,7 +76,7 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
         subTasksPane.getChildren().clear();
         IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
         if(bigTask != null){
-            for (ITask task: taskController.getAllSubTasks()) {
+            for (ITask task: subTaskController.getAllSubTasks()) {
                 subTasksPane.getChildren().add(createNewSubTaskObject(task));
             }
         }

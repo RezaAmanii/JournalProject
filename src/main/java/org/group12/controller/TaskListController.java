@@ -6,9 +6,7 @@ import org.group12.model.Container;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.*;
-import org.group12.view.TaskListView;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +50,7 @@ public class TaskListController implements IController, IObservable {
     public void changeListTitle(String TaskListID, String newTitle) {
         ITaskList taskList = (ITaskList) items.getItem(TaskListID);
         if (taskList != null){
-            if (TaskController.stringValidation(newTitle)) {
+            if (SubTaskController.stringValidation(newTitle)) {
                 taskList.setTitle(newTitle);
             } else {
                 System.out.println("Not a String");

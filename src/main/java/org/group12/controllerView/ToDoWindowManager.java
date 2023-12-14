@@ -244,7 +244,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
 
-
+    // Observer update method
     @Override
     public void update() {
         clearListVBoxContent();
@@ -281,6 +281,7 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
+    // Event Handlers for clicking on SubTask
     @Override
     public void onSubTaskCardClicked(SubTaskCard subTaskCard) {
 

@@ -13,11 +13,11 @@ import java.util.List;
 import org.group12.model.Items;
 
 
-public class TaskController implements IController, IObservable {
+public class SubTaskController implements IController, IObservable {
 
     // Attributes
     private final ItemsSet itemSet;
-    private static TaskController instance;
+    private static SubTaskController instance;
     private final List<IPlanITObserver> observers;
 
 
@@ -26,16 +26,16 @@ public class TaskController implements IController, IObservable {
 
 
     // Constructor
-    private TaskController(){
+    private SubTaskController(){
         this.itemSet = Items.getInstance();
         this.bigTaskController = BigTaskController.getInstance();
         this.observers = new ArrayList<>();
     }
 
     // Singleton
-    public static TaskController getInstance(){
+    public static SubTaskController getInstance(){
         if (instance == null){
-            instance = new TaskController();
+            instance = new SubTaskController();
         }
         return instance;
     }

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,16 +41,12 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITaskListO
     private BigTaskCardClickListener clickListener;
 
     // FXML components
-    @FXML
-    public Label titleLabel;
-    @FXML
-    public Label dueDateLabel;
-    @FXML
-    public CheckBox statusCheckBox;
-    @FXML
-    public ImageView favouriteImageView;
-    @FXML
-    public ImageView deleteTaskBtn;
+    @FXML public Label titleLabel;
+    @FXML public Label dueDateLabel;
+    @FXML public ProgressIndicator progressIndicator;
+    @FXML public CheckBox statusCheckBox;
+    @FXML public ImageView favouriteImageView;
+    @FXML public ImageView deleteTaskBtn;
 
 
     // Constructor

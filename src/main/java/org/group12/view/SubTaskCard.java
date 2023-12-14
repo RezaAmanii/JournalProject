@@ -13,7 +13,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import org.group12.Listeners.SubTaskCardClickListener;
 import org.group12.Observers.ITaskListObserver;
-import org.group12.controller.TaskController;
+import org.group12.controller.SubTaskController;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.ITask;
@@ -29,7 +29,7 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
     private final ItemsSet items;
 
     // Controller
-    private final TaskController taskController;
+    private final SubTaskController subTaskController;
 
     // Listener
     private SubTaskCardClickListener clickListener;
@@ -45,7 +45,7 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
     public SubTaskCard(String ID, ItemsSet items){
         this.items = items;
         this.ID = ID;
-        this.taskController = TaskController.getInstance();
+        this.subTaskController = SubTaskController.getInstance();
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("subTaskCard.fxml"));
         fxmlLoader.setRoot(this);
@@ -72,9 +72,9 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
     }
 
     private void initializeFields(){
-        this.titleLabel.setText(taskController.getSubTaskTitle(this.ID));
-        this.dateCreatedLabel.setText(taskController.getSubTaskDateCreated(this.ID));
-        this.statusCheckBox.setSelected(taskController.getSubTaskStatus(this.ID));
+        this.titleLabel.setText(subTaskController.getSubTaskTitle(this.ID));
+        this.dateCreatedLabel.setText(subTaskController.getSubTaskDateCreated(this.ID));
+        this.statusCheckBox.setSelected(subTaskController.getSubTaskStatus(this.ID));
     }
 
 
@@ -92,14 +92,14 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
         }
     }
     private void deleteSubTaskBtnClicked(MouseEvent event){
-        ITask subTaskToRemove = taskController.getSubTaskByID(this.ID);
-        taskController.handleRemoveSubTask(subTaskToRemove);
+        ITask subTaskToRemove = subTaskController.getSubTaskByID(this.ID);
+        subTaskController.handleRemoveSubTask(subTaskToRemove);
         //update();
     }
 
     private void checkBoxToggled(MouseEvent event) {
         boolean isSelected = statusCheckBox.isSelected();
-        taskController.setSubTaskStatus(ID, isSelected);
+        subTaskController.setSubTaskStatus(ID, isSelected);
         update();
     }
 
@@ -125,7 +125,7 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
 
         Optional<String> result = dialog.showAndWait();
         result.ifPresent(name -> {
-            taskController.renameSubTask(this.ID, name);
+            subTaskController.renameSubTask(this.ID, name);
             update();
         });
     }
@@ -141,9 +141,9 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
             if(item instanceof ITask){
                 ITask subTask = (ITask) item;
 
-                this.titleLabel.setText(taskController.getSubTaskTitle(subTask.getID()));
-                this.dateCreatedLabel.setText(taskController.getSubTaskDateCreated(subTask.getID()));
-                this.statusCheckBox.setSelected(taskController.getSubTaskStatus(subTask.getID()));
+                this.titleLabel.setText(subTaskController.getSubTaskTitle(subTask.getID()));
+                this.dateCreatedLabel.setText(subTaskController.getSubTaskDateCreated(subTask.getID()));
+                this.statusCheckBox.setSelected(subTaskController.getSubTaskStatus(subTask.getID()));
 
 
             } else{

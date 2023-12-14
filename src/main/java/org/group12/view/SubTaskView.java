@@ -3,7 +3,7 @@ package org.group12.view;
 import javafx.scene.control.TextInputDialog;
 import java.util.Optional;
 
-public class TaskView  {
+public class SubTaskView {
 
 
     public String getInputFromUser(){
@@ -14,9 +14,6 @@ public class TaskView  {
         Optional<String> result = dialog.showAndWait();
         return result.orElse("New subtask");
     }
-
-
-
 
 
 
