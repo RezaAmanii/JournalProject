@@ -21,7 +21,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 
 
-
+/**
+ * This class is responsible for managing the ToDo Window.
+ */
 public class ToDoWindowManager implements Initializable, ITaskListObserver, TaskListCardClickListener, BigTaskCardClickListener, SubTaskCardClickListener {
 
     // FXML components
@@ -50,6 +52,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
 
 
+    /**
+     * This method is responsible for initializing the ToDo Window.
+     * @param location The location used to resolve relative paths for the root object or null if not known.
+     * @param resources The resources used to localize the root object or null if not known.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         checkFixedList();
@@ -57,9 +64,12 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         bigTaskController.addObserver(this);
         refreshAllListVBox();
         refreshSidePanelInfo();
-
     }
 
+
+    /**
+     * Checks if fixed task lists ("Today" and "Important") exist, creates them if not present.
+     */
     private static void checkFixedList() {
         boolean todayListExists = taskListController.getTaskListByTitle("Today") != null;
         boolean importantListExists = taskListController.getTaskListByTitle("Important") != null;
@@ -72,7 +82,13 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
-    // Adding Task List
+
+    /**
+     * Creates a new task list card object based on the provided list.
+     *
+     * @param list The task list to create the card for.
+     * @return The created TaskListCards object.
+     */
     public TaskListCards createNewListObject(ITaskList list){
         TaskListCards newTaskListCard = new TaskListCards(list.getID(), Items.getInstance());
         newTaskListCard.setClickListener(this);
@@ -80,6 +96,9 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         return newTaskListCard;
     }
 
+    /**
+     * Adds a new task list based on user input.
+     */
     public void addNewList() {
         String title = taskListView.getInputFromUser();
         String newListID = taskListController.handlerAddToDoList(title);
@@ -87,11 +106,15 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
         TaskListCards listToAppend = createNewListObject(newList);
         appendableListVbox.getChildren().add(listToAppend);
-
     }
 
 
-    // Adding Big Task
+    /**
+     * Creates a new big task card object based on the provided task.
+     *
+     * @param task The big task to create the card for.
+     * @return The created BigTaskCard object.
+     */
     public BigTaskCard createNewTaskObject(IBigTask task) {
         BigTaskCard newBigTaskCard = new BigTaskCard(task.getID(), Items.getInstance());
         newBigTaskCard.setBigTaskClickListener(this);
@@ -99,7 +122,9 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         return newBigTaskCard;
     }
 
-
+    /**
+     * Adds a new big task to the selected task list if available.
+     */
     public void addNewTask() {
         if (lastClickedTaskListCard != null && (taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Today") || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Important"))) {
             System.out.println("Choose another list to add task");
@@ -113,7 +138,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
-    // Removing Big Task
+    /**
+     * Removes a task from the "Today" task list.
+     *
+     * @param taskToRemove The task to remove from the "Today" task list.
+     */
     public void removeTodayTask(IBigTask taskToRemove){
         for(IBigTask task : taskListController.getTaskListByTitle("Today").getBigTaskList()){
             if(task.getID().equals(taskToRemove.getID())){
@@ -123,6 +152,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
+    /**
+     * Removes a task from the "Important" task list.
+     *
+     * @param taskToRemove The task to remove from the "Important" task list.
+     */
     public void removeImportantTasks(IBigTask taskToRemove){
         for(IBigTask task : taskListController.getTaskListByTitle("Important").getBigTaskList()){
             if(task.getID().equals(taskToRemove.getID())){
@@ -132,8 +166,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
-
-    // Populate OngoingTasks VBox
+    /**
+     * Populates the ongoing tasks VBox with the tasks from the provided task list.
+     *
+     * @param taskList The task list to populate the ongoing tasks VBox with.
+     */
     public void populateOngoingTasks(ITaskList taskList){
         ongoingTasksVbox.getChildren().clear();
 
@@ -145,7 +182,9 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
 
-    // Refreshing the lists and tasks methods
+    /**
+     * Refreshes all the lists and tasks in the ToDo Window.
+     */
     public void refreshAllListVBox() {
         clearListVBoxContent();
         refreshFixedLists();
@@ -157,6 +196,10 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
+    /**
+     * Clears the contents of the fixed and appendable VBox containers.
+     * Checks and updates the last clicked task list card if necessary.
+     */
     private void clearListVBoxContent() {
         if (lastClickedTaskListCard == null || taskListController.getTaskListByID(lastClickedTaskListCard.getID()) == null
                 || taskListController.getTaskListByID(lastClickedTaskListCard.getID()).getTitle().equals("Today")
@@ -169,7 +212,9 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
 
-
+    /**
+     * Refreshes the fixed lists VBox by populating it with "Today" and "Important" task lists.
+     */
     private void refreshFixedLists() {
         fixedListsVbox.getChildren().clear();
         for (ITaskList list : taskListController.getTasksLists()) {
@@ -179,6 +224,10 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
+    /**
+     * Refreshes the appendable lists VBox by populating it with task lists other than "Today" and "Important".
+     * Updates tasks within these lists.
+     */
     private void refreshAppendableLists() {
         appendableListVbox.getChildren().clear();
 
@@ -190,6 +239,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
+    /**
+     * Updates tasks within the provided task list based on their due dates and favorites status.
+     *
+     * @param list The task list containing tasks to be updated.
+     */
     private void updateListTasks(ITaskList list) {
         list.getBigTaskList().forEach(task -> {
             LocalDateTime dueDate = task.getDueDate();
@@ -198,16 +252,18 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
                 if (date.isEqual(LocalDateTime.now().toLocalDate())) {
                     updateTodayTask(task);
                 }
-
             }
-
             if (task.isFavourite()) {
                 updateImportantTask(task);
             }
         });
     }
 
-
+    /**
+     * Updates the provided task within the "Today" task list.
+     *
+     * @param task The task to be updated within the "Today" task list.
+     */
     private void updateTodayTask(IBigTask task) {
         taskListController.getTaskListByTitle("Today").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
 
@@ -215,14 +271,20 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
 
     }
 
-
-
+    /**
+     * Updates the provided task within the "Important" task list.
+     *
+     * @param task The task to be updated within the "Important" task list.
+     */
     private void updateImportantTask(IBigTask task) {
         taskListController.getTaskListByTitle("Important").getBigTaskList().removeIf(task1 -> task1.getID().equals(task.getID()));
 
         taskListController.getTaskListByTitle("Important").getBigTaskList().add(task);
     }
 
+    /**
+     * Refreshes the side panel info by populating it with the tasks from the selected task list.
+     */
     public void refreshSidePanelInfo() {
         if (lastClickedTaskListCard != null) {
             ITaskList taskList = taskListController.getTaskListByID(lastClickedTaskListCard.getID());
@@ -244,7 +306,9 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
 
-    // Observer update method
+    /**
+     * Overrides the update method to synchronize and refresh various parts of the application UI/state.
+     */
     @Override
     public void update() {
         clearListVBoxContent();
@@ -253,8 +317,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
 
-
-    // Event Handlers for clicking on TaskList
+    /**
+     * Handles the event triggered when a task list card is clicked.
+     *
+     * @param clickedCard The task list card that was clicked.
+     */
     @Override
     public void onTaskListCardClicked(TaskListCards clickedCard) {
         lastClickedTaskListCard = clickedCard;
@@ -267,7 +334,11 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
     }
 
 
-    // Event Handlers for clicking on BigTask
+    /**
+     * Handles the event triggered when a big task card is clicked.
+     *
+     * @param clickedCard The big task card that was clicked.
+     */
     @Override
     public void onBigTaskCardClicked(BigTaskCard clickedCard) {
         lastClickedBigTaskCard = clickedCard;
@@ -281,7 +352,12 @@ public class ToDoWindowManager implements Initializable, ITaskListObserver, Task
         }
     }
 
-    // Event Handlers for clicking on SubTask
+
+    /**
+     * Handles the event triggered when a subtask card is clicked.
+     *
+     * @param subTaskCard The subtask card that was clicked.
+     */
     @Override
     public void onSubTaskCardClicked(SubTaskCard subTaskCard) {
 

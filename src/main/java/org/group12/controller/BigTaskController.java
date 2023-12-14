@@ -12,6 +12,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages operations related to IBigTask instances, handles their retrieval, modification, and updates observers.
+ */
 public class BigTaskController implements IController, IObservable {
 
     private final ItemsSet itemsSet;
@@ -34,7 +37,12 @@ public class BigTaskController implements IController, IObservable {
     }
 
 
-    // Methods
+    /**
+     * Retrieves the title of a specific IBigTask.
+     *
+     * @param bigTaskID The unique identifier of the IBigTask.
+     * @return The title of the specified IBigTask or "BigTask not found" if not found.
+     */
     public String getBigTaskTitle(String bigTaskID){
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
         if(bigTask != null){
@@ -44,6 +52,12 @@ public class BigTaskController implements IController, IObservable {
         }
     }
 
+    /**
+     * Retrieves the creation date of a specific IBigTask formatted as a string.
+     *
+     * @param bigTaskID The unique identifier of the IBigTask.
+     * @return The creation date of the specified IBigTask formatted as "yyyy-MM-dd HH:mm" or "Unknown" if not found.
+     */
     public String getBigTaskDateCreated(String bigTaskID){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd  HH:mm");
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
@@ -53,6 +67,12 @@ public class BigTaskController implements IController, IObservable {
         return "Unknown";
     }
 
+    /**
+     * Retrieves the checkbox status of a specific IBigTask.
+     *
+     * @param bigTaskID The unique identifier of the IBigTask.
+     * @return The checkbox status of the specified IBigTask or false if not found.
+     */
     public boolean getBigTaskCheckBoxStatus(String bigTaskID){
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
         if(bigTask != null){
@@ -62,34 +82,68 @@ public class BigTaskController implements IController, IObservable {
         }
     }
 
+    /**
+     * Sets the checkbox status of a specific IBigTask.
+     *
+     * @param bigTaskID The unique identifier of the IBigTask.
+     * @param status    The status to set for the checkbox.
+     */
     public void setBigTaskCheckBoxStatus(String bigTaskID, boolean status){
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
         bigTask.setCompleted(status);
     }
 
+    /**
+     * Retrieves the favorite status of a specific IBigTask.
+     *
+     * @param bigTaskID The unique identifier of the IBigTask.
+     * @return The favorite status of the specified IBigTask.
+     */
     public boolean getBigTaskFavouriteStatus(String bigTaskID){
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
         return bigTask.isFavourite();
 
     }
 
+    /**
+     * Sets the favorite status of a specific IBigTask.
+     *
+     * @param bigTaskID The unique identifier of the IBigTask.
+     * @param status    The status to set for the favorite.
+     */
     public void setBigTaskFavoriteStatus(String bigTaskID, boolean status){
         IBigTask bigTask = (IBigTask) itemsSet.getItem(bigTaskID);
         bigTask.setFavourite(status);
         notifyObservers();
     }
 
+    /**
+     * Renames a specific IBigTask.
+     *
+     * @param bigTaskID The unique identifier of the IBigTask.
+     * @param newTitle  The new title to set for the IBigTask.
+     */
     public void renameTheTask(String bigTaskID, String newTitle){
         itemsSet.getItem(bigTaskID).setTitle(newTitle);
         notifyObservers();
     }
 
+    /**
+     * Handles the removal of a specific IBigTask.
+     *
+     * @param bigTask The IBigTask instance to remove.
+     */
     public void handleRemoveTask(IBigTask bigTask){
         TaskListCards selectedList = ToDoWindowManager.lastClickedTaskListCard;
         taskListController.getTaskListByID(selectedList.getID()).removeBigTask(bigTask);
         notifyObservers();
     }
 
+    /**
+     * Handles the addition of a new IBigTask with the provided title.
+     *
+     * @param title The title for the new IBigTask.
+     */
     public void handleAddTask(String title){
         TaskListCards selectedTaskListCard = ToDoWindowManager.lastClickedTaskListCard;
         ITaskList taskList = taskListController.getTaskListByID(selectedTaskListCard.getID());
@@ -97,6 +151,12 @@ public class BigTaskController implements IController, IObservable {
         notifyObservers();
     }
 
+    /**
+     * Retrieves an IBigTask instance by its unique identifier.
+     *
+     * @param bigTaskID The unique identifier of the IBigTask.
+     * @return The IBigTask instance corresponding to the provided ID.
+     */
     public IBigTask getBigTaskByID(String bigTaskID){
         return (IBigTask) itemsSet.getItem(bigTaskID);
     }

@@ -1,34 +1,18 @@
 package org.group12.view;
 
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputDialog;
-import javafx.scene.layout.GridPane;
-import org.group12.model.todo.IBigTask;
-
 import java.util.Optional;
 
+/**
+ * Represents a view for the bigTaskCard class.
+ */
 public class BigTaskView {
 
-    public ProgressIndicator createProgressIndicator(IBigTask task){
-        double finishedTaskPercentage = calculateTaskPercentage(task);
-        ProgressIndicator progressIndicator = new ProgressIndicator(finishedTaskPercentage);
-        GridPane.setHalignment(progressIndicator, HPos.CENTER);
-        GridPane.setMargin(progressIndicator, new Insets(3.0, 3.0, 3.0, 3.0));
-        return progressIndicator;
-    }
-
-    public double calculateTaskPercentage(IBigTask task) {
-        double percentageCompleted = 0;
-        if(!task.getSubTaskList().isEmpty()){
-            percentageCompleted = (double) task.getCompletedSubTasks().size() / task.getSubTaskList().size();
-        } else{
-            return 0;
-        }
-        return percentageCompleted;
-    }
-
+    /**
+     * Retrieves input from the user for creating a new task.
+     *
+     * @return The user-input task name or "New task" if no input is provided.
+     */
     public String getInputFromUser(){
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("New Task");

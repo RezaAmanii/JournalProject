@@ -22,6 +22,9 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+/**
+ * Represents a SubTaskCard view element in the application.
+ */
 public class SubTaskCard extends AnchorPane implements Initializable, ITaskListObserver {
 
     // Class attributes
@@ -60,6 +63,9 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
         update();
     }
 
+    /**
+     * Sets the spacing between cards in the view.
+     */
     private void spacingBetweenCards() {
         double paddingValue = 10.0;
         VBox.setMargin(this, new Insets(paddingValue));
@@ -71,6 +77,9 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
         setupEventHandlers();
     }
 
+    /**
+     * Initializes the fields of the SubTaskCard.
+     */
     private void initializeFields(){
         this.titleLabel.setText(subTaskController.getSubTaskTitle(this.ID));
         this.dateCreatedLabel.setText(subTaskController.getSubTaskDateCreated(this.ID));
@@ -78,25 +87,43 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
     }
 
 
-    // Event handlers
+    /**
+     * Sets up event handlers for various actions.
+     */
     private void setupEventHandlers(){
         titleLabel.setOnMouseClicked(this::titleClicked);
         deleteSubTaskBtn.setOnMouseClicked(this::deleteSubTaskBtnClicked);
         statusCheckBox.setOnMouseClicked(this::checkBoxToggled);
     }
 
+    /**
+     * Handles the click event on the title label of the subtask.
+     *
+     * @param event The MouseEvent triggered by the user.
+     */
     public void titleClicked(MouseEvent event) {
         setDoubleClickEvent();
         if(clickListener != null){
             clickListener.onSubTaskCardClicked(this);
         }
     }
+
+    /**
+     * Handles the click event on the delete button of the subtask.
+     *
+     * @param event The MouseEvent triggered by the user.
+     */
     private void deleteSubTaskBtnClicked(MouseEvent event){
         ITask subTaskToRemove = subTaskController.getSubTaskByID(this.ID);
         subTaskController.handleRemoveSubTask(subTaskToRemove);
-        //update();
+        update();
     }
 
+    /**
+     * Handles the click event on the status checkbox of the subtask.
+     *
+     * @param event The MouseEvent triggered by the user.
+     */
     private void checkBoxToggled(MouseEvent event) {
         boolean isSelected = statusCheckBox.isSelected();
         subTaskController.setSubTaskStatus(ID, isSelected);
@@ -109,7 +136,9 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
         return ID;
     }
 
-    // Rename methods
+    /**
+     * Sets up a double click event for the subtask card.
+     */
     private void setDoubleClickEvent() {
         setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
@@ -118,6 +147,9 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
         });
     }
 
+    /**
+     * Handles the action when the subtask is double-clicked for renaming.
+     */
     private void handleDoubleClick() {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("Rename Task");
@@ -131,7 +163,9 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
     }
 
 
-    // Update method
+    /**
+     * Updates the SubTaskCard view based on the latest data.
+     */
     @Override
     public void update() {
 
@@ -154,7 +188,11 @@ public class SubTaskCard extends AnchorPane implements Initializable, ITaskListO
         }
     }
 
-    // On SubTask clicked
+    /**
+     * Sets the click listener for the SubTaskCard.
+     *
+     * @param clickListener The listener to be set for SubTaskCard clicks.
+     */
     public void setSubTaskCardListener(SubTaskCardClickListener clickListener) {
         this.clickListener = clickListener;
     }

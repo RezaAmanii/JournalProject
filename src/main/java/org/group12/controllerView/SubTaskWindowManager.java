@@ -19,7 +19,9 @@ import static org.group12.controllerView.ToDoWindowManager.*;
 
 
 
-
+/**
+ * Manages the display and actions related to subtasks within a task.
+ */
 public class SubTaskWindowManager implements Initializable, ITaskListObserver, SubTaskCardClickListener {
 
 
@@ -52,7 +54,12 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
         update();
     }
 
-    // Add methods
+    /**
+     * Creates a new SubTaskCard object for a given task.
+     *
+     * @param task The task for which a SubTaskCard needs to be created.
+     * @return The created SubTaskCard object.
+     */
     public SubTaskCard createNewSubTaskObject(ITask task){
         SubTaskCard newSubTaskCard = new SubTaskCard(task.getID(), Items.getInstance());
         newSubTaskCard.setSubTaskCardListener(this);
@@ -60,6 +67,9 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
         return newSubTaskCard;
     }
 
+    /**
+     * Adds a new subtask to the currently selected big task.
+     */
     public void addNewSubTask(){
         String title = subTaskView.getInputFromUser();
 
@@ -69,8 +79,9 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
         }
     }
 
-
-
+    /**
+     * Refreshes the subTasksPane with the updated subtasks related to the currently selected big task.
+     */
     void refreshSubTasksPane(){
 
         subTasksPane.getChildren().clear();
@@ -80,17 +91,22 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver, S
                 subTasksPane.getChildren().add(createNewSubTaskObject(task));
             }
         }
-
     }
 
-    // Observer update method
+    /**
+     * Updates the display of subtasks when there's a change.
+     */
     @Override
     public void update() {
         refreshSubTasksPane();
     }
 
 
-    // On card clicked method
+    /**
+     * Sets the last clicked subtask card.
+     *
+     * @param subTaskCard The last clicked SubTaskCard object.
+     */
     @Override
     public void onSubTaskCardClicked(SubTaskCard subTaskCard) {
         lastClickedSubTaskCard = subTaskCard;
