@@ -1,6 +1,7 @@
 package org.group12.model.todo;
 
 import org.group12.model.ItemsSet;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.todo.factories.TaskFactory;
 
 import java.io.Serializable;
@@ -29,7 +30,7 @@ public class BigTask implements IBigTask, Serializable {
      */
     public BigTask(String title, String ID, ItemsSet items) {
         this.subTaskList = new ArrayList<>();
-        this.taskFactory = new TaskFactory();
+        this.taskFactory = TaskFactory.getInstance();
         modelTask = new Task("model", ID);
         modelTask.setTitle(title);
         this.items = items;

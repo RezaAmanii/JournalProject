@@ -27,7 +27,7 @@ public class TaskList implements ITaskList, Serializable {
      */
     public TaskList(String title, String ID, ItemsSet items) {
         this.bigTaskList = new ArrayList<>();
-        this.bigTaskFactory = new BigTaskFactory(items);
+        this.bigTaskFactory = BigTaskFactory.getInstance();
         this.ID = ID;
         setTitle(title);
         this.items = items;

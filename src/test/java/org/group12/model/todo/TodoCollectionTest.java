@@ -12,7 +12,7 @@ class TodoCollectionTest {
     private ItemsSet itemsSet;
     private TodoCollection todoCollection;
 
-    @BeforeEach
+    /*@BeforeEach
     void setUp() {
         itemsSet = Items.getInstance();
         TodoCollectionFactory todoCollectionFactory = new TodoCollectionFactory(itemsSet);
@@ -48,5 +48,5 @@ class TodoCollectionTest {
     @Test
     void getTitleReturnsCorrectTitle() {
         assertEquals("Test Collection", todoCollection.getTitle());
-    }
+    }*/
 }

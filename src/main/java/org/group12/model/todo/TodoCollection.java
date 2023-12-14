@@ -29,7 +29,7 @@ public class TodoCollection implements ITodoCollection, Serializable {
      */
     public TodoCollection (String title, String ID, ItemsSet items){
         taskList = new ArrayList<>();
-        taskListFactory = new TaskListFactory(items);
+        taskListFactory = TaskListFactory.getInstance();
         this.items = items;
         this.title = title;
         this.ID = ID;
