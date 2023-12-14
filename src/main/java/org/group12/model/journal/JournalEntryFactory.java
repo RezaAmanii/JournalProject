@@ -64,6 +64,6 @@ public class JournalEntryFactory implements IJournalEntryFactory, Serializable {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String title = date.format(formatter);
 
-        return new JournalEntry(ID, title, content, LocalDate.now(), date);
+        return new JournalEntry(ID, title, content, date);
     }
 }
