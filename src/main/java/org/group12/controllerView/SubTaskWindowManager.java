@@ -107,7 +107,7 @@ public class SubTaskWindowManager implements Initializable, ITaskListObserver {
         ITask subTask = taskController.getSubTaskByID(selectedSubTask.getID());
         if(subTask != null){
             subTask.setTitle("Removed");
-            bigTaskController.getBigTaskByID(selectedTask.getID()).removeSubTask(selectedSubTask.getID());
+            bigTaskController.getBigTaskByID(selectedTask.getID()).removeSubTask(selectedSubTask);
             refreshSubTasksPane();
         }
     }

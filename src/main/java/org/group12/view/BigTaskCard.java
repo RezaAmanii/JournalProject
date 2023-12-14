@@ -15,20 +15,16 @@ import org.group12.Listeners.BigTaskCardClickListener;
 import org.group12.Observers.ITaskListObserver;
 import org.group12.controller.BigTaskController;
 import org.group12.controller.TaskListController;
-import org.group12.dataHandler.SaveLoad;
 import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.todo.IBigTask;
 import javafx.geometry.Insets;
-
-
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
-import static org.group12.view.TaskView.openNewForm;
 
 public class BigTaskCard extends AnchorPane implements Initializable, ITaskListObserver {
 

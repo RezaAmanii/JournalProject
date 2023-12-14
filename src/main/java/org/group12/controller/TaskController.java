@@ -1,19 +1,9 @@
 package org.group12.controller;
 
-
-import org.group12.dataHandler.SaveLoad;
-import org.group12.model.INameable;
 import org.group12.model.ItemsSet;
-import org.group12.model.todo.BigTask;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITask;
-import org.group12.model.todo.TodoCollection;
-import org.group12.view.TaskView;
-
-import java.time.LocalDateTime;
-import java.util.Map;
-import org.group12.model.Items;
-
 
 public class TaskController implements IController {
     private ItemsSet itemsSet;
@@ -42,12 +32,8 @@ public class TaskController implements IController {
         return (IBigTask) itemsSet.getItem(taskID);
     }
 
-
-
-
-
     public static boolean stringValidation(String stringToCheck) {
         return stringToCheck != null && !stringToCheck.trim().isEmpty();
     }
 
-    }
+}

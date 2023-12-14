@@ -5,8 +5,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import org.group12.Observers.IObservable;
 import org.group12.Observers.IPlanITObserver;
-import org.group12.dataHandler.SaveLoad;
 import org.group12.model.Container;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.journal.Journal;
 import org.group12.model.journal.JournalEntry;
 

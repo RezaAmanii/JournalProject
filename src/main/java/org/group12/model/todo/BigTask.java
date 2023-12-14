@@ -174,12 +174,12 @@ public class BigTask implements IBigTask, Serializable {
     /**
      * Removes a subtask from the big task.
      *
-     * @param subTaskID The ID of the subtask to be removed.
+     * @param subTask The ID of the subtask to be removed.
      */
     @Override
-    public void removeSubTask(String subTaskID) {
-        subTaskList.remove(subTaskID);
-        items.removeItem(subTaskID);
+    public void removeSubTask(ITask subTask) {
+        subTaskList.remove(subTask);
+        items.removeItem(subTask.getID());
     }
 
     @Override
