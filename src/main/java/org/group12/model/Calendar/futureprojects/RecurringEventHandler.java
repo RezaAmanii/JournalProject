@@ -1,6 +1,7 @@
-package org.group12.model.Calendar;
+package org.group12.model.Calendar.futureprojects;
 
 import javafx.util.Pair;
+import org.group12.model.Calendar.Event;
 import org.group12.model.Calendar.factories.eventFactory;
 import org.group12.model.Calendar.interfaces.IEvent;
 
