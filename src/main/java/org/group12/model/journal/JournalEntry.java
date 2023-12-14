@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JournalEntry implements INameable, IObservable, Serializable {
+public class JournalEntry implements INameable, IObservable, Serializable, IEntry {
     private String ID;
     private String title;
     private final LocalDate entryDate;
