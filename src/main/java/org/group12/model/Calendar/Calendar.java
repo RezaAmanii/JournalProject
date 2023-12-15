@@ -13,12 +13,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
+
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
 
 public class Calendar implements IObservable, ICalendar, Serializable {
     private List<IEvent> eventList;
     private boolean isEmpty;
     private List<IPlanITObserver> observers;
-    private org.group12.model.Calendar.factories.eventFactory eventFactory;
+    private eventFactory eventFactory;
     private final ItemsSet items;
 
     public Calendar(ItemsSet items) {
@@ -27,9 +31,6 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         this.observers = new ArrayList<>();
         this.eventFactory = new eventFactory();
         this.items = items;
-
-
-//        this.observers = new ArrayList<>();
     }
 
     // ---------- methods ----------------
@@ -45,13 +46,6 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         items.addItem(newEvent);
         this.isEmpty = false;
         notifyObservers();
-    }
-    public void addEvent(IEvent event){
-        eventList.add(event);
-        this.isEmpty = false;
-        notifyObservers();
-        items.addItem(event);
-//        notifyObservers();
     }
 
     /**
@@ -70,6 +64,10 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         notifyObservers();
     }
 
+    @Override
+    public void addEvent(IEvent event) {
+    }
+
     /**
      *
      * @param event is removed from the eventList
@@ -81,6 +79,31 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         notifyObservers();
         items.removeItem(event.getID());
 //        notifyObservers();
+    }
+
+    /**
+     * Removes an event with the specified event ID from the event list.
+     *
+     * @param eventId The ID of the event to be removed.
+     */
+    public void removeEvent(String eventId){
+        eventList.removeIf(ev -> eventId.equals(ev.getID()));
+        isEmpty = eventList.isEmpty();
+        notifyObservers();
+        items.removeItem(eventId);
+    }
+
+    /**
+     * Retrieves a list of events within the specified calendar week.
+     *
+     * @param week The CalendarWeek representing the week for which to retrieve events.
+     * @return The list of events within the specified week, sorted by date.
+     */
+    public List<IEvent> getEventList(CalendarWeek week){
+        return eventList.stream()
+                .filter(week::isEventInThisWeek)
+                .sorted(comparing(IEvent::getDateOfEvent))
+                .collect(toList());
     }
 
     /**
@@ -164,4 +187,13 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         }
     }
 
+    /**
+     * Retrieves the event with the specified event ID.
+     *
+     * @param eventId The ID of the event to retrieve.
+     * @return The event with the specified ID, or null if not found.
+     */
+    public IEvent getEvent(String eventId) {
+        return this.eventList.stream().filter(ev -> Objects.equals(ev.getID(), eventId)).findFirst().orElse(null);
+    }
 }

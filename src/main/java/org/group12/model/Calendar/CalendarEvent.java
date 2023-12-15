@@ -13,6 +13,7 @@ public class CalendarEvent implements Serializable {
     private int rowEnd;
     private String title;
     private String discription;
+    private String id;
 
     /**
      * Constructs a CalendarEvent object based on the given Event and initial parameters.
@@ -29,6 +30,7 @@ public class CalendarEvent implements Serializable {
         this.rowEnd = getGridRow(endHrNormalized.getHour(), FIRST_HR_ROW, FIRST_HR);
         this.title = event.getTitle();
         this.discription= event.getDescription();
+        this.id = event.getID();
     }
 
     /**
@@ -77,5 +79,9 @@ public class CalendarEvent implements Serializable {
      */
     private int getGridRow(int hr, int FIRST_HR_ROW, LocalTime FIRST_HR) {
         return hr < FIRST_HR.getHour() ? FIRST_HR_ROW : (hr - FIRST_HR.getHour() + FIRST_HR_ROW);
+    }
+
+    public String getId() {
+        return id;
     }
 }
