@@ -1,7 +1,5 @@
-import org.group12.model.Container;
 import org.group12.model.Items;
 import org.group12.model.ItemsSet;
-import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.journal.*;
 import org.group12.util.TextUtils;
 import org.junit.jupiter.api.BeforeEach;
