@@ -175,17 +175,19 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITodoObser
      */
     private void toggleCheckBoxForSubTasks(boolean isSelected) {
         IBigTask bigTask = bigTaskController.getBigTaskByID(ID);
-        if (bigTask != null) {
-            boolean allSubtasksCompleted = true;
+        if(!bigTask.getSubTaskList().isEmpty()) {
+            if (bigTask != null) {
+                boolean allSubtasksCompleted = true;
 
-            for (ITask subTask : bigTask.getSubTaskList()) {
-                subTask.setCompleted(isSelected);
+                for (ITask subTask : bigTask.getSubTaskList()) {
+                    subTask.setCompleted(isSelected);
 
-                if (!subTask.getStatus()) {
-                    allSubtasksCompleted = false;
+                    if (!subTask.getStatus()) {
+                        allSubtasksCompleted = false;
+                    }
                 }
+                bigTaskController.setBigTaskCheckBoxStatus(ID, allSubtasksCompleted);
             }
-            bigTaskController.setBigTaskCheckBoxStatus(ID, allSubtasksCompleted);
         }
     }
 
@@ -210,7 +212,6 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITodoObser
         String imagePath = status ? "star.png" : "starUnselected.png";
         Image image = new Image(imagePath);
         favouriteImageView.setImage(image);
-        bigTaskController.setBigTaskFavoriteStatus(this.ID, status);
     }
 
     /**
