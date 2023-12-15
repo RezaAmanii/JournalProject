@@ -8,7 +8,6 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import org.group12.controllerView.HomePageView;
 import org.group12.model.homeCalendar.CalendarActivityModel;
@@ -33,7 +32,6 @@ public class HomePageController implements Initializable {
     public VBox dayDeadlines;
     @FXML
     public GridPane calendarPane;
-
     @FXML
     public TextField newTaskNameTF;
     @FXML
@@ -41,12 +39,6 @@ public class HomePageController implements Initializable {
     @FXML
     public Spinner<Integer> minSpinner;
 
-    @FXML
-    private Pane yourPane;
-
-    public ZonedDateTime dateFocus;
-    public  ZonedDateTime today;
-    public  int selectedDay;
     private  HomePageView homePageView ;
     private   CalendarActivityModel calendarActivityModel ;
 
