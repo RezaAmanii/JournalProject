@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface ICalendar {
     void addEvent(String title, String description, Pair<LocalDateTime, LocalDateTime> timeFrame);
-    void addEvent(IEvent event);
     void removeEvent(IEvent event);
     void makeRecurring(IEvent event, int frequency, int durationDays);
     void removeRecurring(IEvent event);
