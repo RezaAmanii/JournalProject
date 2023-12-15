@@ -3,13 +3,11 @@ package org.group12.model.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import javafx.fxml.FXML;
-import org.group12.model.User.User;
 public class UserModel {
 
     public  static List<User> users = new ArrayList<User>();
     public UserModel() {
-        users.add(new User("planit","123456"));
+        users.add(new User("planit","planit"));
     }
 
 
