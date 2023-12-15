@@ -124,10 +124,6 @@ public class Calendar implements IObservable, ICalendar, Serializable {
     }
 
 
-    public void updateEvent(Event event){
-
-    }
-
     // ----------- getters ----------------
     public List<IEvent> getUpcomingEvents(){
         return EventSorter.getEventsAfterNow(eventList);

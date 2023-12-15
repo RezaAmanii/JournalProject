@@ -6,11 +6,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.concurrent.Task;
 import javafx.stage.Stage;
-import org.group12.controllerView.MainMenuController;
 import org.group12.model.User.UserModel;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -23,9 +20,6 @@ public class LoginPageController implements Initializable {
 
     @FXML
     private PasswordField passwordField;
-
-    @FXML
-    private ProgressIndicator progressIndicator;
 
 
     @FXML
@@ -51,6 +45,10 @@ public class LoginPageController implements Initializable {
             newStage.setScene(new Scene(root));
             newStage.setTitle("Main Page");
             newStage.show();
+
+            // close login page
+            Stage currentStage = (Stage) loginButton.getScene().getWindow();
+            currentStage.close();
         } else {
             myLable.setText("Invalid Email or Password !");
             myLable.setStyle("-fx-text-fill: red; -fx-font-size: 14px;");
