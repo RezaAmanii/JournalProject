@@ -5,7 +5,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import org.group12.model.dataHandler.SaveLoad;
 
 public class Main extends Application{
     @Override

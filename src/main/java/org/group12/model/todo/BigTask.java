@@ -1,13 +1,11 @@
 package org.group12.model.todo;
 
 import org.group12.model.ItemsSet;
-import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.todo.factories.TaskFactory;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Represents a big task that contains subtasks.
@@ -183,6 +181,11 @@ public class BigTask implements IBigTask, Serializable {
         items.removeItem(subTask.getID());
     }
 
+    /**
+     * Gets the list of completed subtasks in the big task.
+     *
+     * @return The list of completed subtasks in the big task.
+     */
     @Override
     public ArrayList<ITask> getCompletedSubTasks(){
         for (ITask task: subTaskList){
@@ -193,6 +196,11 @@ public class BigTask implements IBigTask, Serializable {
         return compeletedSubTasks;
     }
 
+    /**
+     * Gets the list of uncompleted subtasks in the big task.
+     *
+     * @return The list of uncompleted subtasks in the big task.
+     */
     @Override
     public ArrayList<ITask> getUncompletedSubTasks() {
         ArrayList<ITask> uncompletedSubTask = new ArrayList<>();
@@ -207,9 +215,9 @@ public class BigTask implements IBigTask, Serializable {
 
 
     /**
-     * Gets the map of subtasks in the big task.
+     * Gets the list of subtasks in the big task.
      *
-     * @return The map of subtasks in the big task.
+     * @return The list of subtasks in the big task.
      */
     @Override
     public ArrayList<ITask> getSubTaskList() {

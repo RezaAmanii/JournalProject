@@ -2,7 +2,6 @@ package org.group12.model.todo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 /**
  * Represents a subtask in a BigTask.

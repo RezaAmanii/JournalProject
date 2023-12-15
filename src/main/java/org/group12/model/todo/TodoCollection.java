@@ -1,12 +1,10 @@
 package org.group12.model.todo;
 
-import org.group12.model.Items;
 import org.group12.model.ItemsSet;
 import org.group12.model.todo.factories.TaskListFactory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Represents a collection of todo lists.
@@ -66,9 +64,9 @@ public class TodoCollection implements ITodoCollection, Serializable {
     }
 
     /**
-     * Returns the task list map of the TodoCollection.
+     * Returns the task list of the TodoCollection.
      *
-     * @return the task list map
+     * @return the task list
      */
     @Override
     public ArrayList<ITaskList> getTaskList() {
