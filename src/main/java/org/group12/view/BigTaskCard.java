@@ -74,6 +74,7 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITodoObser
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
         initializeFields();
         spacingBetweenCards();
     }
@@ -83,6 +84,7 @@ public class BigTaskCard extends AnchorPane implements Initializable, ITodoObser
      */
     private void spacingBetweenCards() {
         double paddingValue = 10.0;
+
         VBox.setMargin(this, new Insets(paddingValue));
     }
 
