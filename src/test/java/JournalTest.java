@@ -29,7 +29,7 @@ class JournalTest {
         journal = journalFactoryInstance.createJournal("Test Journal", journalEntryFactoryInstance, items);
         journal.addEntry(date1);
         journal.addEntry(date2);
-         this.entries= journal.getEntries();
+        this.entries= journal.getEntries();
 
     }
 
@@ -40,20 +40,7 @@ class JournalTest {
         assertTrue(entries.stream().anyMatch(entry -> entry.getDateCreated().equals(date2)), "getEntries should include the entry with date2.");
     }
 
-/*    @Test
-    void testGetEntries() {
-        JournalEntry addedEntry = journal.getEntries().get(0);
-        assertEquals("Test Title", addedEntry.getTitle(), "The title of the added entry should match the provided title.");
-        assertEquals("Test Content", addedEntry.getContent(), "The content of the added entry should match the provided content.");
-    }
 
-    @Test
-    void testRemoveEntry() {
-        IJournalEntry addedEntry = journal.getEntries().get(0);
-        String ID = addedEntry.getID();
-        journal.removeEntry(ID);
-        assertEquals(0, journal.getEntries().size(), "Journal should have no entries after removing the added entry.");
-    }
 
     @Test
     void testSetTitleAndGetTitle() {
@@ -80,36 +67,5 @@ class JournalTest {
         assertEquals("", TextUtils.getFirstNWords("", 2), "getFirstNWords should return an empty string if the input string is empty.");
         assertEquals("", TextUtils.getFirstNWords(null, 2), "getFirstNWords should return an empty string if the input string is null.");
     }
-    @Test
-    void testGetTitle() {
-        assertEquals("Test Title", journalEntry.getTitle(), "getTitle should return the correct title.");
-    }
-
-    @Test
-    void testGetContent() {
-        assertEquals("Test Content", journalEntry.getContent(), "getContent should return the correct content.");
-    }
-
-    @Test
-    void testGetEntryID() {
-        assertNotNull(journalEntry.getID(), "The ID of the journal should not be null.");
-    }
-
-    @Test
-    void testSetTitle() {
-        journalEntry.setTitle("New Title");
-        assertEquals("New Title", journalEntry.getTitle(), "setTitle should update the title correctly.");
-    }
-
-    @Test
-    void testSetContent() {
-        journalEntry.updateContent("New Content");
-        assertEquals("New Content", journalEntry.getContent(), "updateContent should update the content correctly.");
-    }
-
-    @Test
-    void testGetDate() {
-        assertNotNull(journalEntry.getDateCreated(), "getDateCreated should not return null.");
-    }*/
 
 }
