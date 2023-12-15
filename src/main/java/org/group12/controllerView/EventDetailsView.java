@@ -7,7 +7,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import org.group12.model.Calendar.Event;
 import org.group12.model.Calendar.interfaces.IEvent;
 import org.group12.util.Globals;
 
@@ -16,6 +15,10 @@ import java.util.function.Consumer;
 
 import static java.util.Optional.ofNullable;
 
+/**
+ * This class represents the Event Details view.
+ * It displays the details of an event and allows for event deletion.
+ */
 public class EventDetailsView {
 
     private final static DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -39,6 +42,12 @@ public class EventDetailsView {
     private Label toDate;
 
 
+    /**
+     * Initializes the Event Details view with the event data and delete event action.
+     *
+     * @param eventData The event data.
+     * @param deleteEventAction The action to delete the event.
+     */
     public void _initialize(IEvent eventData, Consumer<String> deleteEventAction) {
         this.descriptionTxt.setText(eventData.getDescription());
         this.titleLbl.setText(eventData.getTitle());
@@ -53,6 +62,12 @@ public class EventDetailsView {
         });
     }
 
+    /**
+     * Retrieves the formatted to-date string from the event data.
+     *
+     * @param eventData The event data.
+     * @return The formatted to-date string, or an empty string if it is null.
+     */
     private String getToDate(IEvent eventData) {
         return ofNullable(eventData.getTimeFrame())
                 .map(Pair::getValue)
@@ -60,6 +75,12 @@ public class EventDetailsView {
                 .orElse("");
     }
 
+    /**
+     * Retrieves the formatted from-date string from the event data.
+     *
+     * @param eventData The event data.
+     * @return The formatted from-date string, or an empty string if it is null.
+     */
     private String getFromData(IEvent eventData) {
         return ofNullable(eventData.getTimeFrame())
                 .map(Pair::getKey)

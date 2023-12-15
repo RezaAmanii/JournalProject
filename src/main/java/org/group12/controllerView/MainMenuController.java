@@ -6,10 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -23,13 +20,7 @@ import java.util.*;
 public class MainMenuController implements Initializable {
 
     @FXML
-    private Pane calendarBTN;
-
-    @FXML
     private Label calendarLBL;
-
-    @FXML
-    private Pane homeBtn;
 
     @FXML
     private Label homeLBL;
@@ -41,43 +32,13 @@ public class MainMenuController implements Initializable {
     private Label journalLBL;
 
     @FXML
-    private Pane journalPane;
-
-    @FXML
     private StackPane mainStackPane;
-
-    @FXML
-    private BorderPane mainWindowBorder;
-
-    @FXML
-    private ImageView menuImg;
-
-    @FXML
-    private ImageView menuImg211;
-
-    @FXML
-    private ImageView menuImg2111;
-
-    @FXML
-    private ImageView menuImg2112;
-
-    @FXML
-    private ImageView menuImg2113;
-
-    @FXML
-    private ImageView menuImg2114;
 
     @FXML
     private Label settingsLBL;
 
     @FXML
-    private Pane settingsPane;
-
-    @FXML
     private VBox sideBar;
-
-    @FXML
-    private Pane todoBTN;
 
     @FXML
     private Label todoLBL;
