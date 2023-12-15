@@ -15,11 +15,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
+
 public class Calendar implements IObservable, ICalendar, Serializable {
     private List<IEvent> eventList;
     private boolean isEmpty;
     private List<IPlanITObserver> observers;
-    private org.group12.model.Calendar.factories.eventFactory eventFactory;
+    private eventFactory eventFactory;
     private final ItemsSet items;
 
     public Calendar(ItemsSet items) {
@@ -28,9 +31,6 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         this.observers = new ArrayList<>();
         this.eventFactory = new eventFactory();
         this.items = items;
-
-
-//        this.observers = new ArrayList<>();
     }
 
     // ---------- methods ----------------
@@ -47,13 +47,6 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         this.isEmpty = false;
         notifyObservers();
     }
-    public void addEvent(IEvent event){
-        eventList.add(event);
-        this.isEmpty = false;
-        notifyObservers();
-        items.addItem(event);
-//        notifyObservers();
-    }
 
     /**
      * Adds a new event to the calendar.
@@ -69,6 +62,11 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         items.addItem(newEvent);
         this.isEmpty = false;
         notifyObservers();
+    }
+
+    @Override
+    public void addEvent(IEvent event) {
+
     }
 
     /**
@@ -90,6 +88,13 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         notifyObservers();
         items.removeItem(eventId);
 //        notifyObservers();
+    }
+
+    public List<IEvent> getEventList(CalendarWeek week){
+        return eventList.stream()
+                .filter(week::isEventInThisWeek)
+                .sorted(comparing(IEvent::getDateOfEvent))
+                .collect(toList());
     }
 
     /**

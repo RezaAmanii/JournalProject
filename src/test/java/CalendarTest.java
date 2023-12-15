@@ -1,6 +1,5 @@
 import javafx.util.Pair;
 import org.group12.model.Calendar.Calendar;
-import org.group12.model.Calendar.Event;
 import org.group12.model.Calendar.interfaces.IEvent;
 import org.group12.model.Items;
 import org.junit.jupiter.api.BeforeEach;
