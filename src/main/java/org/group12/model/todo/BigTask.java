@@ -1,6 +1,7 @@
 package org.group12.model.todo;
 
 import org.group12.model.ItemsSet;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.todo.factories.TaskFactory;
 
 import java.io.Serializable;
@@ -29,11 +30,12 @@ public class BigTask implements IBigTask, Serializable {
      */
     public BigTask(String title, String ID, ItemsSet items) {
         this.subTaskList = new ArrayList<>();
-        this.taskFactory = new TaskFactory();
+        this.taskFactory = TaskFactory.getInstance();
         modelTask = new Task("model", ID);
         modelTask.setTitle(title);
         this.items = items;
         this.dueDate = LocalDateTime.now();
+        System.out.println(this.getID());
     }
 
     /**
@@ -173,12 +175,12 @@ public class BigTask implements IBigTask, Serializable {
     /**
      * Removes a subtask from the big task.
      *
-     * @param subTaskID The ID of the subtask to be removed.
+     * @param subTask The ID of the subtask to be removed.
      */
     @Override
-    public void removeSubTask(String subTaskID) {
-        subTaskList.remove(subTaskID);
-        items.removeItem(subTaskID);
+    public void removeSubTask(ITask subTask) {
+        subTaskList.remove(subTask);
+        items.removeItem(subTask.getID());
     }
 
     @Override

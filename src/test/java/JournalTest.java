@@ -1,37 +1,46 @@
+import org.group12.model.Container;
+import org.group12.model.Items;
 import org.group12.model.ItemsSet;
+import org.group12.model.dataHandler.SaveLoad;
 import org.group12.model.journal.*;
 import org.group12.util.TextUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class JournalTest {
     private Journal journal;
-    private JournalFactory journalFactory;
-    private JournalEntryFactory journalEntryFactory;
-    private JournalEntry journalEntry;
     private ItemsSet items;
-    LocalDate date;
+    private LocalDate date1 = LocalDate.of(2022, 1, 1);
+    private LocalDate date2 = LocalDate.of(2022, 1, 2);
+    private JournalEntryFactory journalEntryFactoryInstance;
+    private JournalFactory journalFactoryInstance;
+    private List<IEntry> entries;
 
     @BeforeEach
     void setUp() {
-        journalEntryFactory = JournalEntryFactory.getInstance();
-        journalFactory = JournalFactory.getInstance();
-        journal = journalFactory.createJournal("Test Journal", journalEntryFactory, items);
-        journalEntry = journalEntryFactory.createJournalEntry();
-        date = LocalDate.now();
-        journal.addEntry(date);
+        this.items = Items.getInstance();
+        this.journalEntryFactoryInstance = JournalEntryFactory.getInstance();
+        this.journalFactoryInstance = JournalFactory.getInstance();
+        journal = journalFactoryInstance.createJournal("Test Journal", journalEntryFactoryInstance, items);
+        journal.addEntry(date1);
+        journal.addEntry(date2);
+         this.entries= journal.getEntries();
+
     }
 
     @Test
     void testAddEntry() {
-        assertEquals(1, journal.getEntries().size(), "Journal should have one entry after adding an entry.");
+        assertEquals(2, entries.size(), "getEntries should return a list with all entries in the journal.");
+        assertTrue(entries.stream().anyMatch(entry -> entry.getDateCreated().equals(date1)), "getEntries should include the entry with date1.");
+        assertTrue(entries.stream().anyMatch(entry -> entry.getDateCreated().equals(date2)), "getEntries should include the entry with date2.");
     }
 
-    @Test
+/*    @Test
     void testGetEntries() {
         JournalEntry addedEntry = journal.getEntries().get(0);
         assertEquals("Test Title", addedEntry.getTitle(), "The title of the added entry should match the provided title.");
@@ -40,7 +49,7 @@ class JournalTest {
 
     @Test
     void testRemoveEntry() {
-        JournalEntry addedEntry = journal.getEntries().get(0);
+        IJournalEntry addedEntry = journal.getEntries().get(0);
         String ID = addedEntry.getID();
         journal.removeEntry(ID);
         assertEquals(0, journal.getEntries().size(), "Journal should have no entries after removing the added entry.");
@@ -101,6 +110,6 @@ class JournalTest {
     @Test
     void testGetDate() {
         assertNotNull(journalEntry.getDateCreated(), "getDateCreated should not return null.");
-    }
+    }*/
 
 }

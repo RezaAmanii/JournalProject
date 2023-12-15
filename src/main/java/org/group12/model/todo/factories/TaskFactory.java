@@ -15,13 +15,21 @@ import java.io.Serializable;
  */
 public class TaskFactory implements Serializable {
     private IIDFactory idFactory;
+    private static TaskFactory instance;
 
     /**
      * Constructs a new TaskFactory.
      * Initializes the TaskIDFactory used to generate IDs.
      */
-    public TaskFactory() {
+    private TaskFactory() {
         this.idFactory = IDFactory.getInstance(TaskIDFactory.class);
+    }
+
+    public static TaskFactory getInstance() {
+        if (instance == null) {
+            instance = new TaskFactory();
+        }
+        return instance;
     }
 
     /**

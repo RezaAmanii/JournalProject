@@ -1,138 +1,115 @@
 package org.group12.controllerView;
 
-import javafx.beans.property.SimpleObjectProperty;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import org.group12.Observers.ITaskListObserver;
+import org.group12.Listeners.SubTaskCardClickListener;
+import org.group12.Observers.ITodoObserver;
 import org.group12.controller.BigTaskController;
-import org.group12.controller.TaskController;
+import org.group12.controller.SubTaskController;
+import org.group12.model.Items;
+import org.group12.model.todo.IBigTask;
 import org.group12.model.todo.ITask;
-
-
-
+import org.group12.view.SubTaskCard;
+import org.group12.view.SubTaskView;
 import java.net.URL;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 import java.util.*;
-
 import static org.group12.controllerView.ToDoWindowManager.*;
-import static org.group12.view.TaskView.*;
 
 
-public class SubTaskWindowManager implements Initializable, ITaskListObserver {
 
-    static public ITask selectedSubTask = null;
+/**
+ * Manages the display and actions related to subtasks within a task.
+ */
+public class SubTaskWindowManager implements Initializable, ITodoObserver, SubTaskCardClickListener {
+
+
+    // Corresponding Controllers
     private final BigTaskController bigTaskController = BigTaskController.getInstance();
-    private final TaskController taskController = TaskController.getInstance();
+    private final SubTaskController subTaskController = SubTaskController.getInstance();
+
+    // Corresponding View
+    private final SubTaskView subTaskView = new SubTaskView();
+
+
+    // Reference to the last clicked subtask cards
+    private SubTaskCard lastClickedSubTaskCard;
+
     
     // FXMl Components
-    public Label taskNameLabel;
-    public VBox subTasksPane;
-    public ImageView deleteImg;
-    public AnchorPane addPane;
-    public CheckBox statusCheckBox;
-
+    @FXML public Label taskNameLabel;
+    @FXML public VBox subTasksPane;
+    @FXML public AnchorPane addPane;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        taskNameLabel.setText(bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID()).getTitle());
-
-    }
-
-
-    public GridPane createNewSubTaskObject(ITask task){
-        GridPane newTaskPane = createNewTaskPane();
-        Pane checkBoxPane = createCheckBoxPane(task);
-        TextField subTaskTF = createSubTaskTextField(task);
-        newTaskPane.getChildren().addAll(subTaskTF, checkBoxPane);
-        return newTaskPane;
-    }
-
-    private TextField createSubTaskTextField(ITask task){
-        TextField subTaskTF = new TextField(task.getTitle());
-        subTaskTF.setStyle("-fx-text-fill: white; -fx-border-color: transparent; -fx-background-color: transparent;");
-        subTaskTF.setEditable(false);
-        subTaskTF.setAlignment(Pos.CENTER);
-
-        GridPane.setColumnIndex(subTaskTF, 1);
-        GridPane.setValignment(subTaskTF, javafx.geometry.VPos.CENTER);
-        GridPane.setMargin(subTaskTF, new Insets(0, 0, 0, 5.0));
-        subTaskTF.setFont(new Font("Berlin Sans FB Demi Bold", 29.0));
-        subTaskTF.setOnMouseClicked(event -> {
-            handleSubTaskTestFieldClick(task, event, subTaskTF);
-        });
-        subTaskTF.setOnKeyPressed(event -> {
-            handleSubTaskTextFieldKeyPress(task, event, subTaskTF);
-        });
-        return subTaskTF;
-    }
-
-    private void handleSubTaskTextFieldKeyPress(ITask task, KeyEvent event, TextField subTaskTF) {
-        if (event.getCode() == KeyCode.ENTER) {
-            subTaskTF.setEditable(false);
-            renameSubTask(task, subTaskTF.getText());
+        bigTaskController.addObserver(this);
+        if(lastClickedBigTaskCard != null) {
+            taskNameLabel.setText(bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID()).getTitle());
+        } else{
+            taskNameLabel.setText("No task selected");
         }
+        update();
     }
 
-    private static void handleSubTaskTestFieldClick(ITask task, MouseEvent event, TextField subTaskTF) {
-        selectedSubTask = task;
-        if (event.getClickCount() == 2) {
-            subTaskTF.setEditable(true);
-            subTaskTF.requestFocus();
-        }
+    /**
+     * Creates a new SubTaskCard object for a given task.
+     *
+     * @param task The task for which a SubTaskCard needs to be created.
+     * @return The created SubTaskCard object.
+     */
+    public SubTaskCard createNewSubTaskObject(ITask task){
+        SubTaskCard newSubTaskCard = new SubTaskCard(task.getID(), Items.getInstance(), subTasksPane);
+        newSubTaskCard.setSubTaskCardListener(this);
+
+        return newSubTaskCard;
     }
 
+    /**
+     * Adds a new subtask to the currently selected big task.
+     */
     public void addNewSubTask(){
-        String title = getInputFromUser();
-        String subTaskID = selectedTask.addSubTask(title);
+        String title = subTaskView.getInputFromUser();
 
-        selectedSubTask = taskController.getSubTaskByID(subTaskID);
-        subTasksPane.getChildren().add(createNewSubTaskObject(selectedSubTask));
-        refreshSubTasksPane();
-    }
-
-    
-    public void removeSubTask(){
-        ITask subTask = taskController.getSubTaskByID(selectedSubTask.getID());
-        if(subTask != null){
-            subTask.setTitle("Removed");
-            bigTaskController.getBigTaskByID(selectedTask.getID()).removeSubTask(selectedSubTask.getID());
-            refreshSubTasksPane();
+        if(lastClickedBigTaskCard != null){
+            subTaskController.handleAddSubTask(title);
+            update();
         }
     }
 
-    void renameSubTask(ITask task, String newName){
-        taskController.getSubTaskByID(task.getID()).setTitle(newName);
-    }
 
-
-
+    /**
+     * Refreshes the subTasksPane with the updated subtasks related to the currently selected big task.
+     */
     void refreshSubTasksPane(){
 
         subTasksPane.getChildren().clear();
-
-        for (ITask task: selectedTask.getUncompletedSubTasks()){
-            subTasksPane.getChildren().add(createNewSubTaskObject(task));
-        }
-        for (ITask task: selectedTask.getCompletedSubTasks()){
-            subTasksPane.getChildren().add(createNewSubTaskObject(task));
+        IBigTask bigTask = bigTaskController.getBigTaskByID(lastClickedBigTaskCard.getID());
+        if(bigTask != null){
+            for (ITask task: subTaskController.getAllSubTasks()) {
+                subTasksPane.getChildren().add(createNewSubTaskObject(task));
+            }
         }
     }
 
-
+    /**
+     * Updates the display of subtasks when there's a change.
+     */
     @Override
     public void update() {
         refreshSubTasksPane();
+    }
+
+
+    /**
+     * Sets the last clicked subtask card.
+     *
+     * @param subTaskCard The last clicked SubTaskCard object.
+     */
+    @Override
+    public void onSubTaskCardClicked(SubTaskCard subTaskCard) {
+        lastClickedSubTaskCard = subTaskCard;
     }
 }

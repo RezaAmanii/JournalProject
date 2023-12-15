@@ -6,6 +6,7 @@ import javafx.scene.layout.GridPane;
 import org.group12.model.Calendar.CalendarWeek;
 import org.group12.controllerView.WeekCalenderView;
 import org.group12.model.Calendar.Event;
+import org.group12.model.Calendar.interfaces.IEvent;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -51,8 +52,8 @@ public class WeekCalendarController {
 
     Map<DayOfWeek,Label> weekDayDateLbl;
 
-    List<Event> events;
-    Map<LocalDate,List<Event>> eventsPerDay;
+    List<IEvent> events;
+    Map<LocalDate,List<IEvent>> eventsPerDay;
 
     public WeekCalenderView getViewInstance()
     {
@@ -62,7 +63,7 @@ public class WeekCalendarController {
         }else
             return   this.weekCalenderView;
     }
-    public void initialize(CalendarWeek week, List<Event> weekEvents) {
+    public void initialize(CalendarWeek week, List<IEvent> weekEvents) {
         weekCalenderView = getViewInstance();
         this.events = weekEvents;
         this.eventsPerDay = weekEvents

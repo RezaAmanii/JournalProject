@@ -1,12 +1,46 @@
-package org.group12.dataHandler;
+package org.group12.model.dataHandler;
 
 import org.group12.model.Container;
 import org.group12.model.Items;
+import org.group12.model.todo.factories.TodoCollectionFactory;
 
 import java.io.*;
 
 public class SaveLoad {
-    public void save(Container container, Items items) {
+    private static SaveLoad instance = null;
+    private Container containerInstance;
+    private Items itemsInstance;
+
+    private SaveLoad() {}
+
+    public static SaveLoad getInstance() {
+        if (instance == null) {
+            instance = new SaveLoad();
+        }
+        return instance;
+    }
+
+    public Container getContainerInstance() {
+        boolean saveExists = new File("containerData.ser").isFile();
+        if (saveExists) {
+            containerInstance = loadContainer();
+        } else {
+            containerInstance = Container.getInstance();
+        }
+        return containerInstance;
+    }
+
+    public Items getItemsInstance() {
+        boolean saveExists = new File("itemsData.ser").isFile();
+        if (saveExists) {
+            itemsInstance = loadItems();
+        } else {
+            itemsInstance = Items.getInstance();
+        }
+        return itemsInstance;
+    }
+
+    public void save() {
         try {
             FileOutputStream containerFileOut = new FileOutputStream("containerData.ser");
             FileOutputStream itemsFileOut = new FileOutputStream("itemsData.ser");
@@ -14,8 +48,8 @@ public class SaveLoad {
             ObjectOutputStream containerOut = new ObjectOutputStream(containerFileOut);
             ObjectOutputStream itemsOut = new ObjectOutputStream(itemsFileOut);
 
-            containerOut.writeObject(container);
-            itemsOut.writeObject(items);
+            containerOut.writeObject(containerInstance);
+            itemsOut.writeObject(itemsInstance);
 
             containerOut.close();
             itemsOut.close();
@@ -24,7 +58,7 @@ public class SaveLoad {
         }
     }
 
-    public Container loadContainer() {
+    private Container loadContainer() {
         Container container = null;
         try {
             FileInputStream fileIn = new FileInputStream("containerData.ser");
@@ -40,7 +74,7 @@ public class SaveLoad {
         return container;
     }
 
-    public Items loadItems() {
+    private Items loadItems() {
         Items items = null;
         try {
             FileInputStream fileIn = new FileInputStream("itemsData.ser");

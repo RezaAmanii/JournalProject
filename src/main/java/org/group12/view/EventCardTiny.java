@@ -19,6 +19,7 @@ public class EventCardTiny extends AnchorPane {
     @FXML
     private FlowPane tagsFlowPane;
 
+    // TODO: OBS att items måste komma från SaveLoad
     public EventCardTiny(String ID, CalendarController controller, ItemsSet items){
         this.items = items;
         this.ID = ID;
