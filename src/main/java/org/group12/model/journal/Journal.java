@@ -83,6 +83,16 @@ public class Journal implements INameable, IObservable, Serializable {
         return entries.get(date);
     }
 
+    /**
+     * Returns a list of all entries in the journal.
+     *
+     * @return a List of IEntry objects representing all entries in the journal.
+     * The list is a copy of the original collection of entries, so changes to the returned list will not affect the original entries.
+     * The order of the entries in the list is not specified.
+     */
+    public List<IEntry> getEntries() {
+        return new ArrayList<>(entries.values());
+    }
 
     /**
      * Adds a new JournalEntry with the specified date, notifies all observers.
