@@ -15,7 +15,6 @@ import org.group12.view.CalendarView;
 
 import java.io.IOException;
 
-import static java.util.Comparator.comparing;
 
 /**
  * This class is a controller for the Calendar Page.
@@ -31,13 +30,7 @@ public class CalendarPageController {
     private BorderPane calendarPane;
 
     @FXML
-    private BorderPane mainWindowBorder;
-
-    @FXML
     private Label monthLBL;
-
-    @FXML
-    private Label nameLBL11;
 
     @FXML
     private Label yearLBL;
