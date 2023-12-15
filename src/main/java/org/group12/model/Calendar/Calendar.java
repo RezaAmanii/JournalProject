@@ -64,9 +64,6 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         notifyObservers();
     }
 
-    @Override
-    public void addEvent(IEvent event) {
-    }
 
     /**
      *

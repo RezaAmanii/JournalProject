@@ -3,6 +3,7 @@ package org.group12.model.Calendar.factories;
 import javafx.util.Pair;
 import org.group12.model.Calendar.Event;
 import org.group12.model.Calendar.interfaces.IEvent;
+import org.group12.model.Calendar.interfaces.IEventFactory;
 import org.group12.model.IDFactory.EventIdFactory;
 import org.group12.model.IDFactory.IDFactory;
 import org.group12.model.IDFactory.IIDFactory;
@@ -12,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class eventFactory implements Serializable {
+public class eventFactory implements IEventFactory, Serializable {
     //TODO implement factory in the same way as todo and journal
     private IIDFactory idFactory;
     private static eventFactory instance;
