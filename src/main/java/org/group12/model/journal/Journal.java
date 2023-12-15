@@ -70,18 +70,6 @@ public class Journal implements INameable, IObservable, Serializable {
 
 
     /**
-     * Gets the list of journal entries.
-     *
-     * @return the list of journal entries
-     */
-
-    public List<IEntry> getEntries() {
-        return new ArrayList<>(entries.values());
-    }
-
-
-
-    /**
      * Retrieves a JournalEntry by its date.
      *
      * @param date The date of the JournalEntry to retrieve. Must not be null.
@@ -95,19 +83,6 @@ public class Journal implements INameable, IObservable, Serializable {
         return entries.get(date);
     }
 
-    /**
-     * Removes a JournalEntry by its date and notifies all observers.
-     *
-     * @param date The date of the JournalEntry to remove. Must not be null.
-     * @throws IllegalArgumentException if date is null.
-     */
-    public void removeEntry(LocalDate date) {
-        if (date == null) {
-            throw new IllegalArgumentException("Date cannot be null.");
-        }
-        entries.remove(date);
-        notifyObservers();
-    }
 
     /**
      * Adds a new JournalEntry with the specified date, notifies all observers.
@@ -119,7 +94,7 @@ public class Journal implements INameable, IObservable, Serializable {
         if (date == null) {
             throw new IllegalArgumentException("Date cannot be null.");
         }
-        IEntry newEntry = entryFactory.createJournalEntry(date);
+        IEntry newEntry = entryFactory. createJournalEntry(date);
         for (IPlanITObserver observer : observers) {
             newEntry.addObserver(observer);
         }
