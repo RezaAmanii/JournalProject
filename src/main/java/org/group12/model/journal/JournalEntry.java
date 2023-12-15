@@ -45,9 +45,6 @@ public class JournalEntry implements Serializable, IEntry {
         notifyObservers();
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
-    }
 
     /**
      * Updates the title of the journal entry, updates the modified timestamp to the current date and time, and notifies all observers.
