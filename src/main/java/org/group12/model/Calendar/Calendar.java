@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class Calendar implements IObservable, ICalendar, Serializable {
     private List<IEvent> eventList;
@@ -80,6 +81,14 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         isEmpty = eventList.isEmpty();
         notifyObservers();
         items.removeItem(event.getID());
+//        notifyObservers();
+    }
+
+    public void removeEvent(String eventId){
+        eventList.removeIf(ev -> eventId.equals(ev.getID()));
+        isEmpty = eventList.isEmpty();
+        notifyObservers();
+        items.removeItem(eventId);
 //        notifyObservers();
     }
 
@@ -164,4 +173,7 @@ public class Calendar implements IObservable, ICalendar, Serializable {
         }
     }
 
+    public IEvent getEvent(String eventId) {
+        return this.eventList.stream().filter(ev -> Objects.equals(ev.getID(), eventId)).findFirst().orElse(null);
+    }
 }

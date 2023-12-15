@@ -6,6 +6,9 @@ import javafx.util.Pair;
 import org.group12.model.Calendar.CalendarWeek;
 import org.group12.controllerView.NewEventView;
 import org.group12.model.Calendar.Calendar;
+import org.group12.model.Calendar.Event;
+import org.group12.model.Calendar.EventData;
+import org.group12.model.Container;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -75,15 +78,26 @@ public class CalendarPageController {
     @FXML
     void onAddEvent(MouseEvent msEvent) throws IOException {
         NewEventView controller =  Globals.openNewForm("/org/group12/view/newEvent.fxml", "New Event", false);
-        controller._initialize(ev -> {
-            calendarData.addEvent(ev.getTitle(), ev.getDescription(), ev.getFrom(), new Pair<>(ev.getFrom(), ev.getTo()));
-            drawCalendar(calendarWeek.getValue());
-        });
+        controller._initialize(this::addNewEvent);
+    }
+
+    private void addNewEvent(EventData ev) {
+        calendarData.addEvent(ev.getTitle(), ev.getDescription(), ev.getFrom(), new Pair<>(ev.getFrom(), ev.getTo()));
+        drawCalendar(calendarWeek.getValue());
+    }
+
+    private void deleteEvent(String eventId) {
+        calendarData.removeEvent(eventId);
+        drawCalendar(calendarWeek.getValue());
+    }
+
+    private IEvent getEvent(String eventId) {
+        return calendarData.getEvent(eventId);
     }
 
     void drawCalendar(CalendarWeek week) {
         Globals.FxmlUi<GridPane, WeekCalendarController> form = loadFxml("/org/group12/view/weekCalendar.fxml");
-        form.getController().initialize(week, getWeekEvents(week));
+        form.getController().initialize(week, getWeekEvents(week), this::deleteEvent, this::getEvent);
         calendarPane.setCenter(form.getRoot());
     }
 

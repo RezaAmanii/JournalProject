@@ -1,12 +1,16 @@
 package org.group12.controllerView;
 
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import org.group12.model.Calendar.CalendarEvent;
 import org.group12.model.Calendar.interfaces.IEvent;
+import org.group12.util.Globals;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -15,6 +19,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static java.time.DayOfWeek.*;
 import static java.util.Comparator.comparing;
@@ -102,10 +108,10 @@ public class WeekCalenderView implements Initializable {
         }
     }
 
-    public void drawDayColumn(LocalDate day, List<IEvent> events) {
+    public void drawDayColumn(LocalDate day, List<IEvent> events, Consumer<String> deleteEventAction, Function<String, IEvent> getEventFn) {
         var col = getCalendarGridCol(day);
         fillWithLightGrey(col);
-        toCalendarEvents(events).forEach(ev -> addEventToCalendar(ev, col));
+        toCalendarEvents(events).forEach(ev -> addEventToCalendar(ev, col, deleteEventAction, getEventFn));
     }
 
     public int getCalendarGridCol(LocalDate day) {
@@ -122,11 +128,31 @@ public class WeekCalenderView implements Initializable {
     }
 
 
-    public void addEventToCalendar(CalendarEvent event, int calendarColIndex) {
+    public void addEventToCalendar(CalendarEvent event, int calendarColIndex, Consumer<String> deleteEventAction, Function<String, IEvent> getEventFn) {
         var pane = new BorderPane();
         pane.setTop(new Label(event.getTitle()+" : "+ event.getDiscription()));
         pane.setStyle("-fx-background-color: orange;");
+        pane.setId(event.getId());
+        pane.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getClickCount() == 2) {
+                openEventDetailsWindow(deleteEventAction, getEventFn, mouseEvent);
+            }
+        });
         calendarGrid.add(pane, calendarColIndex, event.getRowStart(), 1, event.getRowEnd() - event.getRowStart() + 1);
+    }
+
+    private static void openEventDetailsWindow(Consumer<String> deleteEventAction, Function<String, IEvent> getEventFn, MouseEvent mouseEvent) {
+        try {
+            var eventId = ((Parent) mouseEvent.getSource()).getId();
+            var eventData = getEventFn.apply(eventId);
+            if(eventData == null) {
+                return;
+            }
+            EventDetailsView controller = Globals.openNewForm("/org/group12/view/eventDetails.fxml", "Event", false);
+            controller._initialize(eventData, deleteEventAction);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static List<CalendarEvent> toCalendarEvents(List<IEvent> events) {
