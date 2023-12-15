@@ -7,7 +7,7 @@ public class UserModel {
 
     public  static List<User> users = new ArrayList<User>();
     public UserModel() {
-        users.add(new User("planit","planit"));
+        users.add(new User("planit","123456"));
     }
 
 
