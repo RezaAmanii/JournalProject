@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="root" prefHeight="400.0" prefWidth="518.0" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.group12.controllerView.EventDetailsView">
+    <center>
+        <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="10.0" style="-fx-background-color: #e3f6f5; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #183a4e;" BorderPane.alignment="CENTER">
+            <children>
+                <Label fx:id="titleLbl" layoutX="14.0" layoutY="14.0" prefHeight="42.0" prefWidth="488.0" text="Name" textFill="#183a4e" wrapText="true" VBox.vgrow="NEVER">
+                    <font>
+                        <Font size="26.0" />
+                    </font>
+                </Label>
+                <GridPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="70.0" prefWidth="486.0" vgap="10.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="178.0" minWidth="10.0" prefWidth="64.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="1.7976931348623157E308" minWidth="10.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="25.0" minHeight="0.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="25.0" minHeight="10.0" prefHeight="25.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="18.0" prefWidth="73.0" text="From :" textAlignment="RIGHT" textFill="#183a4e" wrapText="true">
+                            <font>
+                                <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                            </font>
+                            <padding>
+                                <Insets right="10.0" />
+                            </padding>
+                        </Label>
+                        <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="20.0" prefWidth="61.0" text="To :" textAlignment="RIGHT" textFill="#183a4e" wrapText="true" GridPane.rowIndex="1">
+                            <font>
+                                <Font name="Berlin Sans FB Demi Bold" size="14.0" />
+                            </font>
+                            <padding>
+                                <Insets right="10.0" />
+                            </padding>
+                        </Label>
+                        <Label fx:id="fromDate" prefHeight="31.0" prefWidth="415.0" text="2023-12-13 13:35" GridPane.columnIndex="1" />
+                        <Label fx:id="toDate" layoutX="78.0" layoutY="10.0" prefHeight="31.0" prefWidth="415.0" text="2023-12-13 14:35" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    </children>
+                </GridPane>
+                <TextArea fx:id="descriptionTxt" editable="false" prefHeight="200.0" prefWidth="200.0" promptText="Description" wrapText="true" VBox.vgrow="ALWAYS">
+                    <font>
+                        <Font size="16.0" />
+                    </font>
+                </TextArea>
+                <Button fx:id="deleteBtn" mnemonicParsing="false" prefHeight="34.0" prefWidth="120.0" style="-fx-background-color: #e5b6b6;" text="Delete" VBox.vgrow="NEVER" />
+            </children>
+            <padding>
+                <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            </padding>
+        </VBox>
+    </center>
+</BorderPane>
