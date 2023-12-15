@@ -10,6 +10,10 @@ import org.group12.model.todo.factories.TodoCollectionFactory;
 
 import java.io.Serializable;
 
+/**
+ * This class represents a container that holds the essential objects Calendar, Journal, and a TodoCollection.
+ * It follows the Singleton design pattern, meaning only one instance of this class can exist.
+ */
 public class Container implements Serializable {
     private TodoCollectionFactory todoCollectionFactory;
 
@@ -22,6 +26,10 @@ public class Container implements Serializable {
 
     private final ItemsSet items;
 
+    /**
+     * Private constructor to ensure only one instance of this class is created.
+     * Initializes the Calendar, Journal, and a TodoCollection.
+     */
     private Container() {
 
         this.items = SaveLoad.getInstance().getItemsInstance();
@@ -32,31 +40,50 @@ public class Container implements Serializable {
 
         this.calender = new Calendar(items);
 
-        //Journal
-        //this.journal = new Journal("0", "temp title", null);
         this.journalEntryFactoryInstance = JournalEntryFactory.getInstance();
         this.journalFactoryInstance = JournalFactory.getInstance();
         journal = journalFactoryInstance.createJournal("Test Journal", journalEntryFactoryInstance, items);
     }
 
+    /**
+     * Returns the single instance of this class. If the instance does not exist, it is created.
+     * @return the single instance of this class
+     */
     public static Container getInstance(){
         if(instance == null){
             instance = new Container();
         }
         return instance;
     }
+
+    /**
+     * Sets the todoCollection of this container.
+     * @param todoCollection the new todoCollection
+     */
     public void setTodoCollection(TodoCollection todoCollection) {
         this.todoCollection = todoCollection;
     }
 
+    /**
+     * Returns the calendar of this container.
+     * @return the calendar
+     */
     public Calendar getCalender() {
         return calender;
     }
 
+    /**
+     * Returns the journal of this container.
+     * @return the journal
+     */
     public Journal getJournal() {
         return journal;
     }
 
+    /**
+     * Returns the todoCollection of this container.
+     * @return the todoCollection
+     */
     public TodoCollection getTodoCollection() {
         return todoCollection;
     }

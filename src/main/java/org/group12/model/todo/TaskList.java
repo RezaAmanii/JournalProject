@@ -77,6 +77,7 @@ public class TaskList implements ITaskList, Serializable {
 
     /**
      * Adds a new big task to the task list.
+     * Adds the big task to the items set.
      *
      * @param title The title of the big task.
      */
@@ -100,9 +101,9 @@ public class TaskList implements ITaskList, Serializable {
     }
 
     /**
-     * Gets the map of big tasks in the task list.
+     * Gets the list of big tasks.
      *
-     * @return The map of big tasks in the task list.
+     * @return The list of big tasks.
      */
     @Override
     public ArrayList<IBigTask> getBigTaskList() {

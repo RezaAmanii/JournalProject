@@ -5,8 +5,6 @@ import org.group12.model.IDFactory.IIDFactory;
 import org.group12.model.IDFactory.TodoCollectionIDFactory;
 import org.group12.model.ItemsSet;
 import org.group12.model.dataHandler.SaveLoad;
-import org.group12.model.todo.ITaskList;
-import org.group12.model.todo.TaskList;
 import org.group12.model.todo.TodoCollection;
 
 import java.io.Serializable;
