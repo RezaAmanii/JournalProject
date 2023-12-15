@@ -82,7 +82,7 @@ public class SettingsController implements Initializable {
 
             }
 
-            Main.newStart();
+            Main.newStart(false);
 
         } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
