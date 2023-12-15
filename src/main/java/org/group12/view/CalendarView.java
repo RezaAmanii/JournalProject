@@ -3,8 +3,9 @@ package org.group12.view;
 
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import org.group12.controller.WeekCalendarController;
+import org.group12.controllerView.WeekCalendarView;
 import org.group12.controllerView.NewEventView;
+import org.group12.controllerView.WeekCalendarView;
 import org.group12.model.Calendar.CalendarWeek;
 import org.group12.model.Calendar.EventData;
 import org.group12.model.Calendar.interfaces.IEvent;
@@ -43,7 +44,7 @@ public class CalendarView {
      * @param getEventFn        The function to retrieve an event.
      */
     public void drawCalendar(CalendarWeek week , List<IEvent> eventList, Consumer<String> deleteEventAction, Function<String, IEvent> getEventFn) {
-        Globals.FxmlUi<GridPane, WeekCalendarController> form = loadFxml("/org/group12/view/weekCalendar.fxml");
+        Globals.FxmlUi<GridPane, WeekCalendarView> form = loadFxml("/org/group12/view/weekCalendar.fxml");
         form.getController().initialize(week, eventList, deleteEventAction, getEventFn);
         calendarPane.setCenter(form.getRoot());
     }
